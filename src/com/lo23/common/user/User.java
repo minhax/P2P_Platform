@@ -21,7 +21,8 @@ public class User {
      * Constructeur de User
      * @param login Login du User
      */
-    public User(String login) {
+    public User(String login)
+    {
         this.login = login;
         this.id = UUID.randomUUID();
     }

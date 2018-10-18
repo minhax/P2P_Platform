@@ -19,28 +19,32 @@ public class Comment {
     /**
      * Auteur du commentaire
      */
-    private User user;
+    private User author;
 
     /**
      * Constructeur de Comment
      * @param text Corps du commentaire
      * @param user Auteur du commentaire
      */
-    public Comment(String text, User user) {
+    public Comment(String text, User user)
+    {
         this.text = text;
-        this.user = user;
+        this.author = user;
         this.date = LocalDateTime.now();
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDateTime getDate()
+    {
         return date;
     }
 
-    public User getUser() {
-        return user;
+    public User getAuthor()
+    {
+        return author;
     }
 }
