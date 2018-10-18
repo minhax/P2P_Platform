@@ -17,4 +17,9 @@ public class Tag {
     {
         this.label = label;
     }
+
+    public String getLabel()
+    {
+        return label;
+    }
 }
