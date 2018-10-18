@@ -9,7 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Test unitaires permettant de tester les classes liées aux utilisateurs
  */
-public class UserTests{
+public class UserTests
+{
 
     private UserAccount user;
 
@@ -17,7 +18,8 @@ public class UserTests{
      * On initialise un User de test avant chaque test.
      */
     @BeforeEach
-    void createUserForTests(){
+    void createUserForTests()
+    {
         this.user = new UserAccount(
                 "login",
                 "First",
@@ -31,13 +33,14 @@ public class UserTests{
      * Permet de tester les constructeurs de différentes classes
      */
     @Test
-    void testConstructors(){
+    void testConstructors()
+    {
         assertTrue(
                 this.user.getAge() == 50
-                && this.user.getFirstName().equals("First")
-                && this.user.getLastName().equals("Last")
-                && this.user.getLogin().equals("login")
-                & this.user.checkPassword("password")
+                        && this.user.getFirstName().equals("First")
+                        && this.user.getLastName().equals("Last")
+                        && this.user.getLogin().equals("login")
+                        && this.user.checkPassword("password")
         );
     }
 
@@ -45,7 +48,8 @@ public class UserTests{
      * Teste le changement de prénom
      */
     @Test
-    void ShouldChangeFirstName() {
+    void ShouldChangeFirstName()
+    {
         this.user.setFirstName("Other");
         assertEquals("Other", this.user.getFirstName());
     }
@@ -54,16 +58,18 @@ public class UserTests{
      * Teste le changement de nom de famille
      */
     @Test
-    void ShouldChangeLastName() {
+    void ShouldChangeLastName()
+    {
         this.user.setLastName("Other");
-        assertEquals("Other",this.user.getLastName());
+        assertEquals("Other", this.user.getLastName());
     }
 
     /**
      * Teste le changment d'age
      */
     @Test
-    void ShouldChangeAge() {
+    void ShouldChangeAge()
+    {
         this.user.setAge(20);
         assertEquals(20, this.user.getAge());
     }
@@ -72,7 +78,8 @@ public class UserTests{
      * Teste la correspondance du mot de passe
      */
     @Test
-    void ShouldCheckPassword(){
+    void ShouldCheckPassword()
+    {
         assertTrue(this.user.checkPassword("password"));
     }
 
@@ -80,19 +87,21 @@ public class UserTests{
      * Teste l'incrémentation du nombre de fichiers téléchargés
      */
     @Test
-    void ShouldIncrementNbFilesDownloaded(){
+    void ShouldIncrementNbFilesDownloaded()
+    {
         int nbFiles = this.user.getNbFilesDownloaded();
         this.user.incrementNbFilesDownloaded();
-        assertEquals(nbFiles+1, this.user.getNbFilesDownloaded());
+        assertEquals(nbFiles + 1, this.user.getNbFilesDownloaded());
     }
 
     /**
      * Teste l'incrémentation du nombre de fichiers téléversés
      */
     @Test
-    void ShouldIncrementNbFilesUploaded(){
+    void ShouldIncrementNbFilesUploaded()
+    {
         int nbFiles = this.user.getNbFilesUploaded();
         this.user.incrementNbFilesUploaded();
-        assertEquals(nbFiles+1, this.user.getNbFilesUploaded());
+        assertEquals(nbFiles + 1, this.user.getNbFilesUploaded());
     }
 }

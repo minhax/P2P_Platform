@@ -3,7 +3,8 @@ package com.lo23.common.user;
 /**
  * Classe qui définie un utilisateur et ses informations de base.
  */
-public class UserIdentity extends User {
+public class UserIdentity extends User
+{
 
     /**
      * Prénom de l'utilisateur
@@ -24,39 +25,46 @@ public class UserIdentity extends User {
     /**
      * Constructeur de UserIdentity
      *
-     * @param login Login du User
+     * @param login     Login du User
      * @param firstName Prénom de l'utilisateur
-     * @param lastName Nom de famille de l'utilisateur
-     * @param age Age de l'utilisateur
+     * @param lastName  Nom de famille de l'utilisateur
+     * @param age       Age de l'utilisateur
      */
-    public UserIdentity(String login, String firstName, String lastName, int age) {
+    public UserIdentity(String login, String firstName, String lastName, int age)
+    {
         super(login);
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return firstName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public int getAge() {
+    public int getAge()
+    {
         return age;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName)
+    {
         this.firstName = firstName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public void setAge(int age) {
+    public void setAge(int age)
+    {
         this.age = age;
     }
 }
