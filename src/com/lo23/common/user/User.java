@@ -3,7 +3,7 @@ package com.lo23.common.user;
 import java.util.UUID;
 
 /**
- * Classe User qui définie un utilisateur selon son UUID et son login.
+ * Définit un utilisateur selon son UUID et son login.
  */
 public class User {
     /**
