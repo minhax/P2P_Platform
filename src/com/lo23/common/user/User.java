@@ -20,9 +20,14 @@ public class User {
     /**
      * Constructeur de User
      * @param login Login du User
+     * @throws IllegalArgumentException Exception remontée si le login comporte une erreur
      */
-    public User(String login)
+    public User(String login) throws IllegalArgumentException
     {
+        if(login.length()<=0)
+        {
+            throw new IllegalArgumentException("Login should not be an empty String");
+        }
         this.login = login;
         this.id = UUID.randomUUID();
     }

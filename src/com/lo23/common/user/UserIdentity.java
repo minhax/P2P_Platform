@@ -29,10 +29,23 @@ public class UserIdentity extends User
      * @param firstName Prénom de l'utilisateur
      * @param lastName  Nom de famille de l'utilisateur
      * @param age       Age de l'utilisateur
+     * @throws IllegalArgumentException Exception remontée si il ya une erreur dans le nom, prénom ou age de l'utilisateur
      */
-    public UserIdentity(String login, String firstName, String lastName, int age)
+    public UserIdentity(String login, String firstName, String lastName, int age) throws IllegalArgumentException
     {
         super(login);
+        if(firstName.length()<=0)
+        {
+            throw new IllegalArgumentException("Firstname should not be an empty String");
+        }
+        if(lastName.length()<=0)
+        {
+            throw new IllegalArgumentException("Lastname should not be an empty String");
+        }
+        if(age<=0)
+        {
+            throw new IllegalArgumentException("Age should not be negative");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
