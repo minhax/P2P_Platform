@@ -1,7 +1,8 @@
 package com.lo23.common.filehandler;
 
 /**
- * Définit un handler de fichier, qui représente le fichier et contient ses métadonnées.
+ * Définit un descripteur de fichier, qui représente
+ * le fichier et contient ses métadonnées.
  */
 public class FileHandler
 {

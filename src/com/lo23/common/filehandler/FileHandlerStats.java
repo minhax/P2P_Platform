@@ -1,7 +1,8 @@
 package com.lo23.common.filehandler;
 
 /**
- * Définit un handler de fichier qui contient les statistiques du fichier en plus des autres métadonnées.
+ * Définit un descripteur de fichier qui contient les
+ * statistiques du fichier en plus des autres métadonnées.
  */
 public class FileHandlerStats extends FileHandlerInfos
 {

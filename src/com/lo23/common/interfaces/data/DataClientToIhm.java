@@ -21,7 +21,7 @@ public interface DataClientToIhm
      * Demande à l'IHM de mettre à jour ses utilisateurs connectés
      * suite à la connexion d'un utilisateur
      * @param user utilisateur nouvellement connecté
-     * @param files fichiers dont il est la source
+     * @param files fichiers dont l'utilisateur est la source
      */
     public void sendUpdatesUserConnected(UserIdentity user, Vector<FileHandler> files);
 
@@ -29,7 +29,7 @@ public interface DataClientToIhm
      * Demande à l'IHM de mettre à jour ses utilisateurs connectés
      * suite à la déconnexion d'un utilisateur
      * @param user utilisateur nouvellement déconnecté
-     * @param files fichiers dont il est la source
+     * @param files fichiers dont l'utilisateur est la source
      */
     public void sendUpdatesUserDisconnected(UserIdentity user, Vector<FileHandler> files);
 
@@ -42,17 +42,11 @@ public interface DataClientToIhm
     public void addFileSource(FileHandler file, UserIdentity user);
 
     /**
-     * Demande à l'IHM de mettre à jour les sources d'un fichier
-     * @param users sources du fichier
-     * @return
-     */
-    public UserIdentity updateFileDownload(Vector<UserIdentity> users);
-
-    /**
      * Envoie à l'IHM le pourcentage de complétion du téléchargement
      * @param percentage pourcentage de complétion du téléchargement
      */
     public void showPercentageComplete(float percentage);
+
 
 
 
