@@ -5,13 +5,13 @@ import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.common.user.UserStats;
 
 public interface DataClientToComm
 {
-
     /**
      * Notifie Comm de l'ajout d'un commentaire sur un fichier
-     * @param comment commentaire
+     * @param comment commentaire ajouté
      * @param file fichier commenté
      */
     public void sentFileChanges(Comment comment, FileHandler file);
@@ -20,7 +20,8 @@ public interface DataClientToComm
      * Demande à Comm les sources du fichier que l'utilisateur
      * veut télécharger
      * @param file fichier à télécharger
-     * @param user utilisateur qui télécharge le fichier // TODO askip c'est pour dire au serveur de renvoyer les sources du fichier à cet utilisateur
+     * @param user utilisateur qui télécharge le fichier
+     *             et à qui il faut renvoyer les sources
      */
     public void requestFileLocToServer(FileHandler file, UserIdentity user);
 
@@ -28,16 +29,16 @@ public interface DataClientToComm
      * Envoie une demande de connexion d'un utilisateur
      * au serveur
      * @param user utilisateur qui se connecte
-     * @param server IP du serveur
+     * @param ip adresse IP du serveur
      */
-    //public void connect(UserStats user, ServerInfo server); // TODO diag Envoyer demande de connexion
+    public void login(UserStats user, String ip);
 
     /**
      * Envoie une demande de déconnexion d'un utilisateur
      * @param user utilisateur qui se déconnecte
-     * @param server IP du serveur
+     * @param ip adresse IP du serveur
      */
-    //public void requestLogout(User user, ServerInfo server); // TODO diag Envoyer demande de connexion
+    public void requestLogout(User user, String ip);
 
     /**
      * Envoie à Comm le descripteur de fichier contenant
