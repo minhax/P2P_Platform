@@ -1,4 +1,4 @@
-package com.lo23.common.user;
+package java.common.user;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

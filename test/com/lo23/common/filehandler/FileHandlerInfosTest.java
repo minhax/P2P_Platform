@@ -1,9 +1,9 @@
-package com.lo23.common.filehandler;
+package java.com.lo23.common.filehandler;
 
-import com.lo23.common.Comment;
-import com.lo23.common.Rating;
-import com.lo23.common.Tag;
-import com.lo23.common.user.User;
+import java.common.Comment;
+import java.common.Rating;
+import java.common.Tag;
+import java.common.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

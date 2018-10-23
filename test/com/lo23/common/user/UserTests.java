@@ -1,6 +1,6 @@
-package com.lo23.common.user;
+package java.common.user;
 
-import com.lo23.common.filehandler.FileHandler;
+import java.common.filehandler.FileHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

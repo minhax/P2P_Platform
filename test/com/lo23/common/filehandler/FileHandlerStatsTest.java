@@ -1,4 +1,4 @@
-package com.lo23.common.filehandler;
+package java.common.filehandler;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
