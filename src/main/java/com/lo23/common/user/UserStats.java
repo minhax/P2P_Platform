@@ -47,6 +47,19 @@ public class UserStats extends UserIdentity
     }
 
     /**
+     * Méthode qui décrémente le nombre de fichiers téléversés
+     */
+    public void decrementNbFilesUploaded() throws IllegalStateException
+    {
+        if(this.nbFilesUploaded  <= 0)
+        {
+            throw new IllegalStateException("Number of uploaded files can't be negative");
+        }
+        this.nbFilesUploaded--;
+    }
+
+
+    /**
      * Méthode qui incrémente le nombre de fichiers téléchargés
      */
     public void incrementNbFilesDownloaded()

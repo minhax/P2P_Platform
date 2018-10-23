@@ -33,7 +33,7 @@ utilisée vraiment que lorsque qu'il est nécessaire de récupérer un fichier a
 ses métadonnées.
 
 **!!! Attention !!!**
-> Cette classe ne réalise aucun contrôle sur lors de l'ajout d'un tag, d'une note ou d'un
+> Cette classe ne réalise aucun contrôle lors de l'ajout d'un tag, d'une note ou d'un
 commentaire. Si vous voulez éviter qu'un utilisateur note deux fois le même fichier par 
 exemple, VOUS devez vous assurer qu'il n'a pas déjà entré une note pour ce fichier avant 
 d'ajouter sa note. Lors du retrait d'un tag, d'une note ou d'un commentaire, **il n'est pas
