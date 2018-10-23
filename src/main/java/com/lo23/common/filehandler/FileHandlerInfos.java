@@ -7,7 +7,8 @@ import com.lo23.common.Tag;
 import java.util.Vector;
 
 /**
- * Définit un handler de fichier qui contient les tags, notes et commentaires en plus des métadonnées de base.
+ * Définit un descripteur de fichier qui contient les tags,
+ * notes et commentaires en plus des métadonnées de base.
  */
 public class FileHandlerInfos extends FileHandler
 {
