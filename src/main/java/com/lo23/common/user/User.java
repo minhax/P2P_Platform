@@ -1,11 +1,13 @@
 package com.lo23.common.user;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Définit un utilisateur selon son UUID et son login.
  */
-public class User {
+public class User
+{
     /**
      * Identifiant unique de l'utilisateur.
      */

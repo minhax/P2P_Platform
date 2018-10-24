@@ -2,12 +2,14 @@ package com.lo23.common.user;
 
 import com.lo23.common.filehandler.FileHandler;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Classe qui définie un compte utilisateur avec toutes ses informations utiles.
  */
-public class UserAccount extends UserStats {
+public class UserAccount extends UserStats implements Serializable
+{
     /**
      * Mot de passe du compte utilisateur
      */
