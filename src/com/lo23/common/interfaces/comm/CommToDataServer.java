@@ -9,7 +9,7 @@ public interface CommToDataServer {
      * @param file fichier pour lequel on ajoute une source
      * @param user utilisateur qui devient une nouvelle source
      */
-    public void addNewFileSource(fileHandler file, UserId user);
+    public void addNewFileSource(fileHandler file, UserIdentity user);
 
     /**
      * Demande d'ajout d'un utilisateur à la liste des utilisateurs connectés
