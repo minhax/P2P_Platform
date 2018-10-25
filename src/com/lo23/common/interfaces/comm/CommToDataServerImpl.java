@@ -22,8 +22,8 @@ public class CommToDataServerImpl implements CommToDataServer {
     public void addNewConnectedUser(UserStats user) {
         //gestion d'excptions ?
         //on perd l'objet UserStats dans la bataille ?
-
-        CommunicationManager.requestUserConnection();
+        commManager=getUniqueComManager();
+        commManager.requestUserConnection();
 
         return void;
     }
@@ -40,7 +40,8 @@ public class CommToDataServerImpl implements CommToDataServer {
     public void deleteDisconnectedUser(User user){
 
         userId=user.getId();
-        CommunicationManager.requestLogoutToServer(userId);
+        commManager=getUniqueComManager();
+        commManager.requestLogoutToServer(userId);
 
         return void;
     }
