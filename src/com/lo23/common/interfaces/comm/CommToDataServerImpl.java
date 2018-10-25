@@ -1,11 +1,12 @@
 package com.lo23.common.interfaces.comm;
 import user.*;
 import filehandler.*;
+import communicationManager.*;
 
 public class CommToDataServerImpl implements CommToDataServer {
 
 
-    /* constructeurs / implémentation du singleton */
+    /* constructeurs + implémentation du singleton */
     private static final CommToDataServerImpl COMM_TO_DATA_SERVER_API= new CommToDataServerImpl();
     private CommToDataServerImpl(){}
 
@@ -18,22 +19,38 @@ public class CommToDataServerImpl implements CommToDataServer {
 
     //public void addNewFileSource(fileHandler file, UserIdentity user)
 
-    //public void addNewConnectedUser(UserStats user);
+    public void addNewConnectedUser(UserStats user) {
+        //gestion d'excptions ?
+        //on perd l'objet UserStats dans la bataille ?
+
+        CommunicationManager.requestUserConnection();
+
+        return void;
+    }
 
 
    // public void updateUserChanges(UserIdentity user);
 
 
-   // public void requestFileLoc(FileHandler file, UserIdentity user);
+    //public void requestFileLoc(FileHandler file, UserIdentity user){}
 
 
     //public void removeFileSource(FileHandler file, UserIdentity user);
 
-    //public void deleteDisconnectedUser(User user);
+    public void deleteDisconnectedUser(User user){
 
+        userId=user.getId();
+        CommunicationManager.requestLogoutToServer(userId);
 
-    //public void deleteDisconnectedUsedFiles(User user);
+        return void;
+    }
 
+    public void deleteDisconnectedUserFiles (User user){
+        userId=user.getId();
+        //comment récup tous les fichiers concernés ? rôle de data ?
+        //CommunicationManager.makeFileUnavailableToServer(userId, fileInfo);
+        return void;
+    }
 
     //public void updateFileChanges(String champ, FileHandler file);
 

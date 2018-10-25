@@ -3,10 +3,11 @@ package com.lo23.common.interfaces;
 import users.*;
 import java.util.UUID;
 import fileHandler.*;
+import communicationManager.*;
 
 public interface CommToDataClient
 {
-	
+
 	/**
      * Demande à Data des informations sur un utilisateur.
      * @param user utilisateur que l'on recherche

@@ -1,6 +1,8 @@
 package com.lo23.common.interfaces.comm;
 import user.*;
 import filehandler.*;
+import communicationManager.*;
+
 
 public interface CommToDataServer {
 
@@ -47,7 +49,7 @@ public interface CommToDataServer {
      * Permet d'enlever un utilisateur deconnecté de la liste des personnes proposant tel ou tel fichier, pour chacun des fichiers qu'il met à disposition
      * @param user utilisateur déconnecté
      */
-    public void deleteDisconnectedUsedFiles(User user);
+    public void deleteDisconnectedUserFiles(User user);
 
     /**
      * Met à jour les informations concernant les fichier
