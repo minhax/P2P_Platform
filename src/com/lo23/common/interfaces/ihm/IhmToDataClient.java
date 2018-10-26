@@ -17,21 +17,16 @@ public interface IhmToDataClient {
 
     /**
      * IHM envoie les informations de l'utilisateur à Data pour la création de compte en local
-     * @param username nom d'utilisateur
-     * @param password mot de passe
-     * @param serverIP adresse du serveur
-     * @param userInfo informations de l'utilisateur
+     * @param user : informations du compte utilisateur
      */
-    public void requestRegisterForm(String username, String password, String serverIP, String userInfo);
+    public void requestRegisterForm(UserAccount user);
 
     /**
      * IHM envoie les informations de l'utilisateur à Data pour les vérifications pour connexion
-     * @param username nom d'utilisateur
-     * @param password mot de passe
-     * @param serverIP adresse du serveur
-     * @param userInfo informations de l'utilisateur
+     * @param user : infos sur le compte utilisateur
+     * @param server : infos sur le serveur
      */
-    public void checkAccount(String username, String password, String serverIP, String userInfo);
+    public void checkAccount(UserAccount user, ServerInfos server);
 
     /**
      * IHM transmet à Data la demande de déconnexion
