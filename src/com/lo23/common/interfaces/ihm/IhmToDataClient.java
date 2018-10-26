@@ -5,6 +5,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
 
+import javax.print.DocFlavor;
 import java.util.List;
 
 public interface IhmToDataClient {
@@ -58,6 +59,57 @@ public interface IhmToDataClient {
      */
     public void submitUserChanges(UserAccount user);
 
-
-
+    public List<UserIdentity> refreshConnectedUsers();
+    
+    /**
+    *Demande � data de rendre un fichier indisponible
+    * @param fileID identifiant du fichier
+    */
+    public void makeFileUnavailable(String fileID);
+    
+    /**
+    *Envoie � data la note d'un fichier 
+    * @param rate la note du fichier sur 5
+    * @param fileID identifiant du fichier
+    */
+    public void sendRate(Rating rate, String fileID);
+    
+    /**
+    *Envoie � data la mise � jour des information d'un fichier
+    *par l'utilisateur
+    * @param fileInfo les informations relative au fichier
+    */
+    public void updateFileInfo(FileHandlerInfos fileInfo);
+    
+    /**
+    *Envoi d'un commentaire relatif � un fichier
+    * @param comment le commentaire en question
+    * @param fileID l'identifiant du fichier
+    */
+    public void sendComment(String comment, String fileID);
+    
+    /**
+    *Envoie une requ�te de recherche de fichier par rapport � son nom
+    * @param  fileName le nom du fichier recherch�
+    * @return <List> FileStats la liste des informations des fichiers trouv�
+    */
+    public List<FileStats> searchFile(String fileName);
+    
+    /**
+    *Demande la liste des fichiers partag�s
+    * @return <List> FileStats la liste des fichiers partag�s et de leurs statistique
+    */
+    public List<FileStats> getUploadedFiles();
+    
+    /**
+     *Demande la liste des fichiers disponible
+     * @return <List> FileStats la liste des fichiers disponible et de leurs statistique
+     */
+     public List<FileStats> getAvailableFiles();
+     
+     /**
+     *Demande la source d'un fichier
+     *@param fileID l'identifiant du fichier
+     */
+     public void requestFileLocation(String fileID);
 }
