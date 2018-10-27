@@ -17,5 +17,9 @@ public abstract class CommunicationManager {
 	{
 	
 	}
+	// Récupérer l'adresse IP du réseau sur lequel tourne l'application
+	public void getIpAdress()
+	{
 	
+	}
 }

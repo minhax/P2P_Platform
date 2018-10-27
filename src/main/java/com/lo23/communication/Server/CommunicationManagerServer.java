@@ -21,4 +21,5 @@ public class CommunicationManagerServer {
 	{
 		return Instance;
 	}
+
 }
