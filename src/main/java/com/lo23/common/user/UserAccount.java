@@ -87,8 +87,7 @@ public class UserAccount extends UserStats {
         return lastConnectionServerIP;
     }
 
-    public void setLastConnectionServerIP(String lastConnectionServerIP)
-    {
+    public void setLastConnectionServerIP(String lastConnectionServerIP) {
         this.lastConnectionServerIP = lastConnectionServerIP;
     }
 }
