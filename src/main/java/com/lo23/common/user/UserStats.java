@@ -26,6 +26,15 @@ public class UserStats extends UserIdentity
     public UserStats(String login, String firstName, String lastName, int age)
     {
         super(login, firstName, lastName, age);
+        this.nbFilesUploaded = 0;
+        this.nbFilesDownloaded = 0;
+    }
+
+    public UserStats ()
+    {
+        super();
+        this.nbFilesUploaded = 0;
+        this.nbFilesDownloaded = 0;
     }
 
     public int getNbFilesUploaded()

@@ -8,7 +8,7 @@ import java.util.Vector;
 /**
  * Classe qui définie un compte utilisateur avec toutes ses informations utiles.
  */
-public class UserAccount extends UserStats implements Serializable
+public class UserAccount extends UserStats
 {
     /**
      * Mot de passe du compte utilisateur
@@ -42,6 +42,13 @@ public class UserAccount extends UserStats implements Serializable
             throw new IllegalArgumentException("Password should not be an empty String");
         }
         this.password = password;
+        this.proposedFiles = new Vector<>();
+    }
+
+    public UserAccount ()
+    {
+        super();
+        this.password = "";
         this.proposedFiles = new Vector<>();
     }
 
