@@ -6,6 +6,8 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
+
 /**
  * API data client utilisable par les modules IHM et Comm
  */
@@ -24,15 +26,15 @@ public class DataManagerClient
      * @param user descripteur d'utilisateur
      * @return vrai si sauvegarde avec succès
      */
-    public boolean saveUserInfo(UserAccount user)
-    { // TODO A METTRE EN PRIVE APRES TESTS
-        boolean correct = true;
+    private boolean saveUserInfo(UserAccount user)
+    {
+        boolean registerSuccess = true;
         try
         {
             // Création du flux vers le nouveau fichier
             FileOutputStream fileOut =
                     new FileOutputStream(
-                            "files/accounts/"+user.getLogin()+"_"+user.getId()+".ser");
+                            FILEPATH_ACCOUNTS+user.getLogin()+"_"+user.getId()+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             // Sérialisation de l'utilisateur dans son fichier
             out.writeObject(user);
@@ -42,10 +44,10 @@ public class DataManagerClient
         catch (IOException i)
         {
             i.printStackTrace();
-            correct = false;
+            registerSuccess = false;
         }
 
-        return correct;
+        return registerSuccess;
     }
 
     /**
