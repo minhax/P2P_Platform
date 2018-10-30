@@ -9,8 +9,10 @@ public class Tests
     public static void main(String[] args)
     {
         // Tests de l'API client
-        DataManagerClient dmc = new DataManagerClient();
+
+        // Tests de la sérialisation d'un User
+        /*DataManagerClient dmc = new DataManagerClient();
         UserAccount u = new UserAccount("gong","Jean","Bonneau",78,"gogong");
-        dmc.saveUserInfo(u);
+        dmc.saveUserInfo(u);*/
     }
 }
