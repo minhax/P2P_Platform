@@ -2,8 +2,10 @@ package com.lo23.data.server;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.data.Utils;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
@@ -40,18 +42,16 @@ public class DirectoryUserFiles
     public void addProposedFile(UserIdentity user, FileHandlerInfos file) throws IllegalStateException, IllegalArgumentException
     {
         // On vérifie que les paramètres passés sont valides, sinon on lève une exception.
-        if (user == null)
-        {
-            throw new IllegalArgumentException("User should not be null !");
-        }
-        if (file == null)
-        {
-            throw new IllegalArgumentException("FileHandlerInfos should not be null !");
-        }
+        Utils.throwExceptionIfNull("User should not be null", user);
+        Utils.throwExceptionIfNull("File should not be null", file);
 
         // On lève une exception si l'utilisateur propose déjà ce fichier
-        if (this.userFiles.get(user).contains(file) && this.filesUser.get(file).contains(user) ){
-            throw new IllegalStateException("This user already propose this file !");
+        try {
+            if (this.userFiles.get(user).contains(file) && this.filesUser.get(file).contains(user) ){
+                throw new IllegalStateException("This user already propose this file !");
+            }
+        } catch (NullPointerException npe){
+
         }
 
         // On vérifie si l'utilisateur propose déjà des fichiers, si ce n'est pas le cas on l'ajoute à la map
@@ -87,19 +87,13 @@ public class DirectoryUserFiles
      * Permet d'enlever un couple UserIdentity FileHandlerInfos de l'annuaire
      * @param user Utilisateur
      * @param file Fichier
-     * @throws IllegalArgumentException Exception levée si mauvais arguements passés
+     * @throws NullPointerException Exception levée si mauvais arguements passés
      */
-    public void removeProposedFile(UserIdentity user, FileHandlerInfos file) throws IllegalArgumentException
+    public void removeProposedFile(UserIdentity user, FileHandlerInfos file) throws NullPointerException
     {
         // On vérifie que les paramètres passés sont valides, sinon on lève une exception.
-        if (user == null)
-        {
-            throw new IllegalArgumentException("User should not be null !");
-        }
-        if (file == null)
-        {
-            throw new IllegalArgumentException("FileHandlerInfos should not be null !");
-        }
+        Utils.throwExceptionIfNull("User should not be null", user);
+        Utils.throwExceptionIfNull("File should not be null", file);
 
         // On lève une exception si l'utilisateur propose déjà ce fichier, sinon on enlève les informations des HashMap
         if (this.userFiles.get(user).contains(file) && this.filesUser.get(file).contains(user))
@@ -116,9 +110,8 @@ public class DirectoryUserFiles
 
             if (this.getUsersThatProposeFile(file).isEmpty())
             {
-                this.filesUser.remove(user);
+                this.filesUser.remove(file);
             }
-
         }
         else
         {
@@ -132,19 +125,17 @@ public class DirectoryUserFiles
      */
     public void removeUser(UserIdentity user) throws IllegalArgumentException
     {
-        if (user == null)
-        {
-            throw new IllegalArgumentException("User should not be null");
-        }
-        if (this.userFiles.get(user) == null)
-        {
-            throw new IllegalArgumentException("User does not propose files...");
-        }
+        Utils.throwExceptionIfNull("User should not be null", user);
+        Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
 
         // Suppression de tous les fichiers de l'utilisateur
-        for (FileHandlerInfos f :
-                this.getFilesProposedByUser(user))
+        Vector<FileHandlerInfos> tmp = new Vector<>();
+        tmp.addAll(this.getFilesProposedByUser(user));
+        FileHandlerInfos f;
+
+        for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext();)
         {
+            f = i.next();
             this.removeProposedFile(user, f);
         }
     }
@@ -158,10 +149,7 @@ public class DirectoryUserFiles
     public Vector<FileHandlerInfos> getFilesProposedByUser(UserIdentity user) throws NullPointerException
     {
         // Est ce que l'utilisateur propose des fichiers ?
-        if (this.userFiles.get(user) == null)
-        {
-            throw new NullPointerException("This user has no files !");
-        }
+        Utils.throwExceptionIfNull("User should not be null", user);
         return this.userFiles.get(user);
     }
 
@@ -173,10 +161,7 @@ public class DirectoryUserFiles
      */
     public Vector<UserIdentity> getUsersThatProposeFile(FileHandlerInfos file) throws NullPointerException
     {
-        if (this.filesUser.get(file) == null)
-        {
-            throw new NullPointerException("This file is not available !");
-        }
+        Utils.throwExceptionIfNull("File not available", filesUser.get(file));
         return this.filesUser.get(file);
     }
 
