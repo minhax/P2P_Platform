@@ -78,7 +78,11 @@ public class ConnectionsManager
         {
             // On deconnecte l'utilsateur
             this.connectedUsers.remove(user);
-            this.directory.removeUser(user);
+            // On retire les fichiers de l'utilisateur s'il en a
+            if(this.directory.getFilesProposedByUser(user)!=null)
+            {
+                this.directory.removeUser(user);
+            }
         }
         catch (IllegalArgumentException iae)
         {
