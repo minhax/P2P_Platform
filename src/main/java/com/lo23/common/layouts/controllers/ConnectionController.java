@@ -3,6 +3,8 @@ package com.lo23.common.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.lo23.common.interfaces.ihm.IhmToDataClient;
+import com.lo23.common.layouts.Model.ConnectionModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,14 +41,21 @@ public class ConnectionController implements Initializable{
 	@FXML
 	private Button createAccountButton;
 
+	private ConnectionModel model;
+	private boolean authorizeConnection;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		model = new ConnectionModel();
+		binding();
 		// TODO Auto-generated method stub
 		
 	}
 	
 	public void connection(ActionEvent event)
 	{
+		//A décommenter à l'integration, la routine de connection n'est pas encore bien implémenter
+		//authorizeConnection= IhmToDataClient.checkAccount(this.userNameTextField.getText(),this.passwordField.getText());
 		try
 		{
 			FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
@@ -83,5 +92,13 @@ public class ConnectionController implements Initializable{
 		{
 			e.printStackTrace();
 		}
+	}
+
+	private void binding()
+	{
+		this.userNameTextField.textProperty().bindBidirectional(this.model.userProperty());
+		this.passwordField.textProperty().bindBidirectional(this.model.passwordProperty());
+		this.serverChoiceTextField.textProperty().bindBidirectional(this.model.serverProperty());
+		this.portTextField.textProperty().bindBidirectional(this.model.portProperty());
 	}
 }
