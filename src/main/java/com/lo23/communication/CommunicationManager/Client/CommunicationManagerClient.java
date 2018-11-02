@@ -1,13 +1,14 @@
-package com.lo23.communication.Client;
+package com.lo23.communication.CommunicationManager.Client;
 
 
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
+import com.lo23.communication.Messages.Message;
 
 public class CommunicationManagerClient {
 
-	public DataClientToComm dataInterface;
-	public CommToDataClient commInterface;
+	protected DataClientToComm dataInterface;
+	protected CommToDataClient commInterface;
 	
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerClient()
@@ -20,8 +21,13 @@ public class CommunicationManagerClient {
 	
 	/* Point d'accès à l'instance unique */
 	public static CommunicationManagerClient getInstance()
+	
 	{
 		return Instance;
 	}
-
+	
+	public void sendMsgToData( Message M){
+		// On applique le traitement au message, on stocke les informations dans un nouveau message
+		M.treatment(); // Le probleme actuel c'est qu'il faut que l'on passe l'interface qu'on veut utiliser
+	}
 }
