@@ -1,9 +1,10 @@
-package com.lo23.common.interfaces;
+package com.lo23.common.interfaces.comm;
 
-import users.*;
-import java.util.UUID;
-import fileHandler.*;
-import communicationManager.*;
+import com.lo23.common.filehandler.*;
+import com.lo23.common.user.*;
+
+import java.util.List;
+
 
 public interface CommToDataClient
 {
@@ -11,6 +12,7 @@ public interface CommToDataClient
 	/**
      * Demande à Data des informations sur un utilisateur.
      * @param user utilisateur que l'on recherche
+	 *
      */
 	public void searchUser(UserIdentity user);
 
@@ -40,13 +42,13 @@ public interface CommToDataClient
 	 * Envoie un fichier
 	 * @param fileInfo fichier à transmettre
 	 */
-	public void sendFile(FileHandlerInfo fileInfo);
+	public void sendFile(FileHandlerInfos fileInfo);
 
 	/**
 	 * Enregistre un fichier
 	 * @param fileInfo fichier à enregistrer
 	 */
-	public void saveFile(FileHandlerInfo fileInfo)
+	public void saveFile(FileHandlerInfos fileInfo);
 
 	/**
      * Recevoir la liste des utilisateurs disposant d'un fichier
@@ -65,14 +67,14 @@ public interface CommToDataClient
 	 * Envoie les modifications d'un compte utilisateur
 	 * @param user utilisateur dont on modifie le compte
 	 */
-	public void sendUpdatedAccount(UserIndentity user);
+	public void sendUpdatedAccount(UserIdentity user);
 
 	/**
 	 * Envoie les informations concernant un fichier
 	 * @param file fichier dont on transmet les informations
 	 * @param user utilisateur qui fournit les informations
 	 */
-	public void sendFileInfo(FileHandler file, UserId user);
+	public void sendFileInfo(FileHandler file, UserIdentity user);
 
 	/**
 	 * Envoie un fichier qui a été mis à jour
@@ -85,13 +87,13 @@ public interface CommToDataClient
 	 * @param file Fichier disponible
 	 * @param user utilisateur mettant à disposition le fichier
 	 */
-	public void sendNewFileSource(FileHandler file, UserId user);
+	public void sendNewFileSource(FileHandler file, UserIdentity user);
 
 	/**
 	 * Permet d'uploader un fichier
 	 * @param file fichier à uploader
 	 * @param user Utilisateur qui souhaite uplaoder
 	 */
-	public void UploadFile(FileHandler file, UserId user);
+	public void UploadFile(FileHandler file, UserIdentity user);
 
 }

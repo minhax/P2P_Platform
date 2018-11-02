@@ -1,7 +1,7 @@
 package com.lo23.common.interfaces.comm;
-import user.*;
-import filehandler.*;
-import communicationManager.*;
+
+import com.lo23.common.filehandler.*;
+import com.lo23.common.user.*;
 
 
 public interface CommToDataServer {
@@ -11,7 +11,7 @@ public interface CommToDataServer {
      * @param file fichier pour lequel on ajoute une source
      * @param user utilisateur qui devient une nouvelle source
      */
-    public void addNewFileSource(fileHandler file, UserIdentity user);
+    public void addNewFileSource(FileHandler file, UserIdentity user);
 
     /**
      * Demande d'ajout d'un utilisateur à la liste des utilisateurs connectés
@@ -63,7 +63,7 @@ public interface CommToDataServer {
      * @param file fichier à ajouter
      * @param user utilisateur qui propose le fichier
      */
-    public void addNewFileToServer(FileHandler file, UserId user);
+    public void addNewFileToServer(FileHandler file, UserIdentity user);
 
 
 }

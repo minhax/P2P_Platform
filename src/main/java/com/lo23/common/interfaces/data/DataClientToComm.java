@@ -14,7 +14,7 @@ public interface DataClientToComm
      * @param comment commentaire ajouté
      * @param file fichier commenté
      */
-    public void sendFileChanges(Comment comment, FileHandler file);
+    public void sendFileChange(Comment comment, FileHandler file);
 
     /**
      * Demande à Comm les sources du fichier que l'utilisateur
