@@ -32,7 +32,8 @@ public class DataManagerServer
      * Constructeur permettant d'instancier le gestionnaire de la partie Data du serveur
      * @param serverName Nom du serveur à instancier
      */
-    public DataManagerServer(String serverName){
+    public DataManagerServer(String serverName)
+    {
         this.serverInfos = new ServerInfos(serverName);
         this.connections = new ConnectionsManager();
         // TODO Implémenter les interfaces pour pouvoir les instancier ici
