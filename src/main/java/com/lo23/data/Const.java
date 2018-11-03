@@ -7,5 +7,5 @@ public class Const
 {
     public static final int LOGIN_CHAR_MIN = 4;
     public static final int LOGIN_CHAR_MAX = 15;
-    public static final String FILEPATH_ACCOUNTS = "files/accounts";
+    public static final String FILEPATH_ACCOUNTS = "files/accounts/";
 }
