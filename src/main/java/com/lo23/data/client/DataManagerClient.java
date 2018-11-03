@@ -3,8 +3,12 @@ package com.lo23.data.client;
 import com.lo23.common.user.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.stream.Stream;
 
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
 
@@ -26,7 +30,7 @@ public class DataManagerClient
      * @param user descripteur d'utilisateur
      * @return vrai si sauvegarde avec succès
      */
-    private boolean saveUserInfo(UserAccount user)
+    public boolean saveUserInfo(UserAccount user)
     {
         boolean registerSuccess = true;
         try
@@ -100,5 +104,29 @@ public class DataManagerClient
             e.printStackTrace();
             return "";
         }
+    }
+
+    /**
+     * Vérifie l'existence d'un compte utilisateur sérialisé, dans le dossier adapté : {@link com.lo23.data.Const#FILEPATH_ACCOUNTS}
+     * @param username Nom d'utilisateur du compte à vérifier
+     * @return vrai si le compte existe, faux sinon
+     */
+    public boolean accountExists(String username) {
+        long numberOfMatchingFiles = 0;
+
+        //Itère sur les fichiers de FILEPATH_ACCOUNTS et compte le nombre de fichiers qui ont "username_" en début de nom.
+        try (Stream<Path> paths = Files.walk(Paths.get(FILEPATH_ACCOUNTS))) {
+            numberOfMatchingFiles = paths
+                    .filter(Files::isRegularFile)
+                    .map(Path::toString)
+                    .map(s -> s.substring(FILEPATH_ACCOUNTS.length()))
+                    .filter(path -> path.matches("^(" + username + "_)(.)*$"))
+                    .count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Si au moins un fichier correspond, on retourne vrai
+        return numberOfMatchingFiles > 0;
     }
 }
