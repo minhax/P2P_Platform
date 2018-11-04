@@ -18,11 +18,26 @@ import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
 public class DataManagerClient
 {
     /**
+     * API de DataClient pour IHM
+     */
+    private DataClientToIhmApi dataClientToIhmApi;
+
+    /**
      * Constructeur de DataManagerClient
      */
     public DataManagerClient()
     {
         super();
+        this.dataClientToIhmApi = new DataClientToIhmApi(this);
+    }
+
+    /**
+     * Récupère l'API de DataClient pour IHM.
+     * @return Référence vers l'API de DataClient pour IHM
+     */
+    public DataClientToIhmApi getDataClientToIhmApi ()
+    {
+        return this.dataClientToIhmApi;
     }
 
     /**
@@ -30,7 +45,7 @@ public class DataManagerClient
      * @param user descripteur d'utilisateur
      * @return vrai si sauvegarde avec succès
      */
-    public boolean saveUserInfo(UserAccount user)
+    boolean saveUserInfo(UserAccount user)
     {
         boolean registerSuccess = true;
         try
@@ -81,7 +96,7 @@ public class DataManagerClient
      * @param passwordToHash Mot de passe à hasher
      * @return Hash du mot de passe
      */
-    private String hashPassword (String passwordToHash)
+    String hashPassword (String passwordToHash)
     {
         try
         {
