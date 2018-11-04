@@ -1,5 +1,8 @@
 package com.lo23.data.client;
 
+import com.lo23.common.interfaces.comm.CommToDataClient;
+import com.lo23.common.interfaces.data.DataClientToComm;
+import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
 
 import java.io.*;
@@ -21,6 +24,18 @@ public class DataManagerClient
      * API de DataClient pour IHM
      */
     private DataClientToIhmApi dataClientToIhmApi;
+    /**
+     * API de DataClient pour Comm
+     */
+    private DataClientToCommApi dataClientToCommApi;
+    //private IhmToDataClientApi ihmToDataClientApi;
+    //private CommToDataClientApi commToDataClientApi;
+    /**
+     * Session courante
+     */
+    private Session sessionInfos;
+    private UploadManager uploadManager;
+    private DownloadManager downloadManager;
 
     /**
      * Constructeur de DataManagerClient
