@@ -1,4 +1,5 @@
 package com.lo23.common.interfaces.data;
 
-public interface DataServerToComm {
+public interface DataServerToComm
+{
 }

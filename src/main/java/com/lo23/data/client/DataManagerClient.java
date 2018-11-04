@@ -25,31 +25,39 @@ public class DataManagerClient
     public void login(String login, String password)
     {
         // TODO hash password for comparison
-        boolean loginSuccess = false;
+        boolean userFound = false;
         File[] listOfUserFiles = new File("files/accounts").listFiles();
 
-        for (File userFile : listOfUserFiles) {
-            if (userFile.isFile()) {
-                try{
+        // Etude de chaque fichier utilisateur
+        for (File userFile : listOfUserFiles)
+        {
+            if (userFile.isFile())
+            {
+                try
+                {
                     FileInputStream fileIn = new FileInputStream(userFile.getName());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
                     Object obj = objectIn.readObject();
                     UserAccount comparisonAccount = (UserAccount) obj;
-                    if(comparisonAccount.getLogin().equals(login)){
-                        loginSuccess = true;
-                        if(comparisonAccount.checkPassword(password)) {
+                    if(comparisonAccount.getLogin().equals(login))
+                    {
+                        userFound = true;
+                        if(comparisonAccount.checkPassword(password))
+                        {
 
                             // TODO send login message to comm
 
                         }
                     }
                 }
-                catch(IOException |ClassNotFoundException e) {
+                catch(IOException |ClassNotFoundException e)
+                {
                     e.printStackTrace();
                 }
             }
         }
-        if(loginSuccess){
+        if(userFound)
+        {
             //TODO return error code saying that we found login but password didn't match
         }
     }
