@@ -5,12 +5,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests unitaires du DataManagerClient.
+ */
 class DataManagerClientTest
 {
     private DataManagerClient dm;
 
     /**
-     * On initialise un FileHandler de test avant chaque test.
+     * On initialise un DataManagerClient de test avant chaque test.
      */
     @BeforeEach
     void createDataManagerClient ()
@@ -18,10 +21,16 @@ class DataManagerClientTest
         this.dm = new DataManagerClient();
     }
 
+    /**
+     * On teste si une erreur est levée lors de la création de compte.
+     */
     @Test
     void shouldCreateAccount ()
     {
         DataClientToIhmApi api = dm.getDataClientToIhmApi();
-        api.createAccount("test", "test", "PrénomTest", "NomTest", 99);
+        assertDoesNotThrow(() ->
+                api.createAccount("test", "test", "PrénomTest", "NomTest", 99)
+        );
+        // TODO: virer le fichier créé sur le disque
     }
 }

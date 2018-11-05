@@ -1,5 +1,6 @@
 package com.lo23.data.client;
 
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.UserAccount;
 
@@ -30,16 +31,15 @@ public class DataClientToIhmApi implements DataClientToIhm
      * @param firstname Prénom de l'utilisateur
      * @param lastname Nom de l'utilisateur
      * @param age Age de l'utilisateur
+     * @throws DataException Exception lors de la création du compte
      */
-    public void createAccount (String login, String password, String firstname, String lastname, int age)
+    public void createAccount (String login, String password, String firstname, String lastname, int age) throws DataException
     { // TODO: définir quel retour pour IHM (void d'après diagramme de séquence)
         String hashedPassword = host.hashPassword(password);
-        // TODO: try...catch des erreurs ci dessous
         UserAccount user = new UserAccount(login, firstname, lastname, age, hashedPassword);
         if (!host.saveUserInfo(user))
         {
-            // TODO: Lever une exception ?
-            System.err.println("Erreur lors de la création du compte");
+            throw new DataException("Error while creating account");
         }
         // Connecter l'utilisateur
     }

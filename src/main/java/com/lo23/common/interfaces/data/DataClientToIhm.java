@@ -1,5 +1,6 @@
 package com.lo23.common.interfaces.data;
 
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.user.UserIdentity;
 
@@ -54,6 +55,7 @@ public interface DataClientToIhm
      * @param firstname Prénom de l'utilisateur
      * @param lastname Nom de l'utilisateur
      * @param age Age de l'utilisateur
+     * @throws DataException Exception lors de la création du compte
      */
-    void createAccount (String login, String password, String firstname, String lastname, int age);
+    void createAccount (String login, String password, String firstname, String lastname, int age) throws DataException;
 }
