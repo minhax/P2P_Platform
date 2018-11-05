@@ -1,8 +1,11 @@
-package com.lo23.common.interfaces;
+package com.lo23.common.interfaces.comm;
 
-import users.*;
+
+import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.user.UserIdentity;
+
 import java.util.UUID;
-import fileHandler.*;
+
 
 public interface CommInterface 
 {
@@ -49,7 +52,7 @@ public interface CommInterface
 	
 	/**
      * Demande à Data les informations concernant un utilisateur
-     * @param fileid clef identifiant un fichier
+     * @param fileId clef identifiant un fichier
      */
 	
 	public void requestFileInfo(UUID fileId);

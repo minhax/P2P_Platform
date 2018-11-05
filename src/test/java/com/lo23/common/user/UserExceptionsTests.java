@@ -5,27 +5,39 @@ import org.junit.jupiter.api.Test;
 
 public class UserExceptionsTests {
     @Test
-    void shouldThrowExceptionDueToIncorrectLogin(){
+    void shouldThrowExceptionDueToIncorrectLogin()
+    {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new User(""));
     }
 
     @Test
-    void shouldThrowExceptionDueToIncorrectFirstName(){
+    void shouldThrowExceptionDueToIncorrectFirstName()
+    {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new UserIdentity("login","", "lastName", 50));
     }
 
     @Test
-    void shouldThrowExceptionDueToIncorrectLastName(){
+    void shouldThrowExceptionDueToIncorrectLastName()
+    {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new UserIdentity("login","firstName", "", 50));
     }
 
     @Test
-    void shouldThrowExceptionDueToIncorrectAge(){
+    void shouldThrowExceptionDueToIncorrectAge()
+    {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new UserIdentity("login","firstName", "lastName", -50));
     }
 
     @Test
-    void shouldThrowExceptionDueToIncorrectPassword(){
+    void shouldThrowExceptionDueToIncorrectPassword()
+    {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new UserAccount("login","firstName", "lastName", 50, ""));
+    }
+
+    @Test
+    void ShouldThrowExceptionDueToNegativeUploadedFiles()
+    {
+        UserAccount user = new UserAccount("login", "firstName", "lastName", 50, "password");
+        Assertions.assertThrows(IllegalStateException.class, () -> user.decrementNbFilesUploaded());
     }
 }
