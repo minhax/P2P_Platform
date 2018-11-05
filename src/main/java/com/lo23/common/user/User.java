@@ -32,6 +32,27 @@ public class User {
         this.id = UUID.randomUUID();
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (! (o instanceof User))
+        {
+            return false;
+        }
+        else
+        {
+            User u = (User)o;
+            if (u.getId() == this.getId())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     public UUID getId() {
         return id;
     }

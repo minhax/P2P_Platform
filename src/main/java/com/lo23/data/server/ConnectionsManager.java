@@ -1,7 +1,10 @@
 package com.lo23.data.server;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.common.user.UserStats;
 
 import java.util.Set;
 import java.util.Vector;
@@ -118,6 +121,14 @@ public class ConnectionsManager
      */
     public Set<FileHandlerInfos> getProposedFiles(){
         return this.directory.getProposedFiles();
+    }
+
+    public void addFileToDirectory(UserStats user, FileHandlerInfos file){
+        this.directory.addProposedFile(user, file);
+    }
+
+    public void removeFileSourceFromDirectory(User user, FileHandler file){
+        this.directory.removeProposedFile(user, file);
     }
 
 

@@ -1,6 +1,8 @@
 package com.lo23.data.server;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Utils;
 
@@ -89,7 +91,7 @@ public class DirectoryUserFiles
      * @param file Fichier
      * @throws NullPointerException Exception levée si mauvais arguements passés
      */
-    public void removeProposedFile(UserIdentity user, FileHandlerInfos file) throws NullPointerException
+    public void removeProposedFile(User user, FileHandler file) throws NullPointerException
     {
         // On vérifie que les paramètres passés sont valides, sinon on lève une exception.
         Utils.throwExceptionIfNull("User should not be null", user);
@@ -146,7 +148,7 @@ public class DirectoryUserFiles
      * @return Vector contenant les fichiers proposés par l'utilisateur passé en paramètre
      * @throws NullPointerException Exception levée si l'utilisateur ne propose aucun fichier
      */
-    public Vector<FileHandlerInfos> getFilesProposedByUser(UserIdentity user) throws NullPointerException
+    public Vector<FileHandlerInfos> getFilesProposedByUser(User user) throws NullPointerException
     {
         // Est ce que l'utilisateur propose des fichiers ?
         Utils.throwExceptionIfNull("User should not be null", user);
@@ -159,7 +161,7 @@ public class DirectoryUserFiles
      * @return Vector contenant les utilisateurs proposant ce fichier
      * @throws NullPointerException Exception levée si le fichier n'est proposé par aucun utilisateur
      */
-    public Vector<UserIdentity> getUsersThatProposeFile(FileHandlerInfos file) throws NullPointerException
+    public Vector<UserIdentity> getUsersThatProposeFile(FileHandler file) throws NullPointerException
     {
         Utils.throwExceptionIfNull("File not available", filesUser.get(file));
         return this.filesUser.get(file);
