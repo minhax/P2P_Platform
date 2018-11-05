@@ -1,6 +1,9 @@
 package com.lo23.data.client;
 
+import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.UserAccount;
+import com.lo23.common.user.UserStats;
+
 import java.io.File;
 
 import java.io.FileInputStream;
@@ -9,12 +12,19 @@ import java.io.ObjectInputStream;
 
 public class DataManagerClient
 {
+    private DataClientToComm dataClientToComm;
+
     /**
      * Constructeur de DataManagerClient
      */
     public DataManagerClient()
     {
         super();
+        this.dataClientToComm = new DataClientToComm(this);
+    }
+
+    public DataClientToComm getDataClientToComm(){
+        return this.dataClientToComm;
     }
 
     /**
@@ -25,9 +35,10 @@ public class DataManagerClient
     public void login(String login, String password)
     {
         // TODO hash password for comparison
-        boolean userFound = false;
         File[] listOfUserFiles = new File("files/accounts").listFiles();
 
+        String hashedPassword = hashPassword(password);
+        
         // Etude de chaque fichier utilisateur
         for (File userFile : listOfUserFiles)
         {
@@ -41,12 +52,14 @@ public class DataManagerClient
                     UserAccount comparisonAccount = (UserAccount) obj;
                     if(comparisonAccount.getLogin().equals(login))
                     {
-                        userFound = true;
-                        if(comparisonAccount.checkPassword(password))
+                        if(comparisonAccount.checkPassword(hashedPassword))
                         {
+                            // TODO get IP to connect to.
+                            String serverIP  = "";
 
-                            // TODO send login message to comm
+                            UserStats userToConnect = (UserStats) comparisonAccount;
 
+                            dataClientToComm.login(userToConnect, serverIP);
                         }
                     }
                 }
@@ -56,10 +69,7 @@ public class DataManagerClient
                 }
             }
         }
-        if(userFound)
-        {
-            //TODO return error code saying that we found login but password didn't match
-        }
+        //TODO return error code saying that we found login but password didn't match
     }
 
     /**
