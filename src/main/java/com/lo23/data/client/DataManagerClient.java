@@ -61,4 +61,20 @@ public class DataManagerClient
             //TODO return error code saying that we found login but password didn't match
         }
     }
+
+    /**
+     * Envoie une demande de déconnexion d'un utilisateur
+     * @param user utilisateur qui se déconnecte
+     * @param ip adresse IP du serveur
+     */
+    public void logout(User user, String ip)
+    {
+        // TODO send logout message to com
+        // réutiliser variables user et ip utilisés dans login?
+        // requestLogout(User user, String ip)
+
+
+        //TODO return to user logout successful
+
+    }
 }
