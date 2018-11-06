@@ -10,13 +10,6 @@ import com.lo23.common.user.UserStats;
 public interface DataClientToComm
 {
     /**
-     * Notifie Comm de l'ajout d'un commentaire sur un fichier
-     * @param comment commentaire ajouté
-     * @param file fichier commenté
-     */
-    public void sendFileChanges(Comment comment, FileHandler file);
-
-    /**
      * Demande à Comm les sources du fichier que l'utilisateur
      * veut télécharger
      * @param file fichier à télécharger
