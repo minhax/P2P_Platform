@@ -12,18 +12,18 @@ import java.util.List;
 
 public class DataServerToCommAPI implements DataServerToComm
 {
+    private DataManagerServer manager;
 
-    private ConnectionsManager connections;
-
-    public DataServerToCommAPI(ConnectionsManager manager)
+    public DataServerToCommAPI(DataManagerServer managerServer)
     {
-        this.connections = manager;
+        this.manager = managerServer;
     }
 
     @Override
     public void addNewConnectedUser(UserStats user)
     {
-        this.connections.connectUser(user);
+        this.manager.connections.connectUser(user);
+        // TODO Dire à tous les utilisateurs connectés qu'il y a un nouvel utilisateur
     }
 
     @Override
@@ -33,20 +33,21 @@ public class DataServerToCommAPI implements DataServerToComm
         FileHandlerInfos file;
         while(iterator.hasNext())
         {
-            this.connections.addFileToDirectory(user, iterator.next());
+            this.manager.connections.addFileToDirectory(user, iterator.next());
         }
     }
 
     @Override
     public void deleteDisconnectedUser(UserIdentity user)
     {
-        this.connections.disconnectUser(user);
+        this.manager.connections.disconnectUser(user);
+        //TODO Dire à tous les clients que user s'est déconnecté
     }
 
     @Override
     public FileHandler removeFileSource(FileHandler file, User user)
     {
-        this.connections.removeFileSourceFromDirectory(user, file);
+        this.manager.connections.removeFileSourceFromDirectory(user, file);
         return file;
     }
 
