@@ -1,10 +1,12 @@
 package com.lo23.common.user;
 
+import com.lo23.common.filehandler.FileHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test unitaires permettant de tester les classes liées aux utilisateurs
@@ -103,5 +105,61 @@ public class UserTests
         int nbFiles = this.user.getNbFilesUploaded();
         this.user.incrementNbFilesUploaded();
         assertEquals(nbFiles + 1, this.user.getNbFilesUploaded());
+    }
+
+    /**
+     * Teste la décrémentation du nombre de fichiers téléversés
+     */
+    @Test
+    void ShouldDecrementNbFilesUploaded()
+    {
+        int nbFiles = this.user.getNbFilesUploaded();
+        this.user.incrementNbFilesUploaded();
+        this.user.decrementNbFilesUploaded();
+        assertEquals(nbFiles, this.user.getNbFilesUploaded());
+    }
+
+    /**
+     * Teste que les id générés sont différents
+     */
+    @Test
+    void ShouldNotBeTheSameId()
+    {
+        UUID testID = UUID.randomUUID();
+        assertNotEquals(testID, this.user.getId());
+    }
+
+    /**
+     * Teste l'ajout d'un fichier proposé
+     */
+    @Test
+    void ShouldAddProposedFile()
+    {
+        FileHandler fh = new FileHandler("hash", "titre", 512, "pdf", 3);
+        this.user.addProposedFile(fh);
+        assertTrue(this.user.getProposedFiles().contains(fh));
+    }
+
+
+    /**
+     * Teste la suppression d'un fichier proposé
+     */
+    @Test
+    void ShouldRemoveProposedFile()
+    {
+        FileHandler fh = new FileHandler("hash", "titre", 512, "pdf", 3);
+        this.user.addProposedFile(fh);
+        this.user.removeProposedFile(fh);
+        assertFalse(this.user.getProposedFiles().contains(fh));
+    }
+
+    /**
+     * Teste la mise à jour de l'IP du dernier serveur
+     */
+    @Test
+    void ShouldUpdateAndGetLastServerIP()
+    {
+        this.user.setLastConnectionServerIP("127.0.0.1");
+        assertEquals("127.0.0.1", this.user.getLastConnectionServerIP());
     }
 }
