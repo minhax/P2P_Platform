@@ -36,9 +36,6 @@ public class ConnectionController implements Initializable{
 	private TextField portTextField;
 	
 	@FXML
-	private Button connectButton;
-	
-	@FXML
 	private Button createAccountButton;
 
 	private ConnectionModel model;
@@ -51,8 +48,9 @@ public class ConnectionController implements Initializable{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public void connection(ActionEvent event)
+
+	@FXML
+	public void OnConnectClicked(ActionEvent event)
 	{
 		//A décommenter à l'integration, la routine de connection n'est pas encore bien implémenter
 		//authorizeConnection= IhmToDataClient.checkAccount(this.userNameTextField.getText(),this.passwordField.getText());
@@ -73,8 +71,9 @@ public class ConnectionController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	
-	public void createAccountLoader(ActionEvent event)
+
+	@FXML
+	public void OnCreateAccountLoaderClicked(ActionEvent event)
 	{
 		try
 		{

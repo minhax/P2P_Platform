@@ -95,4 +95,19 @@ public class MainController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 	}
 
+	@FXML
+	public void OnServerParametersButtonClicked(){
+
+    }
+
+    @FXML
+    public void OnUpdateUserButtonClicked(){
+
+    }
+
+    @FXML
+    public void OnDisconnectButtonClicked(){
+
+    }
+
 }

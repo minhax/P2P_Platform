@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="connectionPane" fx:id="connectionPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.common.layouts.controllers.ConnectionController">
+<AnchorPane id="connectionPane" fx:id="connectionPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.common.layouts.controllers.ConnectionController">
    <children>
       <PasswordField id="passwordField" fx:id="passwordField" layoutX="150.0" layoutY="99.0" prefHeight="34.0" prefWidth="340.0" promptText="Mot de passe …" />
       <TextField id="userNameTextField" fx:id="userNameTextField" layoutX="150.0" layoutY="53.0" prefHeight="34.0" prefWidth="340.0" promptText="Nom d'utilisateur ..." AnchorPane.bottomAnchor="316.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="50.0" />
       <TextField id="serverChoiceTextField" fx:id="serverChoiceTextField" layoutX="150.0" layoutY="151.0" prefHeight="25.0" prefWidth="223.0" promptText="Choix de server ..." />
       <TextField id="portTextField" fx:id="portTextField" layoutX="386.0" layoutY="151.0" prefHeight="25.0" prefWidth="103.0" promptText="Port ..." />
-      <Button id="connectButton" fx:id="connectButton" layoutX="242.0" layoutY="254.0" mnemonicParsing="false" onAction="#connection" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #00BFFF; -fx-border-radius: 1;" text="Se connecter" />
-      <Button id="createAccountButton" fx:id="creatAccountButton" layoutX="242.0" layoutY="307.0" mnemonicParsing="false" onAction="#createAccountLoader" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #C0C0C0;" text="Créer un compte" />
+      <Button id="connectButton" fx:id="connectButton" layoutX="242.0" layoutY="254.0" mnemonicParsing="false" onMouseClicked="#OnConnectClicked" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #00BFFF; -fx-border-radius: 1;" text="Se connecter" />
+      <Button id="createAccountButton" fx:id="creatAccountButton" layoutX="242.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountLoaderClicked" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #C0C0C0;" text="Créer un compte" />
    </children>
 </AnchorPane>

@@ -5,12 +5,22 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
-public class CreateAccountController implements Initializable{
+public class CreateAccountController implements Initializable {
+    @FXML
+    private TextField lastnameTextField, firstnameTextField, loginTextField, ageTextField;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
+    @FXML
+    private PasswordField passwordField;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @FXML
+    public void OnCreateAccountClicked(){
+
+    }
 
 }
