@@ -37,6 +37,15 @@ public class ConnectionsManagerTest
     }
 
     @Test
+    void testConnectSameUserTwiceShouldThrowException()
+    {
+        assertThrows(IllegalStateException.class, () ->
+        {
+            this.connectionsManager.connectUser(user1);
+        });
+    }
+
+    @Test
     void testGetterShouldReturnConnectedUsers1And2()
     {
         assertTrue(this.connectionsManager.getConnectedUsers().contains(user1)
@@ -51,6 +60,14 @@ public class ConnectionsManagerTest
         assertTrue(this.connectionsManager.getConnectedUsers().contains(user1)
                 && !this.connectionsManager.getConnectedUsers().contains(user2)
                 && this.connectionsManager.getConnectedUsers().size()==1);
+    }
+
+    @Test
+    void testGetterShouldReturnNoConnectedUsers()
+    {
+        this.connectionsManager.disconnectUser(user1);
+        this.connectionsManager.disconnectUser(user2);
+        assertTrue(this.connectionsManager.getConnectedUsers().size()==0);
     }
 
     @Test
@@ -77,5 +94,31 @@ public class ConnectionsManagerTest
         {
             this.connectionsManager.addFileToDirectory(userStats1, file1);
         });
+    }
+
+    @Test
+    void testRemovingOnlyDirectoryFileSourceShouldReturnEmptyDirectory()
+    {
+        this.connectionsManager.addFileToDirectory(userStats1, file1);
+        this.connectionsManager.removeFileSourceFromDirectory(userStats1, (FileHandler) file1);
+        assertTrue(this.connectionsManager.getProposedFiles().size()==0);
+    }
+
+    @Test
+    void testRemovingOneOnManySourcesShouldReturnNonEmptyDirectory()
+    {
+        this.connectionsManager.addFileToDirectory(userStats1, file1);
+        this.connectionsManager.addFileToDirectory(userStats2, file1);
+        this.connectionsManager.removeFileSourceFromDirectory(userStats1, (FileHandler) file1);
+        assertTrue(this.connectionsManager.getProposedFiles().size()==1);
+    }
+
+    @Test
+    void testRemovingAOneSourceFileShouldReturnNonEmptyDirectory()
+    {
+        this.connectionsManager.addFileToDirectory(userStats1, file1);
+        this.connectionsManager.addFileToDirectory(userStats2, file2);
+        this.connectionsManager.removeFileSourceFromDirectory(userStats1, (FileHandler) file1);
+        assertTrue(this.connectionsManager.getProposedFiles().size()==1);
     }
 }
