@@ -43,9 +43,74 @@ public class DataManagerClient
     public DataManagerClient()
     {
         super();
+        this.dataClientToCommApi = new DataClientToCommApi();
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
     }
 
+    public DataClientToComm getDataClientToComm(){
+        return this.dataClientToCommApi;
+    }
+
+    /**
+     * Connecte l'utilisateur au serveur après avoir vérifié ses identifiants
+     * @param login login de l'utilisateur
+     * @param password password de l'utilisateur
+     */
+    public void login(String login, String password)
+    {
+        // TODO hash password for comparison
+        File[] listOfUserFiles = new File("files/accounts").listFiles();
+
+        String hashedPassword = hashPassword(password);
+        
+        // Etude de chaque fichier utilisateur
+        for (File userFile : listOfUserFiles)
+        {
+            if (userFile.isFile())
+            {
+                try
+                {
+                    FileInputStream fileIn = new FileInputStream(userFile.getName());
+                    ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+                    Object obj = objectIn.readObject();
+                    UserAccount comparisonAccount = (UserAccount) obj;
+                    if(comparisonAccount.getLogin().equals(login))
+                    {
+                        if(comparisonAccount.checkPassword(hashedPassword))
+                        {
+                            // TODO get IP to connect to.
+                            String serverIP  = "";
+
+                            UserStats userToConnect = (UserStats) comparisonAccount;
+
+                            // FIXME Pas la bonne interface appelée
+//                            dataClientToCommApi.login(userToConnect, serverIP);
+                        }
+                    }
+                }
+                catch(IOException |ClassNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //TODO return error code saying that we found login but password didn't match
+    }
+
+    /**
+     * Envoie une demande de déconnexion d'un utilisateur
+     * @param user utilisateur qui se déconnecte
+     * @param ip adresse IP du serveur
+     */
+    public void logout(User user, String ip)
+    {
+        // TODO send logout message to com
+        // réutiliser variables user et ip utilisés dans login?
+        // requestLogout(User user, String ip)
+
+
+        //TODO return to user logout successful
+    }
     /**
      * Récupère l'API de DataClient pour IHM.
      * @return Référence vers l'API de DataClient pour IHM
@@ -159,4 +224,5 @@ public class DataManagerClient
         //Si au moins un fichier correspond, on retourne vrai
         return numberOfMatchingFiles > 0;
     }
+    
 }
