@@ -59,6 +59,30 @@ public interface IhmToDataClient {
      */
     public void submitUserChanges(UserAccount user);
 
+    public List <userAccount> refreshConnectedUsers(UserAccount user);
+    /**
+     *Demande à data la liste des utilisateurs connectés
+     * @param User informations du compte
+     */
+
+    public List <userAccount> searchUser(User user);
+    /**
+     *Demande à data la liste des utilisateurs avec le compte user
+     * @param User informations du compte
+     */
+
+    public UserAccount getUserInfo(String UserID);
+    /**
+     *Demande à data les informations relatives à un certain compte
+     * @param UserID identifiant d'un compte
+     */
+    public void sendFileInfo(FileHandlerInfos fileInfo);
+    /**
+     *Envoie à data les informations relatives à un fichier donné
+     * @param fileInfo informations d'un fichier
+     */
+
+
     public List<UserIdentity> refreshConnectedUsers();
     
     /**
