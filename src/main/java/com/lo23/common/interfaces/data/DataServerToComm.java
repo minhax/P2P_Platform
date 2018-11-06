@@ -24,8 +24,9 @@ public interface DataServerToComm
      * Ajoute les fichiers proposés par un utilisateur
      * au serveur
      * @param filesSharedByUser fichiers à ajouter
+     * @param user Utilisateur proposant le fichier
      */
-    void addNewUserFiles(List<FileHandlerInfos> filesSharedByUser);
+    void addNewUserFiles(List<FileHandlerInfos> filesSharedByUser, UserStats user);
 
     /**
      * Déconnecte un utilisateur
@@ -39,7 +40,7 @@ public interface DataServerToComm
      * @param sourceToRemove utilisateur à retirer des sources
      * @return fichier dont on a retiré une source
      */
-    FileHandlerInfos removeFileSource(FileHandler file, User sourceToRemove);
+    void removeFileSource(FileHandler file, User sourceToRemove);
 
     /**
      * Met à jour les informations d'un utilisateur

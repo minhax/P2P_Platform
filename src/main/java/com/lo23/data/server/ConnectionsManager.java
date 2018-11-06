@@ -75,7 +75,7 @@ public class ConnectionsManager
      * @throws IllegalArgumentException Exception levée si le paramètre passé est mauvais
      * @throws IllegalStateException Exception levée si l'utilisateur n'est pas connecté
      */
-    public void disconnectUser(UserIdentity user) throws IllegalArgumentException, IllegalStateException
+    public void disconnectUser(User user) throws IllegalArgumentException, IllegalStateException
     {
         // Si le paramètre passé est null
         if (user == null)

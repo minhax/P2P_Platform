@@ -1,14 +1,24 @@
 package com.lo23.data.client;
 
+import com.lo23.common.Comment;
+import com.lo23.common.Rating;
 import com.lo23.common.exceptions.DataException;
+import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
+import com.lo23.common.user.UserIdentity;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Objet qui implémente l'API de Data pour IHM.
  */
 public class DataClientToIhmApi implements DataClientToIhm
 {
+
     /**
      * DataManagerClient parent, sur lequel appeler les fonctions privées de Data.
      */
@@ -43,4 +53,114 @@ public class DataClientToIhmApi implements DataClientToIhm
         }
         // Connecter l'utilisateur
     }
+
+
+    @Override
+    public void requestFileLocation(FileHandler fileToDownload)
+    {
+
+    }
+
+    @Override
+    public UserIdentity requestOtherUserInfo(User otherUser)
+    {
+        return null;
+    }
+
+    @Override
+    public void requestShareNewFile(FileHandler newFile)
+    {
+
+    }
+
+    @Override
+    public void requestRateFile(Rating rating, FileHandler ratedFile)
+    {
+
+    }
+
+    @Override
+    public void requestCommentFile(Comment comment, FileHandler commentedFile)
+    {
+
+    }
+
+    @Override
+    public void requestUpdateFileInfo(FileHandler modifiedFile)
+    {
+
+    }
+
+    @Override
+    public UserAccount requestAccountInfos()
+    {
+        return null;
+    }
+
+    @Override
+    public void requestSubmitUserChanges(UserAccount modifiedUser)
+    {
+
+    }
+
+    @Override
+    public void requestMakeFileUnavailable(FileHandler file)
+    {
+
+    }
+
+    @Override
+    public void requestLogout()
+    {
+
+    }
+
+    @Override
+    public void requestCheckCredentials(String login, String password)
+    {
+
+    }
+
+    @Override
+    public List<FileHandler> requestFilesSharedByMe()
+    {
+        return null;
+    }
+
+    @Override
+    public List<FileHandler> requestFilesSharedByOthers()
+    {
+        return null;
+    }
+
+    @Override
+    public List<UserIdentity> requestSearchUser(String searchTerm)
+    {
+        return null;
+    }
+
+    @Override
+    public List<FileHandlerInfos> requestSearchFile(String searchTerm)
+    {
+        return null;
+    }
+
+    @Override
+    public void requestImportAccountData(String pathToAccountFile)
+    {
+
+    }
+
+    @Override
+    public File requestExportAccountData(User profileToExport)
+    {
+        return null;
+    }
+
+    @Override
+    public List<UserIdentity> requestConnectedUsers()
+    {
+        return null;
+    }
+
 }

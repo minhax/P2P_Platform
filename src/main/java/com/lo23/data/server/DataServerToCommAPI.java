@@ -27,9 +27,9 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewUserFiles(UserStats user, List<FileHandlerInfos> files)
+    public void addNewUserFiles(List<FileHandlerInfos> filesSharedByUser, UserStats user)
     {
-        Iterator<FileHandlerInfos> iterator = files.iterator();
+        Iterator<FileHandlerInfos> iterator = filesSharedByUser.iterator();
         FileHandlerInfos file;
         while(iterator.hasNext())
         {
@@ -38,40 +38,39 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void deleteDisconnectedUser(UserIdentity user)
+    public void removeDisconnectedUser(User user)
     {
         this.manager.connections.disconnectUser(user);
         //TODO Dire à tous les clients que user s'est déconnecté
     }
 
     @Override
-    public FileHandler removeFileSource(FileHandler file, User user)
+    public void removeFileSource(FileHandler file, User user)
     {
         this.manager.connections.removeFileSourceFromDirectory(user, file);
-        return file;
     }
 
     @Override
-    public UserIdentity updateUserChanges(UserIdentity user)
+    public void updateUserChanges(UserIdentity user)
+    {
+
+    }
+
+    @Override
+    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
+    {
+
+    }
+
+    @Override
+    public List<UserIdentity> requestFileLocationServer(FileHandler file)
     {
         return null;
     }
 
     @Override
-    public FileHandlerInfos addNewFileToServer(FileHandlerInfos file, UserIdentity user)
+    public void updateFileChanges(FileHandlerInfos file)
     {
-        return null;
-    }
 
-    @Override
-    public List<UserIdentity> requestFileLocServer(FileHandler file, UserIdentity user)
-    {
-        return null;
-    }
-
-    @Override
-    public FileHandler updateFileChanges(FileHandlerInfos file)
-    {
-        return null;
     }
 }

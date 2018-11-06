@@ -125,7 +125,7 @@ public class DirectoryUserFiles
      * Permet de supprimer un utilisateur et tous ses fichiers de l'annuaire
      * @param user Utilisateur à supprimer
      */
-    public void removeUser(UserIdentity user) throws IllegalArgumentException
+    public void removeUser(User user) throws IllegalArgumentException
     {
         Utils.throwExceptionIfNull("User should not be null", user);
         Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
