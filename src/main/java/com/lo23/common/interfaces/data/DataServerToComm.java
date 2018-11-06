@@ -1,5 +1,6 @@
 package com.lo23.common.interfaces.data;
 
+
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
