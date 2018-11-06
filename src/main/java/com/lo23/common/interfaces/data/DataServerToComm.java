@@ -14,59 +14,58 @@ import java.util.List;
 public interface DataServerToComm
 {
     /**
-     * Permet d'ajouter un utilisateur à la liste des utilisateurs connectés.
-     * @param user Utilisateur à ajouter.
+     * Ajoute un utilisateur à la liste des
+     * utilisateurs connectés
+     * @param newlyConnectedUser utilisateur à ajouter
      */
-    void addNewConnectedUser(UserStats user);
+    void addNewConnectedUser(UserStats newlyConnectedUser);
 
     /**
-     * Permet d'ajouter les fichiers d'un utilisateur au serveur.
-     * @param files fichiers à ajouter
+     * Ajoute les fichiers proposés par un utilisateur
+     * au serveur
+     * @param filesSharedByUser fichiers à ajouter
      */
-    void addNewUserFiles(List<FileHandlerInfos> files);
+    void addNewUserFiles(List<FileHandlerInfos> filesSharedByUser);
 
     /**
-     * Permet de déconnecter un utilisateur
-     * @param user utilisateur à déconnecter
+     * Déconnecte un utilisateur
+     * @param disconnectingUser utilisateur à déconnecter
      */
-    void deleteDisconnectedUser(User user);
+    void removeDisconnectedUser(User disconnectingUser);
 
     /**
-     * Permet de retirer une source
-     * @param file fichier à retirer
-     * @param user utilisateur à retirer
-     * @return Retourne le fichier retirer
+     * Retire une source des sources d'un fichier
+     * @param file fichier duquel retirer une source
+     * @param sourceToRemove utilisateur à retirer des sources
+     * @return fichier dont on a retiré une source
      */
-    FileHandlerInfos removeFileSource(FileHandler file, User user);
+    FileHandlerInfos removeFileSource(FileHandler file, User sourceToRemove);
 
     /**
-     * Permet de mettre à jour les informations d'un utilisateur.
-     * @param user Utilisateur
-     * @return Utilisateur mis à jour
+     * Met à jour les informations d'un utilisateur
+     * @param modifiedUser utilisateur modifié
      */
-    UserIdentity updateUserChanges(UserIdentity user);
+    void updateUserChanges(UserIdentity modifiedUser);
 
     /**
-     * Permet d'ajouter un fichier au serveur
-     * @param file fichierà ajouter
-     * @param user utilisateur qui ajoute le fichier
-     * @return Fichier ajouté
+     * Ajoute un fichier au serveur
+     * @param file fichier à ajouter
+     * @param user utilisateur qui partage le fichier
      */
-    FileHandlerInfos addNewFileToServer(FileHandlerInfos file, UserIdentity user);
+    void addNewFileToServer(FileHandlerInfos file, UserIdentity user);
 
     /**
-     * Permet d'obtenir la liste des utilisateur possédant un certain fichier
-     * @param file Fichier à demander
-     * @param user Utilisateur courant
-     * @return Liste des utilisateurs possédant le fichier
+     * Retourne la liste des utilisateurs sources
+     * d'un certain fichier
+     * @param file fichier dont on demande les sources
+     * @return liste des utilisateurs possédant le fichier
      */
-    List<UserIdentity> requestFileLocServer(FileHandler file, UserIdentity user);
+    List<UserIdentity> requestFileLocationServer(FileHandler file);
 
     /**
-     * Permet de mettre à jour les informations d'un fichier
-     * @param file Fichier à mettre à jour
-     * @return Fichier mis à jour
+     * Met à jour les informations d'un fichier
+     * @param file fichier à mettre à jour
      */
-    FileHandler updateFileChanges(FileHandlerInfos file);
+    void updateFileChanges(FileHandlerInfos file);
 
 }

@@ -1,40 +1,81 @@
 package com.lo23.common.interfaces.data;
 
-import com.lo23.common.Comment;
-import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.common.user.UserStats;
+
+import java.util.List;
 
 public interface DataClientToComm
 {
     /**
-     * Envoie à DataClient les sources d'un fichier
+     * Réponse du serveur à DataClient
+     * concernant les sources d'un fichier
      * @param sources sources du fichier
      */
-    void receiveFileLoc(Vector<UserIdentity> sources);
+    void receiveFileLocations(List<UserIdentity> sources);
+
+    // TODO cette méthode est encore floue et à revoir, mais c'est pas urgent pour l'instant
+    /**
+     * Demande à Data le fichier à télécharger
+     * @param userWhoRequestedFile utilisateur qui veut
+     *                             télécharger le fichier
+     * @param fileToDownload fichier demandé
+     * @return fichier à télécharger
+     */
+    FileHandlerInfos requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload);
 
     /**
-     *
-     * @param user
-     * @param file
-     * @return
+     * Demande à Data de recomposer le fichier à partir des fileparts
+     * @param file infos du fichier à recomposer
      */
-    FileHandlerInfos getFile(UserIdentity user, FileHandler file);
+    void mergeFileParts(FileHandlerInfos file);
 
     /**
-     *
-     * @param file
+     * Notifie DataClient d'un nouveau fichier
+     * proposé au partage
+     * @param newSharedFile fichier proposé
      */
-    void saveFile(FileHandlerInfos file);
+    void notifyNewSharedFileToAll(FileHandler newSharedFile);
 
     /**
-     * Envoie à DataClient le fichier devant
-     * être partagé
-     * @param file fichier à partager
+     * Notifie DataClient d'une nouvelle source pour
+     * un fichier existant
+     * @param existingFile fichier existant
+     * @param newSource nouvelle source
      */
-    void sendFileInfo(FileHandler file);
+    void notifyNewSourceToAll(FileHandler existingFile, UserIdentity newSource);
 
+    /**
+     * Notifie les clients distants des modifications
+     * apportées à un fichier partagé
+     * @param modifiedFile fichier modifié
+     */
+    void notifyUpdatedSharedFileToAll(FileHandler modifiedFile);
 
+    /**
+     * Notifie les clients distants du profil
+     * d'un autre utilisateur ayant subi des modifications
+     * @param newlyModifiedUser profil autre utilisateur modifié
+     */
+    void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser);
+
+    /**
+     * Notifie les clients distants de la déconnexion d'un autre
+     * utilisateur et donc de son retrait en tant que source
+     * des fichiers qu'il propose
+     * @param newlyDisconnectedUser autre utilisateur déconnecté
+     * @param files fichiers dont cet utilisateur est la source
+     */
+    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandler> files);
+
+    /**
+     * Notifie les clients distants de la connexion d'un autre
+     * utilisateur et donc de son ajout en tant que source
+     * des fichiers qu'il propose
+     * @param newlyConnectedUser autre utilisateur connecté
+     * @param files fichiers dont cet utilisateur est la source
+     */
+    void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandler> files);
 }
