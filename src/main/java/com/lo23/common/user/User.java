@@ -1,11 +1,18 @@
 package com.lo23.common.user;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Définit un utilisateur selon son UUID et son login.
  */
-public class User {
+public class User implements Serializable
+{
+    /**
+     * Serial UID for class serialisation
+     */
+    private static final long serialVersionUID = 100000000001L;
+
     /**
      * Identifiant unique de l'utilisateur.
      */
@@ -35,22 +42,26 @@ public class User {
     @Override
     public boolean equals(Object o)
     {
-        if (! (o instanceof User))
+        if (!(o instanceof User))
         {
             return false;
-        }
-        else
+        } else
         {
-            User u = (User)o;
+            User u = (User) o;
             if (u.getId() == this.getId())
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
         }
+    }
+
+    public User ()
+    {
+        this.login = "";
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {

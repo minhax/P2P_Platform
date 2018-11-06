@@ -2,12 +2,19 @@ package com.lo23.common;
 
 import com.lo23.common.user.User;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * Définit un commentaire fait par un utilisateur sur un fichier
  */
-public class Comment {
+public class Comment implements Serializable
+{
+    /**
+     * Serial UID for class serialisation
+     */
+    private static final long serialVersionUID = 100000000001L;
+
     /**
      * Corps du commentaire
      */
