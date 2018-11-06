@@ -3,8 +3,8 @@ package com.lo23.common.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
-import com.lo23.common.layouts.Model.ConnectionModel;
+import com.lo23.common.layouts.models.ConnectionModel;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

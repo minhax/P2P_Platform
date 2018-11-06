@@ -1,4 +1,4 @@
-package com.lo23.common.layouts.Model;
+package com.lo23.common.layouts.models;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
