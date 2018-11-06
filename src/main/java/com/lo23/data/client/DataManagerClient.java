@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
 
 /**
- * API data client utilisable par les modules IHM et Comm
+ * Manager Data client
  */
 public class DataManagerClient
 {
