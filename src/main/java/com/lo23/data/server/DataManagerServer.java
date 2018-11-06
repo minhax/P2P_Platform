@@ -17,17 +17,17 @@ public class DataManagerServer
     /**
      * Gestionnaire des connexions et des fichiers proposés
      */
-    private ConnectionsManager connections;
+    ConnectionsManager connections;
 
     /**
      * API venant de la partie communication
      */
-    private CommToDataServer commToDataApi;
+    CommToDataServer commToDataApi;
 
     /**
-     * API servant à la partie communication //TODO Est ce que c'est utile dans cette classe ?
+     * API servant à la partie communication
      */
-    // private DataServerToComm toCommApi;
+     DataServerToComm toCommApi;
 
     /**
      * Constructeur permettant d'instancier le gestionnaire de la partie Data du serveur
@@ -37,9 +37,15 @@ public class DataManagerServer
     {
         this.serverInfos = new ServerInfos(serverName);
         this.connections = new ConnectionsManager();
-        // TODO Implémenter les interfaces pour pouvoir les instancier ici
+        this.toCommApi = new DataServerToCommAPI( this);
     }
 
-
-
+    /**
+     * Permet de spécifier l'API Communication à utiliser
+     * @param api API proposée par communication
+     */
+    public void setCommToDataServer(CommToDataServer api)
+    {
+        this.commToDataApi = api;
+    }
 }
