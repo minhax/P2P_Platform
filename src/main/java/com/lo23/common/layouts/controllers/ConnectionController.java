@@ -3,6 +3,7 @@ package com.lo23.common.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.layouts.models.ConnectionModel;
 
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -34,6 +36,9 @@ public class ConnectionController implements Initializable{
 	
 	@FXML
 	private TextField portTextField;
+
+	@FXML
+	private Label incorrectLabel;
 	
 	@FXML
 	private Button createAccountButton;
@@ -44,6 +49,7 @@ public class ConnectionController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		model = new ConnectionModel();
+		incorrectLabel.setVisible(false);
 		binding();
 		// TODO Auto-generated method stub
 		
@@ -53,22 +59,25 @@ public class ConnectionController implements Initializable{
 	public void OnConnectClicked(ActionEvent event)
 	{
 		//A décommenter à l'integration, la routine de connection n'est pas encore bien implémenter
-		//authorizeConnection= IhmToDataClient.checkAccount(this.userNameTextField.getText(),this.passwordField.getText());
-		try
-		{
-			FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
-			Parent root = fxmlloader.load();
-			Stage stage = new Stage();
-			
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setOpacity(1);
-			stage.setTitle("Fenêtre principale");
-			stage.setScene(new Scene(root));
-			stage.showAndWait();
+		//authorizeConnection= DataClientToIhm.requestCheckCredentials(this.userNameTextField.getText(),this.passwordField.getText());
+		if(true) { // Remplacer true par authorizeConnection
+			try {
+				FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
+				Parent root = fxmlloader.load();
+				Stage stage = new Stage();
+
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.setOpacity(1);
+				stage.setTitle("Fenêtre principale");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		catch(Exception e)
+		else
 		{
-			e.printStackTrace();
+			incorrectLabel.setVisible(true);
 		}
 	}
 
