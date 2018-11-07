@@ -100,7 +100,7 @@ public interface DataClientToIhm
      * @param login pseudo entré par l'utilisateur
      * @param password mot de passe entré par l'utilisateur
      */
-    void requestCheckCredentials(String login, String password);
+    boolean requestCheckCredentials(String login, String password);
 
     /**
      * Retourne la liste des fichiers mis à disposition
