@@ -58,8 +58,10 @@ public class ConnectionController implements Initializable{
 	@FXML
 	public void OnConnectClicked(ActionEvent event)
 	{
-		//A décommenter à l'integration, la routine de connection n'est pas encore bien implémenter
-		//authorizeConnection= DataClientToIhm.requestCheckCredentials(this.userNameTextField.getText(),this.passwordField.getText());
+		//A décommenter à l'integration
+		/*DataClientToIhm api=new DataClientToIhmApi()
+		authorizeConnection= api.requestCheckCredentials(this.userNameTextField.getText(),this.passwordField.getText());
+		 */
 		if(true) { // Remplacer true par authorizeConnection
 			try {
 				FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
