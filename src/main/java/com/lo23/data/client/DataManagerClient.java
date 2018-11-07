@@ -224,5 +224,12 @@ public class DataManagerClient
         //Si au moins un fichier correspond, on retourne vrai
         return numberOfMatchingFiles > 0;
     }
+
+    public void changeUserInfos(UserAccount modifiedUser)
+    {
+        // On réecrit le fichier de l'utilisateur modifié
+        this.saveUserInfo(modifiedUser);
+        // Envoyer la modification vers le serveur
+    }
     
 }
