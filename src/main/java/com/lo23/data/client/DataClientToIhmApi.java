@@ -116,9 +116,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestCheckCredentials(String login, String password)
+    public Boolean requestCheckCredentials(String login, String password)
     {
-
+        return true;
     }
 
     @Override
