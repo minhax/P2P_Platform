@@ -14,7 +14,4 @@ public abstract class CommunicationManager {
 		//this.socketHSend.socket.write(msg)
 		//il faut retourner immediatement sans attendre le retour de la socket
 	}
-	
-	// envoi du message récupéré dans la socket à l'interface CommToDataClient
-	public abstract void sendMessageToData(Message m);
 }

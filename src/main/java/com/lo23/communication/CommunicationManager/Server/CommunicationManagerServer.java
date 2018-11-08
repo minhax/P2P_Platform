@@ -20,15 +20,16 @@ public class CommunicationManagerServer extends CommunicationManager {
 	
 	/* Point d'accès à l'instance unique */
 	public static CommunicationManagerServer getInstance()
+	
 	{
 		return Instance;
-	}
-	public void sendMessageToData( Message M){
-		// On applique le traitement au message, on stocke les informations dans un nouveau message
-		M.treatment(); // Le probleme actuel c'est qu'il faut que l'on passe l'interface qu'on veut utiliser
 	}
 	public DataServerToComm getDataInterface()
 	{
 		return dataInterface;
+	}
+	public CommToDataServer getCommInterface()
+	{
+		return commInterface;
 	}
 }
