@@ -32,4 +32,12 @@ public class CommunicationManagerServer extends CommunicationManager {
 	{
 		return commInterface;
 	}
+	public void setDataInterface(DataServerToComm ds)
+	{
+		this.dataInterface = ds;
+	}
+	public void setCommInterface (CommToDataServer cs)
+	{
+		this.commInterface = cs;
+	}
 }

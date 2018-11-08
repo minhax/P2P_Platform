@@ -34,4 +34,12 @@ public class CommunicationManagerClient {
 	{
 		return commInterface;
 	}
+	public void setDataInterface(DataClientToComm di)
+	{
+		this.dataInterface = di;
+	}
+	public void setCommInterface (CommToDataClient ci)
+	{
+		this.commInterface = ci;
+	}
 }
