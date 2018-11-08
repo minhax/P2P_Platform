@@ -27,8 +27,8 @@ public class CommunicationManagerServer extends CommunicationManager {
 		// On applique le traitement au message, on stocke les informations dans un nouveau message
 		M.treatment(); // Le probleme actuel c'est qu'il faut que l'on passe l'interface qu'on veut utiliser
 	}
-	
+	public DataServerToComm getDataInterface()
+	{
+		return dataInterface;
+	}
 }
-// To do : voir avec Wassim pour qu'il mette toutes les methodes dans l'interface.
-// Des que c'est fait, implementer les interfaces dans des classes spécifiques (CommToDataCLientImple && CommToDataServerImple)
-// Resoudre le probleme de donner l'interface via treatment
