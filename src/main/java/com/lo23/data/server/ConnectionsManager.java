@@ -6,6 +6,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
@@ -123,13 +124,54 @@ public class ConnectionsManager
         return this.directory.getProposedFiles();
     }
 
-    public void addFileToDirectory(UserStats user, FileHandlerInfos file){
+    public void addFileToDirectory(UserStats user, FileHandlerInfos file)
+    {
         this.directory.addProposedFile(user, file);
     }
 
-    public void removeFileSourceFromDirectory(User user, FileHandler file){
+    public void removeFileSourceFromDirectory(User user, FileHandler file)
+    {
         this.directory.removeProposedFile(user, file);
     }
 
+    /**
+     * Permet de modifier un utilisateur dans l'annuaire des connectés
+     * @param modifiedUser Utilisateur à modifier
+     * @throws IllegalStateException Exception levée si l'utilisateur n'est pas dans l'annuaire
+     * @return L'objet UserIdentity tel qu'il était avant la modification
+     */
+    public void modifyConnectedUser(UserIdentity modifiedUser) throws IllegalStateException
+    {
+        int i = 0;
+        boolean foundUser = false;
+        UserIdentity oldUserIdentity = null;
+        UserIdentity currentUser = null;
 
+        // Itération sur les utilisateurs connectés
+        while(i < this.getConnectedUsers().size() && !foundUser)
+        {
+            currentUser = this.getConnectedUsers().get(i);
+            // Si on a trouvé l'utilisateur à modifier
+            // (ceci fonctionne car un utilisateur ne peut modifier son ID)
+            if(currentUser.getId()==modifiedUser.getId())
+            {
+                // On a trouvé l'utilisateur dans l'annuaire :
+                // on modifie ses informations
+                foundUser = true;
+                oldUserIdentity = currentUser;
+                currentUser.setFirstName(modifiedUser.getFirstName());
+                currentUser.setLastName(modifiedUser.getLastName());
+                currentUser.setAge(modifiedUser.getAge());
+            }
+            i = i + 1;
+        }
+        if (foundUser)
+        {
+            // Mise à jour des sources avec le nouvel objet UserIdentity dans this.directory
+        }
+        else
+        {
+            throw new IllegalStateException("User to modify is not connected/Does not exist !");
+        }
+    }
 }
