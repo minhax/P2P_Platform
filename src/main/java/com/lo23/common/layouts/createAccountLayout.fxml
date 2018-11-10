@@ -19,5 +19,7 @@
       <Label id="ageLabel" layoutX="169.0" layoutY="252.0" text="Âge" />
       <TextField id="ageTextField" fx:id="ageTextField" layoutX="283.0" layoutY="248.0" />
       <Button id="subscriptionButton" layoutX="274.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountClicked" style="-fx-background-color: #00BFFF;" text="S'inscrire !" />
+      <Label fx:id="emptyFieldLabel" layoutX="169.0" layoutY="31.0" prefHeight="18.0" prefWidth="396.0" text="Tous les champs doivent obligatoirement être renseignés" textFill="RED" />
+      <Label fx:id="ageErrorLabel" layoutX="274.0" layoutY="274.0" prefHeight="18.0" prefWidth="396.0" text="Doit obligatoirement etre un nombre" textFill="RED" />
    </children>
 </AnchorPane>
