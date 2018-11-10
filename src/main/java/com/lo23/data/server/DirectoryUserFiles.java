@@ -6,10 +6,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Utils;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Annuaire permettant de gérer les fichiers proposés par les utilisateurs.
@@ -174,5 +171,29 @@ public class DirectoryUserFiles
     public Set<FileHandlerInfos> getProposedFiles()
     {
         return this.filesUser.keySet();
+    }
+
+    public void updateSourcesAfterUserModification(UserIdentity oldUserIdentity, UserIdentity newUserIdentity)
+    {
+        // MAJ de l'UserIdentity en tant que source dans userFiles
+        this.userFiles.put(newUserIdentity, this.userFiles.remove(oldUserIdentity));
+        // MAJ de l'UserIdentity en tant que source dans filesUser
+        for (Vector<UserIdentity> sources : this.filesUser.values()) {
+            int i = 0;
+            boolean foundSource = false;
+            UserIdentity currentSource = null;
+            while(i < sources.size() && !foundSource)
+            {
+                currentSource = sources.get(i);
+                if(currentSource==oldUserIdentity)
+                {
+                    foundSource = true;
+                    currentSource.setFirstName(newUserIdentity.getFirstName());
+                    currentSource.setLastName(newUserIdentity.getLastName());
+                    currentSource.setAge(newUserIdentity.getAge());
+                }
+                i = i + 1;
+            }
+        }
     }
 }
