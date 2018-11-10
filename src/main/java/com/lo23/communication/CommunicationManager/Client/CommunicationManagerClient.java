@@ -3,6 +3,7 @@ package com.lo23.communication.CommunicationManager.Client;
 
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
+import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.Messages.Message;
 
 public class CommunicationManagerClient {
@@ -25,9 +26,20 @@ public class CommunicationManagerClient {
 	{
 		return Instance;
 	}
-	
-	public void sendMsgToData( Message M){
-		// On applique le traitement au message, on stocke les informations dans un nouveau message
-		M.treatment(); // Le probleme actuel c'est qu'il faut que l'on passe l'interface qu'on veut utiliser
+	public DataClientToComm getDataInterface()
+	{
+		return dataInterface;
+	}
+	public CommToDataClient getCommInterface()
+	{
+		return commInterface;
+	}
+	public void setDataInterface(DataClientToComm di)
+	{
+		this.dataInterface = di;
+	}
+	public void setCommInterface (CommToDataClient ci)
+	{
+		this.commInterface = ci;
 	}
 }

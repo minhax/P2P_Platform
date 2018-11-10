@@ -20,15 +20,24 @@ public class CommunicationManagerServer extends CommunicationManager {
 	
 	/* Point d'accès à l'instance unique */
 	public static CommunicationManagerServer getInstance()
+	
 	{
 		return Instance;
 	}
-	public void sendMessageToData( Message M){
-		// On applique le traitement au message, on stocke les informations dans un nouveau message
-		M.treatment(); // Le probleme actuel c'est qu'il faut que l'on passe l'interface qu'on veut utiliser
+	public DataServerToComm getDataInterface()
+	{
+		return dataInterface;
 	}
-	
+	public CommToDataServer getCommInterface()
+	{
+		return commInterface;
+	}
+	public void setDataInterface(DataServerToComm ds)
+	{
+		this.dataInterface = ds;
+	}
+	public void setCommInterface (CommToDataServer cs)
+	{
+		this.commInterface = cs;
+	}
 }
-// To do : voir avec Wassim pour qu'il mette toutes les methodes dans l'interface.
-// Des que c'est fait, implementer les interfaces dans des classes spécifiques (CommToDataCLientImple && CommToDataServerImple)
-// Resoudre le probleme de donner l'interface via treatment
