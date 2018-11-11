@@ -1,9 +1,9 @@
 package com.lo23.common.interfaces.comm;
 
+import com.lo23.common.Comment;
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.*;
 import com.lo23.common.user.*;
-
-import java.util.List;
 
 
 public interface CommToDataClient
@@ -14,12 +14,6 @@ public interface CommToDataClient
      * @param file fichier que l'on modifie
      */
     void sendFileChanges(String champ, FileHandler file);
-
-    /**
-     * Envoie les modifications relatives à un utilisateur (communication avec le serveur)
-     * @param user utilisateur concerné
-     */
-    void sendUserChangesToServer(UserIdentity user);
 
     /**
      * Envoie les modifications relatives à un utilisateur
