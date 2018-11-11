@@ -40,6 +40,7 @@ public class connectionMsg extends Authentication {
 		
 		/** stockage des informations concernant l'adresse IP du server et du client dans le cms
 		 */
+		cms.addEntryInClientAndServerIPArray(this.myIp,this.serverIp);
 		
 	}
 }
