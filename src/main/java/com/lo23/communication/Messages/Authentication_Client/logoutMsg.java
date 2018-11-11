@@ -4,6 +4,7 @@ import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
+import com.lo23.common.user.User;
 public class logoutMsg extends Authentication {
 	
 	public logoutMsg(UserStats us){
