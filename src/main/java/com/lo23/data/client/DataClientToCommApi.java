@@ -61,13 +61,13 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandler> files)
+    public void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandlerInfos> files)
     {
 
     }
 
     @Override
-    public void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandler> files)
+    public void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files)
     {
 
     }
