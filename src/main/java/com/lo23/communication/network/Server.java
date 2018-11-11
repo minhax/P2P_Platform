@@ -1,4 +1,4 @@
-package com.lo23.comm.communication.network;
+package com.lo23.communication.network;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -14,7 +14,8 @@ public class Server
     	ServerSocket serverSocket = null;
     	Socket socket = null;
     	
-    	try{
+    	try
+		{
     			serverSocket = new ServerSocket(1026);
     			System.out.println("Server Central");
     	}
@@ -26,7 +27,8 @@ public class Server
     	
     	while(true)
     	{
-    		try{
+    		try
+			{
     				socket = serverSocket.accept();
     		}
     		catch(IOException e)

@@ -3,6 +3,8 @@ package com.lo23.common.interfaces.comm;
 import com.lo23.common.filehandler.*;
 import com.lo23.common.user.*;
 
+import java.util.List;
+
 
 public interface CommToDataServer {
 

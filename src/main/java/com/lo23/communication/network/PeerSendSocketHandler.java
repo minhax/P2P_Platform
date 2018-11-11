@@ -1,4 +1,4 @@
-package com.lo23.comm.communication.network;
+package com.lo23.communication.network;
 
 
 import java.io.ObjectInputStream;
@@ -28,7 +28,7 @@ public class PeerSendSocketHandler extends Thread
             
             while(true)
             {
-                // Mettre les methodes de traitements pour récupérer               
+                // Mettre les methodes de traitements pour recuperer
             }
         }
         catch(Exception e)

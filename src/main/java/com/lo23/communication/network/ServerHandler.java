@@ -1,4 +1,4 @@
-package com.lo23.comm.communication.network;
+package com.lo23.communication.network;
 
 
 import java.net.Socket;

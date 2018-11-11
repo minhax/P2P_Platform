@@ -1,5 +1,4 @@
-package com.lo23.comm.communication.network;
-
+package com.lo23.communication.network;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,16 +17,19 @@ public class PeerSendSocket extends Thread
   
     public PeerSendSocket() {}
    
-    PeerSendSocket(int peerServerPort, String addrPeer) {     
+    PeerSendSocket(int peerServerPort, String addrPeer)
+    {
     	
     	this.peerPort = peerServerPort;
     	
     	this.addrPeer = addrPeer;    
     }
     
-    public void run(){
+    public void run()
+    {
     	
-    	try {
+    	try
+        {
     		
     		    SendServerSocket = new ServerSocket(peerPort);
     			
@@ -36,7 +38,8 @@ public class PeerSendSocket extends Thread
     			new PeerSendSocketHandler(SocketSend, addrPeer).start();
         } 
     	
-    	catch (Exception e) {
+    	catch (Exception e)
+        {
     		
     	}
     }    
