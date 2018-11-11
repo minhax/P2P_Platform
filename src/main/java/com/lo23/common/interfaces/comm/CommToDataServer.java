@@ -3,67 +3,37 @@ package com.lo23.common.interfaces.comm;
 import com.lo23.common.filehandler.*;
 import com.lo23.common.user.*;
 
+import java.util.List;
+
 
 public interface CommToDataServer {
 
     /**
-     * Envoie à data la demande d'ajout d'une nouvelle source d'un fichier
-     * @param file fichier pour lequel on ajoute une source
-     * @param user utilisateur qui devient une nouvelle source
+     * Retire un utilisateur de la liste des utilisateurs connectés
+     * @param user utilisateur à retirer
+     * @param files fichiers pour lesquels il était source
      */
-    public void addNewFileSource(FileHandler file, UserIdentity user);
+    void removeDisconnectedUser(User user, List<FileHandler> files);
 
     /**
-     * Demande d'ajout d'un utilisateur à la liste des utilisateurs connectés
-     * @param user utilisateur qui se connecte
+     * Transmet la liste des utilisateurs proposant un fichier au téléchargement
+     * @param sourceUsers liste des utilisateurs sources pour un fichier
      */
-    public void addNewConnectedUser(UserStats user);
+    void sendFileLoc(List<UserIdentity> sourceUsers);
 
     /**
-     * Met à jour les informations relatives à un utilisateur
-     * @param user Utilisateur pour lequel on met à jour les données
+     * Transmet les informations mises à jour pour un utilisateurs à toutes les applciations clients
+     * @param user utilisateur mis à jour
      */
-    public void updateUserChanges(UserIdentity user);
+    void sendUpdatedAccountToAll(UserIdentity user);
 
     /**
-     * Demande au serveur la localisation d'un fichier
-     * @param file fichier que l'on recherche
-     * @param user utilisateur qui fait la demande
-     */
-    public void requestFileLoc(FileHandler file, UserIdentity user);
-
-    /**
-     * Retire un utilisateur de la liste des personnes mettant un fichier à disposition
-     * @param user utilisateur concerné
+     * Transmet la nouvelle source d'un fichier
      * @param file fichier concerné
+     * @param user utilisateur qui partage le fichier
      */
-    public void removeFileSource(FileHandler file, UserIdentity user);
-
-    /**
-     * Supprime un utilisateur de la liste des utilisateurs connectés
-     * @param user utilisateur qui se déconnecte
-     */
-    public void deleteDisconnectedUser(User user);
-
-    /**
-     * Permet d'enlever un utilisateur deconnecté de la liste des personnes proposant tel ou tel fichier, pour chacun des fichiers qu'il met à disposition
-     * @param user utilisateur déconnecté
-     */
-    public void deleteDisconnectedUserFiles(User user);
-
-    /**
-     * Met à jour les informations concernant les fichier
-     * @param champ champ modifié
-     * @param file fichier modifié
-     */
-    public void updateFileChanges(String champ, FileHandler file);
-
-    /**
-     * Ajoute les informations relatives à un fichier
-     * @param file fichier à ajouter
-     * @param user utilisateur qui propose le fichier
-     */
-    public void addNewFileToServer(FileHandler file, UserIdentity user);
-
-
+    void sendNewFileSource(FileHandler file, UserIdentity user);
 }
+
+
+
