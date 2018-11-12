@@ -58,7 +58,6 @@ public class DataManagerClient
      */
     public void login(String login, String password)
     {
-        // TODO hash password for comparison
         File[] listOfUserFiles = new File("files/accounts").listFiles();
 
         String hashedPassword = hashPassword(password);
@@ -78,17 +77,17 @@ public class DataManagerClient
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
-                            // TODO get IP to connect to.
-                            String serverIP  = "";
-
                             UserStats userToConnect = (UserStats) comparisonAccount;
+
+                            User currUser = (User) comparisonAccount;
+                            sessionInfos.setCurrentUser(currUser);
 
                             // FIXME Pas la bonne interface appelée
 //                            dataClientToCommApi.login(userToConnect, serverIP);
                         }
                     }
                 }
-                catch(IOException |ClassNotFoundException e)
+                catch(IOException | ClassNotFoundException e)
                 {
                     e.printStackTrace();
                 }
@@ -104,9 +103,14 @@ public class DataManagerClient
      */
     public void logout(User user, String ip)
     {
+        User userToLogout = sessionInfos.getCurrentUser();
         // TODO send logout message to com
-        // réutiliser variables user et ip utilisés dans login?
-        // requestLogout(User user, String ip)
+        /*try
+        {
+        requestLogout(userToLogout);
+        }*/
+        // TODO voir exceptions avec comm
+        //catch()
 
 
         //TODO return to user logout successful
