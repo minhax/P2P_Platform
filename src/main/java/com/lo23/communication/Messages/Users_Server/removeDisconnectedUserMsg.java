@@ -12,8 +12,9 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	
 	protected List<FileHandlerInfos> fhInfos;
 	
-	public removeDisconnectedUserMsg(UserIdentity ui){
+	public removeDisconnectedUserMsg(UserIdentity ui, List<FileHandlerInfos> fi){
 		this.user = ui;
+		this.fhInfos = fi;
 	}
 	/**
 	 * Traitement est applique du cote client
@@ -24,8 +25,6 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	void treatment(){
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
-		
-		/* [COM : Minh]Methode en suspens, j'attends la modification de l'interface data sur le parametre de la list en argument */
-		//dataInterface.notifyOtherUserDisconnectedToAll(this.user,this.fhInfo);
+		dataInterface.notifyOtherUserDisconnectedToAll(this.user,this.fhInfos);
 	}
 }

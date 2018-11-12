@@ -4,9 +4,7 @@ import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Authentication_Server.addAdressIpMsg;
-import com.lo23.communication.Messages.Message;
-import com.lo23.communication.Messages.Users_Client.addContactMsg;
-
+import com.lo23.common.exceptions.CommException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.LinkedHashMap;
@@ -17,22 +15,23 @@ public class CommunicationManagerServer extends CommunicationManager {
 	private CommToDataServer commInterface;
 	private LinkedHashMap<String,String> clientAndServerIP;
 	/* Constructeur privé pour implémentation du singleton */
-	private CommunicationManagerServer(){
-		this.dataInterface = null;
-		this.commInterface = null;
-		/** Bloc try pour recuperer l'adresse IP de la machine sur le reseau (fonction a tester) **/
-		try {
-			ip = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException ex)
+	private CommunicationManagerServer()
 		{
-			System.out.print("Error in getting IP Adress");
+			
+			this.dataInterface = null;
+			this.commInterface = null;
+			
+			/** Bloc try pour recuperer l'adresse IP de la machine sur le reseau (fonction a tester) **/
+			try {
+				ip = InetAddress.getLocalHost().getHostAddress();
+			} catch (UnknownHostException ex) {
+				System.out.print("Erreur dans la recuperation de l'adresse IP");
+			}
+			/** Instanciation de la linkedHashMap **/
+			clientAndServerIP = new LinkedHashMap<>();//met bien string string?
 		}
-		/** Instanciation de la linkedHashMap **/
-		clientAndServerIP = new LinkedHashMap<String,String>();
-	}
 	/** Instance unique initialisée **/
-	private static CommunicationManagerServer Instance = new CommunicationManagerServer();
-	
+		private static CommunicationManagerServer Instance = new CommunicationManagerServer();
 	/** Point d'accès à l'instance unique **/
 	public static CommunicationManagerServer getInstance()
 	{
@@ -63,5 +62,15 @@ public class CommunicationManagerServer extends CommunicationManager {
 	{
 		addAdressIpMsg msg = new addAdressIpMsg(ip);
 		//send it through socket
+	}
+	
+	public void removeUserFromTable(String userIPAdress)
+			throws CommException
+	{
+		/** On vérifie que la valeur de la clé (adresse IP du client ) existe bien dans la table**/
+		if (!(this.clientAndServerIP.containsValue(userIPAdress)))
+				throw new CommException("L'adresse IP n'est pas presente dans la table", userIPAdress);
+			else
+			this.clientAndServerIP.remove(userIPAdress);
 	}
 }
