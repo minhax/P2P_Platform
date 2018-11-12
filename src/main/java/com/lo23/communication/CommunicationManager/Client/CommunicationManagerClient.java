@@ -5,20 +5,21 @@ import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
+import java.util.ArrayList;
+import com.lo23.data.client.DataClientToCommApi;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 
 public class CommunicationManagerClient extends CommunicationManager{
 
-	protected DataClientToComm dataInterface;
-	protected CommToDataClient commInterface;
-	protected String addressIpServer;
+	protected DataClientToCommApi dataInterface;
+	protected CommToDataClient commInterface; // Changer avec API
+	protected ArrayList<String> addressIpServer;
 	
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerClient()
 	{
 		/** Initialisation des variables privees du CMC **/
-		this.dataInterface = null;
+		this.dataInterface = new DataClientToCommApi();
 		this.commInterface = null;
 		/** Initialisation de la List
 		 *
