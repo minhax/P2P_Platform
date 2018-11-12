@@ -8,6 +8,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
+import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
@@ -85,8 +86,11 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestLogoutToServer(UserStats user){
+        /** On recupere d'abord le communication manager client, et on extrait l'adresse IP **/
+        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+        String ip = cms.getIp(); //Rajouter une exception plus tard
         Server server = new Server();
-        logoutMsg message = new logoutMsg(user);
+        logoutMsg message = new logoutMsg(user,ip);
         server.sendMessage(message);
     }
 

@@ -11,6 +11,7 @@ public class logoutMsg extends Authentication {
 	protected String IPAdress;
 	public logoutMsg(UserStats us, String ipAdress){
 		this.userStats= us;
+		this.IPAdress =ipAdress;
 	}
 	
 	public void treatment(){
