@@ -97,12 +97,10 @@ public class CommToDataClientAPI implements CommToDataClient
     }*/
 
     @Override
-    public void requestUserConnexion(UserStats user){
-
+    public void requestUserConnexion(UserStats user, List<FileHandler> files){
         //InetAddress ip=commManagerClient.getIP();
-        //files = ??? //TODO : comment récupérer les fichiers associés au user ?
         //connectionMsg message=new connectionMsg(user, file, ip);
-        //commManagerClient.send(message);
+        //commManagerClient.send(message); //->WASSIM
 
     }
 
@@ -113,14 +111,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
     }*/
 
-    @Override
-    public void sendConnectedUserToAll(UserIdentity user, List<FileHandler> files){
-        //InetAddress ip=commManagerClient.getIP();
-        //files = ??? //TODO : comment récupérer les fichiers associés au user ?
-        //connectionMsg message=new connectionMsg(user, file, ip);
-        //commManagerClient.broadcast(message);
-
-    }
 
     @Override
     public void sendFileChanges(Rating rate, FileHandler file){

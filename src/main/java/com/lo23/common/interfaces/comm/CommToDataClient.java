@@ -67,8 +67,9 @@ public interface CommToDataClient
     /**
      * Transmet la demande de connexion d'un utiisateur au serveur
      * @param user utilisateur qui veut se connecter
+     * @param files fichiers qu'il met à disposition
      */
-    public void requestUserConnexion(UserStats user);
+    public void requestUserConnexion(UserStats user, List<FileHandler> files);
 
 
     /*
@@ -80,12 +81,6 @@ public interface CommToDataClient
     //public void connect(UserStats user, long IP);
 
 
-    /**
-     * Broadcast l'information de connexion d'un nouvel utilisateur à tous les utilisateurs connectés
-     * @param user utilisateur qui se connecte
-     * @param files fichiers qu'il met à dispo
-     */
-    public void sendConnectedUserToAll(UserIdentity user, List<FileHandler> files);
 
     /**
      * Envoie une nouvelle note attribuée à un fichier
