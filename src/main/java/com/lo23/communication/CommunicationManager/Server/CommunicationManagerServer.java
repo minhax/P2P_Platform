@@ -96,6 +96,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 		
 		for(Map.Entry<String,String> entry : this.clientAndServerIP.entrySet())
 		{
+			String IpAdress = entry.getKey();
 			serv.sendMessage(m);
 		}
 		//Exception a rajouter?
