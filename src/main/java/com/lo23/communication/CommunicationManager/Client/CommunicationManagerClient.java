@@ -3,26 +3,23 @@ package com.lo23.communication.CommunicationManager.Client;
 
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
-import com.lo23.common.interfaces.data.DataServerToComm;
-import com.lo23.communication.Messages.Message;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
-
+import com.lo23.data.client.DataClientToCommApi;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 
 public class CommunicationManagerClient extends CommunicationManager{
 
-	protected DataClientToComm dataInterface;
-	protected CommToDataClient commInterface;
+	protected DataClientToCommApi dataInterface;
+	protected CommToDataClient commInterface; // Changer avec API
 	protected ArrayList<String> addressIpServer;
 	
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerClient()
 	{
 		/** Initialisation des variables privees du CMC **/
-		this.dataInterface = null;
+		this.dataInterface = new DataClientToCommApi();
 		this.commInterface = null;
 		/** Initialisation de la List
 		 *
@@ -72,7 +69,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 		else
 			System.out.print("L'adresse du serveur existe deja");
 	}
-	public void setDataInterface(DataClientToComm di)
+	public void setDataInterface(DataClientToCommApi di)
 	{
 		this.dataInterface = di;
 	}
