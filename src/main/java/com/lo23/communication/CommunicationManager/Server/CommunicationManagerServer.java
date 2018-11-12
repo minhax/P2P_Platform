@@ -4,14 +4,19 @@ import com.lo23.common.exceptions.CommException;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
+import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Server.addAdressIpMsg;
+import com.lo23.communication.Messages.Message;
 import com.lo23.data.server.DataServerToCommAPI;
 import com.lo23.communication.network.Server;
 
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.EmptyStackException;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class CommunicationManagerServer extends CommunicationManager {
 	
@@ -80,8 +85,20 @@ public class CommunicationManagerServer extends CommunicationManager {
 			else
 			this.clientAndServerIP.remove(userIPAddress);
 	}
-	public void broadcast()
+	/**
+	 * Broadcast l'information a tout les utilisateurs presents sur le serveur.
+	 * Pas ouf comme methode, mais on ne peut pas broadcast sur le serveur de l'utc
+	 */
+	public void broadcast(Message m)
+	throws EmptyStackException  //fonctionne bien?
 	{
-		// prendre les sockets et creer autant de sockets sends qu'il n'y a d'entree dans la table
+		Server serv = new Server();
+		
+		for(Map.Entry<String,String> entry : this.clientAndServerIP.entrySet())
+		{
+			String IpAdress = entry.getKey();
+			serv.sendMessage(m);
+		}
+		//Exception a rajouter?
 	}
 }
