@@ -8,12 +8,16 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import com.lo23.data.client.DataClientToCommApi;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
+import com.lo23.communication.network.PeerSendSocket;
+import com.lo23.communication.network.PeerReceiveSocket;
 
 public class CommunicationManagerClient extends CommunicationManager{
 
 	protected DataClientToCommApi dataInterface;
 	protected CommToDataClient commInterface; // Changer avec API
 	protected ArrayList<String> addressIpServer;
+	protected PeerSendSocket peerSend;
+	protected PeerReceiveSocket peerReceiver;
 	
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerClient()

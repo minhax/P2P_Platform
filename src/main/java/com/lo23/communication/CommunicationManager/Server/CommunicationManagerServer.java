@@ -5,6 +5,8 @@ import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Authentication_Server.addAdressIpMsg;
 import com.lo23.data.server.DataServerToCommAPI;
+import com.lo23.communication.network.Server;
+
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -15,6 +17,8 @@ public class CommunicationManagerServer extends CommunicationManager {
 	private DataServerToCommAPI dataInterface; //incorrect, attendre l'implémentation de l'interface ComClient et ComServeur
 	private CommToDataServer commInterface;
 	private LinkedHashMap<String,String> clientAndServerIP;
+	private Server server;
+
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerServer(){
 		this.dataInterface = null;
