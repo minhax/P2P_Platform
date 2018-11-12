@@ -15,9 +15,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 
 	protected DataClientToCommApi dataInterface;
 	protected CommToDataClient commInterface; // Changer avec API
-	protected ArrayList<String> addressIpServer;
-	protected PeerSendSocket peerSend;
-	protected PeerReceiveSocket peerReceiver;
+	protected String addressIpServer;
 	
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerClient()
@@ -28,7 +26,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 		/** Initialisation de la List
 		 *
 		 */
-		this.addressIpServer = new ArrayList<String>();
+		this.addressIpServer = null;
 		/** Bloc try pour recuperer l'adresse IP de la machine sur le reseau (fonction a tester) **/
 		try {
 			ip = InetAddress.getLocalHost().getHostAddress();
@@ -46,7 +44,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 		return Instance;
 	}
 	/** Getteur et setteur d'interfaces **/
-	public ArrayList<String> getAddressIpServer()
+	public String getAddressIpServer()
 	{
 		return addressIpServer;
 	}
@@ -58,21 +56,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		return commInterface;
 	}
-	public void delAddressIpServer(String ipaddress)
-	{
-		if(this.addressIpServer.contains(ipaddress))
-			this.addressIpServer.remove(ipaddress);
-		else
-			System.out.print("Suppression de l'adresse serveur impossible, elle n'est pas dans la table");
-	}
-
-	public void addAddressIpServer(String ipaddress)
-	{
-		if(!this.addressIpServer.contains(ipaddress))
-			this.addressIpServer.add(ipaddress);
-		else
-			System.out.print("L'adresse du serveur existe deja");
-	}
+	public void setAddressIpServer(String s) {this.addressIpServer = s;}
 	public void setDataInterface(DataClientToCommApi di)
 	{
 		this.dataInterface = di;

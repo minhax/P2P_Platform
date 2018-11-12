@@ -19,6 +19,6 @@ public class addAdressIpMsg extends Authentication {
 	public void treatment()
 	{
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		cms.addAddressIpServer(this.ip);
+		cms.setAddressIpServer(this.ip);
 	}
 }

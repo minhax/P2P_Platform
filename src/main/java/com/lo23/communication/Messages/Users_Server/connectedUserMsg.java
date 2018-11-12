@@ -26,7 +26,6 @@ public class connectedUserMsg extends UserMessage{
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
 		
-		/* [COM : Minh]Methode en suspens, j'attends la modification de l'interface data sur le parametre de la liste en argument */
-		//dataInterface.notifyOtherUserConnectedToAll(this.user,this.fhInfo);
+		dataInterface.notifyOtherUserConnectedToAll(this.user,this.fhInfo);
 	}
 }
