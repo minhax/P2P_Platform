@@ -1,10 +1,9 @@
 package com.lo23.communication.CommunicationManager.Server;
 
 import com.lo23.common.exceptions.CommException;
-import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
+import com.lo23.communication.APIs.CommToDataServerAPI;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
-import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Server.addAdressIpMsg;
 import com.lo23.communication.Messages.Message;
 import com.lo23.data.server.DataServerToCommAPI;
@@ -16,21 +15,20 @@ import java.net.UnknownHostException;
 import java.util.EmptyStackException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class CommunicationManagerServer extends CommunicationManager {
 	
-	private DataServerToCommAPI dataInterface; //incorrect, attendre l'implémentation de l'interface ComClient et ComServeur
-	private CommToDataServer commInterface;
+	private DataServerToCommAPI dataInterface;
+	private CommToDataServerAPI commInterface;
 	private LinkedHashMap<String,String> clientAndServerIP;
 	private Server server;
 
-	/* Constructeur privé pour implémentation du singleton */
+	/** Constructeur privé pour implémentation du singleton **/
 	private CommunicationManagerServer()
 		{
 			
-			this.dataInterface = null;
-			this.commInterface = null;
+			this.dataInterface = null;//TODO FIX AVEC DATA
+			this.commInterface = CommToDataServerAPI.getInstance();
 			
 			/** Bloc try pour recuperer l'adresse IP de la machine sur le reseau (fonction a tester) **/
 			try {
@@ -41,29 +39,34 @@ public class CommunicationManagerServer extends CommunicationManager {
 			/** Instanciation de la linkedHashMap **/
 			clientAndServerIP = new LinkedHashMap<>();//met bien string string?
 		}
-	/** Instance unique initialisée **/
-		private static CommunicationManagerServer Instance = new CommunicationManagerServer();
-	/** Point d'accès à l'instance unique **/
-	public static CommunicationManagerServer getInstance()
-	{
-		return Instance;
-	}
+	
+	
 	/** Getteur et Setteur **/
 	public DataServerToComm getDataInterface()
 	{
 		return dataInterface;
 	}
-	public CommToDataServer getCommInterface()
+	public CommToDataServerAPI getCommInterface()
 	{
 		return commInterface;
 	}
 	public void setDataInterface(DataServerToCommAPI ds) {
 		this.dataInterface = ds;
 	}
-	public void setCommInterface (CommToDataServer cs)
+	public void setCommInterface (CommToDataServerAPI cs)
 	{
 		this.commInterface = cs;
 	}
+	
+	/** Singleton **/
+	/** Instance unique initialisée **/
+	private static CommunicationManagerServer Instance = new CommunicationManagerServer();
+	public static CommunicationManagerServer getInstance()
+	{
+		return Instance;
+	}
+	
+	/** Methodes **/
 	public void addEntryInClientAndServerIPArray(String client, String server)
 	{
 		/** efface la valeur precedemment enregistre pour le client si elle existe**/

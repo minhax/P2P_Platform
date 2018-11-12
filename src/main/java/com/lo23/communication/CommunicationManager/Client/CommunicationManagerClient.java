@@ -5,16 +5,15 @@ import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
+
+import com.lo23.communication.APIs.CommToDataClientAPI;
 import com.lo23.data.client.DataClientToCommApi;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
-import com.lo23.communication.network.PeerSendSocket;
-import com.lo23.communication.network.PeerReceiveSocket;
 
 public class CommunicationManagerClient extends CommunicationManager{
 
 	protected DataClientToCommApi dataInterface;
-	protected CommToDataClient commInterface; // Changer avec API
+	protected CommToDataClientAPI commInterface;
 	protected String addressIpServer;
 	
 	/* Constructeur privé pour implémentation du singleton */
@@ -22,7 +21,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		/** Initialisation des variables privees du CMC **/
 		this.dataInterface = new DataClientToCommApi();
-		this.commInterface = null;
+		this.commInterface = CommToDataClientAPI.getInstance();
 		/** Initialisation de la List
 		 *
 		 */
@@ -48,11 +47,11 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		return addressIpServer;
 	}
-	public DataClientToComm getDataInterface()
+	public DataClientToCommApi getDataInterface()
 	{
 		return dataInterface;
 	}
-	public CommToDataClient getCommInterface()
+	public CommToDataClientAPI getCommInterface()
 	{
 		return commInterface;
 	}
@@ -61,7 +60,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		this.dataInterface = di;
 	}
-	public void setCommInterface (CommToDataClient ci)
+	public void setCommInterface (CommToDataClientAPI ci)
 	{
 		this.commInterface = ci;
 	}

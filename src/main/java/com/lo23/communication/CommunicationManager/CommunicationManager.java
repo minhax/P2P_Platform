@@ -1,7 +1,5 @@
 package com.lo23.communication.CommunicationManager;
 
-import com.lo23.common.interfaces.data.DataClientToComm;
-import com.lo23.communication.Messages.Message;
 public abstract class CommunicationManager {
 	
 	//protectedSocketHandlerSend socketHSend;
