@@ -46,7 +46,7 @@ public class Server
     	}
     }
 
-    public void sendMessage(Authentication message)
+    public void sendMessage(Message message)
     {
         try{
             objOS.writeObject(message);
