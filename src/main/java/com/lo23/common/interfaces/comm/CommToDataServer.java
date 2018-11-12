@@ -20,7 +20,7 @@ public interface CommToDataServer {
      * @param user utilisateur qui se connecte
      * @param files fichiers qu'il met à disposition
      */
-    public void sendConnectedUserToAll(UserIdentity user, List<FileHandler> files);
+    public void sendConnectedUserToAll(UserIdentity user, List<FileHandlerInfos> fileInfos);
 
     /**
      * Transmet la liste des utilisateurs proposant un fichier au téléchargement
