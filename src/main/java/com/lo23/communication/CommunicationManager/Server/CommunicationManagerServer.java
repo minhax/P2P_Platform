@@ -1,5 +1,6 @@
 package com.lo23.communication.CommunicationManager.Server;
 
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
@@ -56,7 +57,8 @@ public class CommunicationManagerServer extends CommunicationManager {
 	public void addEntryInClientAndServerIPArray(String client, String server)
 	{
 		/** efface la valeur precedemment enregistre pour le client si elle existe**/
-		this.clientAndServerIP.put(client,server);
+		//Penser a mettre une exception
+		this.clientAndServerIP.put(client, server);
 	}
 	public void sendServerIpAdress(String ip)
 	{
@@ -64,13 +66,17 @@ public class CommunicationManagerServer extends CommunicationManager {
 		//send it through socket
 	}
 	
-	public void removeUserFromTable(String userIPAdress)
+	public void removeUserFromTable(String userIPAddress)
 			throws CommException
 	{
 		/** On vérifie que la valeur de la clé (adresse IP du client ) existe bien dans la table**/
-		if (!(this.clientAndServerIP.containsValue(userIPAdress)))
-				throw new CommException("L'adresse IP n'est pas presente dans la table", userIPAdress);
+		if (!(this.clientAndServerIP.containsValue(userIPAddress)))
+				throw new CommException("L'adresse IP n'est pas presente dans la table", userIPAddress);
 			else
-			this.clientAndServerIP.remove(userIPAdress);
+			this.clientAndServerIP.remove(userIPAddress);
+	}
+	public void broadcast()
+	{
+		// prendre les sockets et creer autant de sockets sends qu'il n'y a d'entree dans la table
 	}
 }
