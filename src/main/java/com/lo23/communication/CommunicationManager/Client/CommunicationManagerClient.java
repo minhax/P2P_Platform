@@ -13,7 +13,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 
 	protected DataClientToCommApi dataInterface;
 	protected CommToDataClient commInterface; // Changer avec API
-	protected ArrayList<String> addressIpServer;
+	protected String addressIpServer;
 	
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerClient()
@@ -55,7 +55,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 		return commInterface;
 	}
 	public void setAddressIpServer(String s) {this.addressIpServer = s;}
-	public void setDataInterface(DataClientToComm di)
+	public void setDataInterface(DataClientToCommApi di)
 	{
 		this.dataInterface = di;
 	}

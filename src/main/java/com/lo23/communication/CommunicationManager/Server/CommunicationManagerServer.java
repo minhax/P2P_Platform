@@ -1,6 +1,6 @@
 package com.lo23.communication.CommunicationManager.Server;
 
-import com.lo23.common.exceptions.DataException;
+import com.lo23.common.exceptions.CommException;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
