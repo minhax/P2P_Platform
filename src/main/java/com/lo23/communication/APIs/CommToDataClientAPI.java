@@ -1,4 +1,4 @@
-package com.lo23.comm.API.commToDataClient;
+package com.lo23.communication.APIs;
 
 import com.lo23.common.Comment;
 import com.lo23.common.Rating;
