@@ -13,7 +13,11 @@ public class connectionMsg extends Authentication {
 	private String serverIp;
 	private String myIp;
 	private List<FileHandlerInfos> fileInfo;
-	
+
+	public connectionMsg(UserStats us){
+		this.userStats = us;
+	}
+
 	public connectionMsg(UserStats us, List<FileHandlerInfos> files, String serverIp, String myIp ){
 		this.userStats = us;
 		this.serverIp = serverIp;

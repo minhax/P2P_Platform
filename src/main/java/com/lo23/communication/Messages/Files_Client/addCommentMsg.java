@@ -17,7 +17,7 @@ public class addCommentMsg extends FileMessage {
 	public Comment getComment() {
 		return comment;
 	}
-	void treatment(){
+	public void treatment(){
 		//CommToDataServer.addComment( this.getFile(), this.getComment());
 	}
 }

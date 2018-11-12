@@ -13,7 +13,7 @@ public interface CommToDataServer {
      * @param user utilisateur à retirer
      * @param files fichiers pour lesquels il était source
      */
-    public void removeDisconnectedUser(User user, List<FileHandler> files);
+    public void removeDisconnectedUser(UserIdentity user, List<FileHandlerInfos> fileInfos);
 
     /**
      * Ajoute un utilisateur à la liste des utilisateurs connecté (broadcast de l'info à tous les utilisateurs connectés)

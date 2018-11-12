@@ -1,4 +1,4 @@
-package com.lo23.comm.API.commToDataClient;
+package com.lo23.communication.APIs;
 
 import com.lo23.common.Comment;
 import com.lo23.common.Rating;
@@ -8,8 +8,13 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
+import com.lo23.communication.CommunicationManager.CommunicationManager;
+import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
+import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Message;
+import com.lo23.communication.network.Server;
 
 import java.net.InetAddress;
 import java.util.List;
@@ -82,12 +87,10 @@ public class CommToDataClientAPI implements CommToDataClient
     @Override
     public void requestLogoutToServer(UserStats user){
 
-        //création du message de logout
-        logoutMsg message = new logoutMsg(user);
-
-        //appel au communicationManager pour l'envoi du message vers CommServer
-        //commManagerClient.send(message);
-
+        String ip = commManagerClient.getIp(); //TODO: Rajouter une exception plus tard
+        Server server = new Server();
+        logoutMsg message = new logoutMsg(user,ip);
+        server.sendMessage(message);
     }
 
     /*@Override
@@ -97,11 +100,10 @@ public class CommToDataClientAPI implements CommToDataClient
     }*/
 
     @Override
-    public void requestUserConnexion(UserStats user, List<FileHandler> files){
-        //InetAddress ip=commManagerClient.getIP();
-        //connectionMsg message=new connectionMsg(user, file, ip);
-        //commManagerClient.send(message); //->WASSIM
-
+    public void requestUserConnexion(UserStats user){
+        Server server = new Server();
+        connectionMsg message = new connectionMsg(user);
+        server.sendMessage(message);
     }
 
 

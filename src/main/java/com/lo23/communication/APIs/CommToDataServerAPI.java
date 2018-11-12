@@ -1,10 +1,12 @@
 package com.lo23.communication.APIs;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
+import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
 
 import java.util.List;
@@ -44,19 +46,19 @@ public class CommToDataServerAPI implements CommToDataServer {
     /*========= Implémentation des méthodes ============= */
 
     @Override
-    public void removeDisconnectedUser(User user, List<FileHandler> files){
-        //récupérer l'IP (utile ??)
+    public void removeDisconnectedUser(UserIdentity user, List<FileHandlerInfos> fileInfos){
+
         //créer message de déconnexion (removeDisconnectedMessageUser)
-        removeDisconnectedUserMsg message=new removeDisconnectedUserMsg(user);
-        //commManagerServer.broadcast(message);
+        removeDisconnectedUserMsg message=new removeDisconnectedUserMsg(user, fileInfos);
+        commManagerServer.broadcast(message);
 
     }
 
     @Override
     public void sendConnectedUserToAll(UserIdentity user, List<FileHandler> files){
-        //InetAddress ip=commManagerClient.getIP(); //TODO : à changer en string
-        //connectedUserMsg message=new connectedUserMsg(user, files, ip);
-        //commManagerServer.broadcast(message);
+        String ip = commManagerServer.getIp(); //TODO: Rajouter une exception plus tard
+        connectedUserMsg message=new connectedUserMsg(user, files, ip);
+        commManagerServer.broadcast(message);
 
     }
 
