@@ -8,7 +8,7 @@ public class addSourceMsg extends FileMessage {
 	public addSourceMsg(FileHandlerInfos fi){
 		this.file = fi;
 	}
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

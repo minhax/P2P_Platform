@@ -8,7 +8,7 @@ public class updateUserInfoMsg extends UserMessage{
 	public updateUserInfoMsg(UserIdentity ui){
 		this.user = ui;
 	}
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

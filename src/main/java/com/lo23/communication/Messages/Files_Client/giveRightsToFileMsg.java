@@ -14,7 +14,7 @@ public class giveRightsToFileMsg extends FileMessage {
 		this.rights = r;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

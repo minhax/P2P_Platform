@@ -1,18 +1,25 @@
 package com.lo23.communication.network;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.lo23.communication.Messages.Authentication;
+import com.lo23.communication.network.ServerHandler;
+import com.lo23.communication.Messages.Message;
+
 public class Server
 {
+    private ServerSocket serverSocket = null;
+    private Socket socket = null;
+    private ObjectOutputStream objOS;
+    private ObjectInputStream objIS;
  
     @SuppressWarnings("resource")
-    public Server() throws NumberFormatException, IOException
+    public Server() throws NumberFormatException
     {
-    		
-    	ServerSocket serverSocket = null;
-    	Socket socket = null;
     	
     	try
 		{
@@ -38,4 +45,17 @@ public class Server
     		new ServerHandler(socket).start();
     	}
     }
+
+    public void sendMessage(Message message)
+    {
+        try{
+            objOS.writeObject(message);
+            objOS.flush();
+        }
+        catch (Exception e) {
+
+        }
+    }
 }
+
+

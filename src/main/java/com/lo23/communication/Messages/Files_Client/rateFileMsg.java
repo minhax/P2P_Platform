@@ -14,7 +14,7 @@ public class rateFileMsg extends FileMessage {
 		this.rate = r;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

@@ -11,7 +11,7 @@ public class giveRightsToUserMsg extends UserMessage{
 		this.user = ui;
 		this.rights = r;
 	}
-	void treatment(){
+	public void treatment(){
 	
 	}
 }
