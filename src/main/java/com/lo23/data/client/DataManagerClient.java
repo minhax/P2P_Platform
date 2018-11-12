@@ -38,7 +38,7 @@ public class DataManagerClient
         File[] listOfUserFiles = new File("files/accounts").listFiles();
 
         String hashedPassword = hashPassword(password);
-        
+
         // Etude de chaque fichier utilisateur
         for (File userFile : listOfUserFiles)
         {
