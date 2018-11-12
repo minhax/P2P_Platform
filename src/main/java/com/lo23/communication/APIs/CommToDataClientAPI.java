@@ -9,8 +9,10 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
+import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Message;
 import com.lo23.communication.network.Server;
 
 import java.net.InetAddress;

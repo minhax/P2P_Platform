@@ -14,7 +14,7 @@ public class requestFileLocationMsg extends FileMessage {
 		this.user = u;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

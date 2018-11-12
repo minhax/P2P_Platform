@@ -22,7 +22,7 @@ public class connectedUserMsg extends UserMessage{
 	 * Appel la methode addNewConnectedUser pour lui transmettre son objet user Stats
 	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
-	void treatment(){
+	public void treatment(){
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
 		

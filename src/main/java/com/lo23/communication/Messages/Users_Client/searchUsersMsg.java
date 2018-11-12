@@ -8,7 +8,7 @@ public class searchUsersMsg extends UserMessage{
 	public searchUsersMsg(UserIdentity ui){
 		this.user = ui;
 	}
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

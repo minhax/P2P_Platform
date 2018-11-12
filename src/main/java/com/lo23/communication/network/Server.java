@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.network.ServerHandler;
 import com.lo23.communication.Messages.Message;
 
@@ -45,7 +46,7 @@ public class Server
     	}
     }
 
-    public void sendMessage(Message message)
+    public void sendMessage(Authentication message)
     {
         try{
             objOS.writeObject(message);

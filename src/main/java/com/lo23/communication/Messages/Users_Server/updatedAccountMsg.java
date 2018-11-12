@@ -8,7 +8,7 @@ public class updatedAccountMsg extends UserMessage{
 	public updatedAccountMsg(UserIdentity ui){
 		this.user = ui;
 	}
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

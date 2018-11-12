@@ -9,7 +9,7 @@ public class searchFileMsg extends FileMessage {
 		this.file = fi;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

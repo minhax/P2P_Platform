@@ -13,7 +13,7 @@ public class updateFileInfoMsg extends FileMessage {
 		this.champ = s;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

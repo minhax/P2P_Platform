@@ -11,7 +11,7 @@ public class logoutMsg extends Authentication {
 		this.userStats= us;
 	}
 	
-	void treatment(){
+	public void treatment(){
 		
 		/**
 		 * Recupere le communication manager cote serveur.
