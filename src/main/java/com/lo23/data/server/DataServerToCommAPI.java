@@ -23,7 +23,7 @@ public class DataServerToCommAPI implements DataServerToComm
     public void addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
-        // TODO Dire à tous les utilisateurs connectés qu'il y a un nouvel utilisateur
+        // La partie Comm devrait notifier tous les clients de la nouvelle connexion
     }
 
     @Override
@@ -40,8 +40,8 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public void removeDisconnectedUser(User user)
     {
+        // this.manager.commToDataApi.removeDisconnectedUser(user, this.manager.connections.getUserFiles(user));
         this.manager.connections.disconnectUser(user);
-        //TODO Dire à tous les clients que user s'est déconnecté
     }
 
     @Override

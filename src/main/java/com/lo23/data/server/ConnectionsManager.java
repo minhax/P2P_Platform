@@ -6,6 +6,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
@@ -129,6 +130,10 @@ public class ConnectionsManager
 
     public void removeFileSourceFromDirectory(User user, FileHandler file){
         this.directory.removeProposedFile(user, file);
+    }
+
+    public List<FileHandler> getUserFiles(User user){
+        return (List<FileHandler>)(List<?>)this.directory.getFilesProposedByUser(user);
     }
 
 
