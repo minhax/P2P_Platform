@@ -80,12 +80,6 @@ public interface CommToDataClient
     //public void connect(UserStats user, long IP);
 
 
-    /**
-     * Broadcast l'information de connexion d'un nouvel utilisateur à tous les utilisateurs connectés
-     * @param user utilisateur qui se connecte
-     * @param files fichiers qu'il met à dispo
-     */
-    public void sendConnectedUserToAll(UserIdentity user, List<FileHandler> files);
 
     /**
      * Envoie une nouvelle note attribuée à un fichier

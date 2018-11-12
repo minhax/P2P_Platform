@@ -86,9 +86,8 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestLogoutToServer(UserStats user){
-        /** On recupere d'abord le communication manager client, et on extrait l'adresse IP **/
-        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-        String ip = cms.getIp(); //Rajouter une exception plus tard
+
+        String ip = commManagerClient.getIp(); //TODO: Rajouter une exception plus tard
         Server server = new Server();
         logoutMsg message = new logoutMsg(user,ip);
         server.sendMessage(message);
@@ -114,14 +113,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
     }*/
 
-    @Override
-    public void sendConnectedUserToAll(UserIdentity user, List<FileHandler> files){
-        //InetAddress ip=commManagerClient.getIP();
-        //files = ??? //TODO : comment récupérer les fichiers associés au user ?
-        //connectionMsg message=new connectionMsg(user, file, ip);
-        //commManagerClient.broadcast(message);
-
-    }
 
     @Override
     public void sendFileChanges(Rating rate, FileHandler file){
