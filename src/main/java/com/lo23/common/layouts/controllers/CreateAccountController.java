@@ -56,9 +56,9 @@ public class CreateAccountController implements Initializable {
         }
         else {
             // A decommenté et verifier les champs pendant l'integration
-			/*IhmToDataClient api = new IhmToDataClientApi();
+			IhmToDataClient api = new IhmToDataClientApi();
 			api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
-			*/
+			
             System.out.println(loginTextField.getText() + passwordField.getText() + firstnameTextField.getText() + lastnameTextField.getText() + ageTextField.getText());
 
             try {
