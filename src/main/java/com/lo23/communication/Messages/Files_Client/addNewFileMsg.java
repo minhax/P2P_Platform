@@ -14,7 +14,7 @@ public class addNewFileMsg extends FileMessage {
 		this.user = u;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

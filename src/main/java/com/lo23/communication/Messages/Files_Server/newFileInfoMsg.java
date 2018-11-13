@@ -13,7 +13,7 @@ public class newFileInfoMsg extends FileMessage{
 		this.user = u;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }
