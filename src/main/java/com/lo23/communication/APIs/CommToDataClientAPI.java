@@ -90,7 +90,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = commManagerClient.getIp(); //TODO: Rajouter une exception plus tard
         Server server = new Server();
         logoutMsg message = new logoutMsg(user,ip);
-        server.sendMessage(message);
+       // server.sendMessage(message);
     }
 
     /*@Override
@@ -107,7 +107,7 @@ public class CommToDataClientAPI implements CommToDataClient
         Server server = new Server();
         System.out.println("Serveur initialisee");
         connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
-        server.sendMessage(message);
+       // server.sendMessage(message);
     }
 
 

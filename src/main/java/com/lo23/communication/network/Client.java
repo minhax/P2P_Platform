@@ -3,7 +3,6 @@ package com.lo23.communication.network;
 import java.io.*;
 import java.net.*;
 
-import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Message;
 
 public class Client {
@@ -14,7 +13,7 @@ public class Client {
 
     public Client(Message msg, int portServ, String addrServ){
         this.msg = msg;
-        this.port = portServ;
+        this.portServ = portServ;
         this.addrServ = addrServ;
 
         try{
