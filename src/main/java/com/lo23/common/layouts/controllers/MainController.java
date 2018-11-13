@@ -110,4 +110,10 @@ public class MainController implements Initializable{
 
     }
 
+    @FXML
+    public void OnAjouterDocumentButtonClicked(){
+
+
+
+    }
 }
