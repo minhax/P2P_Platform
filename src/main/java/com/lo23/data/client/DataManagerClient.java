@@ -1,5 +1,6 @@
 package com.lo23.data.client;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
@@ -47,7 +48,7 @@ public class DataManagerClient
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
     }
 
-    public DataClientToComm getDataClientToComm(){
+    public DataClientToCommApi getDataClientToComm(){
         return this.dataClientToCommApi;
     }
 
@@ -82,10 +83,14 @@ public class DataManagerClient
                             User currUser = (User) comparisonAccount;
                             sessionInfos.setCurrentUser(currUser);
 
+
                             // FIXME Pas la bonne interface appelée
 //                            dataClientToCommApi.login(userToConnect, serverIP);
+                            //getDataClientToComm().login()
                         }
                     }
+                    fileIn.close();
+                    objectIn.close();
                 }
                 catch(IOException | ClassNotFoundException e)
                 {
@@ -228,5 +233,10 @@ public class DataManagerClient
         //Si au moins un fichier correspond, on retourne vrai
         return numberOfMatchingFiles > 0;
     }
-    
+
+    public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
+        // TODO find file and remove parts ?
+        // TODO send notification to server.
+    }
+
 }
