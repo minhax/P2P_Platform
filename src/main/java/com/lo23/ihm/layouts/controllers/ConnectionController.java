@@ -1,11 +1,13 @@
-package com.lo23.common.layouts.controllers;
+package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.layouts.models.ConnectionModel;
+import com.lo23.data.client.DataManagerClient;
+import com.lo23.ihm.layouts.models.ConnectionModel;
 
+import com.lo23.data.client.DataClientToIhmApi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,12 +61,13 @@ public class ConnectionController implements Initializable{
 	public void OnConnectClicked(ActionEvent event)
 	{
 		//A décommenter à l'integration
-		DataClientToIhm api=new DataClientToIhmApi()
+		DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+
 		authorizeConnection= api.requestCheckCredentials(this.userNameTextField.getText(),this.passwordField.getText());
 
 		if(authorizeConnection) { // Remplacer true par authorizeConnection
 			try {
-				FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
+				FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/ihm/layouts/mainLayout.fxml"));
 				Parent root = fxmlloader.load();
 				Stage stage = new Stage();
 
@@ -88,7 +91,7 @@ public class ConnectionController implements Initializable{
 	{
 		try
 		{
-			FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/createAccountLayout.fxml"));
+			FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/ihm/layouts/createAccountLayout.fxml"));
 			Parent root = fxmlloader.load();
 			Stage stage = new Stage();
 			

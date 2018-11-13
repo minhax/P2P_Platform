@@ -29,7 +29,7 @@ public class DataClientToIhmApi implements DataClientToIhm
      * Est en accès package-private pour empêcher l'instanciation hors du groupe Data.
      * @param host DataManagerClient parent de cette API
      */
-    DataClientToIhmApi (DataManagerClient host)
+    public DataClientToIhmApi (DataManagerClient host)
     {
         this.host = host;
     }

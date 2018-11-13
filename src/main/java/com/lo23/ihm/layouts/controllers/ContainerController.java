@@ -1,4 +1,4 @@
-package com.lo23.common.layouts.controllers;
+package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
