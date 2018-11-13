@@ -4,6 +4,7 @@ import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
+import com.lo23.communication.APIs.CommToDataClientAPI;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -29,7 +30,8 @@ public class DataManagerClient
      */
     private DataClientToCommApi dataClientToCommApi;
     //private IhmToDataClientApi ihmToDataClientApi;
-    //private CommToDataClientApi commToDataClientApi;
+    private CommToDataClientAPI commToDataClientAPI;
+
     /**
      * Session courante
      */
@@ -46,6 +48,7 @@ public class DataManagerClient
         this.sessionInfos = new Session();
         this.dataClientToCommApi = new DataClientToCommApi();
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
+        this.commToDataClientAPI = CommToDataClientAPI.getInstance();
     }
 
     public DataClientToComm getDataClientToComm(){
@@ -79,11 +82,13 @@ public class DataManagerClient
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
-                            // TODO get IP to connect to.
+                            // TODO get IP to connect to. discuter avec comm
                             String serverIP  = "";
 
-                            // FIXME Pas la bonne interface appelée
-                            // dataClientToCommApi.login((UserStats) comparisonAccount, serverIP);
+                            // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
+                            commToDataClientAPI.requestUserConnexion((UserStats)comparisonAccount,
+                                                                     comparisonAccount.getProposedFiles(),
+                                                                     serverIP);
                             this.sessionInfos.setCurrentUser(comparisonAccount);
                         }
                     }
@@ -245,13 +250,8 @@ public class DataManagerClient
             this.sessionInfos.getCurrentUser().setAge(modifiedUser.getAge());
 
             // Communication des changements au serveur pour qu'il se mette à jour
-            //this.commToDataClientApi.
+            this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
         }
-
-
-
-
-        // Envoyer la modification vers le serveur
     }
 
 }
