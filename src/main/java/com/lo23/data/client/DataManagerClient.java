@@ -43,6 +43,7 @@ public class DataManagerClient
     public DataManagerClient()
     {
         super();
+        this.sessionInfos = new Session();
         this.dataClientToCommApi = new DataClientToCommApi();
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
     }
@@ -58,10 +59,11 @@ public class DataManagerClient
      */
     public void login(String login, String password)
     {
+        // TODO hash password for comparison
         File[] listOfUserFiles = new File("files/accounts").listFiles();
 
         String hashedPassword = hashPassword(password);
-        
+
         // Etude de chaque fichier utilisateur
         for (File userFile : listOfUserFiles)
         {
@@ -77,17 +79,16 @@ public class DataManagerClient
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
-                            UserStats userToConnect = (UserStats) comparisonAccount;
-
-                            User currUser = (User) comparisonAccount;
-                            sessionInfos.setCurrentUser(currUser);
+                            // TODO get IP to connect to.
+                            String serverIP  = "";
 
                             // FIXME Pas la bonne interface appelée
-//                            dataClientToCommApi.login(userToConnect, serverIP);
+                            // dataClientToCommApi.login((UserStats) comparisonAccount, serverIP);
+                            this.sessionInfos.setCurrentUser(comparisonAccount);
                         }
                     }
                 }
-                catch(IOException | ClassNotFoundException e)
+                catch(IOException |ClassNotFoundException e)
                 {
                     e.printStackTrace();
                 }
@@ -103,14 +104,9 @@ public class DataManagerClient
      */
     public void logout(User user, String ip)
     {
-        User userToLogout = sessionInfos.getCurrentUser();
         // TODO send logout message to com
-        /*try
-        {
-        requestLogout(userToLogout);
-        }*/
-        // TODO voir exceptions avec comm
-        //catch()
+        // réutiliser variables user et ip utilisés dans login?
+        // requestLogout(User user, String ip)
 
 
         //TODO return to user logout successful
@@ -229,11 +225,33 @@ public class DataManagerClient
         return numberOfMatchingFiles > 0;
     }
 
+    /**
+     * Met à jour le profil utilisateur en local et
+     * envoie une demande de propagation d'information
+     * au serveur
+     * @param modifiedUser nouveau profil
+     */
     public void changeUserInfos(UserAccount modifiedUser)
     {
-        // On réecrit le fichier de l'utilisateur modifié
-        this.saveUserInfo(modifiedUser);
+        this.sessionInfos.getCurrentUser().setPassword(modifiedUser.getPassword());
+        // Si autre chose que le mdp a été changé
+        if (!this.sessionInfos.getCurrentUser().getFirstName().equals(modifiedUser.getFirstName())
+                || !this.sessionInfos.getCurrentUser().getLastName().equals(modifiedUser.getLastName())
+                || this.sessionInfos.getCurrentUser().getAge() != modifiedUser.getAge())
+        {
+            // Mise à jour de l'utilisateur connecté
+            this.sessionInfos.getCurrentUser().setFirstName(modifiedUser.getFirstName());
+            this.sessionInfos.getCurrentUser().setLastName(modifiedUser.getLastName());
+            this.sessionInfos.getCurrentUser().setAge(modifiedUser.getAge());
+
+            // Communication des changements au serveur pour qu'il se mette à jour
+            //this.commToDataClientApi.
+        }
+
+
+
+
         // Envoyer la modification vers le serveur
     }
-    
+
 }

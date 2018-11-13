@@ -99,4 +99,14 @@ public class UserAccount extends UserStats
     public void setLastConnectionServerIP(String lastConnectionServerIP) {
         this.lastConnectionServerIP = lastConnectionServerIP;
     }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 }
