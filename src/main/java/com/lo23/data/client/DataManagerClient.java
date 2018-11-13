@@ -85,8 +85,7 @@ public class DataManagerClient
 
 
                             // FIXME Pas la bonne interface appelée
-//                            dataClientToCommApi.login(userToConnect, serverIP);
-                            //getDataClientToComm().login()
+                            // getDataClientToComm().login()
                         }
                     }
                     fileIn.close();
