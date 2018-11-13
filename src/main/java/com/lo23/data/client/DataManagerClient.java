@@ -65,7 +65,7 @@ public class DataManagerClient
      * @param login login de l'utilisateur
      * @param password password de l'utilisateur
      */
-    public void login(String login, String password)
+    public boolean login(String login, String password)
     {
         File[] listOfUserFiles = new File("files/accounts").listFiles();
 
@@ -93,6 +93,8 @@ public class DataManagerClient
 
                             // FIXME Pas la bonne interface appelée
 //                            dataClientToCommApi.login(userToConnect, serverIP);
+
+                            return true;
                         }
                     }
                 }
@@ -103,6 +105,7 @@ public class DataManagerClient
             }
         }
         //TODO return error code saying that we found login but password didn't match
+        return false;
     }
 
     /**
