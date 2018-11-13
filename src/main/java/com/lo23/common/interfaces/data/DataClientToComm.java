@@ -1,105 +1,81 @@
 package com.lo23.common.interfaces.data;
 
-import com.lo23.common.Comment;
-import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.common.user.UserStats;
+
+import java.util.List;
 
 public interface DataClientToComm
 {
     /**
-     * Notifie Comm de l'ajout d'un commentaire sur un fichier
-     * @param comment commentaire ajouté
-     * @param file fichier commenté
+     * Réponse du serveur à DataClient
+     * concernant les sources d'un fichier
+     * @param sources sources du fichier
      */
-    public void sentFileChanges(Comment comment, FileHandler file);
+    void receiveFileLocations(List<UserIdentity> sources);
+
+    // TODO cette méthode est encore floue et à revoir, mais c'est pas urgent pour l'instant
+    /**
+     * Demande à Data le fichier à télécharger
+     * @param userWhoRequestedFile utilisateur qui veut
+     *                             télécharger le fichier
+     * @param fileToDownload fichier demandé
+     * @return fichier à télécharger
+     */
+    FileHandlerInfos requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload);
 
     /**
-     * Demande à Comm les sources du fichier que l'utilisateur
-     * veut télécharger
-     * @param file fichier à télécharger
-     * @param user utilisateur qui télécharge le fichier
-     *             et à qui il faut renvoyer les sources
+     * Demande à Data de recomposer le fichier à partir des fileparts
+     * @param file infos du fichier à recomposer
      */
-    public void requestFileLocToServer(FileHandler file, UserIdentity user);
+    void mergeFileParts(FileHandlerInfos file);
 
     /**
-     * Envoie une demande de connexion d'un utilisateur
-     * au serveur
-     * @param user utilisateur qui se connecte
-     * @param ip adresse IP du serveur
+     * Notifie DataClient d'un nouveau fichier
+     * proposé au partage
+     * @param newSharedFile fichier proposé
      */
-    public void login(UserStats user, String ip);
+    void notifyNewSharedFileToAll(FileHandler newSharedFile);
 
     /**
-     * Envoie une demande de déconnexion d'un utilisateur
-     * @param user utilisateur qui se déconnecte
-     * @param ip adresse IP du serveur
+     * Notifie DataClient d'une nouvelle source pour
+     * un fichier existant
+     * @param existingFile fichier existant
+     * @param newSource nouvelle source
      */
-    public void requestLogout(User user, String ip);
+    void notifyNewSourceToAll(FileHandler existingFile, UserIdentity newSource);
 
     /**
-     * Envoie à Comm le descripteur de fichier contenant
-     * les changements apportés à ce fichier
-     * @param file nouveau descripteur de fichier qui remplacera l'ancien
+     * Notifie les clients distants des modifications
+     * apportées à un fichier partagé
+     * @param modifiedFile fichier modifié
      */
-    public void sendFilesChanges(FileHandler file);
+    void notifyUpdatedSharedFileToAll(FileHandler modifiedFile);
 
     /**
-     * Envoie à Comm le descripteur d'utilisateur contenant
-     * les changement (autres que seulement mdp) apportés à
-     * cet utilisateur
-     * @param user nouveau descripteur d'utilisateur qui remplacera l'ancien
+     * Notifie les clients distants du profil
+     * d'un autre utilisateur ayant subi des modifications
+     * @param newlyModifiedUser profil autre utilisateur modifié
      */
-    public void sendUserChanges(UserIdentity user);
+    void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser);
 
     /**
-     * Envoie à Comm la note attribuée à un fichier
-     * @param rating note à comptabiliser
-     * @param file fichier sur lequel appliquer la note
+     * Notifie les clients distants de la déconnexion d'un autre
+     * utilisateur et donc de son retrait en tant que source
+     * des fichiers qu'il propose
+     * @param newlyDisconnectedUser autre utilisateur déconnecté
+     * @param files fichiers dont cet utilisateur est la source
      */
-    public void sendFileChanges(Rating rating, FileHandler file);
+    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandlerInfos> files);
 
     /**
-     * Envoie à Comm le fichier qu'un utilisateur souhaite
-     * rendre indisponible
-     * @param file fichier à rendre indisponible
-     * @param User utilisateur qui rend le fichier indisponible
+     * Notifie les clients distants de la connexion d'un autre
+     * utilisateur et donc de son ajout en tant que source
+     * des fichiers qu'il propose
+     * @param newlyConnectedUser autre utilisateur connecté
+     * @param files fichiers dont cet utilisateur est la source
      */
-    public void sendFileChanges(FileHandler file, User User);
-
-    /**
-     * Envoie à Comm le commentaire attribué à un fichier
-     * @param comment commentaire à ajouter
-     * @param file fichier sur lequel ajouter le commentaire
-     */
-    public void sendFileChanges(Comment comment, FileHandler file);
-
-    /**
-     * Envoie à Comm le nouvel utilisateur source pour un fichier
-     * dans le cas où le fichier téléversé par cet utilisateur
-     * existe déjà et donc dans le cas où il faut ajouter cet
-     * utilisateur aux sources existantes pour ce fichier
-     * @param file fichier
-     * @param user nouvelle source
-     */
-    public void sendNewFileSource(FileHandler file, UserIdentity user);
-
-    /**
-     * Envoie à Comm le descripteur d'un fichier que l'utilisateur
-     * souhaite mettre à disposition pour la première fois
-     * @param file fichier
-     * @param user source
-     */
-    public void uploadFile(FileHandler file, UserIdentity user);
-
-    /**
-     * Envoie à Comm le fichier à télécharger et la source
-     * depuis lequel l'obtenir
-     * @param user source choisie
-     * @param file fichier à télécharger
-     */
-    public void askDownload(UserIdentity user, FileHandler file);
+    void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files);
 }
