@@ -4,6 +4,7 @@ import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.common.user.UserStats;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public interface DataClientToComm
      * d'un autre utilisateur ayant subi des modifications
      * @param newlyModifiedUser profil autre utilisateur modifié
      */
-    void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser);
+    void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser);
 
     /**
      * Notifie les clients distants de la déconnexion d'un autre

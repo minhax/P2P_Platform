@@ -48,7 +48,7 @@ public class DataManagerClient
     {
         super();
         this.sessionInfos = new Session();
-        this.dataClientToCommApi = new DataClientToCommApi();
+        this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
     }
@@ -62,6 +62,11 @@ public class DataManagerClient
 
     public DataClientToComm getDataClientToComm(){
         return this.dataClientToCommApi;
+    }
+
+    Session getSessionInfos()
+    {
+        return sessionInfos;
     }
 
     /**
@@ -263,5 +268,6 @@ public class DataManagerClient
             this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
         }
     }
+
 
 }
