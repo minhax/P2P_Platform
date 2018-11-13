@@ -103,7 +103,9 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
         CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
         String ip = cms.getIp();
+        System.out.println(ip);
         Server server = new Server();
+        System.out.println("Serveur initialisee");
         connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
         server.sendMessage(message);
     }

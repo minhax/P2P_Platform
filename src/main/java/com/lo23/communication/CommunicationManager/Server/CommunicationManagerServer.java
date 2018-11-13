@@ -99,6 +99,9 @@ public class CommunicationManagerServer extends CommunicationManager {
 		
 		for(Map.Entry<String,String> entry : this.clientAndServerIP.entrySet())
 		{
+			/** Dans le futur, il faudra que send puisse nenvoyer suivant l'adresse IP qu'on lui donne
+			 *
+			 */
 			String IpAdress = entry.getKey();
 			serv.sendMessage(m);
 		}

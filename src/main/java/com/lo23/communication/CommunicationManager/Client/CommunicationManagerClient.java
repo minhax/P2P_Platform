@@ -1,8 +1,6 @@
 package com.lo23.communication.CommunicationManager.Client;
 
 
-import com.lo23.common.interfaces.comm.CommToDataClient;
-import com.lo23.common.interfaces.data.DataClientToComm;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

@@ -23,6 +23,7 @@ public class connectionMsg extends Authentication {
 		this.serverIp = serverIp;
 		this.fileInfo = files;
 		this.myIp = myIp;
+		System.out.println("Creation du message");
 	}
 	
 	public void treatment(){
@@ -41,7 +42,7 @@ public class connectionMsg extends Authentication {
 		 */
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
-		
+
 		/** stockage des informations concernant l'adresse IP du server et du client dans le cms
 		 */
 		cms.addEntryInClientAndServerIPArray(this.myIp,this.serverIp);
