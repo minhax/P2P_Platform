@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.CreateAccountModel;
 
@@ -71,7 +70,7 @@ public class CreateAccountController implements Initializable {
             System.out.println(loginTextField.getText() + passwordField.getText() + firstnameTextField.getText() + lastnameTextField.getText() + ageTextField.getText());
 
             try {
-                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/ihm/layouts/mainLayout.fxml"));
+                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
                 Stage stage = new Stage();
 
