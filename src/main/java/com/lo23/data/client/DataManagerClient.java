@@ -37,14 +37,23 @@ public class DataManagerClient
     private UploadManager uploadManager;
     private DownloadManager downloadManager;
 
+    static private DataManagerClient instance;
+
     /**
      * Constructeur de DataManagerClient
      */
-    public DataManagerClient()
+    private DataManagerClient()
     {
         super();
         this.dataClientToCommApi = new DataClientToCommApi();
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
+    }
+
+    static public DataManagerClient getInstance(){
+        if(DataManagerClient.instance == null){
+            instance = new DataManagerClient();
+        }
+        return instance;
     }
 
     public DataClientToComm getDataClientToComm(){

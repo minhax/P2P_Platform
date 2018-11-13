@@ -1,11 +1,14 @@
-package com.lo23.common.layouts.controllers;
+package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
+import com.lo23.common.exceptions.DataException;
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
-import com.lo23.common.layouts.models.CreateAccountModel;
+import com.lo23.data.client.DataManagerClient;
+import com.lo23.ihm.layouts.models.CreateAccountModel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,13 +59,19 @@ public class CreateAccountController implements Initializable {
         }
         else {
             // A decommenté et verifier les champs pendant l'integration
-			IhmToDataClient api = new IhmToDataClientApi();
-			api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
-			
+            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+
+            try{
+                api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
+            }
+            catch(DataException de){
+                de.printStackTrace();
+                // TODO génrer l'exception qui signifie que la création de compte a échoué.
+            }
             System.out.println(loginTextField.getText() + passwordField.getText() + firstnameTextField.getText() + lastnameTextField.getText() + ageTextField.getText());
 
             try {
-                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
+                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/ihm/layouts/mainLayout.fxml"));
                 Parent root = fxmlloader.load();
                 Stage stage = new Stage();
 

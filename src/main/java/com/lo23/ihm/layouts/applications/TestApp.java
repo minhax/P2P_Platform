@@ -1,4 +1,4 @@
-package com.lo23.common.layouts.applications;
+package com.lo23.ihm.layouts.applications;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ public class TestApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("com/lo23/common/layouts/connectionLayout.fxml"));
+			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("com/lo23/ihm/layouts/connectionLayout.fxml"));
 			
 			primaryStage.setTitle("My Application");
 			primaryStage.setScene(new Scene(root));

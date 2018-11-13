@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="connectionPane" fx:id="connectionPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.common.layouts.controllers.ConnectionController">
+<AnchorPane id="connectionPane" fx:id="connectionPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.ConnectionController">
    <children>
       <PasswordField id="passwordField" fx:id="passwordField" layoutX="150.0" layoutY="99.0" prefHeight="34.0" prefWidth="340.0" promptText="Mot de passe …" />
       <TextField id="serverChoiceTextField" fx:id="serverChoiceTextField" layoutX="150.0" layoutY="151.0" prefHeight="25.0" prefWidth="223.0" promptText="Choix de server ..." />
