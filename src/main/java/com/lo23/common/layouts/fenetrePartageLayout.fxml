@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -9,21 +10,23 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.common.layouts.NewDocument">
    <children>
-      <Pane layoutX="141.0" layoutY="25.0" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: dcdcdc;">
+      <Pane layoutX="124.0" layoutY="16.0" prefHeight="370.0" prefWidth="350.0" style="-fx-background-color: dcdcdc;">
          <children>
             <Text layoutX="50.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajout d'un Fichier" textAlignment="CENTER" wrappingWidth="236.7654571533203" />
-            <TextField disable="true" layoutX="130.0" layoutY="40.0" prefHeight="27.0" prefWidth="200.0" text="%key.unspecified" />
-            <TextField layoutX="130.0" layoutY="80.0" prefHeight="27.0" prefWidth="200.0" />
-            <TextField layoutX="130.0" layoutY="120.0" prefHeight="11.0" prefWidth="200.0" />
-            <TextField layoutX="130.0" layoutY="160.0" prefHeight="11.0" prefWidth="200.0" />
-            <TextField layoutX="130.0" layoutY="200.0" prefHeight="11.0" prefWidth="200.0" />
             <Text layoutX="15.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Source du Fichier" />
+            <TextField disable="true" editable="false" layoutX="130.0" layoutY="40.0" prefHeight="27.0" prefWidth="200.0" text="%key.unspecified" />
             <Text layoutX="15.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taille" />
+            <TextField disable="true" editable="false" layoutX="130.0" layoutY="80.0" prefHeight="27.0" prefWidth="200.0" text="%key.unspecified" />
             <Text layoutX="15.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Catégorie" />
+            <TextField layoutX="130.0" layoutY="120.0" prefHeight="11.0" prefWidth="200.0" />
             <Text layoutX="15.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom du Fichier" />
-            <Text layoutX="15.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informations" />
+            <TextField layoutX="130.0" layoutY="160.0" prefHeight="11.0" prefWidth="200.0" />
             <Text layoutX="15.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags" />
+            <TextField layoutX="130.0" layoutY="200.0" prefHeight="11.0" prefWidth="200.0" />
+            <Text layoutX="15.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informations" />
             <TextArea layoutX="130.0" layoutY="240.0" prefHeight="86.0" prefWidth="200.0" />
+            <Button layoutX="90.0" layoutY="335.0" mnemonicParsing="false" text="Annuler" />
+            <Button layoutX="200.0" layoutY="335.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="Ok" />
          </children></Pane>
    </children>
 </AnchorPane>
