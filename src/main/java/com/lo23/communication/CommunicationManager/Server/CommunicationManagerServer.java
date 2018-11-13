@@ -8,6 +8,7 @@ import com.lo23.communication.Messages.Authentication_Server.addAdressIpMsg;
 import com.lo23.communication.Messages.Message;
 import com.lo23.data.server.DataServerToCommAPI;
 import com.lo23.communication.network.Server;
+import com.lo23.communication.network.Client;
 
 
 import java.net.InetAddress;
@@ -95,15 +96,14 @@ public class CommunicationManagerServer extends CommunicationManager {
 	public void broadcast(Message m)
 	throws EmptyStackException  //fonctionne bien?
 	{
-		Server serv = new Server();
-		
 		for(Map.Entry<String,String> entry : this.clientAndServerIP.entrySet())
 		{
 			/** Dans le futur, il faudra que send puisse nenvoyer suivant l'adresse IP qu'on lui donne
 			 *
 			 */
 			String IpAdress = entry.getKey();
-			serv.sendMessage(m);
+			Client c = new Client(m, 1026, IpAdress);
+
 		}
 		//Exception a rajouter?
 	}

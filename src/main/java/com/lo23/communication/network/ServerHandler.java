@@ -30,8 +30,10 @@ public class ServerHandler extends Thread
             System.out.println("waiting object from client : " + peerId);
 
             Object msg = objIS.readObject();
-            (Message)msg.treatment();
+            Message msgCast = (Message) msg;
 
+            msgCast.treatment();
+            objOS.wait();
 
         }
         catch (Exception e){

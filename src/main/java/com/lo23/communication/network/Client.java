@@ -7,17 +7,20 @@ import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Message;
 
 public class Client {
-    private String addrClient;
-    private int portClient;
 
-    public Client(String addrClient, int portClient){
-        this.addrClient = addrClient;
-        this.portClient = portClient;
+    private int portServ;
+    private Message msg;
+    private String addrServ;
+
+    public Client(Message msg, int portServ, String addrServ){
+        this.msg = msg;
+        this.port = portServ;
+        this.addrServ = addrServ;
 
         try{
             System.out.println("connecting to the server central");
 
-            Socket clientSocket = new Socket(addrClient,portClient);
+            Socket clientSocket = new Socket(addrServ, portServ);
 
             ObjectOutputStream objOS = new ObjectOutputStream(clientSocket.getOutputStream());
             objOS.flush();
@@ -25,15 +28,14 @@ public class Client {
             ObjectInputStream objIS = new ObjectInputStream(clientSocket.getInputStream());
             System.out.println("creating clients' flux");
 
-            Message m=new connectionMsg();
-            objOS.writeObject(m);
+            objOS.writeObject(msg);
             objOS.flush();
-
             for (;;)
             {
                 Object o = objIS.readObject();
+                System.out.println(o);
+                clientSocket.setSoTimeout(100);
             }
-
         }
         catch (Exception e){
 
