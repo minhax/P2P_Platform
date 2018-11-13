@@ -100,9 +100,11 @@ public class CommToDataClientAPI implements CommToDataClient
     }*/
 
     @Override
-    public void requestUserConnexion(UserStats user){
+    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
+        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+        String ip = cms.getIp();
         Server server = new Server();
-        connectionMsg message = new connectionMsg(user);
+        connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
         server.sendMessage(message);
     }
 

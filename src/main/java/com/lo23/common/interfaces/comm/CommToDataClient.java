@@ -68,7 +68,7 @@ public interface CommToDataClient
      * Transmet la demande de connexion d'un utiisateur au serveur
      * @param user utilisateur qui veut se connecter
      */
-    public void requestUserConnexion(UserStats user);
+    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP);
 
 
     /*
