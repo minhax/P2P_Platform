@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="mainHBox" fx:id="mainHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.common.layouts.controllers.MainController">
+<HBox id="mainHBox" fx:id="mainHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.common.layouts.controllers.MainController">
    <children>
       <AnchorPane id="leftPane" fx:id="leftPane" prefHeight="400.0" prefWidth="160.0" style="-fx-border-style: solid;">
          <children>
@@ -45,7 +45,7 @@
                      <content>
                         <AnchorPane id="myFilesPane" fx:id="myFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="86.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#OnAjouterDocumentButtonClicked" style="-fx-background-color: #C0C0C0; -fx-font-size: small;" text="Ajouter un document" />
+                              <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="86.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #C0C0C0; -fx-font-size: small;" text="Ajouter un document" />
                            </children>
                         </AnchorPane>
                      </content>
