@@ -1,5 +1,6 @@
 package com.lo23.data.client;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
@@ -12,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Vector;
 import java.util.stream.Stream;
 
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
@@ -60,7 +62,7 @@ public class DataManagerClient
         return instance;
     }
 
-    public DataClientToComm getDataClientToComm(){
+    public DataClientToCommApi getDataClientToComm(){
         return this.dataClientToCommApi;
     }
 
@@ -97,16 +99,12 @@ public class DataManagerClient
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
-                            // TODO get IP to connect to. discuter avec comm
-                            String serverIP  = "";
-                            // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
-                            commToDataClientAPI.requestUserConnexion((UserStats)comparisonAccount,
-                                                                     comparisonAccount.getProposedFiles(),
-                                                                     serverIP);
                             this.sessionInfos.setCurrentUser(comparisonAccount);
                             retValue = true;
                         }
                     }
+                    fileIn.close();
+                    objectIn.close();
                 }
                 catch(IOException |ClassNotFoundException e)
                 {
@@ -115,6 +113,20 @@ public class DataManagerClient
             }
         }
         return retValue;
+    }
+
+    public boolean serverLogin(){
+        UserAccount userToConnect = this.sessionInfos.getCurrentUser();
+
+        // TODO get IP to connect to. discuter avec comm
+        String serverIP  = "";
+
+        // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
+        commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
+                userToConnect.getProposedFiles(),
+                serverIP);
+
+        return false;
     }
 
     /**
@@ -243,6 +255,24 @@ public class DataManagerClient
 
         //Si au moins un fichier correspond, on retourne vrai
         return numberOfMatchingFiles > 0;
+    }
+
+    /**
+     * Méthode qui rend un fichier indisponible en local puis envoie
+     * un message au serveur pour partager l'information.
+     * @param fileToMakeUnavailable fichier à rendre indisponible
+     */
+    public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
+        /*
+        TODO find file and remove parts of it?
+        il y aura peut-être besoin de faire une exception dans le cas où
+        fileToMakeUnavailable n'existe pas dans le vecteur. Néanmoins,
+        d'après la doc : "If the Vector does not contain the element, it is unchanged."
+        A préciser donc
+        */
+        //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
+        //userFiles.remove(fileToMakeUnavailable);
+
     }
 
     /**

@@ -25,6 +25,7 @@ class Session
         this.currentUser = null;
     }
 
+<<<<<<< HEAD
     UserAccount getCurrentUser()
     {
         return currentUser;
@@ -32,6 +33,13 @@ class Session
 
     void setCurrentUser(UserAccount currentUser)
     {
+=======
+    public UserAccount getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserAccount currentUser) {
+>>>>>>> c89ac062ae1cc657a331625997576b6a71e52165
         this.currentUser = currentUser;
     }
 
