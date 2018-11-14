@@ -55,7 +55,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void sendFileChanges(String champ, FileHandler file){
+    public void sendFileChanges(FileHandler file){
 
     }
 

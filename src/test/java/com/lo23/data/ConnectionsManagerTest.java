@@ -121,4 +121,28 @@ public class ConnectionsManagerTest
         this.connectionsManager.removeFileSourceFromDirectory(userStats1, (FileHandler) file1);
         assertTrue(this.connectionsManager.getProposedFiles().size()==1);
     }
+
+    @Test
+    void modificationsOnUserIdentityShouldBeSavedInConnectedUsers()
+    {
+        UserIdentity updatedUser1 = user1;
+        updatedUser1.setAge(12);
+        updatedUser1.setFirstName("Habitica");
+        updatedUser1.setLastName("Master");
+        this.connectionsManager.modifyConnectedUser(updatedUser1);
+        assertTrue(this.connectionsManager.getConnectedUsers().get(0).getAge()==12 &&
+                this.connectionsManager.getConnectedUsers().get(0).getFirstName()=="Habitica" &&
+                this.connectionsManager.getConnectedUsers().get(0).getLastName()=="Master"&&
+                this.connectionsManager.getConnectedUsers().get(0).getId()==user1.getId());
+    }
+
+    @Test
+    void modificationsOnNonConnectedUserShouldThrowException()
+    {
+        UserIdentity nonConnectedUser = new UserIdentity("loginN", "PrenomN", "NomN", 8);
+        assertThrows(IllegalStateException.class, () ->
+        {
+            this.connectionsManager.modifyConnectedUser(nonConnectedUser);
+        });
+    }
 }
