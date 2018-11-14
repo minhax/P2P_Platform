@@ -1,24 +1,24 @@
 package com.lo23.data.client;
 
-import com.lo23.common.user.User;
+import com.lo23.common.user.UserAccount;
 
 /**
  * Décrit la session courante ouverte par un utilisateur
  */
 public class Session
 {
-    private User currentUser;
+    private UserAccount currentUser;
 
     public Session()
     {
 
     }
 
-    public User getCurrentUser() {
+    public UserAccount getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    public void setCurrentUser(UserAccount currentUser) {
         this.currentUser = currentUser;
     }
 
