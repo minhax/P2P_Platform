@@ -93,12 +93,6 @@ public class DataManagerClient
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
-                            // TODO get IP to connect to. discuter avec comm
-                            String serverIP  = "";
-                            // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
-                            commToDataClientAPI.requestUserConnexion((UserStats)comparisonAccount,
-                                                                     comparisonAccount.getProposedFiles(),
-                                                                     serverIP);
                             this.sessionInfos.setCurrentUser(comparisonAccount);
                             retValue = true;
                         }
@@ -113,6 +107,20 @@ public class DataManagerClient
             }
         }
         return retValue;
+    }
+
+    public boolean serverLogin(){
+        UserAccount userToConnect = this.sessionInfos.getCurrentUser();
+
+        // TODO get IP to connect to. discuter avec comm
+        String serverIP  = "";
+
+        // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
+        commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
+                userToConnect.getProposedFiles(),
+                serverIP);
+
+        return false;
     }
 
     /**
