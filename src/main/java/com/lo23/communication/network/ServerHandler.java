@@ -3,10 +3,11 @@ package com.lo23.communication.network;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import com.lo23.communication.Messages.Message;
 
-public class ServerHandler extends Thread
+public class ServerHandler extends Thread implements Serializable
 {
     private Socket socket;
     private int peerId;

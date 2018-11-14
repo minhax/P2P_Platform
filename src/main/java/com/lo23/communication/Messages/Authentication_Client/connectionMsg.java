@@ -18,7 +18,7 @@ public class connectionMsg extends Authentication {
 		this.userStats = us;
 	}
 
-	public connectionMsg(UserStats us, List<FileHandlerInfos> files, String serverIp, String myIp ){
+	public connectionMsg(UserStats us, List<FileHandlerInfos> files,String myIp ){
 		this.userStats = us;
 		this.serverIp = serverIp;
 		this.fileInfo = files;
@@ -39,7 +39,9 @@ public class connectionMsg extends Authentication {
 		DataServerToComm dataInterface = cms.getDataInterface();
 		/** appel des methodes de l'interface data
 		 *
+		
 		 */
+		System.out.println("Message treatment affichaged des infos inchallah" + this.getMyIp() + this.serverIp);
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
@@ -47,6 +49,18 @@ public class connectionMsg extends Authentication {
 		 */
 		cms.addEntryInClientAndServerIPArray(this.myIp,this.serverIp);
 		
+	}
+	
+	public List<FileHandlerInfos> getFileInfo() {
+		return fileInfo;
+	}
+	
+	public String getServerIp() {
+		return serverIp;
+	}
+	
+	public String getMyIp() {
+		return myIp;
 	}
 }
 

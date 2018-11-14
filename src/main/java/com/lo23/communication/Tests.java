@@ -1,16 +1,14 @@
 package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
-import com.lo23.common.interfaces.comm.CommToDataClient;
-import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.APIs.CommToDataClientAPI;
 import com.lo23.communication.network.Server;
 import com.lo23.communication.network.Client;
-import com.lo23.communication.Messages.Message;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
-import com.lo23.communication.Messages.Authentication_Client.deconnectionMsg;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.*;
@@ -33,17 +31,26 @@ public class Tests
 		FileHandlerInfos fi = new FileHandlerInfos("blbabla","Flextape", 64, "int", 18, "Musique");
 		ArrayList<FileHandlerInfos> newList = new ArrayList<>();
 		newList.add(fi);
-		String myIP = Inet4Address.getLocalHost().getHostAddress();
-
+		String myIP = null;
+		try {
+			myIP = Inet4Address.getLocalHost().getHostAddress();
+		}catch (UnknownHostException e)
+		{
+			e.printStackTrace();
+		}
         // Test sockets
 
 		System.out.println("1) => Run the server");
 		System.out.println("2) => Run a client");
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		int test = Integer.parseInt(br.readLine());
-
+		int test = 0;
+		try {
+			test = Integer.parseInt(br.readLine());
+		}catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 		if(test == 1)
 		{
 			Server s = new Server();
@@ -59,8 +66,8 @@ public class Tests
 
 
 			// test message connection
-            connectionMsg msgC = new connectionMsg(userstats, newList, addr, myIP);
-
+            connectionMsg msgC = new connectionMsg(userstats, newList, myIP);
+			System.out.println("Mon adresse IP dans le message : "+ msgC.getMyIp());
 			//test message deconnection
 			// Message msgD = deconnectionMsg(userstats, myIP);
 

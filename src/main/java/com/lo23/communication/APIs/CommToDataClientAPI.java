@@ -14,6 +14,7 @@ import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Message;
+import com.lo23.communication.network.Client;
 import com.lo23.communication.network.Server;
 
 import java.net.InetAddress;
@@ -104,10 +105,10 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
         String ip = cms.getIp();
         System.out.println(ip);
-        Server server = new Server();
-        System.out.println("Serveur initialisee");
-        connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
-       // server.sendMessage(message);
+        int portServ = 0;
+        connectionMsg message = new connectionMsg(user, fi, ip);
+	    System.out.println("Client cree");
+	    Client c = new Client(message, portServ, serverIP);
     }
 
 

@@ -28,7 +28,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	private CommunicationManagerServer()
 		{
 			
-			this.dataInterface = null;//TODO FIX AVEC DATA
+			this.dataInterface = new DataServerToCommAPI(null);//TODO FIX AVEC DATA
 			this.commInterface = CommToDataServerAPI.getInstance();
 			
 			/** Bloc try pour recuperer l'adresse IP de la machine sur le reseau (fonction a tester) **/

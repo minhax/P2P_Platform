@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.lo23.communication.network.ServerHandler;
+import java.io.Serializable;
 
 public class Server
 {

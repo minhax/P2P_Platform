@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 
 import com.lo23.communication.Messages.Message;
+import java.io.Serializable;
 
 public class Client {
 
@@ -43,7 +44,7 @@ public class Client {
             }
         }
         catch (Exception e){
-            System.out.println("couldn't connect to the server :/ ");
+            e.printStackTrace();
         }
     }
 }
