@@ -17,6 +17,7 @@ public class ServerHandler extends Thread
         this.socket = peerSocket;
         this.peerId = peerId;
     }
+
     @Override
     public void run()
     {
@@ -28,12 +29,22 @@ public class ServerHandler extends Thread
             ObjectInputStream objIS = new ObjectInputStream(socket.getInputStream());
 
             System.out.println("waiting object from client : " + peerId);
+            System.out.println();
 
-            Object msg = objIS.readObject();
-            Message msgCast = (Message) msg;
+            while(true){
 
-            msgCast.treatment();
-            objOS.wait();
+                Object msg = objIS.readObject(); // server read data from the client
+
+                Message msgCast = (Message) msg;
+
+                System.out.println("treatment of the message : ");
+                msgCast.treatment(); // treatment of the data sent
+                System.out.println("end of the treatment");
+
+                objOS.wait();
+            }
+
+
 
         }
         catch (Exception e){

@@ -15,23 +15,30 @@ public class Server
 	@SuppressWarnings("resource")
 	public Server() throws NumberFormatException
 	{
+
 		try
 		{
 			serverSocket = new ServerSocket(1026);
 			++peerId;
-			System.out.println("Server Central");
+			System.out.println("===============");
+			System.out.println("Server central");
+			System.out.println("===============\n");
 		}
+
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
+
 		while(true)
 			try
 			{
 				socket = serverSocket.accept();
 				++peerId;
+				System.out.println("server established connection with peer " + peerId);
 				new ServerHandler(socket, peerId).start();
 			}
+
 			catch (IOException e)
 			{
 				System.out.println("error server");

@@ -12,12 +12,14 @@ public class Client {
     private String addrServ;
 
     public Client(Message msg, int portServ, String addrServ){
+
         this.msg = msg;
         this.portServ = portServ;
         this.addrServ = addrServ;
 
         try{
-            System.out.println("connecting to the server central");
+
+            System.out.println("connection to the server...");
 
             Socket clientSocket = new Socket(addrServ, portServ);
 
@@ -26,18 +28,22 @@ public class Client {
 
             ObjectInputStream objIS = new ObjectInputStream(clientSocket.getInputStream());
             System.out.println("creating clients' flux");
+            System.out.println();
 
-            objOS.writeObject(msg);
+
+
+            objOS.writeObject(msg); // client send data to the server
             objOS.flush();
+
+            // socket client remains open until socket timeout (default timeout)
             for (;;)
             {
-                Object o = objIS.readObject();
+                Object o = objIS.readObject(); // client read data from the server
                 System.out.println(o);
-                clientSocket.setSoTimeout(100);
             }
         }
         catch (Exception e){
-
+            System.out.println("couldn't connect to the server :/ ");
         }
     }
 }
