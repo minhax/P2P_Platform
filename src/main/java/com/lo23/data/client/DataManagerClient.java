@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Vector;
 import java.util.stream.Stream;
 
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
@@ -257,8 +258,16 @@ public class DataManagerClient
      * @param fileToMakeUnavailable fichier à rendre indisponible
      */
     public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
-        // TODO find file and remove parts ?
-        // TODO send notification to server.
+        /*
+        TODO find file and remove parts of it?
+        il y aura peut-être besoin de faire une exception dans le cas où
+        fileToMakeUnavailable n'existe pas dans le vecteur. Néanmoins,
+        d'après la doc : "If the Vector does not contain the element, it is unchanged."
+        A préciser donc
+        */
+        //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
+        //userFiles.remove(fileToMakeUnavailable);
+
     }
 
     /**
