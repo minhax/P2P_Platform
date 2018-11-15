@@ -9,6 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.stage.Stage;
+
 public class PartageController {
 
     @FXML
@@ -63,17 +65,19 @@ public class PartageController {
     }
 
     @FXML
-    public void OnAjouterFichierButtonClicked (ActionEvent event){
-
+    public void OnAjouterFichierButtonClicked (){
+        System.out.println("Ajouter Fichier Button Clicked!");
     }
 
     @FXML
-    public void OnAnnulerButtonClicked (ActionEvent event){
-
+    public void OnAnnulerButtonClicked (){
+        Stage stage = (Stage) annulerButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
-    public void OnEnregistrerButtonClicked (ActionEvent event){
-
+    public void OnEnregistrerButtonClicked (){
+        System.out.println("Enregistrer Fichier Button Clicked!");
     }
+
 }
