@@ -1,6 +1,5 @@
-package com.lo23.common.layouts.controllers;
+package com.lo23.ihm.layouts.controllers;
 
-import com.lo23.common.layouts.models.ContactsModel;
 import javafx.beans.property.ListProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
