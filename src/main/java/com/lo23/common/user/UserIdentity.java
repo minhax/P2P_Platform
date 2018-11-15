@@ -51,6 +51,14 @@ public class UserIdentity extends User
         this.age = age;
     }
 
+    public UserIdentity ()
+    {
+        super();
+        this.firstName = "";
+        this.lastName = "";
+        this.age = 0;
+    }
+
     public String getFirstName()
     {
         return firstName;

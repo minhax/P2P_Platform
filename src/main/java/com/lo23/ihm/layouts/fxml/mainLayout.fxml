@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="mainHBox" fx:id="mainHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.MainController">
+   <children>
+      <AnchorPane id="leftPane" fx:id="leftPane" prefHeight="400.0" prefWidth="160.0" style="-fx-border-style: solid;">
+         <children>
+            <Label id="detailsLabel" layoutX="58.0" layoutY="14.0" text="DETAILS" />
+         </children>
+      </AnchorPane>
+      <VBox id="middleVBox" fx:id="middleVBox" prefHeight="400.0" prefWidth="280.0" style="-fx-border-style: solid;">
+         <children>
+            <VBox prefHeight="47.0" prefWidth="278.0">
+               <children>
+                  <AnchorPane id="mainTopPane" fx:id="mainTopPane" prefHeight="25.0" prefWidth="278.0" />
+                  <HBox id="mainTopHBox" fx:id="mainTopHBox" prefHeight="39.0" prefWidth="278.0">
+                     <children>
+                        <TextField id="researchTextField" fx:id="researchTextField" prefHeight="25.0" prefWidth="229.0" promptText="RECHERCHER UN DOCUMENT ..." style="-fx-font-size: small;">
+                           <HBox.margin>
+                              <Insets left="2.0" right="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ComboBox id="chooseResearchBox" fx:id="chooseResearchBox" prefHeight="25.0" prefWidth="23.0">
+                           <HBox.margin>
+                              <Insets right="2.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <TabPane id="mainTabPane" fx:id="mainTabPane" prefHeight="311.0" prefWidth="278.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab id="myFilesTab" fx:id="myFilesTab" closable="false" style="-fx-font-size: 8px;" text="Mes documents">
+                     <content>
+                        <AnchorPane id="myFilesPane" fx:id="myFilesPane" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="86.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #C0C0C0; -fx-font-size: small;" text="Ajouter un document" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                <Tab id="availableFilesTab" fx:id="availableFilesTab" closable="false" style="-fx-font-size: 8px;" text="Fichiers disponibles">
+                     <content>
+                        <AnchorPane id="availableFilesPane" fx:id="availableFilesPane" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+                  <Tab id="downloadsTab" fx:id="downloadsTab" closable="false" style="-fx-font-size: 8px;" text="Mes téléchargements">
+                     <content>
+                        <AnchorPane id="downloadsPane" fx:id="downloadsPane" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <AnchorPane id="mainBottomPane" fx:id="mainBottomPane" prefHeight="35.0" prefWidth="278.0">
+               <children>
+                  <Button id="serverParametersButton" fx:id="serverParametersButton" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#OnServerParametersButtonClicked" style="-fx-font-size: 8px; -fx-background-color: #C0C0C0;" text="Configurer le serveur" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox id="rightVBox" fx:id="rightVBox" prefHeight="400.0" prefWidth="160.0" style="-fx-border-style: solid;">
+         <children>
+            <HBox id="rightTopHBox" fx:id="rightTopHBox" prefHeight="47.0" prefWidth="157.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label id="usernameLabel" fx:id="usernameLabel" layoutX="9.0" layoutY="5.0" text="USER" />
+                        <Button fx:id="updateUserButton" layoutX="9.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#OnUpdateUserButtonClicked" prefHeight="5.0" prefWidth="97.0" style="-fx-font-size: 8px; -fx-background-color: #87CEFA;" text="Modifier" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <Label id="onlineUsersLabel" fx:id="onlineUsersLabel" text="Utilisateurs en ligne">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <AnchorPane id="onlineUsersPane" fx:id="onlineUsersPane" prefHeight="200.0" prefWidth="200.0" />
+            <TextField id="researchUserTextField" fx:id="researchUserTextField" prefHeight="25.0" prefWidth="229.0" promptText="Rechercher un utilisateur ..." style="-fx-font-size: small;">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Button id="disconnectButton" fx:id="disconnectButton" mnemonicParsing="false" onMouseClicked="#OnDisconnectButtonClicked" style="-fx-background-color: red;" text="Déconnexion">
+               <VBox.margin>
+                  <Insets left="60.0" top="50.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</HBox>

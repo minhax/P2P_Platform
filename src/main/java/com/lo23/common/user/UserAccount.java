@@ -1,13 +1,17 @@
 package com.lo23.common.user;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 
+import java.io.Serializable;
+import java.util.List;
 import java.util.Vector;
 
 /**
  * Classe qui définie un compte utilisateur avec toutes ses informations utiles.
  */
-public class UserAccount extends UserStats {
+public class UserAccount extends UserStats
+{
     /**
      * Mot de passe du compte utilisateur
      */
@@ -16,7 +20,7 @@ public class UserAccount extends UserStats {
     /**
      * Liste des fichiers proposés par l'utilisateur
      */
-    private Vector<FileHandler> proposedFiles;
+    private Vector<FileHandlerInfos> proposedFiles;
 
     /**
      * Adresse IP du serveur utilisé lors de la dernière connection
@@ -43,6 +47,13 @@ public class UserAccount extends UserStats {
         this.proposedFiles = new Vector<>();
     }
 
+    public UserAccount ()
+    {
+        super();
+        this.password = "";
+        this.proposedFiles = new Vector<>();
+    }
+
     /**
      * Permet de vérifier le mot de passe.
      *
@@ -57,7 +68,7 @@ public class UserAccount extends UserStats {
      * Permet d'ajouter un fichier proposé
      * @param file Fichier à ajouter
      */
-    public void addProposedFile(FileHandler file)
+    public void addProposedFile(FileHandlerInfos file)
     {
         this.proposedFiles.add(file);
         super.incrementNbFilesUploaded();
@@ -77,9 +88,9 @@ public class UserAccount extends UserStats {
      * Retourne la liste des fichiers proposés par l'utilisateur
      * @return Liste des fichiers proposés
      */
-    public Vector<FileHandler> getProposedFiles()
+    public Vector<FileHandlerInfos> getProposedFiles()
     {
-        return this.proposedFiles;
+        return new Vector<>(this.proposedFiles);
     }
 
     public String getLastConnectionServerIP()
@@ -87,8 +98,17 @@ public class UserAccount extends UserStats {
         return lastConnectionServerIP;
     }
 
-    public void setLastConnectionServerIP(String lastConnectionServerIP)
-    {
+    public void setLastConnectionServerIP(String lastConnectionServerIP) {
         this.lastConnectionServerIP = lastConnectionServerIP;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 }

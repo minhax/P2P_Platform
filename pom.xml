@@ -37,6 +37,15 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/java/com/lo23/ihm/layouts/fxml</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <!-- JUnit 5 requires Surefire version 2.22.0 or higher -->
             <plugin>

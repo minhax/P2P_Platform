@@ -1,11 +1,18 @@
 package com.lo23.common.filehandler;
 
+import java.io.Serializable;
+
 /**
  * Définit un descripteur de fichier, qui représente
  * le fichier et contient ses métadonnées.
  */
-public class FileHandler
+public class FileHandler implements Serializable
 {
+    /**
+     * Serial UID for class serialisation
+     */
+    private static final long serialVersionUID = 100000000005L;
+
     /**
      * Identifiant unique du fichier
      */

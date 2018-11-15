@@ -132,6 +132,7 @@ public class UserTests
     /**
      * Teste l'ajout d'un fichier proposé
      */
+    /*
     @Test
     void ShouldAddProposedFile()
     {
@@ -139,11 +140,12 @@ public class UserTests
         this.user.addProposedFile(fh);
         assertTrue(this.user.getProposedFiles().contains(fh));
     }
-
+    */
 
     /**
      * Teste la suppression d'un fichier proposé
      */
+    /*
     @Test
     void ShouldRemoveProposedFile()
     {
@@ -152,7 +154,7 @@ public class UserTests
         this.user.removeProposedFile(fh);
         assertFalse(this.user.getProposedFiles().contains(fh));
     }
-
+    */
     /**
      * Teste la mise à jour de l'IP du dernier serveur
      */
