@@ -3,17 +3,24 @@ package com.lo23.common.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TabPane;
+
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainController implements Initializable{
 
@@ -107,6 +114,27 @@ public class MainController implements Initializable{
 
     @FXML
     public void OnDisconnectButtonClicked(){
+
+    }
+
+    @FXML
+    public void OnAddDocumentButtonClicked(){
+
+        try {
+
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/fenetrePartageLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setOpacity(1);
+            stage.setTitle("Ajout d'un Fichier");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
