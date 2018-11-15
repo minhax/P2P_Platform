@@ -84,10 +84,10 @@ public class DataManagerClient
             {
                 try
                 {
-                    FileInputStream fileIn = new FileInputStream(userFile.getName());
+                    FileInputStream fileIn = new FileInputStream(userFile.getPath());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                    Object obj = objectIn.readObject();
-                    UserAccount comparisonAccount = (UserAccount) obj;
+                    UserAccount comparisonAccount = (UserAccount) objectIn.readObject();
+                    //UserAccount comparisonAccount = (UserAccount) obj;
                     if(comparisonAccount.getLogin().equals(login))
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
@@ -95,9 +95,11 @@ public class DataManagerClient
                             // TODO get IP to connect to. discuter avec comm
                             String serverIP  = "";
                             // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
-                            commToDataClientAPI.requestUserConnexion((UserStats)comparisonAccount,
-                                                                     comparisonAccount.getProposedFiles(),
-                                                                     serverIP);
+//                            commToDataClientAPI.requestUserConnexion((UserStats)comparisonAccount,
+//                                                                     comparisonAccount.getProposedFiles(),
+//                                                                     serverIP);
+
+                            // FIXME l'appel à l'API Comm fait planter l'application.
                             this.sessionInfos.setCurrentUser(comparisonAccount);
                             retValue = true;
                         }
