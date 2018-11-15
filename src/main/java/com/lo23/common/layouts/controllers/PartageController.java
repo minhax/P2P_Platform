@@ -10,6 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.io.File;
 
 public class PartageController {
 
@@ -66,7 +70,13 @@ public class PartageController {
 
     @FXML
     public void OnAjouterFichierButtonClicked (){
-        System.out.println("Ajouter Fichier Button Clicked!");
+        
+        Stage stage = (Stage) ajouterFichierButton.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Ajouter fichier");
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        
     }
 
     @FXML
