@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 import java.io.File;
 
@@ -69,25 +68,39 @@ public class PartageController {
     }
 
     @FXML
-    public void OnAjouterFichierButtonClicked (){
-        
+    public void OnAjouterFichierButtonClicked (){ 
+   
+    	// Utilise le FileChooser pour trouver le fichier que l'utilisateur veut uploader
         Stage stage = (Stage) ajouterFichierButton.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Ajouter fichier");
-        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("All Files", "*.*"));
+        fileChooser.getExtensionFilters().addAll();
         File selectedFile = fileChooser.showOpenDialog(stage);
+        
+        /*  Il faut traiter si l'utilisateur n'ajoute pas de fichier (selectedFile == NULL)
+         *  et qu'est-ce qu'on va faire avec le fichier une fois qu'il soit selectionné
+         *  (l'envoyer a Data, calculer la taille et l'afficher dans la fenêtre, voir s'il
+         *  a été déjà uploadé ou pas, etc...)
+        */	
+        System.out.println(selectedFile); // Commenter une fois qu'on a traité ce que j'ai mis au dessus
         
     }
 
     @FXML
     public void OnAnnulerButtonClicked (){
+    	
+    	// Ferme la fenêtre, ne fait rien avec les données saisies
         Stage stage = (Stage) annulerButton.getScene().getWindow();
         stage.close();
+
     }
 
     @FXML
     public void OnEnregistrerButtonClicked (){
+    	
+    	//	Enregistre les informations données par l'utilisateur chez Data
         System.out.println("Enregistrer Fichier Button Clicked!");
+    
     }
 
 }

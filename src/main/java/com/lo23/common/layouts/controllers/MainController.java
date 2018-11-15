@@ -119,7 +119,8 @@ public class MainController implements Initializable{
 
     @FXML
     public void OnAddDocumentButtonClicked(){
-
+    	// Ouvre le fenêtre d'ajout d'un fichier
+    	
         try {
 
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/fenetrePartageLayout.fxml"));
