@@ -1,9 +1,17 @@
 package com.lo23.common;
 
+import java.io.Serializable;
+
 /**
  * Définit un tag sur un fichier
  */
-public class Tag {
+public class Tag implements Serializable
+{
+    /**
+     * Serial UID for class serialisation
+     */
+    private static final long serialVersionUID = 100000000001L;
+
     /**
      * Mot-clé
      */

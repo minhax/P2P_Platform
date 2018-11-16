@@ -2,12 +2,14 @@ package com.lo23.common.user;
 
 import com.lo23.common.filehandler.FileHandler;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Classe qui définie un compte utilisateur avec toutes ses informations utiles.
  */
-public class UserAccount extends UserStats {
+public class UserAccount extends UserStats
+{
     /**
      * Mot de passe du compte utilisateur
      */
@@ -40,6 +42,13 @@ public class UserAccount extends UserStats {
             throw new IllegalArgumentException("Password should not be an empty String");
         }
         this.password = password;
+        this.proposedFiles = new Vector<>();
+    }
+
+    public UserAccount ()
+    {
+        super();
+        this.password = "";
         this.proposedFiles = new Vector<>();
     }
 
