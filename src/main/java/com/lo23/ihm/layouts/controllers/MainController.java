@@ -1,15 +1,14 @@
 package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.data.client.DataManagerClient;
+import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -108,6 +107,9 @@ public class MainController implements Initializable{
     //pour test
     private UserIdentity user;
 
+    private Timer refreshTimer;
+    private int period=100000;
+
 	
 	
 	@Override
@@ -116,7 +118,18 @@ public class MainController implements Initializable{
         user = new UserIdentity("login", "Prénom", "Nom", 21);
         connectedUsers.add(user);
 
-        refreshContactsWindow();
+
+        refreshTimer = new Timer();
+
+        refreshTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+                Platform.runLater(() -> refreshContactsWindow());
+            }
+        }, 0, period);
+
+        //refreshContactsWindow();
         binding();
 	}
 
@@ -171,5 +184,8 @@ public class MainController implements Initializable{
 
         userListProperty.set(FXCollections.observableArrayList(userList));
     }
+
+
+
 
 }
