@@ -13,6 +13,9 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Files_Client.addSourceMsg;
+import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
+import com.lo23.communication.Messages.Files_Server.fileSourceMsg;
 import com.lo23.communication.Messages.Message;
 import com.lo23.communication.network.Server;
 
@@ -105,7 +108,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = cms.getIp();
         System.out.println(ip);
         Server server = new Server();
-        System.out.println("Serveur initialisee");
+        System.out.println("Serveur initialise");
         connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
         server.sendMessage(message);
     }
@@ -123,30 +126,45 @@ public class CommToDataClientAPI implements CommToDataClient
 
     }
 
-    @Override
-    public void requestAddSource(FileHandler file, UserIdentity user){
 
+    //A priori pas utile puisque l'ajout d'un fichier (méthode requestUploadFile) ajoute la source automatiquement
+    /*@Override
+    public void requestAddSource(FileHandlerInfos file, UserIdentity user){
+        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+        Server server=new Server();
+        addSourceMsg message=new addSourceMsg(file, user);
+        server.sendMessage(message);
+        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
+    }*/
+
+
+    @Override
+    public void requestUploadFile(FileHandlerInfos file, User user){
+        //TODO: rajouter exception
+        Server server=new Server();
+        uploadFileMsg message=new uploadFileMsg(file, user);
+        server.sendMessage(message);
+        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
+        //TODO : méthode des messages + du communicationManager
     }
 
 
-    @Override
-    public void requestUploadFile(FileHandler file, UserIdentity user){
-
-    }
-
-
-    @Override
+    /*@Override
     public void sendNewFileSource(FileHandler file, UserIdentity user){
+        //A priori la même chose que addNewFileSource ?
 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void uploadFile(FileHandler file, UserIdentity user){
 
-    }
+        //Même chose que requestUploadFile ??
+
+    }*/
 
     @Override
     public void requestFileLoc(FileHandler file, UserIdentity user){
+
 
     }
 
