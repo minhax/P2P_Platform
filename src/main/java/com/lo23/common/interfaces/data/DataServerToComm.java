@@ -54,7 +54,7 @@ public interface DataServerToComm
      * @param file fichier à ajouter
      * @param user utilisateur qui partage le fichier
      */
-    void addNewFileToServer(FileHandlerInfos file, UserIdentity user);
+    void addNewFileToServer(FileHandlerInfos file, User user);
 
     /**
      * Retourne la liste des utilisateurs sources

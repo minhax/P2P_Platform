@@ -88,12 +88,12 @@ public interface CommToDataClient
      */
     public void sendFileChanges(Rating rate, FileHandler file);
 
-    /**
+    /*/**
      * Transmet la demande de partage de fichier (déjà partagé) de l'application client à CommServeur
      * @param file fichier qui va être partagé
      * @param user utilisateur qui propose le fichier
      */
-    public void requestAddSource(FileHandler file, UserIdentity user);
+    //public void requestAddSource(FileHandlerInfos file, UserIdentity user);
 
 
     /**
@@ -101,22 +101,22 @@ public interface CommToDataClient
      * @param file fichier qui va être partagé
      * @param user utilisateur qui propose le fichier
      */
-    public void requestUploadFile(FileHandler file, UserIdentity user);
+    public void requestUploadFile(FileHandlerInfos file, User user);
 
 
-    /**
+    /*/**
      * Envoie les infos sur la nouvelle source d'un fichier à tous les clients du réseau
      * @param file fichier partagé
      * @param user utilisateur qui devient source pour ce fichier
      */
-    public void sendNewFileSource(FileHandler file, UserIdentity user);
+    //public void sendNewFileSource(FileHandler file, UserIdentity user);
 
-    /**
+    /*/**
      * Upload le fichier
      * @param file fichier partagé
      * @param user utilisateur qui upload
      */
-    public void uploadFile(FileHandler file, UserIdentity user);
+    //public void uploadFile(FileHandler file, UserIdentity user);
 
     /**
      * Transmet la demande de recherche de source d'un fichier (depuis l'appli client vers commserveur)
