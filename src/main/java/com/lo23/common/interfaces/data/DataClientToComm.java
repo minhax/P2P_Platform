@@ -4,6 +4,7 @@ import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.common.user.UserStats;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public interface DataClientToComm
      * d'un autre utilisateur ayant subi des modifications
      * @param newlyModifiedUser profil autre utilisateur modifié
      */
-    void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser);
+    void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser);
 
     /**
      * Notifie les clients distants de la déconnexion d'un autre
@@ -68,7 +69,7 @@ public interface DataClientToComm
      * @param newlyDisconnectedUser autre utilisateur déconnecté
      * @param files fichiers dont cet utilisateur est la source
      */
-    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandler> files);
+    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandlerInfos> files);
 
     /**
      * Notifie les clients distants de la connexion d'un autre
@@ -77,5 +78,5 @@ public interface DataClientToComm
      * @param newlyConnectedUser autre utilisateur connecté
      * @param files fichiers dont cet utilisateur est la source
      */
-    void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandler> files);
+    void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files);
 }

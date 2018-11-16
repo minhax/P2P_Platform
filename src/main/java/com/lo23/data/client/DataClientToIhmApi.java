@@ -29,7 +29,7 @@ public class DataClientToIhmApi implements DataClientToIhm
      * Est en accès package-private pour empêcher l'instanciation hors du groupe Data.
      * @param host DataManagerClient parent de cette API
      */
-    DataClientToIhmApi (DataManagerClient host)
+    public DataClientToIhmApi (DataManagerClient host)
     {
         this.host = host;
     }
@@ -106,7 +106,10 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestMakeFileUnavailable(FileHandler file)
     {
-
+        host.makeLocalFileUnavailable(file);
+        // TODO appel à la méthode de comm qui rend le fichier indispo
+        // Où est-ce qu'on trouve user d'ici ?
+        //host.getDataClientToComm().removeUserAsSourceFile(file, user)
     }
 
     @Override
@@ -116,9 +119,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestCheckCredentials(String login, String password)
+    public boolean requestCheckCredentials(String login, String password)
     {
-
+        return this.host.login(login, password);
     }
 
     @Override
