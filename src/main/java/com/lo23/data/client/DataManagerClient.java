@@ -258,6 +258,7 @@ public class DataManagerClient
      * @param fileToMakeUnavailable fichier à rendre indisponible
      */
     public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
+
         /*
         TODO find file and remove parts of it?
         il y aura peut-être besoin de faire une exception dans le cas où
@@ -268,6 +269,7 @@ public class DataManagerClient
         //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
         //userFiles.remove(fileToMakeUnavailable);
 
+        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
     }
 
     /**
