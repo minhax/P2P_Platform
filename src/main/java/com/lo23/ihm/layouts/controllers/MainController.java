@@ -108,7 +108,7 @@ public class MainController implements Initializable{
     private UserIdentity user;
 
     private Timer refreshTimer;
-    private int period=100000;
+    private int period=10000;
 
 	
 	
@@ -175,6 +175,7 @@ public class MainController implements Initializable{
 
         Iterator it = connectedUsers.listIterator();
         UserIdentity currentUser = new UserIdentity();
+        userList.clear();
 
         while(it.hasNext())
         {
