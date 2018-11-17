@@ -38,6 +38,9 @@ public class DataManagerClient
      * Session courante
      */
     private Session sessionInfos;
+    /**
+     * Gestionnaire de l'upload de fichiers
+     */
     private UploadManager uploadManager;
     private DownloadManager downloadManager;
 
@@ -50,6 +53,7 @@ public class DataManagerClient
     {
         super();
         this.sessionInfos = new Session();
+        this.uploadManager = new UploadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
@@ -150,6 +154,11 @@ public class DataManagerClient
     public DataClientToIhmApi getDataClientToIhmApi ()
     {
         return this.dataClientToIhmApi;
+    }
+
+    UploadManager getUploadManager ()
+    {
+        return this.uploadManager;
     }
 
     /**
