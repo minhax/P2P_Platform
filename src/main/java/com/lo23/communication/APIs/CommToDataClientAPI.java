@@ -14,6 +14,7 @@ import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Message;
+import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
 import com.lo23.communication.network.Server;
 
 import java.net.InetAddress;
@@ -60,8 +61,17 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void sendUserChangesToServer(UserIdentity user){
-
+    public void sendUserChangesToServer(UserIdentity user)
+    {
+        /**
+         * cree un message de type updateUserInfoMsg
+         * appelle de la methode treatment qui applique les modifications apportees au user
+         * envoie des modification au serveur via socket
+         */
+        updateUserInfoMsg msg = new updateUserInfoMsg(user);
+        msg.treatment();
+        Server server = new Server();
+        server.sendMessage(msg);
     }
 
     @Override
@@ -120,7 +130,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void sendFileChanges(Rating rate, FileHandler file){
-        //System
+
     }
 
     @Override

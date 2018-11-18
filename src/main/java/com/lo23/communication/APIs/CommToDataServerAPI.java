@@ -8,6 +8,8 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
+import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
+import com.lo23.communication.network.Server;
 
 import java.util.List;
 
@@ -68,8 +70,16 @@ public class CommToDataServerAPI implements CommToDataServer {
     }
 
     @Override
-    public void sendUpdatedAccountToAll(UserIdentity user){
+    public void sendUpdatedAccountToAll(UserIdentity user)
+    {
 
+        /**
+         * cree un message de type updateAccountMsg
+         * appelle de la methode treatment qui permet au serveur de diffuser les modifications apportées au user
+         */
+        updatedAccountMsg msg = new updatedAccountMsg(user);
+        msg.treatment();
+        commManagerServer.broadcast(msg);
     }
 
     @Override
