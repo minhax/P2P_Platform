@@ -3,17 +3,19 @@ package com.lo23.ihm.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.lo23.common.filehandler.FileHandler;
+import com.lo23.ihm.layouts.models.AvailableFilesListCell;
+import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
+import com.lo23.ihm.layouts.models.MyFilesListCell;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 public class MainController implements Initializable{
 
@@ -89,10 +91,48 @@ public class MainController implements Initializable{
 
     @FXML
     private Button disconnectButton;
+
+    @FXML
+    private ListView listViewAvailableFiles;
+
+    @FXML
+    private ListView listViewMyFiles;
+
+    @FXML
+    private ListView listViewDownloading;
 	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
+                new FileHandler("hash2", "document 2", 1554, "document2", 32),
+                new FileHandler("hash3", "document 3", 15152, "document3", 64));
+
+        listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new AvailableFilesListCell();
+            }
+        });
+        listViewMyFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new MyFilesListCell();
+            }
+        });
+        listViewDownloading.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new DownloadingFilesListCell();
+            }
+        });
+
+        listViewAvailableFiles.setItems(data);
+        listViewMyFiles.setItems(data);
+        listViewDownloading.setItems(data);
+
 	}
 
 	@FXML
