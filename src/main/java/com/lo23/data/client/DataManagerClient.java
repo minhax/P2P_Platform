@@ -271,8 +271,8 @@ public class DataManagerClient
         d'après la doc : "If the Vector does not contain the element, it is unchanged."
         A préciser donc
         */
-        Vector<FileHandlerInfos> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
-        userFiles.remove(fileToMakeUnavailable);
+        UserAccount currentUser = this.sessionInfos.getCurrentUser();
+        currentUser.removeProposedFile(fileToMakeUnavailable);
     }
 
     /**
