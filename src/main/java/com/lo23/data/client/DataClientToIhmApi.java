@@ -100,7 +100,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestSubmitUserChanges(UserAccount modifiedUser)
     {
-
+        this.host.changeUserInfos(modifiedUser);
     }
 
     @Override
