@@ -32,8 +32,10 @@ public class DataManagerClient
      */
     private DataClientToCommApi dataClientToCommApi;
     //private IhmToDataClientApi ihmToDataClientApi;
+    /**
+     * API de Comm pour DataClient
+     */
     private CommToDataClientAPI commToDataClientAPI;
-
     /**
      * Session courante
      */
@@ -42,8 +44,13 @@ public class DataManagerClient
      * Gestionnaire de l'upload de fichiers
      */
     private UploadManager uploadManager;
+    /**
+     * Gestionnaire pour le download
+     */
     private DownloadManager downloadManager;
-
+    /**
+     * Référence du DataManagerClient pour le design pattern Singleton
+     */
     static private DataManagerClient instance;
 
     /**
