@@ -4,6 +4,7 @@ import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
+import com.lo23.communication.APIs.CommToDataClientAPI;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -29,7 +30,8 @@ public class DataManagerClient
      */
     private DataClientToCommApi dataClientToCommApi;
     //private IhmToDataClientApi ihmToDataClientApi;
-    //private CommToDataClientApi commToDataClientApi;
+    private CommToDataClientAPI commToDataClientAPI;
+
     /**
      * Session courante
      */
@@ -37,18 +39,34 @@ public class DataManagerClient
     private UploadManager uploadManager;
     private DownloadManager downloadManager;
 
+    static private DataManagerClient instance;
+
     /**
      * Constructeur de DataManagerClient
      */
-    public DataManagerClient()
+    private DataManagerClient()
     {
         super();
-        this.dataClientToCommApi = new DataClientToCommApi();
+        this.sessionInfos = new Session();
+        this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
+        this.commToDataClientAPI = CommToDataClientAPI.getInstance();
+    }
+
+    static public DataManagerClient getInstance(){
+        if(DataManagerClient.instance == null){
+            instance = new DataManagerClient();
+        }
+        return instance;
     }
 
     public DataClientToComm getDataClientToComm(){
         return this.dataClientToCommApi;
+    }
+
+    Session getSessionInfos()
+    {
+        return sessionInfos;
     }
 
     /**
@@ -56,13 +74,14 @@ public class DataManagerClient
      * @param login login de l'utilisateur
      * @param password password de l'utilisateur
      */
-    public void login(String login, String password)
+    public boolean login(String login, String password)
     {
+        boolean retValue = false;
         // TODO hash password for comparison
         File[] listOfUserFiles = new File("files/accounts").listFiles();
 
         String hashedPassword = hashPassword(password);
-        
+
         // Etude de chaque fichier utilisateur
         for (File userFile : listOfUserFiles)
         {
@@ -78,13 +97,14 @@ public class DataManagerClient
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
-                            // TODO get IP to connect to.
+                            // TODO get IP to connect to. discuter avec comm
                             String serverIP  = "";
-
-                            UserStats userToConnect = (UserStats) comparisonAccount;
-
-                            // FIXME Pas la bonne interface appelée
-//                            dataClientToCommApi.login(userToConnect, serverIP);
+                            // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
+                            commToDataClientAPI.requestUserConnexion((UserStats)comparisonAccount,
+                                                                     comparisonAccount.getProposedFiles(),
+                                                                     serverIP);
+                            this.sessionInfos.setCurrentUser(comparisonAccount);
+                            retValue = true;
                         }
                     }
                 }
@@ -94,7 +114,7 @@ public class DataManagerClient
                 }
             }
         }
-        //TODO return error code saying that we found login but password didn't match
+        return retValue;
     }
 
     /**
@@ -225,11 +245,29 @@ public class DataManagerClient
         return numberOfMatchingFiles > 0;
     }
 
+    /**
+     * Met à jour le profil utilisateur en local et
+     * envoie une demande de propagation d'information
+     * au serveur
+     * @param modifiedUser nouveau profil
+     */
     public void changeUserInfos(UserAccount modifiedUser)
     {
-        // On réecrit le fichier de l'utilisateur modifié
-        this.saveUserInfo(modifiedUser);
-        // Envoyer la modification vers le serveur
+        this.sessionInfos.getCurrentUser().setPassword(modifiedUser.getPassword());
+        // Si autre chose que le mdp a été changé
+        if (!this.sessionInfos.getCurrentUser().getFirstName().equals(modifiedUser.getFirstName())
+                || !this.sessionInfos.getCurrentUser().getLastName().equals(modifiedUser.getLastName())
+                || this.sessionInfos.getCurrentUser().getAge() != modifiedUser.getAge())
+        {
+            // Mise à jour de l'utilisateur connecté
+            this.sessionInfos.getCurrentUser().setFirstName(modifiedUser.getFirstName());
+            this.sessionInfos.getCurrentUser().setLastName(modifiedUser.getLastName());
+            this.sessionInfos.getCurrentUser().setAge(modifiedUser.getAge());
+
+            // Communication des changements au serveur pour qu'il se mette à jour
+            this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
+        }
     }
-    
+
+
 }

@@ -5,6 +5,7 @@ import com.lo23.common.Rating;
 import com.lo23.common.Comment;
 
 public interface CommClientToServer{
+
     /** Envoie une demande de déconnexion au serveur
      * @param user utilisateur qui se déconnecte
      */

@@ -8,7 +8,7 @@ public class fileLocalisationMsg extends UserMessage{
 	public fileLocalisationMsg(UserIdentity ui){
 		this.user = ui;
 	}
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

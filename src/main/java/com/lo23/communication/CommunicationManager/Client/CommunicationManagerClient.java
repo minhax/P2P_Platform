@@ -1,44 +1,64 @@
 package com.lo23.communication.CommunicationManager.Client;
 
 
-import com.lo23.common.interfaces.comm.CommToDataClient;
-import com.lo23.common.interfaces.data.DataClientToComm;
-import com.lo23.common.interfaces.data.DataServerToComm;
-import com.lo23.communication.Messages.Message;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-public class CommunicationManagerClient {
+import com.lo23.communication.APIs.CommToDataClientAPI;
+import com.lo23.data.client.DataClientToCommApi;
+import com.lo23.communication.CommunicationManager.CommunicationManager;
 
-	protected DataClientToComm dataInterface;
-	protected CommToDataClient commInterface;
+public class CommunicationManagerClient extends CommunicationManager{
+
+	protected DataClientToCommApi dataInterface;
+	protected CommToDataClientAPI commInterface;
+	protected String addressIpServer;
 	
 	/* Constructeur privé pour implémentation du singleton */
 	private CommunicationManagerClient()
 	{
-		dataInterface = null;
-		commInterface = null;
+		/** Initialisation des variables privees du CMC **/
+		this.dataInterface = new DataClientToCommApi();
+		this.commInterface = CommToDataClientAPI.getInstance();
+		/** Initialisation de la List
+		 *
+		 */
+		this.addressIpServer = null;
+		/** Bloc try pour recuperer l'adresse IP de la machine sur le reseau (fonction a tester) **/
+		try {
+			ip = InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException ex)
+		{
+			System.out.print("Error in getting IP Adress");
+		}
 	}
-	/* Instance unique initialisée */
+	/** Implementation du singleton **/
 	private static CommunicationManagerClient Instance = new CommunicationManagerClient();
 	
-	/* Point d'accès à l'instance unique */
+	/** Point d'accès à l'instance unique **/
 	public static CommunicationManagerClient getInstance()
-	
 	{
 		return Instance;
 	}
-	public DataClientToComm getDataInterface()
+	/** Getteur et setteur d'interfaces **/
+	public String getAddressIpServer()
+	{
+		return addressIpServer;
+	}
+	public DataClientToCommApi getDataInterface()
 	{
 		return dataInterface;
 	}
-	public CommToDataClient getCommInterface()
+	public CommToDataClientAPI getCommInterface()
 	{
 		return commInterface;
 	}
-	public void setDataInterface(DataClientToComm di)
+	public void setAddressIpServer(String s) {this.addressIpServer = s;}
+	public void setDataInterface(DataClientToCommApi di)
 	{
 		this.dataInterface = di;
 	}
-	public void setCommInterface (CommToDataClient ci)
+	public void setCommInterface (CommToDataClientAPI ci)
 	{
 		this.commInterface = ci;
 	}

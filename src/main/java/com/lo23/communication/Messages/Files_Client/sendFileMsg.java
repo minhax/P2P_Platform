@@ -10,7 +10,7 @@ public class sendFileMsg extends FileMessage {
 		this.file = fi;
 	}
 	
-	void treatment(){
+	public void treatment(){
 	
 	}
 }

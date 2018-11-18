@@ -5,21 +5,29 @@ import com.lo23.common.Rating;
 import com.lo23.common.filehandler.*;
 import com.lo23.common.user.*;
 
+import java.util.List;
+
 
 public interface CommToDataClient
 {
     /**
-     * Envoie les modifications de fichier
-     * @param champ modification dans le contenu
-     * @param file fichier que l'on modifie
+     * Envoie les modifications faites sur les
+     * métadonnées d'un fichier
+     * @param file fichier mis à jour
      */
-    void sendFileChanges(String champ, FileHandler file);
+    void sendFileChanges(FileHandler file);
+
+    /**
+     * Envoie les modifications relatives à un utilisateur (communication avec le serveur)
+     * @param user utilisateur concerné
+     */
+    void sendUserChangesToServer(UserIdentity user);
 
     /**
      * Envoie les modifications relatives à un utilisateur
      * @param user utilisateur concerné
      */
-    void sendUserChangesToServer(UserIdentity user);
+    void sendUserChanges(UserIdentity user);
 
     /**
      * Rend indisponible un fichier (communication avec le serveur)
@@ -46,27 +54,31 @@ public interface CommToDataClient
      * Transmet la demande de déconnexion de l'utilisateur (recevoir la demande)
      * @param user utilisateur qui se déconnecte
      */
-    void requestLogoutToServer(User user);
+    void requestLogoutToServer(UserStats user);
 
+    /*
     /**
      * Transmet la demande de déconnexion de l'utilisateur (envoyer la demande)
      * @param user utilisateur qui se déconnecte
      */
-    void requestLogout(UserIdentity user);
+    //public void requestLogout(UserIdentity user);
+
 
     /**
      * Transmet la demande de connexion d'un utiisateur au serveur
      * @param user utilisateur qui veut se connecter
      */
-    void requestUserConnexion(UserStats user);
+    void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP);
 
 
+    /*
     /**
      * Envoie la demande de connexion
      * @param user utilisateur qui se connecte
      * @param IP IP de la machine de l'utilisateur
      */
-    void connect(UserStats user, long IP);
+    //public void connect(UserStats user, long IP);
+
 
     /**
      * Envoie une nouvelle note attribuée à un fichier
