@@ -1,6 +1,7 @@
 package com.lo23.data.client;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
@@ -270,9 +271,8 @@ public class DataManagerClient
         d'après la doc : "If the Vector does not contain the element, it is unchanged."
         A préciser donc
         */
-        //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
-        //userFiles.remove(fileToMakeUnavailable);
-
+        Vector<FileHandlerInfos> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
+        userFiles.remove(fileToMakeUnavailable);
     }
 
     /**
