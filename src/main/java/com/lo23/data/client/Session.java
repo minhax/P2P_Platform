@@ -58,4 +58,9 @@ class Session
             this.getOtherLoggedUsers().add(user);
         }
     }
+
+    public Vector<UserStats> getLoggedUsers(){
+        return this.otherLoggedUsers;
+    }
+
 }
