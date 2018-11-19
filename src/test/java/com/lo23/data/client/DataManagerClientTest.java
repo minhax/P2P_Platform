@@ -1,5 +1,6 @@
 package com.lo23.data.client;
 
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ class DataManagerClientTest
     @Test
     void shouldCreateAccount ()
     {
-        DataClientToIhmApi api = dm.getDataClientToIhmApi();
+        DataClientToIhm api = dm.getDataClientToIhmApi();
         assertDoesNotThrow(() ->
                 api.createAccount("test", "test", "PrénomTest", "NomTest", 99)
         );
