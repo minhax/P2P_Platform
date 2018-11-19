@@ -14,7 +14,7 @@
       <TextField fx:id="passwordUpdateField" layoutX="160.0" layoutY="96.0" prefHeight="38.0" prefWidth="290.0" promptText="Mot de passe ..." />
       <TextField fx:id="familynameUpdateField" layoutX="160.0" layoutY="200.0" prefHeight="38.0" prefWidth="290.0" promptText="Nom ..." />
       <TextField fx:id="nameUpdateField" layoutX="160.0" layoutY="249.0" prefHeight="38.0" prefWidth="290.0" promptText="Prénom ..." />
-      <TextField fx:id="birthdateUpdateField" layoutX="160.0" layoutY="301.0" prefHeight="38.0" prefWidth="290.0" promptText="Date de naissance ..." />
+      <TextField fx:id="ageUpdateField" layoutX="160.0" layoutY="301.0" prefHeight="38.0" prefWidth="290.0" promptText="Âge..." />
       <Button fx:id="avatarUpdateButton" layoutX="381.0" layoutY="402.0" mnemonicParsing="false" onAction="#updateAvatar" text="Modifier" />
       <Button fx:id="validateUpdateButton" layoutX="160.0" layoutY="464.0" mnemonicParsing="false" onAction="#Validate" prefHeight="27.0" prefWidth="290.0" text="Valider" />
       <Button fx:id="previousButton" layoutX="33.0" layoutY="32.0" mnemonicParsing="false" onAction="#Previous" text="&lt;- Précédent" />
