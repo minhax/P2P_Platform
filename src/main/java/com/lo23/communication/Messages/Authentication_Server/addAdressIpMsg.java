@@ -3,6 +3,8 @@ package com.lo23.communication.Messages.Authentication_Server;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.Messages.Authentication;
 
+import java.io.Serializable;
+
 /** Message cree dans le server pour transferer son adresse IP jusqu'aux clients
  * /
  */
@@ -18,7 +20,11 @@ public class addAdressIpMsg extends Authentication {
 	 */
 	public void treatment()
 	{
-		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		cms.setAddressIpServer(this.ip);
+		//CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+		//cms.setAddressIpServer(this.ip);
+		System.out.println("IP" + this.ip);
 	}
+	public String getIp()
+	{ return ip;}
+	
 }

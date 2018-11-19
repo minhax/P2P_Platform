@@ -2,6 +2,7 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
+import com.lo23.communication.Messages.Authentication_Server.addAdressIpMsg;
 import com.lo23.communication.network.Server;
 import com.lo23.communication.network.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
@@ -47,8 +48,9 @@ public class Tests
 		int test = 0;
 		try {
 			test = Integer.parseInt(br.readLine());
-		}catch(IOException e)
-		{
+		}
+		catch(IOException e){
+		
 			e.printStackTrace();
 		}
 		if(test == 1)
@@ -66,8 +68,9 @@ public class Tests
 
 
 			// test message connection
-            connectionMsg msgC = new connectionMsg(userstats, newList, myIP);
-			System.out.println("Mon adresse IP dans le message : "+ msgC.getMyIp());
+            //connectionMsg msgC = new connectionMsg(userstats, newList, myIP);
+			addAdressIpMsg msgC = new addAdressIpMsg("192.168.0.1");
+			System.out.println("Mon adresse IP dans le message : "+ msgC.getIp());
 			//test message deconnection
 			// Message msgD = deconnectionMsg(userstats, myIP);
 
