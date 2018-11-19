@@ -31,6 +31,10 @@ public class CommunicationManagerClient extends CommunicationManager{
 		{
 			System.out.print("Error in getting IP Adress");
 		}
+		try {
+			this.getIPadress();
+		}catch(Exception e)
+		{e.printStackTrace();}
 	}
 	/** Implementation du singleton **/
 	private static CommunicationManagerClient Instance = new CommunicationManagerClient();
@@ -53,7 +57,9 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		return commInterface;
 	}
-	public void setAddressIpServer(String s) {this.addressIpServer = s;}
+	public void setAddressIpServer(String s) {
+		System.out.println("Ajout reussi");
+		this.addressIpServer = s;}
 	public void setDataInterface(DataClientToCommApi di)
 	{
 		this.dataInterface = di;

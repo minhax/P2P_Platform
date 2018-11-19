@@ -106,7 +106,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = cms.getIp();
         System.out.println(ip);
         int portServ = 0;
-        connectionMsg message = new connectionMsg(user, fi, ip);
+        connectionMsg message = new connectionMsg(user, fi);
 	    System.out.println("Client cree");
 	    Client c = new Client(message, portServ, serverIP);
     }

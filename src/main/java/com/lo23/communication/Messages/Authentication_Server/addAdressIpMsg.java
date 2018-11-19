@@ -20,9 +20,9 @@ public class addAdressIpMsg extends Authentication {
 	 */
 	public void treatment()
 	{
-		//CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		//cms.setAddressIpServer(this.ip);
 		System.out.println("IP" + this.ip);
+		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+		cms.setAddressIpServer(this.ip);
 	}
 	public String getIp()
 	{ return ip;}

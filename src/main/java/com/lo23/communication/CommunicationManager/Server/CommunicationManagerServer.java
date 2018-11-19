@@ -39,6 +39,10 @@ public class CommunicationManagerServer extends CommunicationManager {
 			}
 			/** Instanciation de la linkedHashMap **/
 			clientAndServerIP = new LinkedHashMap<>();//met bien string string?
+			try {
+				this.getIPadress();
+			}catch(Exception e)
+			{e.printStackTrace();}
 		}
 	
 	

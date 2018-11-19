@@ -5,12 +5,9 @@ import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
-
-import java.net.InetAddress;
 import java.util.List;
 
 public class connectionMsg extends Authentication {
-	private String serverIp;
 	private String myIp;
 	private List<FileHandlerInfos> fileInfo;
 
@@ -18,11 +15,9 @@ public class connectionMsg extends Authentication {
 		this.userStats = us;
 	}
 
-	public connectionMsg(UserStats us, List<FileHandlerInfos> files,String myIp ){
+	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
 		this.userStats = us;
-		this.serverIp = serverIp;
 		this.fileInfo = files;
-		this.myIp = myIp;
 		System.out.println("Creation du message");
 	}
 	
@@ -41,13 +36,19 @@ public class connectionMsg extends Authentication {
 		 *
 		
 		 */
-		System.out.println("Message treatment affichaged des infos inchallah" + this.getMyIp() + this.serverIp);
+		System.out.println("Message treatment affichaged des infos inchallah" + this.getMyIp());
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		/** stockage des informations concernant l'adresse IP du server et du client dans le cms
-		 */
-		cms.addEntryInClientAndServerIPArray(this.myIp,this.serverIp);
+		String IpAdress = null;
+		try {
+			 IpAdress = cms.getIp();
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		cms.addEntryInClientAndServerIPArray(this.myIp, IpAdress);
 		
 	}
 	
@@ -55,9 +56,6 @@ public class connectionMsg extends Authentication {
 		return fileInfo;
 	}
 	
-	public String getServerIp() {
-		return serverIp;
-	}
 	
 	public String getMyIp() {
 		return myIp;

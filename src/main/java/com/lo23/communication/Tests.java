@@ -68,9 +68,8 @@ public class Tests
 
 
 			// test message connection
-            //connectionMsg msgC = new connectionMsg(userstats, newList, myIP);
-			addAdressIpMsg msgC = new addAdressIpMsg("192.168.0.1");
-			System.out.println("Mon adresse IP dans le message : "+ msgC.getIp());
+            connectionMsg msgC = new connectionMsg(userstats, newList);
+			System.out.println("Mon adresse IP dans le message : "+ msgC.getMyIp());
 			//test message deconnection
 			// Message msgD = deconnectionMsg(userstats, myIP);
 
