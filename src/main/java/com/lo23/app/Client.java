@@ -17,8 +17,9 @@ public class Client extends Application {
         DataManagerClient dataManagerClient = DataManagerClient.getInstance();
         CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
 
-        // On partage les APIs entre les Manager
-        // TODO: partager les API
+        dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
+        commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());
+        // TODO: partager l'API avec IHM sans Singleton
 
         launch(args);
     }

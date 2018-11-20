@@ -4,13 +4,13 @@ package com.lo23.communication.CommunicationManager.Client;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.communication.APIs.CommToDataClientAPI;
-import com.lo23.data.client.DataClientToCommApi;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 
 public class CommunicationManagerClient extends CommunicationManager{
 
-	protected DataClientToCommApi dataInterface;
+	protected DataClientToComm dataInterface;
 	protected CommToDataClientAPI commInterface;
 	protected String addressIpServer;
 	
@@ -22,7 +22,6 @@ public class CommunicationManagerClient extends CommunicationManager{
 	private CommunicationManagerClient()
 	{
 		/** Initialisation des variables privees du CMC **/
-		//this.dataInterface = new DataClientToCommApi();
 		this.commInterface = CommToDataClientAPI.getInstance();
 		this.addressIpServer = null;
 		
@@ -44,7 +43,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		return addressIpServer;
 	}
-	public DataClientToCommApi getDataInterface()
+	public DataClientToComm getDataInterface()
 	{
 		return dataInterface;
 	}
@@ -54,7 +53,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 	}
 	public void setAddressIpServer(String s) {
 		this.addressIpServer = s;}
-	public void setDataInterface(DataClientToCommApi di)
+	public void setDataInterface(DataClientToComm di)
 	{
 		this.dataInterface = di;
 	}

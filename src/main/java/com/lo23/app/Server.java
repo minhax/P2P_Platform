@@ -18,9 +18,12 @@ public class Server {
         CommunicationManagerServer commManager = CommunicationManagerServer.getInstance();
 
         // On partage les APIs entre les Manager
-        // TODO: partager les API
+        dataManagerServer.setCommToDataServer(commManager.getCommInterface());
+        commManager.setDataInterface(dataManagerServer.getDataServerToCommApi());
 
         Server s = new Server();
+
+        System.out.println("Serveur lancé");
 
         Scanner consoleInput = new Scanner(System.in);
         boolean exitApp = false;

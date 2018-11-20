@@ -48,4 +48,9 @@ public class DataManagerServer
     {
         this.commToDataApi = api;
     }
+
+    public DataServerToComm getDataServerToCommApi ()
+    {
+        return this.toCommApi;
+    }
 }

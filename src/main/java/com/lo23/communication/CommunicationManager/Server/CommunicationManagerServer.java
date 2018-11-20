@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class CommunicationManagerServer extends CommunicationManager {
 	
-	private DataServerToCommAPI dataInterface;
+	private DataServerToComm dataInterface;
 	private CommToDataServerAPI commInterface;
 	private LinkedHashMap<String,String> clientAndServerIP;
 	
@@ -28,7 +28,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 **/
 	private CommunicationManagerServer()
 		{
-			this.dataInterface = new DataServerToCommAPI(null);//TODO FIX AVEC DATA
 			this.commInterface = CommToDataServerAPI.getInstance();
 			
 			try {
@@ -49,7 +48,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	{
 		return commInterface;
 	}
-	public void setDataInterface(DataServerToCommAPI ds) {
+	public void setDataInterface(DataServerToComm ds) {
 		this.dataInterface = ds;
 	}
 	public void setCommInterface (CommToDataServerAPI cs)
