@@ -46,9 +46,9 @@ public interface CommToDataClient
     /**
      * Transmet l'ajout d'un nouveau commentaire sur un fichier
      * @param comment Commentaire
-     * @param file Fichier commenté
+     * @param commentedFile Fichier commenté
      */
-    void sendFilesChanges(Comment comment, FileHandler file);
+    void sendCommentedFile(Comment comment, FileHandler commentedFile);
 
     /**
      * Transmet la demande de déconnexion de l'utilisateur (recevoir la demande)

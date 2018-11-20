@@ -1,6 +1,9 @@
 package com.lo23.data.client;
 
+import com.lo23.common.Comment;
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataClientToIhm;
@@ -325,6 +328,21 @@ public class DataManagerClient
             // Communication des changements au serveur pour qu'il se mette à jour
             this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
         }
+    }
+
+    /**
+     * Ajoute en local un commentaire à un fichier
+     * @param comment commentaire
+     * @param commentedFile fichier commenté
+     */
+    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
+    {
+        commentedFile.addComment(comment);
+
+        FileHandler file = (FileHandler) commentedFile;
+
+        this.sessionInfos
+        this.getCommToDataClientApi().sendCommentedFile(comment, file);
     }
 
 
