@@ -293,7 +293,11 @@ public class DataManagerClient
     public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
         // Supression du fichier en local
         this.sessionInfos.getDirectory().removeProposedFile(this.sessionInfos.getCurrentUser(), fileToMakeUnavailable);
-        
+        /*
+        Ici on ne supprime pas les parties de fichier parce que dans l'éventualité ou
+        on rendrait le fichier dispo de nouveau, on override les fileParts  qui existent
+        déjà donc les laisser en mémoire ne pose pas de problème.
+         */
         /*
         TODO find file and remove parts of it?
         il y aura peut-être besoin de faire une exception dans le cas où
