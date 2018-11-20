@@ -152,9 +152,13 @@ public class DataManagerClient
         return retValue;
     }
 
+    /**
+     * Méthode qui connecte l'utilisateur courant au serveur
+     * @return Succès de la connexion
+     */
     public boolean serverLogin(){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
-
+        
         // TODO get IP to connect to. discuter avec comm
         String serverIP  = "";
 
