@@ -62,23 +62,23 @@ public class ConnectionController implements Initializable {
         DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
 
         authorizeConnection = api.requestCheckCredentials(this.userNameTextField.getText(), this.passwordField.getText());
-        if (authorizeConnection) { // Remplacer true par authorizeConnection
-            if (this.serverChoiceTextField.getText().trim().isEmpty() || this.portTextField.getText().trim().isEmpty()) {
-                try {
-                    FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
-                    Parent root = fxmlloader.load();
-                    Stage stage = new Stage();
+        if (authorizeConnection) {
+            if (!(this.serverChoiceTextField.getText() == null || this.portTextField.getText() == null)) {
+                //TODO à decommenter pour le merge
+               // api.requestConnectionToServer(this.serverChoiceTextField.getText());
+            }
+            try {
+                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                Parent root = fxmlloader.load();
+                Stage stage = new Stage();
 
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setOpacity(1);
-                    stage.setTitle("Fenêtre principale");
-                    stage.setScene(new Scene(root));
-                    stage.showAndWait();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setOpacity(1);
+                stage.setTitle("Fenêtre principale");
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
             incorrectLabel.setVisible(true);
