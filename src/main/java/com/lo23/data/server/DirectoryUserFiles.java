@@ -196,4 +196,14 @@ public class DirectoryUserFiles
             }
         }
     }
+
+    public HashMap<FileHandlerInfos, Vector<UserIdentity>> getFilesUser()
+    {
+        return filesUser;
+    }
+
+    public HashMap<UserIdentity, Vector<FileHandlerInfos>> getUserFiles()
+    {
+        return userFiles;
+    }
 }

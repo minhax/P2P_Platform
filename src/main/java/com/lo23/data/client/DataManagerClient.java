@@ -16,6 +16,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Stream;
 
@@ -334,8 +336,22 @@ public class DataManagerClient
      */
     public void addRatingToFile(Rating rating, FileHandlerInfos ratedFile)
     {
-        // Ajout de la note en local
-        ratedFile.addRating(rating);
+        // Récupération de la liste des fichiers partagés
+        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
+        boolean found = false;
+        Iterator<FileHandlerInfos> i = keySet.iterator();
+        // Itération sur les fichiers partagés
+        while(i.hasNext() && !found)
+        {
+            FileHandlerInfos nextFile = i.next();
+            if(nextFile.getHash().equals(ratedFile.getHash()))
+            {
+                // Ajout de la note au fichier
+                nextFile.addRating(rating);
+                found = true;
+            }
+        }
+
         // Communication des changements au serveur pour qu'il se mette à jour
         this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
     }
