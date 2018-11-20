@@ -19,6 +19,7 @@ import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
 import com.lo23.communication.Messages.Files_Server.fileSourceMsg;
 import com.lo23.communication.Messages.Message;
 import com.lo23.communication.network.Server;
+import com.sun.security.ntlm.Client;
 
 import java.net.InetAddress;
 import java.util.List;
@@ -75,9 +76,10 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
-        Server server = new Server();
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
-        server.sendMessage(message);
+        Client client=new Client(message, 1026, ip);
     }
 
     @Override
@@ -92,11 +94,10 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestLogoutToServer(UserStats user){
-
-        String ip = commManagerClient.getIp(); //TODO: Rajouter une exception plus tard
-        Server server = new Server();
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
         logoutMsg message = new logoutMsg(user,ip);
-        server.sendMessage(message);
+        Client client=new Client(message, 1026, ip);
     }
 
     /*@Override
@@ -107,13 +108,10 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-        String ip = cms.getIp();
-        System.out.println(ip);
-        Server server = new Server();
-        System.out.println("Serveur initialise");
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
         connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
-        server.sendMessage(message);
+        Client client=new Client(message, 1026, ip);
     }
 
 
@@ -144,9 +142,11 @@ public class CommToDataClientAPI implements CommToDataClient
     @Override
     public void requestUploadFile(FileHandlerInfos file, User user){
         //TODO: rajouter exception
-        Server server=new Server();
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
-        server.sendMessage(message);
+        Client client=new Client(message, 1026, ip);
+
         //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
     }
 
