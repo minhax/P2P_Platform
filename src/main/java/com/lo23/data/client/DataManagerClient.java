@@ -1,6 +1,7 @@
 package com.lo23.data.client;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataClientToIhm;
@@ -151,6 +152,10 @@ public class DataManagerClient
         return retValue;
     }
 
+    /**
+     * Méthode qui connecte l'utilisateur courant au serveur
+     * @return Succès de la connexion
+     */
     public boolean serverLogin(String serverIp){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
 
@@ -285,15 +290,15 @@ public class DataManagerClient
      */
     public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
         /*
-        TODO find file and remove parts of it?
-        il y aura peut-être besoin de faire une exception dans le cas où
-        fileToMakeUnavailable n'existe pas dans le vecteur. Néanmoins,
-        d'après la doc : "If the Vector does not contain the element, it is unchanged."
-        A préciser donc
-        */
-        //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
-        //userFiles.remove(fileToMakeUnavailable);
-
+        Ici on ne supprime pas les parties de fichier sur le disque parce que
+        dans l'éventualité ou on rendrait le fichier dispo de nouveau, on
+        override les fileParts  qui existent déjà donc les laisser en mémoire
+        ne pose pas de problème.
+         */
+        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
+        // Supression du fichier en local
+        UserAccount currentUser = this.sessionInfos.getCurrentUser();
+        currentUser.removeProposedFile(fileToMakeUnavailable);
     }
 
     /**
