@@ -16,7 +16,20 @@ import java.util.List;
  */
 public class DataClientToCommApi implements DataClientToComm
 {
+    /**
+     * DataManagerClient parent, sur lequel appeler les fonctions privées de Data.
+     */
+    private DataManagerClient host;
 
+    /**
+     * Constructeur de l'objet.
+     * Est en accès package-private pour empêcher l'instanciation hors du groupe Data.
+     * @param host DataManagerClient parent de cette API
+     */
+    DataClientToCommApi (DataManagerClient host)
+    {
+        this.host = host;
+    }
 
     @Override
     public void receiveFileLocations(List<UserIdentity> sources)
@@ -55,9 +68,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser)
+    public void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser)
     {
-
+        this.host.getSessionInfos().mergeUserIntoLoggedUsers(newlyModifiedUser);
     }
 
     @Override

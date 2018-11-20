@@ -125,7 +125,7 @@ public class ConnectionsManager
         return this.directory.getProposedFiles();
     }
 
-    public void addFileToDirectory(UserStats user, FileHandlerInfos file)
+    public void addFileToDirectory(UserIdentity user, FileHandlerInfos file)
     {
         this.directory.addProposedFile(user, file);
     }

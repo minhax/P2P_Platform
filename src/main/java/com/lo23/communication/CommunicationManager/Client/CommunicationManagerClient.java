@@ -22,7 +22,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 	private CommunicationManagerClient()
 	{
 		/** Initialisation des variables privees du CMC **/
-		this.dataInterface = new DataClientToCommApi();
+		//this.dataInterface = new DataClientToCommApi();
 		this.commInterface = CommToDataClientAPI.getInstance();
 		this.addressIpServer = null;
 		
