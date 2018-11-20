@@ -63,7 +63,7 @@ public interface DataClientToIhm
      * @param comment commentaire
      * @param commentedFile fichier commenté
      */
-    void requestCommentFile(Comment comment, FileHandler commentedFile);
+    void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException;
 
     /**
      * Envoie à Data un fichier qui a subi des modifications

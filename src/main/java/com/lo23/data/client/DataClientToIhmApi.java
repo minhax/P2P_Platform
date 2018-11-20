@@ -98,9 +98,14 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestCommentFile(Comment comment, FileHandler commentedFile)
+    public void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
     {
+        if (commentedFile == null)
+            throw new DataException("File to comment is null");
+        if (comment == null)
+            throw new DataException("Added comment object is null");
 
+        this.host.addCommentToFile(comment, commentedFile);
     }
 
     @Override
