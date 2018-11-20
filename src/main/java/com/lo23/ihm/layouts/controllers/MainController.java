@@ -1,7 +1,7 @@
 package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
@@ -9,6 +9,15 @@ import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
 import com.lo23.ihm.layouts.models.MyFilesListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.common.user.User;
+import com.lo23.common.user.UserIdentity;
+import com.lo23.data.client.DataManagerClient;
+import javafx.application.Platform;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -87,6 +96,9 @@ public class MainController implements Initializable{
     private AnchorPane onlineUsersPane;
 
     @FXML
+    private ListView<String> contactsListView;
+
+    @FXML
     private TextField researchUserTextField;
 
     @FXML
@@ -100,6 +112,21 @@ public class MainController implements Initializable{
 
     @FXML
     private ListView listViewDownloading;
+
+    //gestion fenêtre contacts en ligne
+    private List<UserIdentity> connectedUsers = new ArrayList<UserIdentity>();
+
+    private List<String> userList = new ArrayList<String>();
+
+    private ListProperty<String> userListProperty = new SimpleListProperty<String>();
+
+    //pour test
+    private UserIdentity user;
+
+    private Timer refreshTimer;
+    private int period=10000;
+
+
 	
 	
 	@Override
@@ -133,7 +160,39 @@ public class MainController implements Initializable{
         listViewMyFiles.setItems(data);
         listViewDownloading.setItems(data);
 
+
+	    //pour test
+        user = new UserIdentity("login", "Prénom", "Nom", 21);
+        connectedUsers.add(user);
+
+
+        refreshTimer = new Timer();
+
+        refreshTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+                Platform.runLater(() -> refreshContactsWindow());
+            }
+        }, 0, period);
+
+        //refreshContactsWindow();
+        binding();
 	}
+
+    @FXML
+    public void OnRefreshConnectedUsersClicked()
+    {
+        try
+        {
+            refreshContactsWindow();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
 
 	@FXML
 	public void OnServerParametersButtonClicked(){
@@ -149,5 +208,32 @@ public class MainController implements Initializable{
     public void OnDisconnectButtonClicked(){
 
     }
+
+    private void binding()
+    {
+        this.contactsListView.itemsProperty().bind(userListProperty);
+    }
+
+    private void refreshContactsWindow()
+    {
+        //décommenter à l'intégration
+        //DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        //connectedUsers = api.requestConnectedUsers();
+
+        Iterator it = connectedUsers.listIterator();
+        UserIdentity currentUser = new UserIdentity();
+        userList.clear();
+
+        while(it.hasNext())
+        {
+            currentUser = (UserIdentity) it.next();
+            userList.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+        }
+
+        userListProperty.set(FXCollections.observableArrayList(userList));
+    }
+
+
+
 
 }
