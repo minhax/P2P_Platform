@@ -24,12 +24,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class MainController implements Initializable{
+public class MainController implements Initializable {
 
-	
-	@FXML
+
+    @FXML
     private HBox mainHBox;
 
     @FXML
@@ -124,13 +125,11 @@ public class MainController implements Initializable{
     private UserIdentity user;
 
     private Timer refreshTimer;
-    private int period=10000;
+    private int period = 10000;
 
 
-	
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
         data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
@@ -161,7 +160,7 @@ public class MainController implements Initializable{
         listViewDownloading.setItems(data);
 
 
-	    //pour test
+        //pour test
         user = new UserIdentity("login", "Prénom", "Nom", 21);
         connectedUsers.add(user);
 
@@ -178,44 +177,39 @@ public class MainController implements Initializable{
 
         //refreshContactsWindow();
         binding();
-	}
+    }
 
     @FXML
-    public void OnRefreshConnectedUsersClicked()
-    {
-        try
-        {
+    public void OnRefreshConnectedUsersClicked() {
+        try {
             refreshContactsWindow();
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-	@FXML
-	public void OnServerParametersButtonClicked(){
+    @FXML
+    public void OnServerParametersButtonClicked() {
 
     }
 
     @FXML
-    public void OnUpdateUserButtonClicked(){
+    public void OnUpdateUserButtonClicked() {
 
     }
 
     @FXML
-    public void OnDisconnectButtonClicked(){
-
+    public void OnDisconnectButtonClicked() { //TODO renvoyer sur la fenetre de connection --> V4
+        DataManagerClient.getInstance().getDataClientToIhmApi().requestLogout();
+        ((Stage) this.mainHBox.getScene().getWindow()).close();
     }
 
-    private void binding()
-    {
+    private void binding() {
         this.contactsListView.itemsProperty().bind(userListProperty);
     }
 
-    private void refreshContactsWindow()
-    {
+    private void refreshContactsWindow() {
         //décommenter à l'intégration
         //DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         //connectedUsers = api.requestConnectedUsers();
@@ -224,16 +218,13 @@ public class MainController implements Initializable{
         UserIdentity currentUser = new UserIdentity();
         userList.clear();
 
-        while(it.hasNext())
-        {
+        while (it.hasNext()) {
             currentUser = (UserIdentity) it.next();
             userList.add(currentUser.getFirstName() + " " + currentUser.getLastName());
         }
 
         userListProperty.set(FXCollections.observableArrayList(userList));
     }
-
-
 
 
 }
