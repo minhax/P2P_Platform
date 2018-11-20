@@ -99,7 +99,6 @@ public class PartageController {
     public void OnEnregistrerButtonClicked (){
     	
     	//	Enregistre les informations données par l'utilisateur chez Data
-        //  requestOtherUserInfo(User otherUser)
         System.out.println("Enregistrer Fichier Button Clicked!");
     
     }
