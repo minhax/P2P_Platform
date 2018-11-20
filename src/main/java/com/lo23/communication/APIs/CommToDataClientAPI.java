@@ -9,8 +9,6 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
-import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Files_Client.addSourceMsg;
@@ -18,10 +16,9 @@ import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
 import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
 import com.lo23.communication.Messages.Files_Server.fileSourceMsg;
 import com.lo23.communication.Messages.Message;
+import com.lo23.communication.network.Client;
 import com.lo23.communication.network.Server;
-import com.sun.security.ntlm.Client;
 
-import java.net.InetAddress;
 import java.util.List;
 
 public class CommToDataClientAPI implements CommToDataClient
@@ -91,13 +88,26 @@ public class CommToDataClientAPI implements CommToDataClient
     public void sendFilesChanges(Comment comment, FileHandler file){
 
     }
-
+    /**
+     * Demande de déconnexion de l'utilisateur sur le serveur
+     *
+     * @param UserStats user
+     * Récupère instance cms
+     * Récupère l'adresse IP de la machine, et le serveur sur lequel il est via getAdressIPServer()
+     * Crée logout Msg + Client
+     * @return void
+     **/
     @Override
     public void requestLogoutToServer(UserStats user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
-        logoutMsg message = new logoutMsg(user,ip);
-        Client client=new Client(message, 1026, ip);
+        String myIPAdress = null;
+        try{
+            myIPAdress = CommunicationManager.findIPadress();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        logoutMsg message=new logoutMsg(user, myIPAdress);
+        Client c = new Client(message, portServ, cmc.getAddressIpServer());
     }
 
     /*@Override
@@ -108,12 +118,13 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
-        connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
-        Client client=new Client(message, 1026, ip);
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        cmc.setAddressIpServer(serverIP);
+        int portServ = 0;
+        connectionMsg message=new connectionMsg(user, fi);
+        System.out.println("Client cree");
+        Client c=new Client(message, portServ, serverIP);
     }
-
 
     /*@Override
     public void connect(UserStats user, long IP){

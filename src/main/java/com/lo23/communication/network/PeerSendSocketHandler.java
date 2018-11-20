@@ -4,10 +4,10 @@ package com.lo23.communication.network;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
+import java.io.Serializable;
 // Peer To Send Handler Socket
 
-public class PeerSendSocketHandler extends Thread
+public class PeerSendSocketHandler extends Thread implements Serializable
 {
     Socket SendThreadSocket;
     String addrPeer;

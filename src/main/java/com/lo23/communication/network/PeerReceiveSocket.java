@@ -5,12 +5,12 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
+import java.io.Serializable;
 
 // Peer to Receive 
 
 
-public class PeerReceiveSocket {
+public class PeerReceiveSocket implements Serializable{
 	
 	@SuppressWarnings({"unused"})
 	public PeerReceiveSocket()
@@ -62,7 +62,6 @@ public class PeerReceiveSocket {
 			System.out.println("Error to connect peers");
 		}
 	}
-	
 	@SuppressWarnings({ "unused", "resource" })
 	public static void clientAsServer(String clientAsServerAddr, int clientAsServerPort) throws ClassNotFoundException
 	{   
