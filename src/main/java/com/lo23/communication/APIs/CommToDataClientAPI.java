@@ -101,6 +101,7 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestLogoutToServer(UserStats user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String myIPAdress = null;
+        int portServ=0;
         try{
             myIPAdress = CommunicationManager.findIPadress();
         }catch (Exception e){
