@@ -240,7 +240,7 @@ public class MainController implements Initializable {
 
 
     @FXML
-    public void OnAddDocumentButtonClicked() {
+    public void OnAddDocumentButtonClicked(){
         // Ouvre le fenêtre d'ajout d'un fichier
 
         try {
@@ -258,6 +258,8 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+
 
 }
