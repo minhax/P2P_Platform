@@ -10,7 +10,7 @@ public class Tag implements Serializable
     /**
      * Serial UID for class serialisation
      */
-    private static final long serialVersionUID = 100000000001L;
+    private static final long serialVersionUID = 100000000004L;
 
     /**
      * Mot-clé

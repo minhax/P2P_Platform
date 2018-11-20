@@ -18,7 +18,7 @@ class DataManagerClientTest
     @BeforeEach
     void createDataManagerClient ()
     {
-        this.dm = new DataManagerClient();
+        this.dm = DataManagerClient.getInstance();
     }
 
     /**
