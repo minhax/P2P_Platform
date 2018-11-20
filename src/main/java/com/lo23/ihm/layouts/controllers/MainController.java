@@ -28,8 +28,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class MainController implements Initializable {
-
-
     @FXML
     private HBox mainHBox;
 
@@ -191,12 +189,13 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnServerParametersButtonClicked() {
-
     }
 
-    @FXML
-    public void OnDisconnectButtonClicked() {
 
+    @FXML
+    public void OnDisconnectButtonClicked() { //TODO renvoyer sur la fenetre de connection --> V4
+       // DataManagerClient.getInstance().getDataClientToIhmApi().requestLogout();
+        ((Stage) this.mainHBox.getScene().getWindow()).close();
     }
 
     private void binding() {
@@ -260,6 +259,5 @@ public class MainController implements Initializable {
         }
 
     }
-
 
 }
