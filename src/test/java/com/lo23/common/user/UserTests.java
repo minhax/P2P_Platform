@@ -1,6 +1,7 @@
 package com.lo23.common.user;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class UserTests
 {
-
     private UserAccount user;
 
     /**
@@ -136,7 +136,8 @@ public class UserTests
     @Test
     void ShouldAddProposedFile()
     {
-        FileHandler fh = new FileHandler("hash", "titre", 512, "pdf", 3);
+        FileHandlerInfos fh = new FileHandlerInfos("hash", "titre", 512, "pdf", 3,
+                "description");
         this.user.addProposedFile(fh);
         assertTrue(this.user.getProposedFiles().contains(fh));
     }
@@ -149,7 +150,8 @@ public class UserTests
     @Test
     void ShouldRemoveProposedFile()
     {
-        FileHandler fh = new FileHandler("hash", "titre", 512, "pdf", 3);
+        FileHandlerInfos fh = new FileHandlerInfos("hash", "titre", 512, "pdf", 3,
+                "description");
         this.user.addProposedFile(fh);
         this.user.removeProposedFile(fh);
         assertFalse(this.user.getProposedFiles().contains(fh));

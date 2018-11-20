@@ -15,6 +15,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Objet qui implémente l'API de Data pour IHM.
@@ -164,6 +165,15 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public List<FileHandlerInfos> requestSearchFile(String searchTerm)
     {
+        Vector<FileHandlerInfos> returnedFiles = new Vector<>();
+        // On parcourt tous les fichiers disponibles 
+        for (FileHandlerInfos fhi :
+                this.host.getSessionInfos().getDirectory().getProposedFiles())
+        {
+            if (fhi.getTitle().contains(searchTerm) || fhi.getDesc().contains(searchTerm) ){
+                returnedFiles.add(fhi);
+            }
+        }
         return null;
     }
 
