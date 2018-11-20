@@ -9,15 +9,11 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
-import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
-import com.lo23.communication.Messages.Message;
 import com.lo23.communication.network.Client;
 import com.lo23.communication.network.Server;
 
-import java.net.InetAddress;
 import java.util.List;
 
 public class CommToDataClientAPI implements CommToDataClient
@@ -84,27 +80,46 @@ public class CommToDataClientAPI implements CommToDataClient
     public void sendFilesChanges(Comment comment, FileHandler file){
 
     }
-
+    /**
+     * Demande de déconnexion de l'utilisateur sur le serveur
+     *
+     * @param UserStats user
+     * Récupère instance cms
+     * Récupère l'adresse IP de la machine, et le serveur sur lequel il est via getAdressIPServer()
+     * Crée logout Msg + Client
+     * @return void
+     **/
     @Override
     public void requestLogoutToServer(UserStats user){
-
-        String ip = commManagerClient.getIp(); //TODO: Rajouter une exception plus tard
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        String myIPAdress = null;
+        int portServ = 0;
+        try {
+            myIPAdress = CommunicationManager.findIPadress();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
         Server server = new Server();
-        logoutMsg message = new logoutMsg(user,ip);
-       // server.sendMessage(message);
+        logoutMsg message = new logoutMsg(user,myIPAdress);
+        Client c = new Client(message, portServ, cmc.getAddressIpServer());
     }
-
-    /*@Override
-    public void requestLogout(UserIdentity user){
-        // A priori même rôle que requestLogoutToServer (à changer plus tard si besoin)
-
-    }*/
-
+    /**
+     * Demande de connexion de l'utilisateur sur le serveur
+     *
+     * @param UserStats user
+     * @param List<FileHandlerInfos> fi
+     * @param String serverIP
+     *
+     * Récupère instance cmc
+     * Set adresseIPServer pour le cmc
+     * Crée le message + client
+     * @return void
+     **/
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-        String ip = cms.getIp();
-        System.out.println(ip);
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        cmc.setAddressIpServer(serverIP);
         int portServ = 0;
         connectionMsg message = new connectionMsg(user, fi);
 	    System.out.println("Client cree");

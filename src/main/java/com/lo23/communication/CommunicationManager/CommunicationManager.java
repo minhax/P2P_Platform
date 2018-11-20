@@ -7,27 +7,25 @@ import java.util.Enumeration;
 
 public abstract class CommunicationManager {
 	
-	//protectedSocketHandlerSend socketHSend;
-	//protected SocketHandlerReceive socketHReceive; //Vraiment utile?
-	// protected SocketHandler socketH
-     protected String ip;
-	// envoi du message crée au préalable au socket handler
-	public String getIp(){
+	protected String ip;
+	
+	public String getIp() {
 		return this.ip;
 	}
-	/*
-	public void sendMessageToSocket(Message M){
-		// Le message est cree dans les methodes de l'interface puis transmis
-		//this.socketHSend.socket.write(msg)
-		//il faut retourner immediatement sans attendre le retour de la socket
-	*/
-	public void getIPadress() throws Exception {
+
+/**
+ * Retourne et affiche l'adresse IP sur le serveur UTC de la machine appelante
+ *
+ * @param
+ * ... TODO FIX HARDCODE EQUALS
+ * @return String IPadress
+**/
+	public static String findIPadress() throws Exception {
 		
 		Enumeration<NetworkInterface> interfaces = null;
 		try {
 			interfaces = NetworkInterface.getNetworkInterfaces();
-		}catch(SocketException e)
-		{
+		} catch (SocketException e) {
 			e.printStackTrace();
 		}
 		while (interfaces.hasMoreElements()) {
@@ -36,23 +34,21 @@ public abstract class CommunicationManager {
 			try {
 				if (!networkInterface.isUp())
 					continue;
-			}catch (SocketException e)
-			{
+			} catch (SocketException e) {
 				e.printStackTrace();
 			}
 			// smth we can explore
 			Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
-			while(addresses.hasMoreElements()) {
+			while (addresses.hasMoreElements()) {
 				InetAddress addr = addresses.nextElement();
-				System.out.println("Nom cannonique" + addr.getCanonicalHostName());
-				System.out.println("CommunicationManager Addresse IP est : " + this.ip);
-				//if(addr.isLoopbackAddress())
-				//	continue;
-				//else
-				//	this.ip = addr.toString();
-				//	return;
+				String ip = addr.getCanonicalHostName().toString();
+				if (ip.regionMatches(0, "172", 0, 3)) {
+					System.out.println("Ajout de l'adresse IP " + ip);
+					return ip;
+				} else
+					continue;
 			}
 		}
+		return null;
 	}
-	
-	}
+}

@@ -11,13 +11,15 @@ public class connectionMsg extends Authentication {
 	private String myIp;
 	private List<FileHandlerInfos> fileInfo;
 
-	public connectionMsg(UserStats us){
-		this.userStats = us;
-	}
-
 	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
 		this.userStats = us;
 		this.fileInfo = files;
+		try {
+			this.myIp = CommunicationManagerServer.findIPadress();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		System.out.println("Creation du message");
 	}
 	
@@ -32,23 +34,17 @@ public class connectionMsg extends Authentication {
 		
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
-		/** appel des methodes de l'interface data
-		 *
-		
+		/** On récupère et stocke l'adresse IP du serveur
 		 */
-		System.out.println("Message treatment affichaged des infos inchallah" + this.getMyIp());
+		String ServerIpAdress = cms.getIP();
+		
+		System.out.println("Mon ip = " + this.myIp);
+		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
+		
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		String IpAdress = null;
-		try {
-			 IpAdress = cms.getIp();
-		}catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		cms.addEntryInClientAndServerIPArray(this.myIp, IpAdress);
+		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
 		
 	}
 	
