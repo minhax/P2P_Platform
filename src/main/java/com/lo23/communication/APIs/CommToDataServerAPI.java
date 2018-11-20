@@ -49,8 +49,6 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     @Override
     public void removeDisconnectedUser(UserIdentity user, List<FileHandlerInfos> fileInfos){
-
-        //créer message de déconnexion (removeDisconnectedMessageUser)
         removeDisconnectedUserMsg message=new removeDisconnectedUserMsg(user, fileInfos);
         commManagerServer.broadcast(message);
 
@@ -58,7 +56,6 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     @Override
     public void sendConnectedUserToAll(UserIdentity user, List<FileHandlerInfos> fileInfos){
-        //String ip = commManagerServer.getIp(); //TODO: Rajouter une exception plus tard
         connectedUserMsg message=new connectedUserMsg(user, fileInfos);
         commManagerServer.broadcast(message);
 

@@ -10,14 +10,16 @@ import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+<<<<<<< HEAD
 import com.lo23.communication.Messages.Message;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
+=======
+import com.lo23.communication.network.Client;
+>>>>>>> communication2
 import com.lo23.communication.network.Server;
 
-import java.net.InetAddress;
 import java.util.List;
 
 public class CommToDataClientAPI implements CommToDataClient
@@ -64,14 +66,18 @@ public class CommToDataClientAPI implements CommToDataClient
     public void sendUserChangesToServer(UserIdentity user)
     {
         /**
-         * cree un message de type updateUserInfoMsg
-         * appelle de la methode treatment qui applique les modifications apportees au user
-         * envoie des modification au serveur via socket
+         * recupere le CommunicationManager cote Client
+         * recupere l'addresse du serveur
+         * cree un message de type updateUserInfoMsg pour la modification des infos de l'utilisateur user
+         * cree un objet Client qui permet d'envoyer le message au serveur via socket
          */
+        CommunicationManagerClient  cmc= CommunicationManagerClient.getInstance();
+        //A modifier plus tard ==> cms.getPort()
+        int portServer=1026;
+        String addrServer=cmc.getAddressIpServer();
         updateUserInfoMsg msg = new updateUserInfoMsg(user);
-        msg.treatment();
-        Server server = new Server();
-        server.sendMessage(msg);
+        Client c= new Client(msg,portServer,addrServer);
+
     }
 
     @Override
@@ -93,31 +99,49 @@ public class CommToDataClientAPI implements CommToDataClient
     public void sendFilesChanges(Comment comment, FileHandler file){
 
     }
-
+    /**
+     * Demande de déconnexion de l'utilisateur sur le serveur
+     *
+     * @param UserStats user
+     * Récupère instance cms
+     * Récupère l'adresse IP de la machine, et le serveur sur lequel il est via getAdressIPServer()
+     * Crée logout Msg + Client
+     * @return void
+     **/
     @Override
     public void requestLogoutToServer(UserStats user){
-
-        String ip = commManagerClient.getIp(); //TODO: Rajouter une exception plus tard
-        Server server = new Server();
-        logoutMsg message = new logoutMsg(user,ip);
-        server.sendMessage(message);
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        String myIPAdress = null;
+        int portServ = 0;
+        try {
+            myIPAdress = CommunicationManager.findIPadress();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        logoutMsg message = new logoutMsg(user,myIPAdress);
+        Client c = new Client(message, portServ, cmc.getAddressIpServer());
     }
-
-    /*@Override
-    public void requestLogout(UserIdentity user){
-        // A priori même rôle que requestLogoutToServer (à changer plus tard si besoin)
-
-    }*/
-
+    /**
+     * Demande de connexion de l'utilisateur sur le serveur
+     *
+     * @param UserStats user
+     * @param List<FileHandlerInfos> fi
+     * @param String serverIP
+     *
+     * Récupère instance cmc
+     * Set adresseIPServer pour le cmc
+     * Crée le message + client
+     * @return void
+     **/
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-        String ip = cms.getIp();
-        System.out.println(ip);
-        Server server = new Server();
-        System.out.println("Serveur initialisee");
-        connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
-        server.sendMessage(message);
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        cmc.setAddressIpServer(serverIP);
+        int portServ = 0;
+        connectionMsg message = new connectionMsg(user, fi);
+	    System.out.println("Client cree");
+	    Client c = new Client(message, portServ, serverIP);
     }
 
 
