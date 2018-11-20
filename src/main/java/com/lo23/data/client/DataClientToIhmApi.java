@@ -11,6 +11,9 @@ import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Vector;
 
@@ -109,22 +112,40 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestMakeFileUnavailable(FileHandler file)
     {
-        host.makeLocalFileUnavailable(file);
+        // Vérification de l'existence du fichier sur le disque
+        String hash = file.getHash();
+        File folder = new File("files/fileparts");
+        File[] listOfParts = folder.listFiles();
+
+        for(int i = 0; i < listOfParts.length; i++){
+            // Signifie que le fichier existe bien
+            if(listOfParts[i].getName().matches(hash)){
+                host.makeLocalFileUnavailable(file);
+            }
+        }
+
+        // Pas besoin d'appeler de méthode ici, elle est appelée dans la méthode
+        // makeLocalFileUnavailable
         // TODO appel à la méthode de comm qui rend le fichier indispo
         // Où est-ce qu'on trouve user d'ici ?
-        //host.getDataClientToComm().removeUserAsSourceFile(file, user)
+        // host.getDataClientToComm().removeUserAsSourceFile(file, user)
     }
 
     @Override
-    public void requestLogout()
+    public boolean requestLogout()
     {
-
+        return host.logout();
     }
 
     @Override
     public boolean requestCheckCredentials(String login, String password)
     {
         return this.host.login(login, password);
+    }
+
+    public boolean requestConnectionToServer(String serverIp)
+    {
+        return this.host.serverLogin(serverIp);
     }
 
     @Override
