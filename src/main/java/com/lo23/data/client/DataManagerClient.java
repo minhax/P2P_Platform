@@ -3,6 +3,7 @@ package com.lo23.data.client;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
 import com.lo23.communication.APIs.CommToDataClientAPI;
@@ -26,21 +27,31 @@ public class DataManagerClient
     /**
      * API de DataClient pour IHM
      */
-    private DataClientToIhmApi dataClientToIhmApi;
+    private DataClientToIhm dataClientToIhmApi;
     /**
      * API de DataClient pour Comm
      */
-    private DataClientToCommApi dataClientToCommApi;
+    private DataClientToComm dataClientToCommApi;
     //private IhmToDataClientApi ihmToDataClientApi;
-    private CommToDataClientAPI commToDataClientAPI;
-
+    /**
+     * API de Comm pour DataClient
+     */
+    private CommToDataClient commToDataClientAPI;
     /**
      * Session courante
      */
     private Session sessionInfos;
+    /**
+     * Gestionnaire de l'upload de fichiers
+     */
     private UploadManager uploadManager;
+    /**
+     * Gestionnaire pour le download
+     */
     private DownloadManager downloadManager;
-
+    /**
+     * Référence du DataManagerClient pour le design pattern Singleton
+     */
     static private DataManagerClient instance;
 
     /**
@@ -50,6 +61,7 @@ public class DataManagerClient
     {
         super();
         this.sessionInfos = new Session();
+        this.uploadManager = new UploadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
@@ -62,13 +74,37 @@ public class DataManagerClient
         return instance;
     }
 
-    public DataClientToCommApi getDataClientToComm(){
-        return this.dataClientToCommApi;
+    UploadManager getUploadManager ()
+    {
+        return this.uploadManager;
     }
 
     Session getSessionInfos()
     {
         return sessionInfos;
+    }
+
+    /**
+     * Renvoie l'API de DataClient pour IHM.
+     * @return Référence vers l'API de DataClient pour IHM
+     */
+    public DataClientToIhm getDataClientToIhmApi ()
+    {
+        return this.dataClientToIhmApi;
+    }
+
+    public DataClientToComm getDataClientToComm (){
+        return this.dataClientToCommApi;
+    }
+
+    CommToDataClient getCommToDataClientApi ()
+    {
+        return this.commToDataClientAPI;
+    }
+
+    public void setCommToDataClientAPI (CommToDataClient fromCommApi)
+    {
+        this.commToDataClientAPI = fromCommApi;
     }
 
     /**
@@ -143,14 +179,6 @@ public class DataManagerClient
 
         //TODO return to user logout successful
     }
-    /**
-     * Récupère l'API de DataClient pour IHM.
-     * @return Référence vers l'API de DataClient pour IHM
-     */
-    public DataClientToIhmApi getDataClientToIhmApi ()
-    {
-        return this.dataClientToIhmApi;
-    }
 
     /**
      * Sauvegarde un profil nouvellement créé en local
@@ -165,7 +193,7 @@ public class DataManagerClient
             // Création du flux vers le nouveau fichier
             FileOutputStream fileOut =
                     new FileOutputStream(
-                            FILEPATH_ACCOUNTS+user.getLogin()+"_"+user.getId()+".ser");
+                            FILEPATH_ACCOUNTS + user.getLogin() + "_" + user.getId() + ".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             // Sérialisation de l'utilisateur dans son fichier
             out.writeObject(user);
