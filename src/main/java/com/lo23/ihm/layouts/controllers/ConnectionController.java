@@ -65,7 +65,7 @@ public class ConnectionController implements Initializable {
         if (authorizeConnection) {
             if (!(this.serverChoiceTextField.getText() == null || this.portTextField.getText() == null)) {
                 //TODO à decommenter pour le merge
-               // api.requestConnectionToServer(this.serverChoiceTextField.getText());
+                api.requestConnectionToServer(this.serverChoiceTextField.getText());
             }
             try {
                 FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
