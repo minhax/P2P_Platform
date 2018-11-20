@@ -107,7 +107,7 @@ public class MainController implements Initializable{
     }
 
     @FXML
-    public void OnUpdateUserButtonClicked(ActionEvent event)
+    public void OnUpdateUserButtonClicked()
 	{
 		try
 		{

@@ -22,7 +22,7 @@ public class updateProfileController {
     private TextField loginUpdateField, passwordUpdateField, familynameUpdateField, nameUpdateField, ageUpdateField, passwordConfirmationUpdateField;
 
     @FXML
-    private Button avatarUpdateButton, validateUpdateButton, previousButton;
+    private Button validateUpdateButton, previousButton;
     
     @FXML
     private Label errorUpdateLabel;
@@ -93,10 +93,3 @@ public class updateProfileController {
          }
     }
 }
-/*
-    @FXML
-    void updateAvatar(ActionEvent event) {
-
-    }
-
-}*/
