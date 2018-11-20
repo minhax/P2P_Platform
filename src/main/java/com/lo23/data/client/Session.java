@@ -2,6 +2,7 @@ package com.lo23.data.client;
 
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserStats;
+import com.lo23.data.server.DirectoryUserFiles;
 
 import java.util.Vector;
 
@@ -20,8 +21,11 @@ class Session
      */
     private Vector<UserStats> otherLoggedUsers;
 
+    private DirectoryUserFiles directory;
+
     Session()
     {
+        this.directory = new DirectoryUserFiles();
         this.currentUser = null;
     }
 
@@ -57,5 +61,18 @@ class Session
             this.getOtherLoggedUsers().remove(user);
             this.getOtherLoggedUsers().add(user);
         }
+    }
+
+    /**
+     * Permet de mettre à jour l'annuaire de correspondance entre les utilisateurs et les fichiers.
+     * @param newDirectory Dictionnaire à remplacer
+     */
+    void setDirectoryUserFiles(DirectoryUserFiles newDirectory){
+        this.directory=newDirectory;
+    }
+
+    public DirectoryUserFiles getDirectory()
+    {
+        return directory;
     }
 }

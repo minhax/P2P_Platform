@@ -291,7 +291,9 @@ public class DataManagerClient
      * @param fileToMakeUnavailable fichier à rendre indisponible
      */
     public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
-
+        // Supression du fichier en local
+        this.sessionInfos.getDirectory().removeProposedFile(this.sessionInfos.getCurrentUser(), fileToMakeUnavailable);
+        
         /*
         TODO find file and remove parts of it?
         il y aura peut-être besoin de faire une exception dans le cas où

@@ -94,7 +94,7 @@ public interface DataClientToIhm
      * Envoie à Data une demande de déconnexion de
      * l'utilisateur connecté
      */
-    void requestLogout();
+    boolean requestLogout();
 
     /**
      * Demande à Data de vérifier si les informations entrées par
