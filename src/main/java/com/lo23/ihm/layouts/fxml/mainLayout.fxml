@@ -46,7 +46,7 @@
                      <content>
                         <AnchorPane id="myFilesPane" fx:id="myFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="77.0" layoutY="245.0" mnemonicParsing="false" style="-fx-background-color: #C0C0C0; -fx-font-size: small;" text="Ajouter un document" />
+                              <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="77.0" layoutY="245.0" mnemonicParsing="false" style="-fx-background-color: #C0C0C0; -fx-font-size: small;"  onAction="#OnAddDocumentButtonClicked" text="Ajouter un document" />
                               <ListView fx:id="listViewMyFiles" layoutY="7.0" prefHeight="232.0" prefWidth="278.0" />
                            </children>
                         </AnchorPane>
