@@ -1,7 +1,9 @@
 package com.lo23.data.client;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
 import com.lo23.communication.APIs.CommToDataClientAPI;
@@ -12,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Vector;
 import java.util.stream.Stream;
 
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
@@ -24,21 +27,31 @@ public class DataManagerClient
     /**
      * API de DataClient pour IHM
      */
-    private DataClientToIhmApi dataClientToIhmApi;
+    private DataClientToIhm dataClientToIhmApi;
     /**
      * API de DataClient pour Comm
      */
-    private DataClientToCommApi dataClientToCommApi;
+    private DataClientToComm dataClientToCommApi;
     //private IhmToDataClientApi ihmToDataClientApi;
-    private CommToDataClientAPI commToDataClientAPI;
-
+    /**
+     * API de Comm pour DataClient
+     */
+    private CommToDataClient commToDataClientAPI;
     /**
      * Session courante
      */
     private Session sessionInfos;
+    /**
+     * Gestionnaire de l'upload de fichiers
+     */
     private UploadManager uploadManager;
+    /**
+     * Gestionnaire pour le download
+     */
     private DownloadManager downloadManager;
-
+    /**
+     * Référence du DataManagerClient pour le design pattern Singleton
+     */
     static private DataManagerClient instance;
 
     /**
@@ -48,7 +61,8 @@ public class DataManagerClient
     {
         super();
         this.sessionInfos = new Session();
-        this.dataClientToCommApi = new DataClientToCommApi();
+        this.uploadManager = new UploadManager();
+        this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
     }
@@ -60,8 +74,37 @@ public class DataManagerClient
         return instance;
     }
 
-    public DataClientToComm getDataClientToComm(){
+    UploadManager getUploadManager ()
+    {
+        return this.uploadManager;
+    }
+
+    Session getSessionInfos()
+    {
+        return sessionInfos;
+    }
+
+    /**
+     * Renvoie l'API de DataClient pour IHM.
+     * @return Référence vers l'API de DataClient pour IHM
+     */
+    public DataClientToIhm getDataClientToIhmApi ()
+    {
+        return this.dataClientToIhmApi;
+    }
+
+    public DataClientToComm getDataClientToComm (){
         return this.dataClientToCommApi;
+    }
+
+    CommToDataClient getCommToDataClientApi ()
+    {
+        return this.commToDataClientAPI;
+    }
+
+    public void setCommToDataClientAPI (CommToDataClient fromCommApi)
+    {
+        this.commToDataClientAPI = fromCommApi;
     }
 
     /**
@@ -92,18 +135,12 @@ public class DataManagerClient
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
-                            // TODO get IP to connect to. discuter avec comm
-                            String serverIP  = "";
-                            // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
-//                            commToDataClientAPI.requestUserConnexion((UserStats)comparisonAccount,
-//                                                                     comparisonAccount.getProposedFiles(),
-//                                                                     serverIP);
-
-                            // FIXME l'appel à l'API Comm fait planter l'application.
                             this.sessionInfos.setCurrentUser(comparisonAccount);
                             retValue = true;
                         }
                     }
+                    fileIn.close();
+                    objectIn.close();
                 }
                 catch(IOException |ClassNotFoundException e)
                 {
@@ -112,6 +149,20 @@ public class DataManagerClient
             }
         }
         return retValue;
+    }
+
+    public boolean serverLogin(){
+        UserAccount userToConnect = this.sessionInfos.getCurrentUser();
+
+        // TODO get IP to connect to. discuter avec comm
+        String serverIP  = "";
+
+        // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
+        commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
+                userToConnect.getProposedFiles(),
+                serverIP);
+
+        return false;
     }
 
     /**
@@ -128,14 +179,6 @@ public class DataManagerClient
 
         //TODO return to user logout successful
     }
-    /**
-     * Récupère l'API de DataClient pour IHM.
-     * @return Référence vers l'API de DataClient pour IHM
-     */
-    public DataClientToIhmApi getDataClientToIhmApi ()
-    {
-        return this.dataClientToIhmApi;
-    }
 
     /**
      * Sauvegarde un profil nouvellement créé en local
@@ -150,7 +193,7 @@ public class DataManagerClient
             // Création du flux vers le nouveau fichier
             FileOutputStream fileOut =
                     new FileOutputStream(
-                            FILEPATH_ACCOUNTS+user.getLogin()+"_"+user.getId()+".ser");
+                            FILEPATH_ACCOUNTS + user.getLogin() + "_" + user.getId() + ".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             // Sérialisation de l'utilisateur dans son fichier
             out.writeObject(user);
@@ -243,6 +286,24 @@ public class DataManagerClient
     }
 
     /**
+     * Méthode qui rend un fichier indisponible en local puis envoie
+     * un message au serveur pour partager l'information.
+     * @param fileToMakeUnavailable fichier à rendre indisponible
+     */
+    public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
+        /*
+        TODO find file and remove parts of it?
+        il y aura peut-être besoin de faire une exception dans le cas où
+        fileToMakeUnavailable n'existe pas dans le vecteur. Néanmoins,
+        d'après la doc : "If the Vector does not contain the element, it is unchanged."
+        A préciser donc
+        */
+        //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
+        //userFiles.remove(fileToMakeUnavailable);
+
+    }
+
+    /**
      * Met à jour le profil utilisateur en local et
      * envoie une demande de propagation d'information
      * au serveur
@@ -265,5 +326,6 @@ public class DataManagerClient
             this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
         }
     }
+
 
 }
