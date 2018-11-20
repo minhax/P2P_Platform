@@ -11,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.net.*;
 import java.util.Scanner;
 
@@ -65,34 +64,11 @@ public class Tests
 			System.out.println("enter the port : ");
 			int port = sc.nextInt();
 
-
-
-			// test message connection
             connectionMsg msgC = new connectionMsg(userstats, newList);
-			System.out.println("Mon adresse IP dans le message : "+ msgC.getMyIp());
-			//test message deconnection
-			// Message msgD = deconnectionMsg(userstats, myIP);
-
-			Client c = new Client(msgC, port, addr);
+					Client c = new Client(msgC, port, addr);
 		}
 		else{
 			System.out.println("wrong choice =.= ");
 		}
-
-		// Fin test des sockets
-
-
-        /*
-	    String serverIPAdress = "192.168.0.1";
-		System.out.println(serverIPAdress);
-
-		CommToDataClientAPI commApi = CommToDataClientAPI.getInstance();
-		System.out.println("Recuperation de l'instance");
-		//commApi.requestUserConnexion(userstats,newList,serverIPAdress);
-		System.out.println("Execution de la methode API");
-		*/
-
-
-
 	}
 }
