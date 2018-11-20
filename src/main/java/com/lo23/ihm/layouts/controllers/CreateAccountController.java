@@ -28,7 +28,7 @@ public class CreateAccountController implements Initializable {
     private PasswordField passwordField;
 
     @FXML
-    private Label emptyFieldLabel,ageErrorLabel;
+    private Label emptyFieldLabel,ageErrorLabel, loginErrorLabel;
 
     private CreateAccountModel model;
 
@@ -37,6 +37,7 @@ public class CreateAccountController implements Initializable {
         model = new CreateAccountModel();
         emptyFieldLabel.setVisible(false);
         ageErrorLabel.setVisible(false);
+        loginErrorLabel.setVisible(false);
         binding();
         // TODO Auto-generated method stub
 
@@ -55,6 +56,9 @@ public class CreateAccountController implements Initializable {
         else if(!ageTextField.getText().matches("\\d+"))
         {
             ageErrorLabel.setVisible(true);
+        }
+        else if(!loginTextField.getText().matches("^[A-Za-z0-9]{6,25}$")) {
+        	loginErrorLabel.setVisible(true);
         }
         else {
             // A decommenté et verifier les champs pendant l'integration
