@@ -1,6 +1,8 @@
 package com.lo23.data.client;
 
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataClientToIhm;
@@ -32,7 +34,6 @@ public class DataManagerClient
      * API de DataClient pour Comm
      */
     private DataClientToComm dataClientToCommApi;
-    //private IhmToDataClientApi ihmToDataClientApi;
     /**
      * API de Comm pour DataClient
      */
@@ -42,11 +43,11 @@ public class DataManagerClient
      */
     private Session sessionInfos;
     /**
-     * Gestionnaire de l'upload de fichiers
+     * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
     /**
-     * Gestionnaire pour le download
+     * Gestionnaire pour le téléchargement de fichiers
      */
     private DownloadManager downloadManager;
     /**
@@ -174,8 +175,7 @@ public class DataManagerClient
     {
         // TODO send logout message to com
         // réutiliser variables user et ip utilisés dans login?
-        // requestLogout(User user, String ip)
-
+        //this.getCommToDataClientApi().requestLogoutToServer(user);
 
         //TODO return to user logout successful
     }
@@ -325,6 +325,19 @@ public class DataManagerClient
             // Communication des changements au serveur pour qu'il se mette à jour
             this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
         }
+    }
+
+    /**
+     * Ajoute en local une note à un fichier
+     * @param rating note
+     * @param ratedFile fichier noté
+     */
+    public void addRatingToFile(Rating rating, FileHandlerInfos ratedFile)
+    {
+        // Ajout de la note en local
+        ratedFile.addRating(rating);
+        // Communication des changements au serveur pour qu'il se mette à jour
+        this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
     }
 
 
