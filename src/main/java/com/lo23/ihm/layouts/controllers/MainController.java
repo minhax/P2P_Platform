@@ -10,20 +10,21 @@ import com.lo23.ihm.layouts.models.MyFilesListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.data.client.DataManagerClient;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class MainController implements Initializable{
@@ -200,11 +201,6 @@ public class MainController implements Initializable{
     }
 
     @FXML
-    public void OnUpdateUserButtonClicked(){
-
-    }
-
-    @FXML
     public void OnDisconnectButtonClicked(){
 
     }
@@ -234,6 +230,25 @@ public class MainController implements Initializable{
     }
 
 
+    @FXML
+    public void OnUpdateUserButtonClicked()
+    {
+        try
+        {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = new Stage();
 
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setOpacity(1);
+            stage.setTitle("Édition du compte");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
 }
