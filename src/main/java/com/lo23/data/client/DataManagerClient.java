@@ -129,8 +129,8 @@ public class DataManagerClient
                 {
                     FileInputStream fileIn = new FileInputStream(userFile.getPath());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                    Object obj = objectIn.readObject();
-                    UserAccount comparisonAccount = (UserAccount) obj;
+                    UserAccount comparisonAccount = (UserAccount) objectIn.readObject();
+                    //UserAccount comparisonAccount = (UserAccount) obj;
                     if(comparisonAccount.getLogin().equals(login))
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
