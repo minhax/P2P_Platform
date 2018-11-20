@@ -34,7 +34,7 @@ public interface CommToDataClient
      * @param file fichier que l'on rend indisponible
      * @param user utilisateur qui le rend indisponible
      */
-    public void makeFilesUnavailableToServer(FileHandler file, User user);
+    public void makeFilesUnavailableToServer(FileHandlerInfos file, User user);
 
     /**
      * Transmet l'information comme quoi un fichier est rendu insponible par un utilisateur

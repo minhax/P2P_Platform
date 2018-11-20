@@ -14,6 +14,7 @@ import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Files_Client.addSourceMsg;
+import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
 import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
 import com.lo23.communication.Messages.Files_Server.fileSourceMsg;
 import com.lo23.communication.Messages.Message;
@@ -73,8 +74,10 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void makeFilesUnavailableToServer(FileHandler file, User user){
-
+    public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
+        Server server = new Server();
+        makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
+        server.sendMessage(message);
     }
 
     @Override
@@ -145,7 +148,6 @@ public class CommToDataClientAPI implements CommToDataClient
         uploadFileMsg message=new uploadFileMsg(file, user);
         server.sendMessage(message);
         //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
-        //TODO : méthode des messages + du communicationManager
     }
 
 
