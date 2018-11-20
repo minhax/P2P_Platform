@@ -29,31 +29,22 @@ public class DataClientToIhmApi implements DataClientToIhm
      * Est en accès package-private pour empêcher l'instanciation hors du groupe Data.
      * @param host DataManagerClient parent de cette API
      */
-    public DataClientToIhmApi (DataManagerClient host)
+    DataClientToIhmApi (DataManagerClient host)
     {
         this.host = host;
     }
 
-    /**
-     * Crée un compte à partir des informations de base.
-     * @param login Login de l'utilisateur
-     * @param password Mot de passe (en clair) de l'utilisateur
-     * @param firstname Prénom de l'utilisateur
-     * @param lastname Nom de l'utilisateur
-     * @param age Age de l'utilisateur
-     * @throws DataException Exception lors de la création du compte
-     */
-    public void createAccount (String login, String password, String firstname, String lastname, int age) throws DataException
-    { // TODO: définir quel retour pour IHM (void d'après diagramme de séquence)
+    @Override
+    public void createAccount (String login, String password, String firstname, String lastname, int age)
+            throws DataException
+    {
         String hashedPassword = host.hashPassword(password);
         UserAccount user = new UserAccount(login, firstname, lastname, age, hashedPassword);
         if (!host.saveUserInfo(user))
-        {
             throw new DataException("Error while creating account");
-        }
-        // Connecter l'utilisateur
+        if (!host.login(login, password))
+            throw new DataException("Error while connecting user");
     }
-
 
     @Override
     public void requestFileLocation(FileHandler fileToDownload)
@@ -68,9 +59,20 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestShareNewFile(FileHandler newFile)
+    public void requestShareNewFile(String pathOnDisk, String title, String description)
+            throws DataException
     {
+        FileHandlerInfos filehandler = host.getUploadManager().prepareToShare(pathOnDisk, title, description);
+        if (filehandler == null)
+            throw new DataException("Error while sharing file");
 
+        UserAccount currUser = host.getSessionInfos().getCurrentUser();
+        if (currUser == null)
+            throw new DataException("Error while accessing current user");
+        // On ajoute le handler aux fichiers proposés par l'utilisateur
+        currUser.addProposedFile(filehandler);
+
+        // TODO: prévenir le serveur qu'un fichier est proposé
     }
 
     @Override
