@@ -100,7 +100,6 @@ public class CommToDataClientAPI implements CommToDataClient
         {
             e.printStackTrace();
         }
-        Server server = new Server();
         logoutMsg message = new logoutMsg(user,myIPAdress);
         Client c = new Client(message, portServ, cmc.getAddressIpServer());
     }
