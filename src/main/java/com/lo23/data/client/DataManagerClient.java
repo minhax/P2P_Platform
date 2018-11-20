@@ -158,7 +158,7 @@ public class DataManagerClient
      */
     public boolean serverLogin(){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
-        
+
         // TODO get IP to connect to. discuter avec comm
         String serverIP  = "";
 
