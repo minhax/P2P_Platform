@@ -20,6 +20,8 @@ public class Server {
         // On partage les APIs entre les Manager
         // TODO: partager les API
 
+        Server s = new Server();
+
         Scanner consoleInput = new Scanner(System.in);
         boolean exitApp = false;
         String command;
