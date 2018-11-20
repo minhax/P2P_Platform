@@ -32,9 +32,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void receiveFileLocations(List<UserIdentity> sources)
+    public void receiveFileSource(UserIdentity fileSource, FileHandlerInfos proposedFile)
     {
-
+        this.host.getSessionInfos().getDirectory().addProposedFile(fileSource, proposedFile);
     }
 
     @Override
