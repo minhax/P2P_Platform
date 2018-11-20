@@ -19,6 +19,6 @@
       <Button fx:id="previousButton" layoutX="33.0" layoutY="32.0" mnemonicParsing="false" onAction="#Previous" text="&lt;- Précédent" />
       <Text layoutX="160.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editer son profil :" wrappingWidth="126.5966796875" />
       <TextField fx:id="passwordConfirmationUpdateField" layoutX="160.0" layoutY="147.0" prefHeight="38.0" prefWidth="290.0" promptText="Confirmation Mot de Passe..." />
-      <Label fx:id="errorUpdateLabel" layoutX="192.0" layoutY="497.0" prefHeight="17.0" prefWidth="226.0" text="Tous les champs sont obligatoire" textFill="RED" />
+      <Label fx:id="errorUpdateLabel" layoutX="192.0" layoutY="497.0" prefHeight="17.0" prefWidth="226.0" text="Tous les champs sont obligatoires" textFill="RED" />
    </children>
 </AnchorPane>

@@ -8,6 +8,7 @@ import com.lo23.common.layouts.models.UpdateProfileModel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
-public class updateProfileController {
+public class updateProfileController implements Initializable {
 
     @FXML
     private TextField loginUpdateField, passwordUpdateField, familynameUpdateField, nameUpdateField, ageUpdateField, passwordConfirmationUpdateField;
@@ -29,6 +30,7 @@ public class updateProfileController {
     
     private UpdateProfileModel model;
     
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new UpdateProfileModel();
         errorUpdateLabel.setVisible(false);
