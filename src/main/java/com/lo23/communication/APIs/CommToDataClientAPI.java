@@ -119,7 +119,7 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         cmc.setAddressIpServer(serverIP);
-        int portServ = 0;
+        int portServ = 1026;
         connectionMsg message = new connectionMsg(user, fi);
 	    System.out.println("Client cree");
 	    Client c = new Client(message, portServ, serverIP);

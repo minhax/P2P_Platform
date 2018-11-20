@@ -1,5 +1,6 @@
 package com.lo23.data.client;
 
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
@@ -15,6 +16,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Stream;
 
@@ -33,7 +36,6 @@ public class DataManagerClient
      * API de DataClient pour Comm
      */
     private DataClientToComm dataClientToCommApi;
-    //private IhmToDataClientApi ihmToDataClientApi;
     /**
      * API de Comm pour DataClient
      */
@@ -43,11 +45,11 @@ public class DataManagerClient
      */
     private Session sessionInfos;
     /**
-     * Gestionnaire de l'upload de fichiers
+     * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
     /**
-     * Gestionnaire pour le download
+     * Gestionnaire pour le téléchargement de fichiers
      */
     private DownloadManager downloadManager;
     /**
@@ -175,7 +177,7 @@ public class DataManagerClient
         // TODO catch erreur eventuelle.
         this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
-        return true;
+        return true; //TODO return to user logout successful ?
     }
 
     /**
@@ -323,6 +325,33 @@ public class DataManagerClient
             // Communication des changements au serveur pour qu'il se mette à jour
             this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
         }
+    }
+
+    /**
+     * Ajoute en local une note à un fichier
+     * @param rating note
+     * @param ratedFile fichier noté
+     */
+    public void addRatingToFile(Rating rating, FileHandlerInfos ratedFile)
+    {
+        // Récupération de la liste des fichiers partagés
+        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
+        boolean found = false;
+        Iterator<FileHandlerInfos> i = keySet.iterator();
+        // Itération sur les fichiers partagés
+        while(i.hasNext() && !found)
+        {
+            FileHandlerInfos nextFile = i.next();
+            if(nextFile.getHash().equals(ratedFile.getHash()))
+            {
+                // Ajout de la note au fichier
+                nextFile.addRating(rating);
+                found = true;
+            }
+        }
+
+        // Communication des changements au serveur pour qu'il se mette à jour
+        this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
     }
 
 
