@@ -17,6 +17,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Stream;
 
@@ -337,13 +339,26 @@ public class DataManagerClient
      */
     public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
     {
-        commentedFile.addComment(comment);
 
-        FileHandler file = (FileHandler) commentedFile;
+        // Récupération de la liste des fichiers partagés
+        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
+        boolean found = false;
 
-        this.sessionInfos
-        this.getCommToDataClientApi().sendCommentedFile(comment, file);
+        // Itération sur les fichiers partagés
+        Iterator<FileHandlerInfos> it = keySet.iterator();
+        while (it.hasNext() && !found)
+        {
+            FileHandlerInfos nextFile = it.next();
+            if(nextFile.getHash().equals(commentedFile.getHash()))
+            {
+                // Ajout commentaire au fichier
+                nextFile.addComment(comment);
+                found=true;
+            }
+        }
+
+        // Communication des changements au serveur
+        this.getCommToDataClientApi().sendCommentedFile(comment, (FileHandler) commentedFile);
     }
-
-
+    
 }
