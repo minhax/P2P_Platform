@@ -56,7 +56,7 @@ public interface DataClientToIhm
      * @param rating note
      * @param ratedFile fichier noté
      */
-    void requestRateFile(Rating rating, FileHandler ratedFile);
+    void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException;
 
     /**
      * Envoie à Data le commentaire attribué à un fichier
@@ -94,7 +94,7 @@ public interface DataClientToIhm
      * Envoie à Data une demande de déconnexion de
      * l'utilisateur connecté
      */
-    void requestLogout();
+    boolean requestLogout();
 
     /**
      * Demande à Data de vérifier si les informations entrées par
@@ -104,6 +104,8 @@ public interface DataClientToIhm
      * @param password mot de passe entré par l'utilisateur
      */
     boolean requestCheckCredentials(String login, String password);
+
+    boolean requestConnectionToServer(String serverIp);
 
     /**
      * Retourne la liste des fichiers mis à disposition

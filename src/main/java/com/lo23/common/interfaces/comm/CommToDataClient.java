@@ -51,16 +51,23 @@ public interface CommToDataClient
     void sendCommentedFile(Comment comment, FileHandler commentedFile);
 
     /**
+     * Envoie une nouvelle note attribuée à un fichier
+     * @param rating note à ajouter au fichier
+     * @param ratedFile fichier noté
+     */
+    void sendRatedFile(Rating rating, FileHandler ratedFile);
+
+    /**
      * Transmet la demande de déconnexion de l'utilisateur (recevoir la demande)
      * @param user utilisateur qui se déconnecte
      */
     void requestLogoutToServer(UserStats user);
-
     /*
     /**
      * Transmet la demande de déconnexion de l'utilisateur (envoyer la demande)
      * @param user utilisateur qui se déconnecte
      */
+
     //public void requestLogout(UserIdentity user);
 
 
@@ -70,22 +77,15 @@ public interface CommToDataClient
      */
     void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP);
 
-
     /*
     /**
      * Envoie la demande de connexion
      * @param user utilisateur qui se connecte
      * @param IP IP de la machine de l'utilisateur
      */
+
     //public void connect(UserStats user, long IP);
 
-
-    /**
-     * Envoie une nouvelle note attribuée à un fichier
-     * @param rate note
-     * @param file fichier modifié
-     */
-    void sendFileChanges(Rating rate, FileHandler file);
 
     /**
      * Transmet la demande de partage de fichier (déjà partagé) de l'application client à CommServeur

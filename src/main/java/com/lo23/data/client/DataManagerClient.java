@@ -2,6 +2,7 @@ package com.lo23.data.client;
 
 import com.lo23.common.Comment;
 import com.lo23.common.exceptions.DataException;
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
@@ -37,7 +38,6 @@ public class DataManagerClient
      * API de DataClient pour Comm
      */
     private DataClientToComm dataClientToCommApi;
-    //private IhmToDataClientApi ihmToDataClientApi;
     /**
      * API de Comm pour DataClient
      */
@@ -47,11 +47,11 @@ public class DataManagerClient
      */
     private Session sessionInfos;
     /**
-     * Gestionnaire de l'upload de fichiers
+     * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
     /**
-     * Gestionnaire pour le download
+     * Gestionnaire pour le téléchargement de fichiers
      */
     private DownloadManager downloadManager;
     /**
@@ -156,33 +156,30 @@ public class DataManagerClient
         return retValue;
     }
 
-    public boolean serverLogin(){
+    /**
+     * Méthode qui connecte l'utilisateur courant au serveur
+     * @return Succès de la connexion
+     */
+    public boolean serverLogin(String serverIp){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
-
-        // TODO get IP to connect to. discuter avec comm
-        String serverIP  = "";
 
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
         commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
                 userToConnect.getProposedFiles(),
-                serverIP);
+                serverIp);
 
         return false;
     }
 
     /**
      * Envoie une demande de déconnexion d'un utilisateur
-     * @param user utilisateur qui se déconnecte
-     * @param ip adresse IP du serveur
      */
-    public void logout(User user, String ip)
+    public boolean logout()
     {
-        // TODO send logout message to com
-        // réutiliser variables user et ip utilisés dans login?
-        // requestLogout(User user, String ip)
-
-
-        //TODO return to user logout successful
+        // TODO catch erreur eventuelle.
+        this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
+        this.sessionInfos.setCurrentUser(null);
+        return true; //TODO return to user logout successful ?
     }
 
     /**
@@ -297,15 +294,15 @@ public class DataManagerClient
      */
     public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
         /*
-        TODO find file and remove parts of it?
-        il y aura peut-être besoin de faire une exception dans le cas où
-        fileToMakeUnavailable n'existe pas dans le vecteur. Néanmoins,
-        d'après la doc : "If the Vector does not contain the element, it is unchanged."
-        A préciser donc
-        */
-        //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
-        //userFiles.remove(fileToMakeUnavailable);
-
+        Ici on ne supprime pas les parties de fichier sur le disque parce que
+        dans l'éventualité ou on rendrait le fichier dispo de nouveau, on
+        override les fileParts  qui existent déjà donc les laisser en mémoire
+        ne pose pas de problème.
+         */
+        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
+        // Supression du fichier en local
+        UserAccount currentUser = this.sessionInfos.getCurrentUser();
+        currentUser.removeProposedFile(fileToMakeUnavailable);
     }
 
     /**
@@ -360,5 +357,32 @@ public class DataManagerClient
         // Communication des changements au serveur
         this.getCommToDataClientApi().sendCommentedFile(comment, (FileHandler) commentedFile);
     }
-    
+
+    /**
+     * Ajoute en local une note à un fichier
+     * @param rating note
+     * @param ratedFile fichier noté
+     */
+    public void addRatingToFile(Rating rating, FileHandlerInfos ratedFile)
+    {
+        // Récupération de la liste des fichiers partagés
+        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
+        boolean found = false;
+        Iterator<FileHandlerInfos> i = keySet.iterator();
+        // Itération sur les fichiers partagés
+        while(i.hasNext() && !found)
+        {
+            FileHandlerInfos nextFile = i.next();
+            if(nextFile.getHash().equals(ratedFile.getHash()))
+            {
+                // Ajout de la note au fichier
+                nextFile.addRating(rating);
+                found = true;
+            }
+        }
+
+        // Communication des changements au serveur pour qu'il se mette à jour
+        this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
+    }
+
 }
