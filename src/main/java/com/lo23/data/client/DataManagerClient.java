@@ -151,33 +151,26 @@ public class DataManagerClient
         return retValue;
     }
 
-    public boolean serverLogin(){
+    public boolean serverLogin(String serverIp){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
-
-        // TODO get IP to connect to. discuter avec comm
-        String serverIP  = "";
 
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
         commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
                 userToConnect.getProposedFiles(),
-                serverIP);
+                serverIp);
 
         return false;
     }
 
     /**
      * Envoie une demande de déconnexion d'un utilisateur
-     * @param user utilisateur qui se déconnecte
-     * @param ip adresse IP du serveur
      */
-    public void logout(User user, String ip)
+    public boolean logout()
     {
-        // TODO send logout message to com
-        // réutiliser variables user et ip utilisés dans login?
-        // requestLogout(User user, String ip)
-
-
-        //TODO return to user logout successful
+        // TODO catch erreur eventuelle.
+        this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
+        this.sessionInfos.setCurrentUser(null);
+        return true;
     }
 
     /**

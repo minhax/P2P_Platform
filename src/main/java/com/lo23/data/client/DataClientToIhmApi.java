@@ -111,19 +111,24 @@ public class DataClientToIhmApi implements DataClientToIhm
         host.makeLocalFileUnavailable(file);
         // TODO appel à la méthode de comm qui rend le fichier indispo
         // Où est-ce qu'on trouve user d'ici ?
-        //host.getDataClientToComm().removeUserAsSourceFile(file, user)
+        // host.getDataClientToComm().removeUserAsSourceFile(file, user)
     }
 
     @Override
-    public void requestLogout()
+    public boolean requestLogout()
     {
-
+        return host.logout();
     }
 
     @Override
     public boolean requestCheckCredentials(String login, String password)
     {
         return this.host.login(login, password);
+    }
+
+    public boolean requestConnectionToServer(String serverIp)
+    {
+        return this.host.serverLogin(serverIp);
     }
 
     @Override
