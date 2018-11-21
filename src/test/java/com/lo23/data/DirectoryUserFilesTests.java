@@ -86,7 +86,23 @@ public class DirectoryUserFilesTests
         boolean b1 = this.directory.getProposedFiles().contains(file3);
         boolean b2 = this.directory.getFilesProposedByUser(user2).contains(file3);
         boolean b3 = this.directory.getUsersThatProposeFile(file3).contains(user2);
-
         assertTrue(b1 && b2 && b3);
+    }
+
+    @Test
+    void modifyingSourcesShouldReallyChangeSources(){
+        // on checke que les sources ont bien été actualisées, que le nombre de sources
+        // demeure le même ainsi que le nombre de fichiers proposé par l'utilisateur modifié
+        UserIdentity modifiedUser2 = this.user2;
+        modifiedUser2.setFirstName("Pug");
+        modifiedUser2.setLastName("Ster");
+        modifiedUser2.setAge(10);
+        this.directory.updateSourcesAfterUserModification(user2, modifiedUser2);
+        // Note : DirectoryUserFiles::getUsersThatProposeFile() prend un argument de type User :
+        // seuls le login et l'ID rentrent en jeu (que l'utilisateur ne peut en aucun cas changer)
+        assertTrue(this.directory.getUsersThatProposeFile(this.file1).get(0).getLogin()=="login1" &&
+                this.directory.getUsersThatProposeFile(this.file1).get(1).getLogin()=="login2" &&
+                this.directory.getUsersThatProposeFile(this.file1).size()==2 &&
+                this.directory.getFilesProposedByUser(modifiedUser2).size()==1);
     }
 }
