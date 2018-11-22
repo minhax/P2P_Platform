@@ -10,12 +10,14 @@ import java.util.List;
 
 public interface CommToDataClient
 {
+    /*
     /**
      * Envoie les modifications faites sur les
      * métadonnées d'un fichier
      * @param file fichier mis à jour
-     */
+
     void sendFileChanges(FileHandler file);
+    */
 
     /**
      * Envoie les modifications relatives à un utilisateur (communication avec le serveur)
@@ -34,8 +36,7 @@ public interface CommToDataClient
      * @param file fichier que l'on rend indisponible
      * @param user utilisateur qui le rend indisponible
      */
-
-    void makeFilesUnavailableToServer(FileHandler file, User user);
+    void makeFilesUnavailableToServer(FileHandlerInfos file, User user);
 
     /**
      * Transmet l'information comme quoi un fichier est rendu insponible par un utilisateur
@@ -52,16 +53,23 @@ public interface CommToDataClient
     void sendFilesChanges(Comment comment, FileHandler file);
 
     /**
+     * Envoie une nouvelle note attribuée à un fichier
+     * @param rating note à ajouter au fichier
+     * @param ratedFile fichier noté
+     */
+    /*void sendRatedFile(Rating rating, FileHandler ratedFile);*/
+
+    /**
      * Transmet la demande de déconnexion de l'utilisateur (recevoir la demande)
      * @param user utilisateur qui se déconnecte
      */
     void requestLogoutToServer(UserStats user);
-
     /*
     /**
      * Transmet la demande de déconnexion de l'utilisateur (envoyer la demande)
      * @param user utilisateur qui se déconnecte
      */
+
     //public void requestLogout(UserIdentity user);
 
 
@@ -71,33 +79,22 @@ public interface CommToDataClient
      */
     void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP);
 
-
     /*
     /**
      * Envoie la demande de connexion
      * @param user utilisateur qui se connecte
      * @param IP IP de la machine de l'utilisateur
      */
+
     //public void connect(UserStats user, long IP);
 
 
     /**
-     * Envoie une nouvelle note attribuée à un fichier
-     * @param rate note
-     * @param file fichier modifié
-     */
-    void sendFileChanges(Rating rate, FileHandler file);
-
-    /*/**
      * Transmet la demande de partage de fichier (déjà partagé) de l'application client à CommServeur
      * @param file fichier qui va être partagé
      * @param user utilisateur qui propose le fichier
      */
-<<<<<<< HEAD
-    //public void requestAddSource(FileHandlerInfos file, UserIdentity user);
-=======
-    void requestAddSource(FileHandler file, UserIdentity user);
->>>>>>> communication2
+    /*void requestAddSource(FileHandler file, UserIdentity user);*/
 
 
     /**
@@ -105,34 +102,22 @@ public interface CommToDataClient
      * @param file fichier qui va être partagé
      * @param user utilisateur qui propose le fichier
      */
-<<<<<<< HEAD
-    public void requestUploadFile(FileHandlerInfos file, User user);
-=======
-    void requestUploadFile(FileHandler file, UserIdentity user);
->>>>>>> communication2
+    void requestUploadFile(FileHandlerInfos file, User user);
 
 
-    /*/**
+    /**
      * Envoie les infos sur la nouvelle source d'un fichier à tous les clients du réseau
      * @param file fichier partagé
      * @param user utilisateur qui devient source pour ce fichier
      */
-<<<<<<< HEAD
-    //public void sendNewFileSource(FileHandler file, UserIdentity user);
-=======
     void sendNewFileSource(FileHandler file, UserIdentity user);
->>>>>>> communication2
 
-    /*/**
+    /**
      * Upload le fichier
      * @param file fichier partagé
      * @param user utilisateur qui upload
      */
-<<<<<<< HEAD
-    //public void uploadFile(FileHandler file, UserIdentity user);
-=======
     void uploadFile(FileHandler file, UserIdentity user);
->>>>>>> communication2
 
     /**
      * Transmet la demande de recherche de source d'un fichier (depuis l'appli client vers commserveur)
@@ -143,3 +128,4 @@ public interface CommToDataClient
 
 
 }
+

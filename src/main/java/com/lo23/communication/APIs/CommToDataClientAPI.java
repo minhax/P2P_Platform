@@ -57,11 +57,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void sendFileChanges(FileHandler file){
-
-    }
-
-    @Override
     public void sendUserChangesToServer(UserIdentity user){
 
     }
@@ -77,11 +72,6 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = cmc.getAddressIpServer();
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
         Client client=new Client(message, 1026, ip);
-    }
-
-    @Override
-    public void sendFileChanges(User user, FileHandler file){
-
     }
 
     @Override
@@ -135,7 +125,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void sendFileChanges(Rating rate, FileHandler file){
+    public void sendFileChanges(User user, FileHandler file){
 
     }
 
@@ -163,18 +153,18 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
 
-    /*@Override
+    @Override
     public void sendNewFileSource(FileHandler file, UserIdentity user){
         //A priori la même chose que addNewFileSource ?
 
-    }*/
+    }
 
-    /*@Override
+    @Override
     public void uploadFile(FileHandler file, UserIdentity user){
 
         //Même chose que requestUploadFile ??
 
-    }*/
+    }
 
     @Override
     public void requestFileLoc(FileHandler file, UserIdentity user){
