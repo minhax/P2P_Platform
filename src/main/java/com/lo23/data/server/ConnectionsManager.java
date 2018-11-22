@@ -179,4 +179,8 @@ public class ConnectionsManager
             throw new IllegalStateException("User to modify is not connected/Does not exist !");
         }
     }
+
+    public List<UserIdentity> getUsersThatProposeFile(FileHandler file){
+        return this.directory.getUsersThatProposeFile(file);
+    }
 }
