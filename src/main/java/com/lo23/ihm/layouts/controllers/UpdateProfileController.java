@@ -53,7 +53,7 @@ public class UpdateProfileController implements Initializable {
     	else {
             // Integration data
 			DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
-			//api.updateAccount(loginUpdateField.getText(),passwordUpdateField.getText(),nameTextField.getText(),familynameUpdateField.getText(),Integer.parseInt(birthdateUpdateField.getText()));
+			//api.requestSubmitUserChanges(loginUpdateField.getText(),passwordUpdateField.getText(),nameTextField.getText(),familynameUpdateField.getText(),Integer.parseInt(birthdateUpdateField.getText()));
             //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
 
