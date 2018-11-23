@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.*;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
 import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
 import com.lo23.ihm.layouts.models.MyFilesListCell;
@@ -194,7 +196,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnDisconnectButtonClicked() { //TODO renvoyer sur la fenetre de connection --> V4
-       // DataManagerClient.getInstance().getDataClientToIhmApi().requestLogout();
+       DataManagerClient.getInstance().getDataClientToIhmApi().requestLogout();
         ((Stage) this.mainHBox.getScene().getWindow()).close();
     }
 
@@ -204,8 +206,8 @@ public class MainController implements Initializable {
 
     private void refreshContactsWindow() {
         //décommenter à l'intégration
-        //DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
-        //connectedUsers = api.requestConnectedUsers();
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        connectedUsers = api.requestConnectedUsers();
 
         Iterator it = connectedUsers.listIterator();
         UserIdentity currentUser = new UserIdentity();

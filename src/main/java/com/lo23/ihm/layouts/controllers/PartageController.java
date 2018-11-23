@@ -1,8 +1,12 @@
-package com.lo23.common.layouts.controllers;
+package com.lo23.ihm.layouts.controllers;
 
 import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.common.user.UserAccount;
+import com.lo23.data.client.DataManagerClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -87,8 +91,8 @@ public class PartageController {
         fileChooser.setTitle("Ajouter fichier");
         fileChooser.getExtensionFilters().addAll();
         selectedFile = fileChooser.showOpenDialog(stage);
-
-        //userAccount = requestAccountInfos();
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        UserAccount userAccount = api.requestAccountInfos();
         //sourceFichier.setText(userAccount.getLogin());
         nomFichier.setText(selectedFile.getName());
         tailleFichier.setText(humanReadableByteCount(selectedFile.length(),true));
@@ -120,11 +124,21 @@ public class PartageController {
             String pathOnDisk = selectedFile.getPath();
             String title = nomFichier.getText();
             String description = informationsFichier.getText();
-            //requestShareNewFile(pathOnDisk, title, description);
+            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+            try {
+                api.requestShareNewFile(pathOnDisk, title, description);
+            }
+            catch(Exception e)
+            {
+
+            }
 
             System.out.println(pathOnDisk);
             System.out.println(title);
             System.out.println(description);
+
+            Stage stage = (Stage) annulerButton.getScene().getWindow();
+            stage.close();
 
         }
 

@@ -3,6 +3,9 @@ package com.lo23.ihm.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.common.interfaces.ihm.IhmToDataClient;
+import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.CreateAccountModel;
 import com.lo23.ihm.layouts.models.UpdateProfileModel;
 
@@ -49,9 +52,9 @@ public class UpdateProfileController implements Initializable {
     	}
     	else {
             // Integration data
-			/*IhmToDataClient api = new IhmToDataClientApi();
-			api.updateAccount(loginUpdateField.getText(),passwordUpdateField.getText(),nameTextField.getText(),familynameUpdateField.getText(),Integer.parseInt(birthdateUpdateField.getText()));
-			*/
+			DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
+			//api.updateAccount(loginUpdateField.getText(),passwordUpdateField.getText(),nameTextField.getText(),familynameUpdateField.getText(),Integer.parseInt(birthdateUpdateField.getText()));
+            //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
 
             try {
