@@ -79,9 +79,13 @@ public interface DataClientToIhm
 
     /**
      * Envoie à Data le profil modifié de l'utilisateur connecté
-     * @param modifiedUser profil utilisateur modifié
+     * @param login de l'utilisateur à modifier
+     * @param password à appliquer à l'utilisateur à modifier
+     * @param firstname à appliquer à l'utilisateur à modifier
+     * @param lastname à appliquer à l'utilisateur à modifier
+     * @param age à appliquer à l'utilisateur à modifier
      */
-    void requestSubmitUserChanges(UserAccount modifiedUser);
+    void requestSubmitUserChanges(String login, String password, String firstname, String lastname, int age);
 
     /**
      * Envoie à Data un fichier devant être rendu

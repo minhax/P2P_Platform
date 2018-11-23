@@ -116,9 +116,10 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestSubmitUserChanges(UserAccount modifiedUser)
+    public void requestSubmitUserChanges(String login, String password, String firstname, String lastname, int age)
     {
-
+        UserAccount modifiedUser = new UserAccount(login, firstname, lastname, age, password);
+        this.host.changeUserInfos(modifiedUser);
     }
 
     @Override
