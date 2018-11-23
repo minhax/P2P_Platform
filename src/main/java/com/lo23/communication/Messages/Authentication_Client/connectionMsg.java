@@ -5,24 +5,21 @@ import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
-
-import java.net.InetAddress;
 import java.util.List;
 
 public class connectionMsg extends Authentication {
-	private String serverIp;
 	private String myIp;
 	private List<FileHandlerInfos> fileInfo;
 
-	public connectionMsg(UserStats us){
+	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
 		this.userStats = us;
-	}
-
-	public connectionMsg(UserStats us, List<FileHandlerInfos> files, String serverIp, String myIp ){
-		this.userStats = us;
-		this.serverIp = serverIp;
 		this.fileInfo = files;
-		this.myIp = myIp;
+		try {
+			this.myIp = CommunicationManagerServer.findIPadress();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		System.out.println("Creation du message");
 	}
 	
@@ -37,16 +34,27 @@ public class connectionMsg extends Authentication {
 		
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
-		/** appel des methodes de l'interface data
-		 *
+		/** On récupère et stocke l'adresse IP du serveur
 		 */
+		String ServerIpAdress = cms.getIP();
+		
+		System.out.println("Mon ip = " + this.myIp);
+		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
+		
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		/** stockage des informations concernant l'adresse IP du server et du client dans le cms
-		 */
-		cms.addEntryInClientAndServerIPArray(this.myIp,this.serverIp);
+		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
 		
+	}
+	
+	public List<FileHandlerInfos> getFileInfo() {
+		return fileInfo;
+	}
+	
+	
+	public String getMyIp() {
+		return myIp;
 	}
 }
 

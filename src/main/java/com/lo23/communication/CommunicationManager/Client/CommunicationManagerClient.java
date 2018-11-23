@@ -14,28 +14,27 @@ public class CommunicationManagerClient extends CommunicationManager{
 	protected CommToDataClientAPI commInterface;
 	protected String addressIpServer;
 	
-	/* Constructeur privé pour implémentation du singleton */
+	/** Constructeur privé
+	 * Récupère interfaces de dataClient et commClient
+	 * Récupère l'adresse IP de la machine sur le réseau UTC
+	 * @param
+	 **/
 	private CommunicationManagerClient()
 	{
 		/** Initialisation des variables privees du CMC **/
 		//this.dataInterface = new DataClientToCommApi();
 		this.commInterface = CommToDataClientAPI.getInstance();
-		/** Initialisation de la List
-		 *
-		 */
 		this.addressIpServer = null;
-		/** Bloc try pour recuperer l'adresse IP de la machine sur le reseau (fonction a tester) **/
+		
 		try {
-			ip = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException ex)
-		{
-			System.out.print("Error in getting IP Adress");
+			this.ip = findIPadress();
+		} catch (Exception ex) {
+			System.out.print("Erreur dans la recuperation de l'adresse IP");
 		}
 	}
-	/** Implementation du singleton **/
-	private static CommunicationManagerClient Instance = new CommunicationManagerClient();
 	
-	/** Point d'accès à l'instance unique **/
+	/** Singleton **/
+	private static CommunicationManagerClient Instance = new CommunicationManagerClient();
 	public static CommunicationManagerClient getInstance()
 	{
 		return Instance;
@@ -53,7 +52,8 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		return commInterface;
 	}
-	public void setAddressIpServer(String s) {this.addressIpServer = s;}
+	public void setAddressIpServer(String s) {
+		this.addressIpServer = s;}
 	public void setDataInterface(DataClientToCommApi di)
 	{
 		this.dataInterface = di;
