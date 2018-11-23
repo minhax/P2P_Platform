@@ -30,7 +30,7 @@ public interface DataClientToIhm
      * Demande à Data la source d'un fichier
      * @param fileToDownload fichier à télécharger
      */
-    void requestFileLocation(FileHandler fileToDownload);
+    void requestFileDownload(FileHandler fileToDownload);
 
     /**
      * Demande à Data les informations détaillées d'un

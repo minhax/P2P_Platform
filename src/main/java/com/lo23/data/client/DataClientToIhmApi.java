@@ -51,12 +51,6 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestFileLocation(FileHandler fileToDownload)
-    {
-
-    }
-
-    @Override
     public UserIdentity requestOtherUserInfo(User otherUser)
     {
         return null;
@@ -134,7 +128,8 @@ public class DataClientToIhmApi implements DataClientToIhm
         File folder = new File("files/fileparts");
         File[] listOfParts = folder.listFiles();
 
-        for(int i = 0; i < listOfParts.length; i++){
+        for(int i = 0; i < listOfParts.length; i++)
+        {
             // Signifie que le fichier existe bien
             if(listOfParts[i].getName().matches(hash)){
                 host.makeLocalFileUnavailable(file);
@@ -215,5 +210,14 @@ public class DataClientToIhmApi implements DataClientToIhm
     {
         return null;
     }
+
+    @Override
+    public void requestFileDownload(FileHandler fileToDownload)
+    {
+        if (fileToDownload != null)
+        {
+            //this.host.downloadFile(fileToDownload);
+        }
+    };
 
 }

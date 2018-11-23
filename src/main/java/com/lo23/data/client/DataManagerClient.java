@@ -67,6 +67,7 @@ public class DataManagerClient
         super();
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
+        this.downloadManager = new DownloadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
@@ -383,6 +384,11 @@ public class DataManagerClient
 
         // Communication des changements au serveur pour qu'il se mette à jour
         this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
+    }
+
+    public void downloadFile(FileHandler fileToDownload)
+    {
+        // créer une fct DOwnloadManager::Download ? 
     }
 
 }
