@@ -1,5 +1,7 @@
 package com.lo23.data.server;
 
+import com.lo23.common.Rating;
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
@@ -178,5 +180,12 @@ public class ConnectionsManager
         {
             throw new IllegalStateException("User to modify is not connected/Does not exist !");
         }
+    }
+
+    public void addRatingToFile(Rating rating, FileHandlerInfos fileToRate) throws DataException
+    {
+        fileToRate.addRating(rating);
+        this.directory.updateFilesAfterModification(fileToRate);
+        // TO DO : Propagation des infos
     }
 }
