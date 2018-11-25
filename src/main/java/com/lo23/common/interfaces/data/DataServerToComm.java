@@ -2,6 +2,7 @@ package com.lo23.common.interfaces.data;
 
 
 import com.lo23.common.Rating;
+import com.lo23.common.Comment;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
@@ -73,4 +74,6 @@ public interface DataServerToComm
     void updateFileChanges(FileHandlerInfos file);
 
     void addFileRating(Rating rating, FileHandlerInfos fileToRate) throws DataException;
+
+    void addFileComment(Comment comment, FileHandlerInfos fileToRate) throws DataException;
 }
