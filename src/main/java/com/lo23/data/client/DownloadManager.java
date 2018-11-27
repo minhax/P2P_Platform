@@ -103,7 +103,7 @@ public class DownloadManager
             byte[] data = new byte[Const.FILEPART_SIZE];
             File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
             FileInputStream fileIn = new FileInputStream(filePart);
-            Files.readAllBytes(filePart.toPath());
+            data = Files.readAllBytes(filePart.toPath());
             // TODO send filePart to comm
             // this.getCommToDataClientAPI();
         } catch(FileNotFoundException e){
@@ -111,5 +111,25 @@ public class DownloadManager
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Méthode de reprise sur erreur dans le cas ou comm ne peut pas nous fournir
+     * le filePart dans le temps imparti
+     * @param userAsking l'utilisateur qui demande le filePart
+     * @param userSource l'utilisateur qui n'a pas réussi le filePart
+     * @param fileToDownload le fichier à télécharger
+     * @param part la partie du fichier à télécharger
+     */
+    public void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part){
+        Vector<UserIdentity> sources = this
+                .getDataManagerClient()
+                .getSessionInfos()
+                .getDirectory()
+                .getUsersThatProposeFile(fileToDownload);
+
+        sources.remove(userSource);
+
+        // TODO send  query to comm again
     }
 }

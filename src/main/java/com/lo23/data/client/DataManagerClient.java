@@ -400,7 +400,7 @@ public class DataManagerClient
 
     public void downloadFile(FileHandler fileToDownload)
     {
-        // créer une fct DownloadManager::Download ?
+        
 
     }
 
