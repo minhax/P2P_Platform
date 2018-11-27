@@ -37,11 +37,11 @@ public class Client {
             objOS.flush();
 
             // socket client remains open until socket timeout (default timeout)
-            for (;;)
-            {
-                Object o = objIS.readObject(); // client read data from the server
-                System.out.println(o);
-            }
+//            for (;;)
+//            {
+//                Object o = objIS.readObject(); // client read data from the server
+//                System.out.println(o);
+//            }
         }
         catch (Exception e){
             e.printStackTrace();
