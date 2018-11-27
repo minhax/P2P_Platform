@@ -9,6 +9,7 @@ import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.data.Const;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -48,12 +49,6 @@ public class DataClientToIhmApi implements DataClientToIhm
             throw new DataException("Error while creating account");
         if (!host.login(login, password))
             throw new DataException("Error while connecting user");
-    }
-
-    @Override
-    public void requestFileLocation(FileHandler fileToDownload)
-    {
-
     }
 
     @Override
@@ -98,9 +93,14 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestCommentFile(Comment comment, FileHandler commentedFile)
+    public void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
     {
+        if (commentedFile == null)
+            throw new DataException("File to comment is null");
+        if (comment == null)
+            throw new DataException("Added comment object is null");
 
+        this.host.addCommentToFile(comment, commentedFile);
     }
 
     @Override
@@ -130,7 +130,8 @@ public class DataClientToIhmApi implements DataClientToIhm
         File folder = new File("files/fileparts");
         File[] listOfParts = folder.listFiles();
 
-        for(int i = 0; i < listOfParts.length; i++){
+        for(int i = 0; i < listOfParts.length; i++)
+        {
             // Signifie que le fichier existe bien
             if(listOfParts[i].getName().matches(hash)){
                 host.makeLocalFileUnavailable(file);
@@ -211,5 +212,14 @@ public class DataClientToIhmApi implements DataClientToIhm
     {
         return null;
     }
+
+    @Override
+    public void requestFileDownload(FileHandler fileToDownload)
+    {
+        if (fileToDownload != null)
+        {
+            //this.host.downloadFile(fileToDownload);
+        }
+    };
 
 }
