@@ -89,4 +89,9 @@ public class DataClientToCommApi implements DataClientToComm
     {
 
     }
+
+    @Override
+    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+        this.host.getDownloadManager().getFilePart(userAsking, userSource, file, part);
+    }
 }
