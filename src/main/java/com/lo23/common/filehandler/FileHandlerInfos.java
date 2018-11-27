@@ -38,7 +38,7 @@ public class FileHandlerInfos extends FileHandler
      * @param nbBlocks Nombre de blocks du fichier découpé
      * @param desc Description du fichier
      */
-    public FileHandlerInfos (String hash, String title, int size, String type, int nbBlocks, String desc)
+    public FileHandlerInfos (String hash, String title, long size, String type, int nbBlocks, String desc)
     {
         super(hash, title, size, type, nbBlocks);
         this.desc = desc;

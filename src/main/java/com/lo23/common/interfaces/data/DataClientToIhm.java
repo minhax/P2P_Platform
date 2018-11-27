@@ -44,23 +44,26 @@ public interface DataClientToIhm
     /**
      * Envoie à Data les métadonnées d'un fichier proposé
      * entrées par l'utilisateur
-     * @param newFile descripteur du fichier proposé
+     * @param pathOnDisk cehemin du fichier sur le disque de l'utilisateur
+     * @param title titre du fichier
+     * @param description description du fichier
+     * @throws DataException Exception lors de la création du compte
      */
-    void requestShareNewFile(FileHandler newFile);
+    void requestShareNewFile(String pathOnDisk, String title, String description) throws DataException;
 
     /**
      * Envoie à Data la note attribuée à un fichier
      * @param rating note
      * @param ratedFile fichier noté
      */
-    void requestRateFile(Rating rating, FileHandler ratedFile);
+    void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException;
 
     /**
      * Envoie à Data le commentaire attribué à un fichier
      * @param comment commentaire
      * @param commentedFile fichier commenté
      */
-    void requestCommentFile(Comment comment, FileHandler commentedFile);
+    void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException;
 
     /**
      * Envoie à Data un fichier qui a subi des modifications
@@ -91,7 +94,7 @@ public interface DataClientToIhm
      * Envoie à Data une demande de déconnexion de
      * l'utilisateur connecté
      */
-    void requestLogout();
+    boolean requestLogout();
 
     /**
      * Demande à Data de vérifier si les informations entrées par
@@ -101,6 +104,8 @@ public interface DataClientToIhm
      * @param password mot de passe entré par l'utilisateur
      */
     boolean requestCheckCredentials(String login, String password);
+
+    boolean requestConnectionToServer(String serverIp);
 
     /**
      * Retourne la liste des fichiers mis à disposition

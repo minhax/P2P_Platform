@@ -1,8 +1,13 @@
 package com.lo23.data.client;
 
+import com.lo23.common.Comment;
+import com.lo23.common.exceptions.DataException;
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
 import com.lo23.communication.APIs.CommToDataClientAPI;
@@ -13,6 +18,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Stream;
 
@@ -26,21 +33,30 @@ public class DataManagerClient
     /**
      * API de DataClient pour IHM
      */
-    private DataClientToIhmApi dataClientToIhmApi;
+    private DataClientToIhm dataClientToIhmApi;
     /**
      * API de DataClient pour Comm
      */
-    private DataClientToCommApi dataClientToCommApi;
-    //private IhmToDataClientApi ihmToDataClientApi;
-    private CommToDataClientAPI commToDataClientAPI;
-
+    private DataClientToComm dataClientToCommApi;
+    /**
+     * API de Comm pour DataClient
+     */
+    private CommToDataClient commToDataClientAPI;
     /**
      * Session courante
      */
     private Session sessionInfos;
+    /**
+     * Gestionnaire du téléversement de fichiers
+     */
     private UploadManager uploadManager;
+    /**
+     * Gestionnaire pour le téléchargement de fichiers
+     */
     private DownloadManager downloadManager;
-
+    /**
+     * Référence du DataManagerClient pour le design pattern Singleton
+     */
     static private DataManagerClient instance;
 
     /**
@@ -50,6 +66,7 @@ public class DataManagerClient
     {
         super();
         this.sessionInfos = new Session();
+        this.uploadManager = new UploadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
@@ -62,13 +79,37 @@ public class DataManagerClient
         return instance;
     }
 
-    public DataClientToCommApi getDataClientToComm(){
-        return this.dataClientToCommApi;
+    UploadManager getUploadManager ()
+    {
+        return this.uploadManager;
     }
 
     Session getSessionInfos()
     {
         return sessionInfos;
+    }
+
+    /**
+     * Renvoie l'API de DataClient pour IHM.
+     * @return Référence vers l'API de DataClient pour IHM
+     */
+    public DataClientToIhm getDataClientToIhmApi ()
+    {
+        return this.dataClientToIhmApi;
+    }
+
+    public DataClientToComm getDataClientToComm (){
+        return this.dataClientToCommApi;
+    }
+
+    CommToDataClient getCommToDataClientApi ()
+    {
+        return this.commToDataClientAPI;
+    }
+
+    public void setCommToDataClientAPI (CommToDataClient fromCommApi)
+    {
+        this.commToDataClientAPI = fromCommApi;
     }
 
     /**
@@ -91,10 +132,10 @@ public class DataManagerClient
             {
                 try
                 {
-                    FileInputStream fileIn = new FileInputStream(userFile.getName());
+                    FileInputStream fileIn = new FileInputStream(userFile.getPath());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                    Object obj = objectIn.readObject();
-                    UserAccount comparisonAccount = (UserAccount) obj;
+                    UserAccount comparisonAccount = (UserAccount) objectIn.readObject();
+                    //UserAccount comparisonAccount = (UserAccount) obj;
                     if(comparisonAccount.getLogin().equals(login))
                     {
                         if(comparisonAccount.checkPassword(hashedPassword))
@@ -115,41 +156,30 @@ public class DataManagerClient
         return retValue;
     }
 
-    public boolean serverLogin(){
+    /**
+     * Méthode qui connecte l'utilisateur courant au serveur
+     * @return Succès de la connexion
+     */
+    public boolean serverLogin(String serverIp){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
-
-        // TODO get IP to connect to. discuter avec comm
-        String serverIP  = "";
 
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
         commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
                 userToConnect.getProposedFiles(),
-                serverIP);
+                serverIp);
 
         return false;
     }
 
     /**
      * Envoie une demande de déconnexion d'un utilisateur
-     * @param user utilisateur qui se déconnecte
-     * @param ip adresse IP du serveur
      */
-    public void logout(User user, String ip)
+    public boolean logout()
     {
-        // TODO send logout message to com
-        // réutiliser variables user et ip utilisés dans login?
-        // requestLogout(User user, String ip)
-
-
-        //TODO return to user logout successful
-    }
-    /**
-     * Récupère l'API de DataClient pour IHM.
-     * @return Référence vers l'API de DataClient pour IHM
-     */
-    public DataClientToIhmApi getDataClientToIhmApi ()
-    {
-        return this.dataClientToIhmApi;
+        // TODO catch erreur eventuelle.
+        this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
+        this.sessionInfos.setCurrentUser(null);
+        return true; //TODO return to user logout successful ?
     }
 
     /**
@@ -165,7 +195,7 @@ public class DataManagerClient
             // Création du flux vers le nouveau fichier
             FileOutputStream fileOut =
                     new FileOutputStream(
-                            FILEPATH_ACCOUNTS+user.getLogin()+"_"+user.getId()+".ser");
+                            FILEPATH_ACCOUNTS + user.getLogin() + "_" + user.getId() + ".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             // Sérialisation de l'utilisateur dans son fichier
             out.writeObject(user);
@@ -264,15 +294,15 @@ public class DataManagerClient
      */
     public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
         /*
-        TODO find file and remove parts of it?
-        il y aura peut-être besoin de faire une exception dans le cas où
-        fileToMakeUnavailable n'existe pas dans le vecteur. Néanmoins,
-        d'après la doc : "If the Vector does not contain the element, it is unchanged."
-        A préciser donc
-        */
-        //Vector<FileHandler> userFiles = this.sessionInfos.getCurrentUser().getProposedFiles();
-        //userFiles.remove(fileToMakeUnavailable);
-
+        Ici on ne supprime pas les parties de fichier sur le disque parce que
+        dans l'éventualité ou on rendrait le fichier dispo de nouveau, on
+        override les fileParts  qui existent déjà donc les laisser en mémoire
+        ne pose pas de problème.
+         */
+        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
+        // Supression du fichier en local
+        UserAccount currentUser = this.sessionInfos.getCurrentUser();
+        currentUser.removeProposedFile(fileToMakeUnavailable);
     }
 
     /**
@@ -299,5 +329,60 @@ public class DataManagerClient
         }
     }
 
+    /**
+     * Ajoute en local un commentaire à un fichier
+     * @param comment commentaire
+     * @param commentedFile fichier commenté
+     */
+    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
+    {
+
+        // Récupération de la liste des fichiers partagés
+        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
+        boolean found = false;
+
+        // Itération sur les fichiers partagés
+        Iterator<FileHandlerInfos> it = keySet.iterator();
+        while (it.hasNext() && !found)
+        {
+            FileHandlerInfos nextFile = it.next();
+            if(nextFile.getHash().equals(commentedFile.getHash()))
+            {
+                // Ajout commentaire au fichier
+                nextFile.addComment(comment);
+                found=true;
+            }
+        }
+
+        // Communication des changements au serveur
+        this.getCommToDataClientApi().sendCommentedFile(comment, (FileHandler) commentedFile);
+    }
+
+    /**
+     * Ajoute en local une note à un fichier
+     * @param rating note
+     * @param ratedFile fichier noté
+     */
+    public void addRatingToFile(Rating rating, FileHandlerInfos ratedFile)
+    {
+        // Récupération de la liste des fichiers partagés
+        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
+        boolean found = false;
+        Iterator<FileHandlerInfos> i = keySet.iterator();
+        // Itération sur les fichiers partagés
+        while(i.hasNext() && !found)
+        {
+            FileHandlerInfos nextFile = i.next();
+            if(nextFile.getHash().equals(ratedFile.getHash()))
+            {
+                // Ajout de la note au fichier
+                nextFile.addRating(rating);
+                found = true;
+            }
+        }
+
+        // Communication des changements au serveur pour qu'il se mette à jour
+        this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
+    }
 
 }
