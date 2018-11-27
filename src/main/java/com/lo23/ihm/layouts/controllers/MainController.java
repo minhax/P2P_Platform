@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
@@ -131,11 +132,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        ObservableList<FileHandler> data = FXCollections.observableArrayList();
-        data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
-                new FileHandler("hash2", "document 2", 1554, "document2", 32),
-                new FileHandler("hash3", "document 3", 15152, "document3", 64));
-
         listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
             @Override
             public ListCell<FileHandler> call(ListView<FileHandler> listView) {
@@ -155,9 +151,26 @@ public class MainController implements Initializable {
             }
         });
 
-        listViewAvailableFiles.setItems(data);
+        // TODO :  Gérer les fichiers ici
+
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        List<FileHandlerInfos> fhsharedbyme = api.requestFilesSharedByMe();
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        if(fhsharedbyme != null) {
+            if(!fhsharedbyme.isEmpty()) {
+                System.out.println("test1");
+                data.addAll(fhsharedbyme);
+            } else
+                System.out.println("test3");
+        } else {
+            System.out.println("test2");
+        }
+
+
+        //listViewAvailableFiles.setItems(data);
         listViewMyFiles.setItems(data);
-        listViewDownloading.setItems(data);
+        //listViewDownloading.setItems(data);
 
 
         //pour test
@@ -186,6 +199,57 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    @FXML
+    public void OnChangeToTabMyFiles() {
+    // TODO :  Gérer les fichiers ici
+
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        List<FileHandlerInfos> fhsharedbyme = api.requestFilesSharedByMe();
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        if(fhsharedbyme != null) {
+            if(!fhsharedbyme.isEmpty()) {
+                System.out.println("test1");
+                data.addAll(fhsharedbyme);
+            } else
+                System.out.println("test3");
+        } else {
+            System.out.println("test2");
+        }
+
+        listViewMyFiles.setItems(data);
+    }
+
+
+    @FXML
+    public void OnChangeToTabAvailable() {
+    // TODO :  Gérer les fichiers ici
+
+        /*DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        List<FileHandler> fhsharedbyme = api.requestFilesSharedByOthers();
+        api.
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        if(fhsharedbyme != null) {
+            if(!fhsharedbyme.isEmpty()) {
+                System.out.println("test1");
+                data.addAll(fhsharedbyme);
+            } else
+                System.out.println("test3");
+        } else {
+            System.out.println("test2");
+        }
+
+        listViewAvailableFiles.setItems(data);*/
+    }
+
+    @FXML
+    public void OnChangeToTabDownloading() {
+// TODO :  Gérer les fichiers ici
+
 
     }
 
@@ -255,10 +319,27 @@ public class MainController implements Initializable {
             stage.setTitle("Ajout d'un Fichier");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
+            // TODO :  Gérer les fichiers ici
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        List<FileHandlerInfos> fhsharedbyme = api.requestFilesSharedByMe();
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        if(fhsharedbyme != null) {
+            if(!fhsharedbyme.isEmpty()) {
+                System.out.println("test1");
+                data.addAll(fhsharedbyme);
+            } else
+                System.out.println("test3");
+        } else {
+            System.out.println("test2");
+        }
+
+        listViewMyFiles.setItems(data);
 
     }
 
