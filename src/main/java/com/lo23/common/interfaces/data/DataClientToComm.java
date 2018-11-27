@@ -79,4 +79,14 @@ public interface DataClientToComm
      * @param files fichiers dont cet utilisateur est la source
      */
     void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files);
+
+    /**
+     * Fonction qui permet d'obtenir le filePart numéro "part" du fichier
+     * "file" pour l'envoyer à userAsking.
+     * @param userAsking
+     * @param userSource
+     * @param file
+     * @param part
+     */
+    void getFilePart(User userAsking, User userSource, FileHandler file, long part);
 }

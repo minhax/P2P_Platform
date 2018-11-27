@@ -50,6 +50,7 @@ public class DataManagerClient
      * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
+
     /**
      * Gestionnaire pour le téléchargement de fichiers
      */
@@ -85,6 +86,16 @@ public class DataManagerClient
     {
         return this.uploadManager;
     }
+
+    public DownloadManager getDownloadManager() {
+        return downloadManager;
+    }
+
+    public void setDownloadManager(DownloadManager downloadManager) {
+        this.downloadManager = downloadManager;
+    }
+
+
 
     Session getSessionInfos()
     {

@@ -6,7 +6,8 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Const;
 
-import java.io.File;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.Vector;
 
 public class DownloadManager
@@ -86,6 +87,29 @@ public class DownloadManager
             }
             // TODO demander à comm de demander à l'user i les blocs i
             // this.getCommToDataClientAPI();
+        }
+    }
+
+    /**
+     * Fonction qui permet d'obtenir le filePart numéro "part" du fichier
+     * "file" pour l'envoyer à userAsking.
+     * @param userAsking l'utilisateur qui demande le fichier
+     * @param userSource l'utilisateur qui fournit le filePart
+     * @param file les métadonnées du ficheir en question
+     * @param part l'index de la partie du fichier.
+     */
+    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+        try{
+            byte[] data = new byte[Const.FILEPART_SIZE];
+            File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
+            FileInputStream fileIn = new FileInputStream(filePart);
+            Files.readAllBytes(filePart.toPath());
+            // TODO send filePart to comm
+            // this.getCommToDataClientAPI();
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
