@@ -222,4 +222,13 @@ public class DataClientToIhmApi implements DataClientToIhm
         }
     };
 
+    @Override
+    public Vector<FileHandler> requestInQueueFiles(){
+        return this.host.getDownloadManager().getInQueue();
+    }
+
+    @Override
+    public Vector<FileHandler> requestInProgressFiles(){
+        return this.host.getDownloadManager().getInProgress();
+    }
 }

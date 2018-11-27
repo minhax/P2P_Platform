@@ -13,7 +13,7 @@ import java.util.Vector;
 public class DownloadManager
 {
     private Vector<FileHandler> inQueue;
-    private Vector<DownloadHandler> inProgress;
+    private Vector<FileHandler> inProgress;
     private CommToDataClient commToDataClientAPI;
     private DataManagerClient dataManagerClient;
 
@@ -35,7 +35,7 @@ public class DownloadManager
 
     DownloadManager(){
         this.inQueue = new Vector<FileHandler>();
-        this.inProgress = new Vector<DownloadHandler>();
+        this.inProgress = new Vector<FileHandler>();
     }
 
     public Vector<FileHandler> getInQueue()
@@ -53,7 +53,7 @@ public class DownloadManager
         this.inQueue.remove(fileToRemove);
     }
 
-    public Vector<DownloadHandler> getInProgress() {
+    public Vector<FileHandler> getInProgress() {
         return this.inProgress;
     }
 

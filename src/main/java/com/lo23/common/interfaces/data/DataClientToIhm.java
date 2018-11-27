@@ -11,6 +11,7 @@ import com.lo23.common.user.UserIdentity;
 
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 public interface DataClientToIhm
 {
@@ -162,6 +163,16 @@ public interface DataClientToIhm
      */
     List<UserIdentity> requestConnectedUsers();
 
+    /**
+     * Renvoie les fichiers en attente de téléchargement
+     * @return Vector des téléchargements en attente.
+     */
+    Vector<FileHandler> requestInQueueFiles();
 
+    /**
+     * Renvoie les ficheirs en cours de téléchargement
+     * @return Vector des téléchargements en cours.
+     */
+    Vector<FileHandler> requestInProgressFiles();
 
 }
