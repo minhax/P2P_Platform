@@ -28,11 +28,13 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     /* Initialisation du singleton*/
-    private static CommToDataClientAPI Instance=new CommToDataClientAPI();
+    private static CommToDataClientAPI Instance;
 
     /* Accesseurs */
     public static CommToDataClientAPI getInstance()
     {
+        if (Instance == null)
+            Instance = new CommToDataClientAPI();
         return Instance;
     }
 
