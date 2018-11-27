@@ -11,8 +11,9 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
 import com.lo23.communication.network.Client;
-import com.lo23.communication.network.Server;
+
 
 import java.util.List;
 
@@ -57,7 +58,20 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void sendUserChangesToServer(UserIdentity user){
+    public void sendUserChangesToServer(UserIdentity user)
+    {
+        /**
+         * recupere le CommunicationManager cote Client
+         * recupere l'addresse du serveur
+         * cree un message de type updateUserInfoMsg pour la modification des infos de l'utilisateur user
+         * cree un objet Client qui permet d'envoyer le message au serveur via socket
+         */
+        CommunicationManagerClient  cmc= CommunicationManagerClient.getInstance();
+        //A modifier plus tard ==> cms.getPort()
+        int portServer=1026;
+        String addrServer=cmc.getAddressIpServer();
+        updateUserInfoMsg msg = new updateUserInfoMsg(user);
+        Client c= new Client(msg,portServer,addrServer);
 
     }
 
