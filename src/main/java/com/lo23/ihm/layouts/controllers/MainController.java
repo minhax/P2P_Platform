@@ -4,9 +4,13 @@ import java.net.URL;
 import java.util.*;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
 import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
 import com.lo23.ihm.layouts.models.MyFilesListCell;
+import javafx.beans.property.ReadOnlyListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,12 +18,15 @@ import com.lo23.common.user.UserIdentity;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -47,7 +54,7 @@ public class MainController implements Initializable {
     private TextField researchTextField;
 
     @FXML
-    private ComboBox<?> chooseResearchBox;
+    private ComboBox<String> chooseResearchBox;
 
     @FXML
     private TabPane mainTabPane;
@@ -126,8 +133,32 @@ public class MainController implements Initializable {
     private int period = 10000;
 
 
+    //gestion recherche de fichier
+    private ObservableList<String> choices = FXCollections.observableArrayList();
+    private List<FileHandlerInfos> researchResults = new ArrayList<FileHandlerInfos>();
+    private ListProperty<FileHandlerInfos> researchResultsProperty = new SimpleListProperty<FileHandlerInfos>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        choices.addAll("Nom", "Auteur", "Tags");
+        chooseResearchBox.setItems(choices);
+
+        researchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode().equals(KeyCode.ENTER)) {
+
+                    researchResults.clear();
+                    String searchItem = researchTextField.getText();
+                    // choix de recherche pas dans la méthode de Data??
+                    String searchMethod = chooseResearchBox.getValue();
+
+                    researchFile(searchItem,searchMethod);
+                    mainTabPane.getSelectionModel().select(availableFilesTab);
+                }
+            }
+        });
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
         data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
@@ -161,7 +192,6 @@ public class MainController implements Initializable {
         //pour test
         user = new UserIdentity("login", "Prénom", "Nom", 21);
         connectedUsers.add(user);
-
 
         refreshTimer = new Timer();
 
@@ -258,6 +288,19 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    public void researchFile(String searchItem, String searchMethod)
+    {
+        //décommenter à l'integ
+        //DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        //researchResults = api.requestSearchFile(searchItem);
+
+        //pour test
+        researchResults.add(new FileHandlerInfos("hash", "title", 200, "type", 1, "desc"));
+        ObservableList<FileHandlerInfos> donnees = FXCollections.observableArrayList(researchResults);
+
+        listViewAvailableFiles.setItems(donnees);
     }
 
 }
