@@ -80,6 +80,12 @@ public class CommToDataClientAPI implements CommToDataClient
     public void sendFilesChanges(Comment comment, FileHandler file){
 
     }
+
+    @Override
+    public void sendRatedFile(Rating rating, FileHandler ratedFile){
+
+    }
+
     /**
      * Demande de déconnexion de l'utilisateur sur le serveur
      *
@@ -132,11 +138,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
     }*/
 
-
-    @Override
-    public void sendFileChanges(Rating rate, FileHandler file){
-
-    }
 
     @Override
     public void requestAddSource(FileHandler file, UserIdentity user){

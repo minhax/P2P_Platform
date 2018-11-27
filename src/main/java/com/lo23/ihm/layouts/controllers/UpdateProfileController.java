@@ -3,6 +3,9 @@ package com.lo23.ihm.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.common.interfaces.ihm.IhmToDataClient;
+import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.CreateAccountModel;
 import com.lo23.ihm.layouts.models.UpdateProfileModel;
 
@@ -44,18 +47,18 @@ public class UpdateProfileController implements Initializable {
         {
             errorUpdateLabel.setVisible(true);
         }
-    	else if (passwordUpdateField.getText() != passwordConfirmationUpdateField.getText()) {
+    	else if (!passwordUpdateField.getText().equals(passwordConfirmationUpdateField.getText()) ) {
     		errorUpdateLabel.setVisible(true);
     	}
     	else {
             // Integration data
-			/*IhmToDataClient api = new IhmToDataClientApi();
-			api.updateAccount(loginUpdateField.getText(),passwordUpdateField.getText(),nameTextField.getText(),familynameUpdateField.getText(),Integer.parseInt(birthdateUpdateField.getText()));
-			*/
+			DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
+			api.requestSubmitUserChanges(loginUpdateField.getText(),passwordUpdateField.getText(),nameUpdateField.getText(),familynameUpdateField.getText(),Integer.parseInt(ageUpdateField.getText()));
+            //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
 
             try {
-                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
+                /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
                 Stage stage = new Stage();
 
@@ -63,7 +66,9 @@ public class UpdateProfileController implements Initializable {
                 stage.setOpacity(1);
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-                stage.showAndWait();
+                stage.showAndWait();*/
+                Stage stage = (Stage) errorUpdateLabel.getScene().getWindow();
+                stage.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
