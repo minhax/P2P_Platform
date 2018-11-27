@@ -9,16 +9,11 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
-import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
-<<<<<<< HEAD
-import com.lo23.communication.Messages.Message;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
-=======
 import com.lo23.communication.network.Client;
->>>>>>> communication2
-import com.lo23.communication.network.Server;
+
 
 import java.util.List;
 
