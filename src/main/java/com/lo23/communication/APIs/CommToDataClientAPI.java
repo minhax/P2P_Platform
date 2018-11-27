@@ -12,7 +12,6 @@ import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.network.Client;
-import com.lo23.communication.network.Server;
 
 import java.util.List;
 

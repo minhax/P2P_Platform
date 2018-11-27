@@ -49,7 +49,7 @@ public class PeerReceiveSocket implements Serializable{
   
 			// Inclure methode pour recuperer le/les fichiers sur le client qui doit envoyer les fichiers;
 					
-			System.out.println("Waiting for Server");
+			System.out.println("Waiting for ServerClass");
 			
 			String clientAsServerAddr = "localhost";
 			int clientAsServerPort = 100;

@@ -7,14 +7,14 @@ import java.net.Socket;
 import com.lo23.communication.network.ServerHandler;
 import java.io.Serializable;
 
-public class Server
+public class ServerClass
 {
 	private ServerSocket serverSocket = null;
 	private Socket socket = null;
 	private int peerId = 0;
 
 	@SuppressWarnings("resource")
-	public Server() throws NumberFormatException
+	public ServerClass() throws NumberFormatException
 	{
 
 		try
@@ -22,7 +22,7 @@ public class Server
 			serverSocket = new ServerSocket(1026);
 			++peerId;
 			System.out.println("===============");
-			System.out.println("Server central");
+			System.out.println("ServerClass central");
 			System.out.println("===============\n");
 		}
 

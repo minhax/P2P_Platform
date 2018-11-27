@@ -2,8 +2,7 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.Messages.Authentication_Server.addAdressIpMsg;
-import com.lo23.communication.network.Server;
+import com.lo23.communication.network.ServerClass;
 import com.lo23.communication.network.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 
@@ -54,7 +53,7 @@ public class Tests
 		}
 		if(test == 1)
 		{
-			Server s = new Server();
+			ServerClass s = new ServerClass();
 		}
 		else if(test == 2)
 		{

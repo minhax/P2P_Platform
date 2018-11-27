@@ -22,7 +22,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * Récupère un objet interface de DataServer et CommServer
 	 * Récupère l'adresse IP de la machine sur le réseau UTC
 	 * Instancie la LinkedHashMap
-	 * @param IP client et IP Server
+	 * @param IP client et IP ServerClass
 	 * ...
 	 * @return void
 	 **/
@@ -70,7 +70,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	/**
 	 * Ajoute une clé [IP Client et IP Serveur] dans une LinkedHashMap
 	 *
-	 * @param IP client et IP Server
+	 * @param IP client et IP ServerClass
 	 * ...
 	 * @return void
 	 **/
