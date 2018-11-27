@@ -32,6 +32,11 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
+    public void receiveFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        this.host.storeNewFilePart(fileHandler, blocNumber, data);
+    }
+
+    @Override
     public void receiveFileLocations(List<UserIdentity> sources)
     {
 

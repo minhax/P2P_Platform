@@ -7,6 +7,12 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Const;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Vector;
 
 public class DownloadManager
@@ -61,7 +67,7 @@ public class DownloadManager
      * source le même nombre de blocs.
      * @param fileToDownload le fichier à télécharger.
      */
-    public void splitDownload(FileHandler fileToDownload)
+    public void download(FileHandler fileToDownload)
     {
         long nbBlocks = (long) Math.ceil(fileToDownload.getSize() / Const.FILEPART_SIZE);
 
@@ -87,5 +93,32 @@ public class DownloadManager
             // TODO demander à comm de demander à l'user i les blocs i
             // this.getCommToDataClientAPI();
         }
+    }
+
+    public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        // TODO : store the fileParts, and check if it's completed or not
+        long nbBlocks = (long) Math.ceil(fileHandler.getSize() / Const.FILEPART_SIZE);
+
+        // check how many parts exist
+        //todo regex and check number of existing parts, and remove hardcore
+        long existingPartsNumber = 0;
+
+        //all parts collected
+        if (existingPartsNumber == nbBlocks) {
+
+        } else if (existingPartsNumber < nbBlocks) {
+            // Store the part in the disk
+            try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
+                fos.write(data);
+            } catch (IOException e) {
+                System.out.println("Error when storing file part in disk");
+                e.printStackTrace();
+            }
+
+        } else {
+            throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
+        }
+
+
     }
 }

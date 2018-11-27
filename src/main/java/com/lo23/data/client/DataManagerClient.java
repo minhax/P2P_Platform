@@ -389,8 +389,11 @@ public class DataManagerClient
 
     public void downloadFile(FileHandler fileToDownload)
     {
-        // créer une fct DownloadManager::Download ?
+        downloadManager.download(fileToDownload);
+    }
 
+    public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        this.downloadManager.storeNewFilePart(fileHandler, blocNumber, data);
     }
 
 }
