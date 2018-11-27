@@ -57,7 +57,7 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
+    public void addNewFileToServer(FileHandlerInfos file, User user)
     {
 
     }
