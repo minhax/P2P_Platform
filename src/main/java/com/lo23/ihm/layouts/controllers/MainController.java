@@ -136,8 +136,7 @@ public class MainController implements Initializable {
     //gestion recherche de fichier
     private ObservableList<String> choices = FXCollections.observableArrayList();
     private List<FileHandlerInfos> researchResults = new ArrayList<FileHandlerInfos>();
-    private ListProperty<FileHandlerInfos> researchResultsProperty = new SimpleListProperty<FileHandlerInfos>();
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -153,8 +152,8 @@ public class MainController implements Initializable {
         researchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                // la recherche se fait en appuyant sur la touche entrée
                 if(event.getCode().equals(KeyCode.ENTER)) {
-
                     researchResults.clear();
                     String searchItem = researchTextField.getText();
                     // choix de recherche pas dans la méthode de Data??
@@ -164,8 +163,8 @@ public class MainController implements Initializable {
                     mainTabPane.getSelectionModel().select(availableFilesTab);
                 }
 
+                // pour revenir à la liste de tous les fichiers disponibles (hors recherche) : touche backspace
                 else if(event.getCode().equals(KeyCode.BACK_SPACE)) {
-
                     listViewAvailableFiles.setItems(data);
                 }
             }
@@ -305,6 +304,7 @@ public class MainController implements Initializable {
 
         //pour test
         researchResults.add(new FileHandlerInfos("hash", "title", 200, "type", 1, "desc"));
+
         ObservableList<FileHandlerInfos> donnees = FXCollections.observableArrayList(researchResults);
 
         listViewAvailableFiles.setItems(donnees);
