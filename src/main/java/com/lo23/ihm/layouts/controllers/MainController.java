@@ -208,17 +208,19 @@ public class MainController implements Initializable {
         //décommenter à l'intégration
         DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         connectedUsers = api.requestConnectedUsers();
+        if(connectedUsers!=null) {
 
-        Iterator it = connectedUsers.listIterator();
-        UserIdentity currentUser = new UserIdentity();
-        userList.clear();
+            Iterator it = connectedUsers.listIterator();
+            UserIdentity currentUser = new UserIdentity();
+            userList.clear();
 
-        while (it.hasNext()) {
-            currentUser = (UserIdentity) it.next();
-            userList.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+            while (it.hasNext()) {
+                currentUser = (UserIdentity) it.next();
+                userList.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+            }
+
+            userListProperty.set(FXCollections.observableArrayList(userList));
         }
-
-        userListProperty.set(FXCollections.observableArrayList(userList));
     }
 
 
