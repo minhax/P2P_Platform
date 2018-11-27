@@ -144,6 +144,12 @@ public class MainController implements Initializable {
         choices.addAll("Nom", "Auteur", "Tags");
         chooseResearchBox.setItems(choices);
 
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
+                new FileHandler("hash2", "document 2", 1554, "document2", 32),
+                new FileHandler("hash3", "document 3", 15152, "document3", 64));
+
+
         researchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -157,13 +163,14 @@ public class MainController implements Initializable {
                     researchFile(searchItem,searchMethod);
                     mainTabPane.getSelectionModel().select(availableFilesTab);
                 }
+
+                else if(event.getCode().equals(KeyCode.BACK_SPACE)) {
+
+                    listViewAvailableFiles.setItems(data);
+                }
             }
         });
 
-        ObservableList<FileHandler> data = FXCollections.observableArrayList();
-        data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
-                new FileHandler("hash2", "document 2", 1554, "document2", 32),
-                new FileHandler("hash3", "document 3", 15152, "document3", 64));
 
         listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
             @Override
