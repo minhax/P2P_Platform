@@ -11,6 +11,7 @@ import com.lo23.common.user.UserIdentity;
 
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 public interface DataClientToIhm
 {
@@ -30,7 +31,7 @@ public interface DataClientToIhm
      * Demande à Data la source d'un fichier
      * @param fileToDownload fichier à télécharger
      */
-    void requestFileLocation(FileHandler fileToDownload);
+    void requestFileDownload(FileHandler fileToDownload);
 
     /**
      * Demande à Data les informations détaillées d'un
@@ -63,7 +64,7 @@ public interface DataClientToIhm
      * @param comment commentaire
      * @param commentedFile fichier commenté
      */
-    void requestCommentFile(Comment comment, FileHandler commentedFile);
+    void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException;
 
     /**
      * Envoie à Data un fichier qui a subi des modifications
@@ -162,6 +163,16 @@ public interface DataClientToIhm
      */
     List<UserIdentity> requestConnectedUsers();
 
+    /**
+     * Renvoie les fichiers en attente de téléchargement
+     * @return Vector des téléchargements en attente.
+     */
+    Vector<FileHandler> requestInQueueFiles();
 
+    /**
+     * Renvoie les ficheirs en cours de téléchargement
+     * @return Vector des téléchargements en cours.
+     */
+    Vector<FileHandler> requestInProgressFiles();
 
 }
