@@ -400,8 +400,11 @@ public class DataManagerClient
 
     public void downloadFile(FileHandler fileToDownload)
     {
-        
+       downloadManager.download(fileToDownload);
+    }
 
+    public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        this.downloadManager.storeNewFilePart(fileHandler, blocNumber, data);
     }
 
 }

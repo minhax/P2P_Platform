@@ -6,6 +6,13 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Const;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Vector;
@@ -62,7 +69,7 @@ public class DownloadManager
      * source le même nombre de blocs.
      * @param fileToDownload le fichier à télécharger.
      */
-    public void splitDownload(FileHandler fileToDownload)
+    public void download(FileHandler fileToDownload)
     {
         long nbBlocks = (long) Math.ceil(fileToDownload.getSize() / Const.FILEPART_SIZE);
 
@@ -113,7 +120,7 @@ public class DownloadManager
         }
     }
 
-    /**
+   /**
      * Méthode de reprise sur erreur dans le cas ou comm ne peut pas nous fournir
      * le filePart dans le temps imparti
      * @param userAsking l'utilisateur qui demande le filePart
@@ -121,7 +128,7 @@ public class DownloadManager
      * @param fileToDownload le fichier à télécharger
      * @param part la partie du fichier à télécharger
      */
-    public void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part){
+    public void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
         Vector<UserIdentity> sources = this
                 .getDataManagerClient()
                 .getSessionInfos()
@@ -131,5 +138,30 @@ public class DownloadManager
         sources.remove(userSource);
 
         // TODO send  query to comm again
+    }
+
+   public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        // TODO : store the fileParts, and check if it's completed or not
+        long nbBlocks = (long) Math.ceil(fileHandler.getSize() / Const.FILEPART_SIZE);
+
+        // check how many parts exist
+        //todo regex and check number of existing parts, and remove hardcore
+        long existingPartsNumber = 0;
+
+        //all parts collected
+        if (existingPartsNumber == nbBlocks) {
+
+        } else if (existingPartsNumber < nbBlocks) {
+            // Store the part in the disk
+            try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
+                fos.write(data);
+            } catch (IOException e) {
+                System.out.println("Error when storing file part in disk");
+                e.printStackTrace();
+            }
+
+        } else {
+            throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
+        }
     }
 }
