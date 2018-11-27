@@ -9,6 +9,7 @@ import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.data.Const;
 
 import java.io.File;
 import java.io.FileDescriptor;

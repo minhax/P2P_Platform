@@ -71,6 +71,7 @@ public class DataManagerClient
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
+        this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
     }
 
     static public DataManagerClient getInstance(){
@@ -388,7 +389,8 @@ public class DataManagerClient
 
     public void downloadFile(FileHandler fileToDownload)
     {
-        // créer une fct DOwnloadManager::Download ? 
+        // créer une fct DownloadManager::Download ?
+
     }
 
 }
