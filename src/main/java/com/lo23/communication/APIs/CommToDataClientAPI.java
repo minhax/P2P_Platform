@@ -78,7 +78,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void sendFilesChanges(Comment comment, FileHandler file){
+    public void sendCommentedFile(Comment comment, FileHandler commentedFile){
 
     }
 
