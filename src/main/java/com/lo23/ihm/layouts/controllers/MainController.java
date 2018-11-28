@@ -149,11 +149,12 @@ public class MainController implements Initializable {
                 new FileHandler("hash3", "document 3", 15152, "document3", 64));
 
 
-        researchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        researchTextField.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                System.out.println(researchTextField.getText());
                 // la recherche se fait en appuyant sur la touche entrée
-                if(event.getCode().equals(KeyCode.ENTER)) {
+                //if(event.getCode().equals(KeyCode.ENTER)) {
                     researchResults.clear();
                     String searchItem = researchTextField.getText();
                     // choix de recherche pas dans la méthode de Data??
@@ -161,10 +162,11 @@ public class MainController implements Initializable {
 
                     researchFile(searchItem,searchMethod);
                     mainTabPane.getSelectionModel().select(availableFilesTab);
-                }
+               // }
 
                 // pour revenir à la liste de tous les fichiers disponibles (hors recherche) : touche backspace
-                else if(event.getCode().equals(KeyCode.BACK_SPACE)) {
+                //else if(event.getCode().equals(KeyCode.BACK_SPACE)) {
+                if(researchTextField.getText().isEmpty() || researchTextField.getText()==null){
                     listViewAvailableFiles.setItems(data);
                 }
             }
