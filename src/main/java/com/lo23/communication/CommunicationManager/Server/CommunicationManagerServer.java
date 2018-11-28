@@ -84,7 +84,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 			throws CommException
 	{
 		/** On vérifie que la valeur de la clé (adresse IP du client ) existe bien dans la table**/
-		if (!(this.clientAndServerIP.containsValue(userIPAddress)))
+		if (!(this.clientAndServerIP.containsKey(userIPAddress)))
 				throw new CommException("L'adresse IP n'est pas presente dans la table", userIPAddress);
 			else
 			this.clientAndServerIP.remove(userIPAddress);
