@@ -100,7 +100,7 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestLogoutToServer(UserStats user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         String myIPAdress = null;
-        int portServ = 0;
+        int portServ = 1026;
         try {
             myIPAdress = CommunicationManager.findIPadress();
         }catch(Exception e)
@@ -109,6 +109,7 @@ public class CommToDataClientAPI implements CommToDataClient
         }
         logoutMsg message = new logoutMsg(user,myIPAdress);
         Client c = new Client(message, portServ, cmc.getAddressIpServer());
+        System.out.println("[COM] Deconnexion reussie");
     }
     /**
      * Demande de connexion de l'utilisateur sur le serveur

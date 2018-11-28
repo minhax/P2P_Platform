@@ -20,7 +20,7 @@ public class Client {
 
         try{
 
-            System.out.println("connection to the server...");
+            System.out.println("Connection au serveur...");
 
             Socket clientSocket = new Socket(addrServ, portServ);
 
@@ -28,11 +28,11 @@ public class Client {
             objOS.flush();
 
             ObjectInputStream objIS = new ObjectInputStream(clientSocket.getInputStream());
-            System.out.println("creating clients' flux");
+            System.out.println("Creation du flux ");
             System.out.println();
 
 
-
+            System.out.println("Envoi du message" + msg.toString());
             objOS.writeObject(msg); // client send data to the server
             objOS.flush();
 

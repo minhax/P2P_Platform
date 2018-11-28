@@ -38,7 +38,7 @@ public class ServerHandler extends Thread implements Serializable
 
                 Message msgCast = (Message) msg;
 
-                System.out.println("treatment of the message : ");
+                System.out.println("treatment of the message : " + msgCast.toString());
                 msgCast.treatment(); // treatment of the data sent
                 System.out.println("end of the treatment");
 

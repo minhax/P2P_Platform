@@ -23,8 +23,6 @@ public class logoutMsg extends Authentication {
 		
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
-		
-		dataInterface.removeDisconnectedUser(this.userStats);
 		try {
 			cms.removeUserFromTable(this.UserIPAdress);
 		}catch(CommException e){
@@ -33,8 +31,8 @@ public class logoutMsg extends Authentication {
 			System.out.println("\t printStackTrace: \t");
 			e.printStackTrace();
 		}
-		finally{
-			System.out.print("\t Non arret du logiciel");
-		}
+
+		dataInterface.removeDisconnectedUser(this.userStats);
+
 	}
 }
