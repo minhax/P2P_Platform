@@ -48,7 +48,7 @@ public class User implements Serializable
         } else
         {
             User u = (User) o;
-            if (u.getId() == this.getId())
+            if (u.getId().equals(this.getId()))
             {
                 return true;
             } else

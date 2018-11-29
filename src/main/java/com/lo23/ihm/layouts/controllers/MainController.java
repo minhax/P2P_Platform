@@ -1,24 +1,36 @@
 package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
+import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.data.client.DataManagerClient;
+import com.lo23.ihm.layouts.models.AvailableFilesListCell;
+import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
+import com.lo23.ihm.layouts.models.MyFilesListCell;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import com.lo23.common.user.UserIdentity;
+import javafx.application.Platform;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
-public class MainController implements Initializable{
-
-	
-	@FXML
+public class MainController implements Initializable {
+    @FXML
     private HBox mainHBox;
 
     @FXML
@@ -85,28 +97,170 @@ public class MainController implements Initializable{
     private AnchorPane onlineUsersPane;
 
     @FXML
+    private ListView<String> contactsListView;
+
+    @FXML
     private TextField researchUserTextField;
 
     @FXML
     private Button disconnectButton;
-	
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-	}
 
-	@FXML
-	public void OnServerParametersButtonClicked(){
+    @FXML
+    private ListView listViewAvailableFiles;
+
+    @FXML
+    private ListView listViewMyFiles;
+
+    @FXML
+    private ListView listViewDownloading;
+
+    //gestion fenêtre contacts en ligne
+    private List<UserIdentity> connectedUsers = new ArrayList<UserIdentity>();
+
+    private List<String> userList = new ArrayList<String>();
+
+    private ListProperty<String> userListProperty = new SimpleListProperty<String>();
+
+    //pour test
+    private UserIdentity user;
+
+    private Timer refreshTimer;
+    private int period = 10000;
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
+                new FileHandler("hash2", "document 2", 1554, "document2", 32),
+                new FileHandler("hash3", "document 3", 15152, "document3", 64));
+
+        listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new AvailableFilesListCell();
+            }
+        });
+        listViewMyFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new MyFilesListCell();
+            }
+        });
+        listViewDownloading.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new DownloadingFilesListCell();
+            }
+        });
+
+        listViewAvailableFiles.setItems(data);
+        listViewMyFiles.setItems(data);
+        listViewDownloading.setItems(data);
+
+
+        //pour test
+        user = new UserIdentity("login", "Prénom", "Nom", 21);
+        connectedUsers.add(user);
+
+
+        refreshTimer = new Timer();
+
+        refreshTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+                Platform.runLater(() -> refreshContactsWindow());
+            }
+        }, 0, period);
+
+        //refreshContactsWindow();
+        binding();
+    }
+
+    @FXML
+    public void OnRefreshConnectedUsersClicked() {
+        try {
+            refreshContactsWindow();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
-    public void OnUpdateUserButtonClicked(){
-
+    public void OnServerParametersButtonClicked() {
     }
 
+
     @FXML
-    public void OnDisconnectButtonClicked(){
+    public void OnDisconnectButtonClicked() { //TODO renvoyer sur la fenetre de connection --> V4
+       DataManagerClient.getInstance().getDataClientToIhmApi().requestLogout();
+        ((Stage) this.mainHBox.getScene().getWindow()).close();
+    }
+
+    private void binding() {
+        this.contactsListView.itemsProperty().bind(userListProperty);
+    }
+
+    private void refreshContactsWindow() {
+        //décommenter à l'intégration
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        connectedUsers = api.requestConnectedUsers();
+        if(connectedUsers!=null) {
+
+            Iterator it = connectedUsers.listIterator();
+            UserIdentity currentUser = new UserIdentity();
+            userList.clear();
+
+            while (it.hasNext()) {
+                currentUser = (UserIdentity) it.next();
+                userList.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+            }
+
+            userListProperty.set(FXCollections.observableArrayList(userList));
+        }
+    }
+
+
+    @FXML
+    public void OnUpdateUserButtonClicked() {
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setOpacity(1);
+            stage.setTitle("Édition du compte");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    public void OnAddDocumentButtonClicked(){
+        // Ouvre le fenêtre d'ajout d'un fichier
+
+        try {
+
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setOpacity(1);
+            stage.setTitle("Ajout d'un Fichier");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

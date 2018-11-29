@@ -1,5 +1,5 @@
 package com.lo23.communication.network;
-
+import java.io.Serializable;
 public class InfoPeer
 {
     private String addrPeer;

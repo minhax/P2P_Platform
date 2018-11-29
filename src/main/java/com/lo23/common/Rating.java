@@ -12,7 +12,7 @@ public class Rating implements Serializable
     /**
      * Serial UID for class serialisation
      */
-    private static final long serialVersionUID = 100000000001L;
+    private static final long serialVersionUID = 100000000003L;
 
     /**
      * Valeur numérique de la note

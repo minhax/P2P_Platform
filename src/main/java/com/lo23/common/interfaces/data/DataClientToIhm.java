@@ -11,6 +11,7 @@ import com.lo23.common.user.UserIdentity;
 
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 public interface DataClientToIhm
 {
@@ -30,7 +31,7 @@ public interface DataClientToIhm
      * Demande à Data la source d'un fichier
      * @param fileToDownload fichier à télécharger
      */
-    void requestFileLocation(FileHandler fileToDownload);
+    void requestFileDownload(FileHandler fileToDownload);
 
     /**
      * Demande à Data les informations détaillées d'un
@@ -44,23 +45,26 @@ public interface DataClientToIhm
     /**
      * Envoie à Data les métadonnées d'un fichier proposé
      * entrées par l'utilisateur
-     * @param newFile descripteur du fichier proposé
+     * @param pathOnDisk cehemin du fichier sur le disque de l'utilisateur
+     * @param title titre du fichier
+     * @param description description du fichier
+     * @throws DataException Exception lors de la création du compte
      */
-    void requestShareNewFile(FileHandler newFile);
+    void requestShareNewFile(String pathOnDisk, String title, String description) throws DataException;
 
     /**
      * Envoie à Data la note attribuée à un fichier
      * @param rating note
      * @param ratedFile fichier noté
      */
-    void requestRateFile(Rating rating, FileHandler ratedFile);
+    void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException;
 
     /**
      * Envoie à Data le commentaire attribué à un fichier
      * @param comment commentaire
      * @param commentedFile fichier commenté
      */
-    void requestCommentFile(Comment comment, FileHandler commentedFile);
+    void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException;
 
     /**
      * Envoie à Data un fichier qui a subi des modifications
@@ -76,9 +80,13 @@ public interface DataClientToIhm
 
     /**
      * Envoie à Data le profil modifié de l'utilisateur connecté
-     * @param modifiedUser profil utilisateur modifié
+     * @param login de l'utilisateur à modifier
+     * @param password à appliquer à l'utilisateur à modifier
+     * @param firstname à appliquer à l'utilisateur à modifier
+     * @param lastname à appliquer à l'utilisateur à modifier
+     * @param age à appliquer à l'utilisateur à modifier
      */
-    void requestSubmitUserChanges(UserAccount modifiedUser);
+    void requestSubmitUserChanges(String login, String password, String firstname, String lastname, int age);
 
     /**
      * Envoie à Data un fichier devant être rendu
@@ -91,7 +99,7 @@ public interface DataClientToIhm
      * Envoie à Data une demande de déconnexion de
      * l'utilisateur connecté
      */
-    void requestLogout();
+    boolean requestLogout();
 
     /**
      * Demande à Data de vérifier si les informations entrées par
@@ -102,12 +110,14 @@ public interface DataClientToIhm
      */
     boolean requestCheckCredentials(String login, String password);
 
+    boolean requestConnectionToServer(String serverIp);
+
     /**
      * Retourne la liste des fichiers mis à disposition
      * par l'utilisateur
      * @return fichiers qu'on a mis à disposition
      */
-    List<FileHandler> requestFilesSharedByMe();
+    List<FileHandlerInfos> requestFilesSharedByMe();
 
     /**
      * Retourne la liste de tous les fichiers disponibles
@@ -153,6 +163,16 @@ public interface DataClientToIhm
      */
     List<UserIdentity> requestConnectedUsers();
 
+    /**
+     * Renvoie les fichiers en attente de téléchargement
+     * @return Vector des téléchargements en attente.
+     */
+    Vector<FileHandler> requestInQueueFiles();
 
+    /**
+     * Renvoie les ficheirs en cours de téléchargement
+     * @return Vector des téléchargements en cours.
+     */
+    Vector<FileHandler> requestInProgressFiles();
 
 }

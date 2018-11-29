@@ -11,7 +11,7 @@ public class FileHandler implements Serializable
     /**
      * Serial UID for class serialisation
      */
-    private static final long serialVersionUID = 100000000001L;
+    private static final long serialVersionUID = 100000000005L;
 
     /**
      * Identifiant unique du fichier
@@ -24,7 +24,7 @@ public class FileHandler implements Serializable
     /**
      * Taille en octets du fichier
      */
-    private int size;
+    private long size;
     /**
      * Type MIME du fichier (pas forcément identique à l'extension)
      */
@@ -42,7 +42,7 @@ public class FileHandler implements Serializable
      * @param type Type du fichier (peut être différent de l'extension)
      * @param nbBlocks nombre de blocks générés par le découpage du fichier
      */
-    public FileHandler (String hash, String title, int size, String type, int nbBlocks)
+    public FileHandler (String hash, String title, long size, String type, int nbBlocks)
             throws IllegalArgumentException
     {
         if (hash.length() == 0)
@@ -90,7 +90,7 @@ public class FileHandler implements Serializable
      *
      * @return Taille du fichier en octets
      */
-    public int getSize ()
+    public long getSize ()
     {
         return size;
     }
