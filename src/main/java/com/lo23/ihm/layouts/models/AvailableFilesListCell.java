@@ -3,12 +3,17 @@ package com.lo23.ihm.layouts.models;
 import com.lo23.common.filehandler.FileHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class AvailableFilesListCell extends ListCell<FileHandler>  {
     HBox hbox = new HBox();
@@ -31,7 +36,19 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
         addComment.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Ajout d'un commentaire pour l'objet : " + lastItem);
+            	try {
+                    FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("commentLayout.fxml"));
+                    Parent root = fxmlloader.load();
+                    Stage stage = new Stage();
+
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setOpacity(1);
+                    stage.setTitle("Commentaire");
+                    stage.setScene(new Scene(root));
+                    stage.showAndWait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
