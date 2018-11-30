@@ -1,5 +1,7 @@
 package com.lo23.data.client;
 
+import com.lo23.common.Comment;
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
@@ -48,6 +50,7 @@ public class DataManagerClient
      * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
+
     /**
      * Gestionnaire pour le téléchargement de fichiers
      */
@@ -65,9 +68,11 @@ public class DataManagerClient
         super();
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
+        this.downloadManager = new DownloadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
+        this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
     }
 
     static public DataManagerClient getInstance(){
@@ -81,6 +86,16 @@ public class DataManagerClient
     {
         return this.uploadManager;
     }
+
+    public DownloadManager getDownloadManager() {
+        return downloadManager;
+    }
+
+    public void setDownloadManager(DownloadManager downloadManager) {
+        this.downloadManager = downloadManager;
+    }
+
+
 
     Session getSessionInfos()
     {
@@ -328,6 +343,35 @@ public class DataManagerClient
     }
 
     /**
+     * Ajoute en local un commentaire à un fichier
+     * @param comment commentaire
+     * @param commentedFile fichier commenté
+     */
+    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
+    {
+
+        // Récupération de la liste des fichiers partagés
+        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
+        boolean found = false;
+
+        // Itération sur les fichiers partagés
+        Iterator<FileHandlerInfos> it = keySet.iterator();
+        while (it.hasNext() && !found)
+        {
+            FileHandlerInfos nextFile = it.next();
+            if(nextFile.getHash().equals(commentedFile.getHash()))
+            {
+                // Ajout commentaire au fichier
+                nextFile.addComment(comment);
+                found=true;
+            }
+        }
+
+        // Communication des changements au serveur
+        this.getCommToDataClientApi().sendCommentedFile(comment, (FileHandler) commentedFile);
+    }
+
+    /**
      * Ajoute en local une note à un fichier
      * @param rating note
      * @param ratedFile fichier noté
@@ -354,5 +398,10 @@ public class DataManagerClient
         this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
     }
 
+    public void downloadFile(FileHandler fileToDownload)
+    {
+        // créer une fct DownloadManager::Download ?
+
+    }
 
 }
