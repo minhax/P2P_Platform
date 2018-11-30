@@ -115,7 +115,7 @@ public interface CommToDataClient
      * @param file fichier partagé
      * @param user utilisateur qui upload
      */
-    void uploadFile(FileHandler file, UserIdentity user);
+    void uploadFile(FileHandlerInfos file, UserIdentity user);
 
     /**
      * Transmet la demande de recherche de source d'un fichier (depuis l'appli client vers commserveur)

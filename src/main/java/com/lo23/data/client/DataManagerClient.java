@@ -315,9 +315,9 @@ public class DataManagerClient
         override les fileParts  qui existent déjà donc les laisser en mémoire
         ne pose pas de problème.
          */
+        System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
         this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
         // Supression du fichier en local
-        System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
         UserAccount currentUser = this.sessionInfos.getCurrentUser();
         currentUser.removeProposedFile(fileToMakeUnavailable);
     }

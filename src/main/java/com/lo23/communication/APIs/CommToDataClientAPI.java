@@ -11,6 +11,7 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
 import com.lo23.communication.network.Client;
 
 import java.util.List;
@@ -159,8 +160,12 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void uploadFile(FileHandler file, UserIdentity user){
-
+    public void uploadFile(FileHandlerInfos fi, UserIdentity user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        int portServ = 1026;
+        uploadFileMsg message = new uploadFileMsg(fi,user );
+        System.out.println("Client cree");
+        Client c = new Client(message, portServ, cmc.getAddressIpServer());
     }
 
     @Override
