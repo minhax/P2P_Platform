@@ -50,6 +50,7 @@ public class DataServerToCommAPI implements DataServerToComm
     public void removeFileSource(FileHandler file, User user)
     {
         this.manager.connections.removeFileSourceFromDirectory(user, file);
+        System.out.println("[DATA] Suppression du fichier" + file.getHash() + "coté serveur");
     }
 
     @Override
