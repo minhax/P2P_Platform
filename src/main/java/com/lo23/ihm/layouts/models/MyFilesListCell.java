@@ -1,6 +1,8 @@
 package com.lo23.ihm.layouts.models;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.interfaces.*;
+import com.lo23.common.data.client.DataManagerClient;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -9,6 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+
 
 public class MyFilesListCell extends ListCell<FileHandler>  {
     HBox hbox = new HBox();
@@ -39,6 +42,11 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Suppression de l'objet : " + lastItem);
+
+                DataManagerClient dm = DataManagerClient.getInstance();
+                dm.dataClientToIhmApi.makeLocalFileUnavailable(lastItem);
+                updateItem(lastItem,true);
+                
             }
         });
     }
@@ -49,6 +57,7 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
         setText(null);  // No text in label of super class
         if (empty) {
             lastItem = null;
+            System.out.println("Deleting Graphics : " + item);
             setGraphic(null);
         } else {
             lastItem = item;
