@@ -1,8 +1,6 @@
 package com.lo23.ihm.layouts.models;
 
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.interfaces.*;
-import com.lo23.common.data.client.DataManagerClient;
 import com.lo23.data.client.DataManagerClient;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

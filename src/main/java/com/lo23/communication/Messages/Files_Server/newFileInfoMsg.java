@@ -20,7 +20,7 @@ public class newFileInfoMsg extends FileMessage{
 		DataClientToComm dataInterface = cmc.getDataInterface();
 		
 		/** Appel de la methode **/
-		dataInterface.notifyNewSharedFileToAll(this.file);
+		dataInterface.notifyNewSharedFileToAll(this.file, this.user);
 	
 	}
 }
