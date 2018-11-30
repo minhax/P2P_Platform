@@ -6,20 +6,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.CreateAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.CreateAccountController">
    <children>
-      <PasswordField id="passwordField" fx:id="passwordField" layoutX="283.0" layoutY="202.0" />
-      <TextField id="lastnameTextField" fx:id="lastnameTextField" layoutX="283.0" layoutY="74.0" />
-      <TextField id="firstnameTextField" fx:id="firstnameTextField" layoutX="283.0" layoutY="113.0" />
-      <TextField id="loginTextField" fx:id="loginTextField" layoutX="283.0" layoutY="163.0" />
+      <Label fx:id="emptyFieldLabel" layoutX="169.0" layoutY="31.0" prefHeight="18.0" prefWidth="396.0" text="Tous les champs doivent obligatoirement être renseignés" textFill="RED" />
       <Label id="lastnameLabel" layoutX="169.0" layoutY="78.0" text="Nom" />
+      <TextField id="lastnameTextField" fx:id="lastnameTextField" layoutX="283.0" layoutY="74.0" />
       <Label id="firstnameLabel" layoutX="169.0" layoutY="117.0" text="Prénom" />
+      <TextField id="firstnameTextField" fx:id="firstnameTextField" layoutX="283.0" layoutY="113.0" />
       <Label id="loginLabel" layoutX="169.0" layoutY="167.0" text="Login" />
+      <TextField id="loginTextField" fx:id="loginTextField" layoutX="283.0" layoutY="163.0" />
       <Label id="passwordLabel" layoutX="169.0" layoutY="206.0" text="Mot de passe" />
+      <PasswordField id="passwordField" fx:id="passwordField" layoutX="283.0" layoutY="202.0" />
       <Label id="ageLabel" layoutX="169.0" layoutY="252.0" text="Âge" />
       <TextField id="ageTextField" fx:id="ageTextField" layoutX="283.0" layoutY="248.0" />
-      <Button id="subscriptionButton" layoutX="274.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountClicked" style="-fx-background-color: #00BFFF;" text="S'inscrire !" />
-      <Label fx:id="emptyFieldLabel" layoutX="169.0" layoutY="31.0" prefHeight="18.0" prefWidth="396.0" text="Tous les champs doivent obligatoirement être renseignés" textFill="RED" />
       <Label fx:id="ageErrorLabel" layoutX="274.0" layoutY="274.0" prefHeight="18.0" prefWidth="396.0" text="Doit obligatoirement etre un nombre" textFill="RED" />
+      <Button id="subscriptionButton" layoutX="274.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountClicked" style="-fx-background-color: #00BFFF;" text="S'inscrire !" />
    </children>
 </AnchorPane>
