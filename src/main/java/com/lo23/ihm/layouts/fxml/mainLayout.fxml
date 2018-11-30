@@ -47,7 +47,7 @@
                         <AnchorPane id="myFilesPane" fx:id="myFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="77.0" layoutY="245.0" mnemonicParsing="false" onAction="#OnAddDocumentButtonClicked" style="-fx-background-color: #C0C0C0; -fx-font-size: small;" text="Ajouter un document" />
-                              <ListView fx:id="listViewMyFiles" layoutY="7.0" prefHeight="232.0" prefWidth="278.0" />
+                              <ListView fx:id="listViewMyFiles" layoutY="9.0" prefHeight="230.0" prefWidth="278.0" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -56,7 +56,7 @@
                      <content>
                         <AnchorPane id="availableFilesPane" fx:id="availableFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listViewAvailableFiles" layoutX="-3.0" prefHeight="283.0" prefWidth="278.0" />
+                              <ListView fx:id="listViewAvailableFiles" layoutX="-3.0" layoutY="11.0" prefHeight="272.0" prefWidth="278.0" />
                            </children></AnchorPane>
                      </content>
                   </Tab>
@@ -64,7 +64,7 @@
                      <content>
                         <AnchorPane id="downloadsPane" fx:id="downloadsPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listViewDownloading" prefHeight="281.0" prefWidth="278.0" />
+                              <ListView fx:id="listViewDownloading" layoutY="12.0" prefHeight="269.0" prefWidth="278.0" />
                            </children></AnchorPane>
                      </content>
                   </Tab>
