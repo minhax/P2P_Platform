@@ -5,6 +5,7 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
@@ -48,14 +49,15 @@ public class CommToDataServerAPI implements CommToDataServer {
     @Override
     public void removeDisconnectedUser(UserIdentity user, List<FileHandlerInfos> fileInfos){
         removeDisconnectedUserMsg message=new removeDisconnectedUserMsg(user, fileInfos);
-        commManagerServer.broadcast(message);
-
+        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+        cms.broadcast(message);
     }
 
     @Override
     public void sendConnectedUserToAll(UserIdentity user, List<FileHandlerInfos> fileInfos){
         connectedUserMsg message=new connectedUserMsg(user, fileInfos);
-        commManagerServer.broadcast(message);
+        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+        cms.broadcast(message);
 
     }
 
