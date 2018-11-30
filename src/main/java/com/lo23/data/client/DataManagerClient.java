@@ -147,7 +147,10 @@ public class DataManagerClient
                 {
                     FileInputStream fileIn = new FileInputStream(userFile.getPath());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                    UserAccount comparisonAccount = (UserAccount) objectIn.readObject();
+                    Object obj = objectIn.readObject();
+                    System.out.println(userFile.getName());
+                    System.out.println(obj.getClass());
+                    UserAccount comparisonAccount = (UserAccount) obj;
                     //UserAccount comparisonAccount = (UserAccount) obj;
                     if(comparisonAccount.getLogin().equals(login))
                     {
@@ -314,6 +317,7 @@ public class DataManagerClient
          */
         this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
         // Supression du fichier en local
+        System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
         UserAccount currentUser = this.sessionInfos.getCurrentUser();
         currentUser.removeProposedFile(fileToMakeUnavailable);
     }
