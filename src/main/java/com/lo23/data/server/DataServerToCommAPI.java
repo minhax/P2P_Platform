@@ -24,6 +24,8 @@ public class DataServerToCommAPI implements DataServerToComm
     {
         this.manager.connections.connectUser(user);
         // La partie Comm devrait notifier tous les clients de la nouvelle connexion
+        this.manager.commToDataApi.sendConnectedUserToAll(user,
+                this.manager.connections.getDirectory().getFilesProposedByUser(user));
     }
 
     @Override
