@@ -39,6 +39,7 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Suppression de l'objet : " + lastItem);
+
             }
         });
     }
