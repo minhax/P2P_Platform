@@ -1,14 +1,14 @@
 package com.lo23.communication.APIs;
 
-import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataServer;
-import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
+import com.lo23.communication.Messages.Files_Server.fileSourceMsg;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
+import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 import java.util.List;
 
@@ -67,13 +67,22 @@ public class CommToDataServerAPI implements CommToDataServer {
     }
 
     @Override
-    public void sendUpdatedAccountToAll(UserIdentity user){
+    public void sendUpdatedAccountToAll(UserIdentity user)
+    {
 
+        /**
+         * cree un message de type updateAccountMsg
+         * appelle de la methode treatment qui permet au serveur de diffuser les modifications apportées au user
+         */
+       // updatedAccountMsg msg = new updatedAccountMsg(user);
+       // msg.treatment();
+        //commManagerServer.broadcast(msg);
     }
 
     @Override
-    public void sendNewFileSource(FileHandler file, UserIdentity user){
-
+    public void sendNewFileSource(FileHandlerInfos file, UserIdentity user){
+        fileSourceMsg message=new fileSourceMsg(file, user);
+        commManagerServer.broadcast(message);
     }
 
 }

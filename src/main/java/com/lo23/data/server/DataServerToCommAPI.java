@@ -60,9 +60,9 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
+    public void addNewFileToServer(FileHandlerInfos file, User user)
     {
-        this.manager.connections.addFileToDirectory(user, file);
+       //TODO this.manager.connections.addFileToDirectory(user, file);
     }
 
     @Override

@@ -135,7 +135,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         {
             // Signifie que le fichier existe bien
             if(listOfParts[i].getName().matches(hash)){
-                host.makeLocalFileUnavailable(file);
+                //host.makeLocalFileUnavailable(file);
             }
         }
 
