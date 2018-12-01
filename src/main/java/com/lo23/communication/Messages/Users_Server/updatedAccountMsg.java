@@ -8,8 +8,9 @@ import com.lo23.communication.Messages.UserMessage;
 
 public class updatedAccountMsg extends UserMessage{
 	protected UserStats us;
-	public updatedAccountMsg(UserStats ui){
-		this.us = ui;
+	public updatedAccountMsg(UserIdentity ui, UserStats us){
+		this.user = ui;
+		this.us =us;
 	}
 	public void treatment()
 	{

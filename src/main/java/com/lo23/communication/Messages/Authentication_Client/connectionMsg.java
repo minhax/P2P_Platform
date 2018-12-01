@@ -1,10 +1,13 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.user.User;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
+import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
+
 import java.util.List;
 
 public class connectionMsg extends Authentication {
@@ -45,8 +48,9 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
 		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
-		/**Faire le broadcast **/
-		
+		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
+		connectedUserMsg message=new connectedUserMsg(this.userStats, this.fileInfo);
+		cms.broadcast(message);
 	}
 	
 	public List<FileHandlerInfos> getFileInfo() {

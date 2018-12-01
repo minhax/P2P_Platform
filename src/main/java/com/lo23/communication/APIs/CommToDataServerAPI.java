@@ -53,10 +53,7 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     @Override
     public void sendConnectedUserToAll(UserIdentity user, List<FileHandlerInfos> fileInfos){
-        connectedUserMsg message=new connectedUserMsg(user, fileInfos);
-        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-        cms.broadcast(message);
-
+    
     }
 
     @Override
