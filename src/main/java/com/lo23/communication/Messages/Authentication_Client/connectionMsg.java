@@ -45,6 +45,7 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
 		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
+		/**Faire le broadcast **/
 		
 	}
 	

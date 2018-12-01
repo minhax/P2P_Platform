@@ -305,7 +305,7 @@ public class DataManagerClient
      * un message au serveur pour partager l'information.
      * @param fileToMakeUnavailable fichier à rendre indisponible
      */
-    public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
+    public void makeLocalFileUnavailable(FileHandlerInfos fileToMakeUnavailable){
         /*
         Ici on ne supprime pas les parties de fichier sur le disque parce que
         dans l'éventualité ou on rendrait le fichier dispo de nouveau, on

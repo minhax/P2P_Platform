@@ -15,6 +15,7 @@ public interface CommToDataClient
      * métadonnées d'un fichier
      * @param file fichier mis à jour
      */
+
     void sendFileChanges(FileHandler file);
 
     /**
@@ -22,6 +23,8 @@ public interface CommToDataClient
      * @param user utilisateur concerné
      */
     void sendUserChangesToServer(UserIdentity user);
+
+    void sendFileChanges(Rating rate, FileHandler file);
 
     /**
      * Envoie les modifications relatives à un utilisateur
@@ -34,7 +37,7 @@ public interface CommToDataClient
      * @param file fichier que l'on rend indisponible
      * @param user utilisateur qui le rend indisponible
      */
-    void makeFilesUnavailableToServer(FileHandler file, User user);
+    void makeFilesUnavailableToServer(FileHandlerInfos file, User user);
 
     /**
      * Transmet l'information comme quoi un fichier est rendu insponible par un utilisateur
@@ -56,6 +59,13 @@ public interface CommToDataClient
      * @param ratedFile fichier noté
      */
     void sendRatedFile(Rating rating, FileHandler ratedFile);
+
+    /**
+     * Envoie une nouvelle note attribuée à un fichier
+     * @param rating note à ajouter au fichier
+     * @param ratedFile fichier noté
+     */
+    /*void sendRatedFile(Rating rating, FileHandler ratedFile);*/
 
     /**
      * Transmet la demande de déconnexion de l'utilisateur (recevoir la demande)
@@ -100,7 +110,7 @@ public interface CommToDataClient
      * @param file fichier qui va être partagé
      * @param user utilisateur qui propose le fichier
      */
-    void requestUploadFile(FileHandler file, UserIdentity user);
+    void requestUploadFile(FileHandlerInfos file, User user);
 
 
     /**
@@ -126,3 +136,4 @@ public interface CommToDataClient
 
 
 }
+
