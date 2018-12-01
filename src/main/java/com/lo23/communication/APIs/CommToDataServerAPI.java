@@ -3,12 +3,10 @@ package com.lo23.communication.APIs;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Files_Server.fileSourceMsg;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
-import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 import java.util.List;
 
@@ -81,8 +79,9 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     @Override
     public void sendNewFileSource(FileHandlerInfos file, UserIdentity user){
-        fileSourceMsg message=new fileSourceMsg(file, user);
-        commManagerServer.broadcast(message);
+        fileSourceMsg message = new fileSourceMsg(file, user);
+        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+        cms.broadcast(message);
     }
 
 }
