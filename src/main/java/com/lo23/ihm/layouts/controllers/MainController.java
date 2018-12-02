@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -113,6 +114,18 @@ public class MainController implements Initializable {
 
     @FXML
     private ListView listViewDownloading;
+    
+    @FXML
+    private Label fileInfosName;
+    
+    @FXML
+    private Label fileInfosType;
+    
+    @FXML
+    private Label fileInfosDescription;
+    
+    @FXML
+    private Label fileInfosSize;
 
     //gestion fenÃªtre contacts en ligne
     private List<UserIdentity> connectedUsers = new ArrayList<UserIdentity>();
@@ -126,8 +139,7 @@ public class MainController implements Initializable {
 
     private Timer refreshTimer;
     private int period = 10000;
-
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -142,6 +154,8 @@ public class MainController implements Initializable {
                 return new AvailableFilesListCell();
             }
         });
+        
+        
         listViewMyFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
             @Override
             public ListCell<FileHandler> call(ListView<FileHandler> listView) {
@@ -158,7 +172,7 @@ public class MainController implements Initializable {
         listViewAvailableFiles.setItems(data);
         listViewMyFiles.setItems(data);
         listViewDownloading.setItems(data);
-
+        
 
         //pour test
         user = new UserIdentity("login", "PrÃ©nom", "Nom", 21);
@@ -177,6 +191,40 @@ public class MainController implements Initializable {
 
         //refreshContactsWindow();
         binding();
+    }
+    
+    
+/***  
+ * Impossible d'accéder aux caractéristiques des items des listView. Il faut trouver une solution sinon pas possible d'afficher à gauche.
+ * Peut-être créer la listViex différemment.
+ * Les 3 méthodes ci-dessous permettent de set les labels de la partie gauche de main lors du click sur un fichier. Peut être moyen d'éviter
+ * la redondance des 3 méthodes mais pas trouvé.   
+***/
+    
+    @FXML
+    void handleMouseClkickAvailableFiles(MouseEvent event) {
+    
+//	    fileInfosName.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosType.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosDescription.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosSize.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+	    
+    }
+
+    @FXML
+    void handleMouseClkickDownloadingFiles(MouseEvent event) {
+//	    fileInfosName.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosType.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosDescription.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosSize.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    void handleMouseClkickMyFiles(MouseEvent event) {
+//	    fileInfosName.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosType.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosDescription.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
+//	    fileInfosSize.setText(listViewAvailableFiles.getSelectionModel().getSelectedItem());
     }
 
     @FXML
