@@ -2,6 +2,7 @@ package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataClientToIhm;
@@ -114,6 +115,12 @@ public class MainController implements Initializable {
     @FXML
     private ListView listViewDownloading;
 
+    @FXML
+    private TextField changeServerIpAdressTextField;
+
+    @FXML
+    private Label incorrectIP;
+
     //gestion fenêtre contacts en ligne
     private List<UserIdentity> connectedUsers = new ArrayList<UserIdentity>();
 
@@ -130,6 +137,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        incorrectIP.setVisible(false);
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
         data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
@@ -191,6 +199,33 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnServerParametersButtonClicked() {
+        String new_ip = changeServerIpAdressTextField.getText();
+        Pattern pat = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+        if(pat.matcher(new_ip).matches()) {
+            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+            if(api.requestConnectionToServer(new_ip)) {
+                //TODO : ne pas fermer, mais plutôt réactualiser toute la page ? À réétudier quand l'application restera sur la même fenêtre
+
+                ((Stage) this.mainHBox.getScene().getWindow()).close();
+                try {
+                    FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                    Parent root = fxmlloader.load();
+                    Stage stage = new Stage();
+
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setOpacity(1);
+                    stage.setTitle("Fenêtre principale");
+                    stage.setScene(new Scene(root));
+                    stage.showAndWait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                incorrectIP.setVisible(true);
+            }
+        } else {
+            incorrectIP.setVisible(true);
+        }
     }
 
 

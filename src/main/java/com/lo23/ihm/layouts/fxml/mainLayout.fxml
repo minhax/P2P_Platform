@@ -46,7 +46,7 @@
                      <content>
                         <AnchorPane id="myFilesPane" fx:id="myFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="77.0" layoutY="245.0" mnemonicParsing="false" style="-fx-background-color: #C0C0C0; -fx-font-size: small;"  onAction="#OnAddDocumentButtonClicked" text="Ajouter un document" />
+                              <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="77.0" layoutY="245.0" mnemonicParsing="false" onAction="#OnAddDocumentButtonClicked" style="-fx-background-color: #C0C0C0; -fx-font-size: small;" text="Ajouter un document" />
                               <ListView fx:id="listViewMyFiles" layoutY="7.0" prefHeight="232.0" prefWidth="278.0" />
                            </children>
                         </AnchorPane>
@@ -56,7 +56,7 @@
                      <content>
                         <AnchorPane id="availableFilesPane" fx:id="availableFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listViewAvailableFiles" layoutX="-3.0" prefHeight="283.0" prefWidth="278.0" />
+                              <ListView fx:id="listViewAvailableFiles" layoutX="-3.0" prefHeight="273.0" prefWidth="278.0" />
                            </children></AnchorPane>
                      </content>
                   </Tab>
@@ -64,7 +64,7 @@
                      <content>
                         <AnchorPane id="downloadsPane" fx:id="downloadsPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listViewDownloading" prefHeight="281.0" prefWidth="278.0" />
+                              <ListView fx:id="listViewDownloading" prefHeight="275.0" prefWidth="278.0" />
                            </children></AnchorPane>
                      </content>
                   </Tab>
@@ -72,7 +72,9 @@
             </TabPane>
             <AnchorPane id="mainBottomPane" fx:id="mainBottomPane" prefHeight="35.0" prefWidth="278.0">
                <children>
-                  <Button id="serverParametersButton" fx:id="serverParametersButton" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#OnServerParametersButtonClicked" style="-fx-font-size: 8px; -fx-background-color: #C0C0C0;" text="Configurer le serveur" />
+                  <TextField fx:id="changeServerIpAdressTextField" layoutX="14.0" layoutY="-3.0" promptText="IP du serveur" />
+                  <Button id="serverParametersButton" fx:id="serverParametersButton" layoutX="186.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#OnServerParametersButtonClicked" style="-fx-font-size: 8px; -fx-background-color: #C0C0C0;" text="Changer le serveur" />
+                  <Label fx:id="incorrectIP" disable="true" layoutX="22.0" layoutY="22.0" prefHeight="17.0" prefWidth="148.0" text="IP incorrecte" textFill="RED" />
                </children>
             </AnchorPane>
          </children>
