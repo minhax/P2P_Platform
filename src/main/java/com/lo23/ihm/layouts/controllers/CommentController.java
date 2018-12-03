@@ -2,6 +2,8 @@ package com.lo23.ihm.layouts.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.lo23.common.filehandler.FileHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -17,6 +19,16 @@ public class CommentController {
     private Button validateCommentButton;
     
     private String comment;
+    
+    private FileHandler file;
+    
+    public void setFile(FileHandler file){
+        this.file = file;
+    }
+
+    public FileHandler getFile(){
+        return this.file;
+    }
     
     
     @FXML

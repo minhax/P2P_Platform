@@ -15,6 +15,7 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.lo23.ihm.layouts.controllers.ratingController;
+import com.lo23.ihm.layouts.controllers.CommentController;
 
 public class MyFilesListCell extends ListCell<FileHandler>  {
     HBox hbox = new HBox();
@@ -61,7 +62,29 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
         addComment.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Ajout d'un commentaire pour l'objet : " + lastItem);
+            	try {
+
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getClassLoader().getResource("commentLayout.fxml"));
+                    Parent root = loader.load();
+
+                    CommentController controller = loader.getController();
+                    controller.setFile(lastItem);
+
+                    Stage stage = new Stage();
+
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setOpacity(1);
+                    stage.setTitle("Commentaire d'un fichier");
+                    stage.setScene(new Scene(root));
+                    stage.showAndWait();
+
+                    System.out.println("Ajout d'un commentaire pour l'objet : " + lastItem);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
