@@ -126,6 +126,9 @@ public class PartageController {
             System.out.println(title);
             System.out.println(description);
 
+            Stage stage = (Stage) enregistrerButton.getScene().getWindow();
+            stage.close();
+
         }
 
 
