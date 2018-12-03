@@ -1,6 +1,7 @@
 package com.lo23.ihm.layouts.models;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.ihm.layouts.controllers.ratingController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,30 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
         addNote.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Ajout d'une note pour l'objet : " + lastItem);
+
+                try {
+
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getClassLoader().getResource("ratingLayout.fxml"));
+                    Parent root = loader.load();
+
+                    ratingController controller = loader.getController();
+                    controller.setFile(lastItem);
+
+                    Stage stage = new Stage();
+
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setOpacity(1);
+                    stage.setTitle("Notation d'un fichier");
+                    stage.setScene(new Scene(root));
+                    stage.showAndWait();
+
+                    System.out.println("Ajout de la note pour l'objet : " + lastItem);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

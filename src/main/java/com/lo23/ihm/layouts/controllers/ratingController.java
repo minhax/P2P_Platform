@@ -2,21 +2,18 @@ package com.lo23.ihm.layouts.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import org.controlsfx.control.Rating;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.controlsfx.control.Rating;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import org.controlsfx.control.Rating;
+import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.common.filehandler.FileHandler;
 
-
-public class ratingController implements Initializable{
+public class ratingController implements Initializable {
 
     @FXML
     private ResourceBundle resources;
@@ -29,49 +26,55 @@ public class ratingController implements Initializable{
 
     @FXML
     private Label ratingLabel;
-    
+
     @FXML
     private Button okButton;
 
     @FXML
     private Button cancelButton;
 
-    
-    @FXML
-    void onCancelButtonClicked(ActionEvent event) {
+    private FileHandler file;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        rating.ratingProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
+
+                ratingLabel.setText("Rating : "+ t1.toString());
+            }
+        });
+
+    }
+
+    public void setFile(FileHandler file){
+        this.file = file;
+    }
+
+    public FileHandler getFile(){
+        return this.file;
+    }
+
+    public void onOkButtonClicked (){
+
+        // Enlever pour envoyer a data
+        // requestRateFile(rating.getRating(), getFile());
+
+        System.out.println("The File "+getFile()+"has a rating of "+rating.getRating());
+
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        stage.close();
+
+    }
+
+    public void onCancelButtonClicked (){
 
         // Ferme la fenêtre, ne fait rien avec les données saisies
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
-    	
+
     }
 
-    @FXML
-    void onOkButtonClicked(ActionEvent event) {
-
-    	//System.out.println(rating.getRating());
-    	//requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException;
-    	
-        Stage stage = (Stage) okButton.getScene().getWindow();
-        stage.close();
-        
-    }
-    
-    
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		rating.ratingProperty().addListener(new ChangeListener<Number>() {
-			
-            @Override 
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-              
-            	ratingLabel.setText("Note : "+ t1.toString());
-            	
-            }
-        });
-        		
-	}
-
-    
 }
