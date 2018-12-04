@@ -42,7 +42,7 @@ public class ServerHandler extends Thread implements Serializable
                 msgCast.treatment(); // treatment of the data sent
                 System.out.println("end of the treatment");
 
-                objOS.wait();
+                objOS.flush();
             }
 
 

@@ -103,7 +103,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 		for(Map.Entry<String,String> entry : this.clientAndServerIP.entrySet())
 		{
 			String IpAdress = entry.getKey();
-			Client c = new Client(m, 1026, IpAdress); /*TODO FIX hardcode por */
+			Client c = new Client(m , 1026, IpAdress, 0, null, 0); /*TODO FIX hardcode por */
 
 		}
 		//Exception a rajouter?

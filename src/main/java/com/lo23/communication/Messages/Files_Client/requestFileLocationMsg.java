@@ -17,4 +17,6 @@ public class requestFileLocationMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

@@ -27,4 +27,6 @@ public class updateUserInfoMsg extends UserMessage{
 	    //updatedAccountMsg message = new updatedAccountMsg((UserStats)this.user); //TODO FIX USERSTATS
 	    //cms.broadcast(message);
 	}
+
+    public boolean isToServ(){return true;}
 }

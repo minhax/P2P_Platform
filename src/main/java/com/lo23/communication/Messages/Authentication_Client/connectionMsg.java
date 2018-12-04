@@ -61,5 +61,7 @@ public class connectionMsg extends Authentication {
 	public String getMyIp() {
 		return myIp;
 	}
+
+	public boolean isToServ(){return true;}
 }
 

@@ -5,4 +5,5 @@ import java.io.Serializable;
 
 public abstract class Message implements Serializable {
 	public abstract void treatment();
+	public abstract boolean isToServ();
 }

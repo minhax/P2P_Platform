@@ -35,4 +35,6 @@ public class logoutMsg extends Authentication {
 		dataInterface.removeDisconnectedUser(this.userStats);
 
 	}
+
+	public boolean isToServ(){return true;}
 }

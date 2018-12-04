@@ -33,4 +33,6 @@ public class uploadFileMsg extends FileMessage {
 		cms.broadcast(message);
 
 	}
+
+	public boolean isToServ(){return true;}
 }
