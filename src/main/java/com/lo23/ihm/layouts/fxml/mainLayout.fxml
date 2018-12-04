@@ -42,7 +42,7 @@
             </VBox>
             <TabPane id="mainTabPane" fx:id="mainTabPane" prefHeight="311.0" prefWidth="278.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab id="myFilesTab" fx:id="myFilesTab" closable="false" style="-fx-font-size: 8px;" text="Mes documents">
+                <Tab id="myFilesTab" fx:id="myFilesTab" closable="false" onSelectionChanged="#OnChangeToTabMyFiles" style="-fx-font-size: 8px;" text="Mes documents">
                      <content>
                         <AnchorPane id="myFilesPane" fx:id="myFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
@@ -52,7 +52,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                <Tab id="availableFilesTab" fx:id="availableFilesTab" closable="false" style="-fx-font-size: 8px;" text="Fichiers disponibles">
+                <Tab id="availableFilesTab" fx:id="availableFilesTab" closable="false" onSelectionChanged="#OnChangeToTabAvailable" style="-fx-font-size: 8px;" text="Fichiers disponibles">
                      <content>
                         <AnchorPane id="availableFilesPane" fx:id="availableFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
@@ -60,7 +60,7 @@
                            </children></AnchorPane>
                      </content>
                   </Tab>
-                  <Tab id="downloadsTab" fx:id="downloadsTab" closable="false" style="-fx-font-size: 8px;" text="Mes téléchargements">
+                  <Tab id="downloadsTab" fx:id="downloadsTab" closable="false" onSelectionChanged="#OnChangeToTabDownloading" style="-fx-font-size: 8px;" text="Mes téléchargements">
                      <content>
                         <AnchorPane id="downloadsPane" fx:id="downloadsPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
