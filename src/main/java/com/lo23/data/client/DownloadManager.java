@@ -66,9 +66,9 @@ class DownloadManager
      * source le même nombre de blocs.
      * @param fileToDownload le fichier à télécharger.
      */
-    public void download(FileHandler fileToDownload)
+    void download(FileHandler fileToDownload)
     {
-        long nbBlocks = (long) Math.ceil(fileToDownload.getSize() / Const.FILEPART_SIZE);
+        long nbBlocks = fileToDownload.getNbBlocks();
 
         Vector<UserIdentity> sources = this
                 .getDataManagerClient()
@@ -102,7 +102,7 @@ class DownloadManager
      * @param file les métadonnées du ficheir en question
      * @param part l'index de la partie du fichier.
      */
-    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+    void getFilePart(User userAsking, User userSource, FileHandler file, long part){
         try{
             byte[] data = new byte[Const.FILEPART_SIZE];
             File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
@@ -125,7 +125,7 @@ class DownloadManager
      * @param fileToDownload le fichier à télécharger
      * @param part la partie du fichier à télécharger
      */
-    public void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
+    void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
         Vector<UserIdentity> sources = this
                 .getDataManagerClient()
                 .getSessionInfos()
@@ -137,9 +137,9 @@ class DownloadManager
         // TODO send  query to comm again
     }
 
-   public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+   void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
         // TODO : store the fileParts, and check if it's completed or not
-        long nbBlocks = (long) Math.ceil(fileHandler.getSize() / Const.FILEPART_SIZE);
+        long nbBlocks = fileHandler.getNbBlocks();
 
         // check how many parts exist
         //todo regex and check number of existing parts, and remove hardcore
@@ -147,7 +147,7 @@ class DownloadManager
 
         //all parts collected
         if (existingPartsNumber == nbBlocks) {
-
+            this.mergeFileparts(fileHandler);
         } else if (existingPartsNumber < nbBlocks) {
             // Store the part in the disk
             try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
@@ -162,12 +162,11 @@ class DownloadManager
         }
     }
 
-    void mergeFileparts (FileHandler fileToBuild) // FIXME: segment dépassement
+    void mergeFileparts (FileHandler fileToBuild)
     {
-        // TODO: get correct extension
         try {
             byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
-            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + fileToBuild.getTitle() + ".txt");
+            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + fileToBuild.getTitle() + "." + fileToBuild.getType());
             int bytesRead;
             for (int i = 0; i < fileToBuild.getNbBlocks(); i++)
             {
