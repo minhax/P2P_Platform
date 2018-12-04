@@ -14,28 +14,12 @@ public class DownloadManager
 {
     private Vector<FileHandler> inQueue;
     private Vector<FileHandler> inProgress;
-    private CommToDataClient commToDataClientAPI;
-    private DataManagerClient dataManagerClient;
+    private DataManagerClient managerClient;
 
-    public DataManagerClient getDataManagerClient() {
-        return dataManagerClient;
-    }
-
-    public void setDataManagerClient(DataManagerClient dataManagerClient) {
-        this.dataManagerClient = dataManagerClient;
-    }
-
-    public CommToDataClient getCommToDataClientAPI() {
-        return commToDataClientAPI;
-    }
-
-    public void setCommToDataClientAPI(CommToDataClient commToDataClientAPI) {
-        this.commToDataClientAPI = commToDataClientAPI;
-    }
-
-    DownloadManager(){
-        this.inQueue = new Vector<FileHandler>();
-        this.inProgress = new Vector<FileHandler>();
+    DownloadManager (DataManagerClient host) {
+        this.inQueue = new Vector<>();
+        this.inProgress = new Vector<>();
+        this.managerClient = host;
     }
 
     public Vector<FileHandler> getInQueue()
@@ -64,10 +48,10 @@ public class DownloadManager
      */
     public void splitDownload(FileHandler fileToDownload)
     {
-        long nbBlocks = (long) Math.ceil(fileToDownload.getSize() / Const.FILEPART_SIZE);
+        long nbBlocks = (long) Math.ceil((float)fileToDownload.getSize() / (float)Const.FILEPART_SIZE);
 
         Vector<UserIdentity> sources = this
-                .getDataManagerClient()
+                .managerClient
                 .getSessionInfos()
                 .getDirectory()
                 .getUsersThatProposeFile(fileToDownload);
@@ -106,9 +90,7 @@ public class DownloadManager
             Files.readAllBytes(filePart.toPath());
             // TODO send filePart to comm
             // this.getCommToDataClientAPI();
-        } catch(FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
