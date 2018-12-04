@@ -8,16 +8,13 @@ import com.lo23.data.Const;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.io.*;
 import java.nio.file.Files;
 import java.util.Vector;
 
-public class DownloadManager
+class DownloadManager
 {
     private Vector<FileHandler> inQueue;
     private Vector<DownloadHandler> inProgress;
@@ -162,6 +159,26 @@ public class DownloadManager
 
         } else {
             throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
+        }
+    }
+
+    void mergeFileparts (FileHandler fileToBuild) // FIXME: segment dépassement
+    {
+        // TODO: get correct extension
+        try {
+            byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
+            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + fileToBuild.getTitle() + ".txt");
+            int bytesRead;
+            for (int i = 0; i < fileToBuild.getNbBlocks(); i++)
+            {
+                FileInputStream filepart = new FileInputStream("files/fileparts/" + fileToBuild.getHash() + ".part" + i);
+                bytesRead = filepart.read(segment);
+                fileBuilt.write(segment, 0, bytesRead);
+                filepart.close();
+            }
+            fileBuilt.close();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
         }
     }
 }
