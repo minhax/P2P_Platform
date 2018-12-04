@@ -68,7 +68,7 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser)
+    public void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser)
     {
         this.host.getSessionInfos().mergeUserIntoLoggedUsers(newlyModifiedUser);
     }
