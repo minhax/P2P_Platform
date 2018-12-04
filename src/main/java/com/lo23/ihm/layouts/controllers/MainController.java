@@ -143,8 +143,12 @@ public class MainController implements Initializable {
         choices.addAll("Nom", "Auteur", "Tags");
         chooseResearchBox.setItems(choices);
 
-        ObservableList<FileHandler> data = FXCollections.observableArrayList();
-        data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getMyFiles();
+        listViewMyFiles.setItems(data);
+
+        ObservableList<FileHandler> dataTest = FXCollections.observableArrayList();
+        dataTest.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
                 new FileHandler("hash2", "document 2", 1554, "document2", 32),
                 new FileHandler("hash3", "document 3", 15152, "document3", 64));
 
@@ -152,7 +156,6 @@ public class MainController implements Initializable {
         researchTextField.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println(researchTextField.getText());
                 // la recherche se fait en appuyant sur la touche entrée
                 //if(event.getCode().equals(KeyCode.ENTER)) {
                     researchResults.clear();
@@ -167,11 +170,10 @@ public class MainController implements Initializable {
                 // pour revenir à la liste de tous les fichiers disponibles (hors recherche) : touche backspace
                 //else if(event.getCode().equals(KeyCode.BACK_SPACE)) {
                 if(researchTextField.getText().isEmpty() || researchTextField.getText()==null){
-                    listViewAvailableFiles.setItems(data);
+                    listViewAvailableFiles.setItems(dataTest);
                 }
             }
         });
-
 
         listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
             @Override
@@ -193,9 +195,7 @@ public class MainController implements Initializable {
         });
 
 
-        // TODO :  Gérer les fichiers ici
-        ObservableList<FileHandler> data = getMyFiles();
-        listViewMyFiles.setItems(data);
+
 
 
         //pour test
@@ -346,7 +346,6 @@ public class MainController implements Initializable {
         return data;
     }
 
-<<<<<<< HEAD
     private ObservableList<FileHandler> getFilesSharedByOthers() {
         DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         List<FileHandler> fhsharedbyothers = api.requestFilesSharedByOthers();
@@ -374,9 +373,6 @@ public class MainController implements Initializable {
         return data;
     }
 
-
-
-=======
     public void researchFile(String searchItem, String searchMethod)
     {
         //décommenter à l'integ
@@ -391,5 +387,4 @@ public class MainController implements Initializable {
         listViewAvailableFiles.setItems(donnees);
     }
 
->>>>>>> ihm_recherche_fichier
 }
