@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,7 +29,10 @@ public class CreateAccountController implements Initializable {
     private PasswordField passwordField;
 
     @FXML
-    private Label emptyFieldLabel,ageErrorLabel;
+    private Label emptyFieldLabel, ageErrorLabel;
+
+    @FXML
+    private AnchorPane acountFormPane;
 
     private CreateAccountModel model;
 
@@ -44,26 +48,19 @@ public class CreateAccountController implements Initializable {
 
     @FXML
     public void OnCreateAccountClicked() {
-        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null)
-        {
+        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null) {
             emptyFieldLabel.setVisible(true);
-        }
-        else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty())
-        {
+        } else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty()) {
             emptyFieldLabel.setVisible(true);
-        }
-        else if(!ageTextField.getText().matches("\\d+"))
-        {
+        } else if (!ageTextField.getText().matches("\\d+")) {
             ageErrorLabel.setVisible(true);
-        }
-        else {
+        } else {
             // A decommenté et verifier les champs pendant l'integration
-            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+            DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
 
-            try{
-                api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
-            }
-            catch(DataException de){
+            try {
+                api.createAccount(loginTextField.getText(), passwordField.getText(), firstnameTextField.getText(), lastnameTextField.getText(), Integer.parseInt(ageTextField.getText()));
+            } catch (DataException de) {
                 de.printStackTrace();
                 // TODO génrer l'exception qui signifie que la création de compte a échoué.
             }
@@ -72,10 +69,7 @@ public class CreateAccountController implements Initializable {
             try {
                 FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
-                Stage stage = new Stage();
-
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setOpacity(1);
+                Stage stage = (Stage) acountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();

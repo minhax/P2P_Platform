@@ -215,9 +215,18 @@ public class MainController implements Initializable {
 
 
     @FXML
-    public void OnDisconnectButtonClicked() { //TODO renvoyer sur la fenetre de connection --> V4
+    public void OnDisconnectButtonClicked() {
        DataManagerClient.getInstance().getDataClientToIhmApi().requestLogout();
-        ((Stage) this.mainHBox.getScene().getWindow()).close();
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = (Stage) mainHBox.getScene().getWindow();
+            stage.setTitle("Édition du compte");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void binding() {
@@ -249,10 +258,7 @@ public class MainController implements Initializable {
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
             Parent root = fxmlloader.load();
-            Stage stage = new Stage();
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setOpacity(1);
+            Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
             stage.setScene(new Scene(root));
             stage.showAndWait();

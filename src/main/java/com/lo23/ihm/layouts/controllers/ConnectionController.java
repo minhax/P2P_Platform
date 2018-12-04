@@ -64,16 +64,14 @@ public class ConnectionController implements Initializable {
         authorizeConnection = api.requestCheckCredentials(this.userNameTextField.getText(), this.passwordField.getText());
         if (authorizeConnection) {
             if (!(this.serverChoiceTextField.getText() == null || this.portTextField.getText() == null)) {
-                //TODO à decommenter pour le merge
+
                 api.requestConnectionToServer(this.serverChoiceTextField.getText());
+
             }
             try {
                 FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
-                Stage stage = new Stage();
-
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setOpacity(1);
+                Stage stage = (Stage) connectionPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
@@ -90,10 +88,7 @@ public class ConnectionController implements Initializable {
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("createAccountLayout.fxml"));
             Parent root = fxmlloader.load();
-            Stage stage = new Stage();
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setOpacity(1);
+            Stage stage = (Stage) connectionPane.getScene().getWindow();
             stage.setTitle("Creation de compte");
             stage.setScene(new Scene(root));
             stage.showAndWait();
