@@ -26,7 +26,7 @@ public class Client extends Application {
 
         // On échange les API
         dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
-        commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());
+        commManagerClient.setDataInterface(dataManagerClient.getDataClientToCommApi());
         // TODO: partager l'API avec IHM
 
         // Code de gestion du FXML
@@ -34,6 +34,7 @@ public class Client extends Application {
         // TODO: déclarer le controller de IHM
         // Controller controller = new Controller(params); // EXEMPLE
         fxmlLoader.setController(controller);
+        // controller.setDataClientToCommApi(dataManagerClient.getDataClientToIhm());
         fxmlLoader.setLocation(getClass().getResource("connectionLayout.fxml"));
 
         Parent root = fxmlLoader.load();

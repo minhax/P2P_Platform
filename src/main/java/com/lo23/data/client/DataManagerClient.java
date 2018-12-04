@@ -92,7 +92,7 @@ public class DataManagerClient
         return this.dataClientToIhmApi;
     }
 
-    public DataClientToComm getDataClientToComm (){
+    public DataClientToComm getDataClientToCommApi(){
         return this.dataClientToCommApi;
     }
 
