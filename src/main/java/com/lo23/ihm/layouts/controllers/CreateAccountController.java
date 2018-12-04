@@ -71,7 +71,6 @@ public class CreateAccountController implements Initializable {
                 Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-                stage.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -86,7 +85,6 @@ public class CreateAccountController implements Initializable {
             Stage stage = (Stage) accountFormPane.getScene().getWindow();
             stage.setTitle("Fenêtre principale");
             stage.setScene(new Scene(root));
-            stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }

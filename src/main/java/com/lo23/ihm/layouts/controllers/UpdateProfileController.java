@@ -94,7 +94,6 @@ public class UpdateProfileController implements Initializable {
              stage.setOpacity(1);
              stage.setTitle("Fenêtre principale");
              stage.setScene(new Scene(root));
-             stage.showAndWait();
          } catch (Exception e) {
              e.printStackTrace();
          }

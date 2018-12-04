@@ -223,7 +223,6 @@ public class MainController implements Initializable {
             Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
             stage.setScene(new Scene(root));
-            stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -261,7 +260,6 @@ public class MainController implements Initializable {
             Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
             stage.setScene(new Scene(root));
-            stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
