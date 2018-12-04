@@ -369,7 +369,7 @@ public class MainController implements Initializable {
 
     private ObservableList<FileHandler> getMyFiles() {
         DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
-        List<FileHandlerInfos> fhsharedbyme = api.requestFilesSharedByMe();
+        List<FileHandler> fhsharedbyme = api.requestFilesSharedByMe();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
         if(fhsharedbyme != null && !fhsharedbyme.isEmpty()) {
