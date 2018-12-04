@@ -194,6 +194,7 @@ public class DataManagerClient
     {
         // TODO catch erreur eventuelle.
         this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
+        this.saveUserInfo(this.getSessionInfos().getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
         return true; //TODO return to user logout successful ?
     }
