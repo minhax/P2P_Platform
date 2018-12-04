@@ -164,9 +164,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public List<FileHandlerInfos> requestFilesSharedByMe()
+    public List<FileHandler> requestFilesSharedByMe()
     {
-        return this.host.getSessionInfos().getCurrentUser().getProposedFiles();
+        return null;
     }
 
     @Override
