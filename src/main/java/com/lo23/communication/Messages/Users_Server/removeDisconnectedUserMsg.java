@@ -25,6 +25,7 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	public void treatment(){
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
+		
 		dataInterface.notifyOtherUserDisconnectedToAll(this.user,this.fhInfos);
 	}
 }

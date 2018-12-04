@@ -10,6 +10,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
+import com.lo23.data.Const;
 
 import java.io.File;
 
@@ -18,7 +19,6 @@ import java.util.Iterator;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.util.List;
 import java.util.Vector;
 
@@ -56,12 +56,6 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestFileLocation(FileHandler fileToDownload)
-    {
-
-    }
-
-    @Override
     public UserIdentity requestOtherUserInfo(User otherUser)
     {
         return null;
@@ -80,8 +74,9 @@ public class DataClientToIhmApi implements DataClientToIhm
             throw new DataException("Error while accessing current user");
         // On ajoute le handler aux fichiers proposés par l'utilisateur
         currUser.addProposedFile(filehandler);
-
+        System.out.println("Hash :" + filehandler.getHash());
         // TODO: prévenir le serveur qu'un fichier est proposé
+        host.getCommToDataClientApi().requestUploadFile(filehandler, currUser);
     }
 
     @Override
@@ -126,9 +121,10 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestSubmitUserChanges(UserAccount modifiedUser)
+    public void requestSubmitUserChanges(String login, String password, String firstname, String lastname, int age)
     {
-
+        UserAccount modifiedUser = new UserAccount(login, firstname, lastname, age, password);
+        this.host.changeUserInfos(modifiedUser);
     }
 
     @Override
@@ -139,10 +135,11 @@ public class DataClientToIhmApi implements DataClientToIhm
         File folder = new File("files/fileparts");
         File[] listOfParts = folder.listFiles();
 
-        for(int i = 0; i < listOfParts.length; i++){
+        for(int i = 0; i < listOfParts.length; i++)
+        {
             // Signifie que le fichier existe bien
             if(listOfParts[i].getName().matches(hash)){
-                host.makeLocalFileUnavailable(file);
+                //host.makeLocalFileUnavailable(file);
             }
         }
 
@@ -171,9 +168,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public List<FileHandler> requestFilesSharedByMe()
+    public List<FileHandlerInfos> requestFilesSharedByMe()
     {
-        return null;
+        return this.host.getSessionInfos().getCurrentUser().getProposedFiles();
     }
 
     @Override
@@ -237,4 +234,22 @@ public class DataClientToIhmApi implements DataClientToIhm
         return null;
     }
 
+    @Override
+    public void requestFileDownload(FileHandler fileToDownload)
+    {
+        if (fileToDownload != null)
+        {
+            //this.host.downloadFile(fileToDownload);
+        }
+    };
+
+    @Override
+    public Vector<FileHandler> requestInQueueFiles(){
+        return this.host.getDownloadManager().getInQueue();
+    }
+
+    @Override
+    public Vector<FileHandler> requestInProgressFiles(){
+        return this.host.getDownloadManager().getInProgress();
+    }
 }

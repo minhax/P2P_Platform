@@ -20,6 +20,7 @@ public class ConnectionsManager
      * Vecteur des utilisateurs connectés
      */
     private Vector<UserIdentity> connectedUsers;
+
     /**
      * Annuaires des fichiers proposés par utilisateurs.
      */
@@ -32,6 +33,10 @@ public class ConnectionsManager
     {
         this.connectedUsers = new Vector<>();
         this.directory = new DirectoryUserFiles();
+    }
+
+    public DirectoryUserFiles getDirectory() {
+        return directory;
     }
 
     /**

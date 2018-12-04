@@ -11,6 +11,7 @@ import com.lo23.common.user.UserIdentity;
 
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 public interface DataClientToIhm
 {
@@ -30,7 +31,7 @@ public interface DataClientToIhm
      * Demande à Data la source d'un fichier
      * @param fileToDownload fichier à télécharger
      */
-    void requestFileLocation(FileHandler fileToDownload);
+    void requestFileDownload(FileHandler fileToDownload);
 
     /**
      * Demande à Data les informations détaillées d'un
@@ -79,9 +80,13 @@ public interface DataClientToIhm
 
     /**
      * Envoie à Data le profil modifié de l'utilisateur connecté
-     * @param modifiedUser profil utilisateur modifié
+     * @param login de l'utilisateur à modifier
+     * @param password à appliquer à l'utilisateur à modifier
+     * @param firstname à appliquer à l'utilisateur à modifier
+     * @param lastname à appliquer à l'utilisateur à modifier
+     * @param age à appliquer à l'utilisateur à modifier
      */
-    void requestSubmitUserChanges(UserAccount modifiedUser);
+    void requestSubmitUserChanges(String login, String password, String firstname, String lastname, int age);
 
     /**
      * Envoie à Data un fichier devant être rendu
@@ -112,7 +117,7 @@ public interface DataClientToIhm
      * par l'utilisateur
      * @return fichiers qu'on a mis à disposition
      */
-    List<FileHandler> requestFilesSharedByMe();
+    List<FileHandlerInfos> requestFilesSharedByMe();
 
     /**
      * Retourne la liste de tous les fichiers disponibles
@@ -158,6 +163,16 @@ public interface DataClientToIhm
      */
     List<UserIdentity> requestConnectedUsers();
 
+    /**
+     * Renvoie les fichiers en attente de téléchargement
+     * @return Vector des téléchargements en attente.
+     */
+    Vector<FileHandler> requestInQueueFiles();
 
+    /**
+     * Renvoie les ficheirs en cours de téléchargement
+     * @return Vector des téléchargements en cours.
+     */
+    Vector<FileHandler> requestInProgressFiles();
 
 }

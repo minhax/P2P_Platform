@@ -9,14 +9,14 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
-import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
-import com.lo23.communication.Messages.Message;
-import com.lo23.communication.network.Server;
+import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
+import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
+import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
+import com.lo23.communication.network.Client;
 
-import java.net.InetAddress;
+
 import java.util.List;
 
 public class CommToDataClientAPI implements CommToDataClient
@@ -31,11 +31,13 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     /* Initialisation du singleton*/
-    private static CommToDataClientAPI Instance=new CommToDataClientAPI();
+    private static CommToDataClientAPI Instance;
 
     /* Accesseurs */
     public static CommToDataClientAPI getInstance()
     {
+        if (Instance == null)
+            Instance = new CommToDataClientAPI();
         return Instance;
     }
 
@@ -53,16 +55,32 @@ public class CommToDataClientAPI implements CommToDataClient
 
     /*========= Implémentation des méthodes ============= */
 
-
     @Override
     public void sendFileChanges(FileHandler file){
 
     }
 
     @Override
-    public void sendUserChangesToServer(UserIdentity user){
+    public void sendFileChanges(Rating rate, FileHandler file){
 
     }
+
+    @Override
+    public void sendUserChangesToServer(UserIdentity user) {
+        /**
+         * recupere le CommunicationManager cote Client
+         * recupere l'addresse du serveur
+         * cree un message de type updateUserInfoMsg pour la modification des infos de l'utilisateur user
+         * cree un objet Client qui permet d'envoyer le message au serveur via socket
+         */
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        //A modifier plus tard ==> cms.getPort()
+        int portServer = 1026;
+        String addrServer = cmc.getAddressIpServer();
+        updateUserInfoMsg msg = new updateUserInfoMsg(user);
+        Client c = new Client(msg, portServer, addrServer);
+    }
+
 
     @Override
     public void sendUserChanges(UserIdentity user){
@@ -70,13 +88,11 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void makeFilesUnavailableToServer(FileHandler file, User user){
-
-    }
-
-    @Override
-    public void sendFileChanges(User user, FileHandler file){
-
+    public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
+        makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
+        Client client=new Client(message, 1026, ip);
     }
 
     @Override
@@ -85,12 +101,32 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void requestLogoutToServer(UserStats user){
+    public void sendRatedFile(Rating rating, FileHandler ratedFile){
 
-        String ip = commManagerClient.getIp(); //TODO: Rajouter une exception plus tard
-        Server server = new Server();
-        logoutMsg message = new logoutMsg(user,ip);
-        server.sendMessage(message);
+    }
+
+    /**
+     * Demande de déconnexion de l'utilisateur sur le serveur
+     *
+     * @param UserStats user
+     * Récupère instance cms
+     * Récupère l'adresse IP de la machine, et le serveur sur lequel il est via getAdressIPServer()
+     * Crée logout Msg + Client
+     * @return void
+     **/
+    @Override
+    public void requestLogoutToServer(UserStats user){
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String myIPAdress = null;
+        int portServ = 1026;
+        try {
+            myIPAdress = CommunicationManager.findIPadress();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        logoutMsg message=new logoutMsg(user, myIPAdress);
+        Client c = new Client(message, portServ, cmc.getAddressIpServer());
+        System.out.println("[COM] Deconnexion reussie");
     }
 
     /*@Override
@@ -101,15 +137,13 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-        String ip = cms.getIp();
-        System.out.println(ip);
-        Server server = new Server();
-        System.out.println("Serveur initialisee");
-        connectionMsg message = new connectionMsg(user, fi,serverIP, ip);
-        server.sendMessage(message);
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        cmc.setAddressIpServer(serverIP);
+        int portServ = 1026;
+        connectionMsg message = new connectionMsg(user, fi);
+        System.out.println("Client cree");
+        Client c = new Client(message, portServ, serverIP);
     }
-
 
     /*@Override
     public void connect(UserStats user, long IP){
@@ -119,34 +153,56 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void sendFileChanges(Rating rate, FileHandler file){
-
-    }
-
-    @Override
     public void requestAddSource(FileHandler file, UserIdentity user){
+    
+    }
+    
+    @Override
+    public void sendFileChanges(User user, FileHandler file){
 
     }
 
+    //A priori pas utile puisque l'ajout d'un fichier (méthode requestUploadFile) ajoute la source automatiquement
+    /*@Override
+    public void requestAddSource(FileHandlerInfos file, UserIdentity user){
+        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+        Server server=new Server();
+        addSourceMsg message=new addSourceMsg(file, user);
+        server.sendMessage(message);
+        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
+    }*/
+
 
     @Override
-    public void requestUploadFile(FileHandler file, UserIdentity user){
+    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){ //TODO Fix le parametre UserIdentity ou User?
+        //TODO: rajouter exception
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
+        uploadFileMsg message=new uploadFileMsg(file, user);
+        Client client=new Client(message, 1026, ip);
 
+        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
     }
 
 
     @Override
     public void sendNewFileSource(FileHandler file, UserIdentity user){
+        //A priori la même chose que addNewFileSource ?
 
     }
 
     @Override
-    public void uploadFile(FileHandler file, UserIdentity user){
-
+    public void uploadFile(FileHandlerInfos fi, UserIdentity user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        int portServ = 1026;
+        uploadFileMsg message = new uploadFileMsg(fi,user );
+        System.out.println("Client cree");
+        Client c = new Client(message, portServ, cmc.getAddressIpServer());
     }
 
     @Override
     public void requestFileLoc(FileHandler file, UserIdentity user){
+
 
     }
 

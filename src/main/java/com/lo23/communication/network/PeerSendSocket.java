@@ -2,12 +2,12 @@ package com.lo23.communication.network;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.io.Serializable;
 
 
 // Peer To Send Socket 
 
-public class PeerSendSocket extends Thread
+public class PeerSendSocket extends Thread implements Serializable
 {
     int peerPort;
     

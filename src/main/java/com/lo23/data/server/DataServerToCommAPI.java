@@ -24,6 +24,8 @@ public class DataServerToCommAPI implements DataServerToComm
     {
         this.manager.connections.connectUser(user);
         // La partie Comm devrait notifier tous les clients de la nouvelle connexion
+        this.manager.commToDataApi.sendConnectedUserToAll(user,
+                this.manager.connections.getDirectory().getFilesProposedByUser(user));
     }
 
     @Override
@@ -48,6 +50,7 @@ public class DataServerToCommAPI implements DataServerToComm
     public void removeFileSource(FileHandler file, User user)
     {
         this.manager.connections.removeFileSourceFromDirectory(user, file);
+        System.out.println("[DATA] Suppression du fichier" + file.getHash() + "coté serveur");
     }
 
     @Override
@@ -57,9 +60,9 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
+    public void addNewFileToServer(FileHandlerInfos file, User user)
     {
-        this.manager.connections.addFileToDirectory(user, file);
+       //TODO this.manager.connections.addFileToDirectory(user, file);
     }
 
     @Override

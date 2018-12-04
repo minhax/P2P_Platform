@@ -50,9 +50,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyNewSharedFileToAll(FileHandler newSharedFile)
+    public void notifyNewSharedFileToAll(FileHandlerInfos newSharedFile, UserIdentity source)
     {
-
+        this.host.getSessionInfos().getDirectory().addProposedFile(source, newSharedFile);
     }
 
     @Override
@@ -83,5 +83,10 @@ public class DataClientToCommApi implements DataClientToComm
     public void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files)
     {
 
+    }
+
+    @Override
+    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+        this.host.getDownloadManager().getFilePart(userAsking, userSource, file, part);
     }
 }

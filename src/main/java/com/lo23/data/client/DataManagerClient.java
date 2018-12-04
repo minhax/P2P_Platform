@@ -50,6 +50,7 @@ public class DataManagerClient
      * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
+
     /**
      * Gestionnaire pour le téléchargement de fichiers
      */
@@ -67,9 +68,11 @@ public class DataManagerClient
         super();
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
+        this.downloadManager = new DownloadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
+        this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
     }
 
     static public DataManagerClient getInstance(){
@@ -83,6 +86,16 @@ public class DataManagerClient
     {
         return this.uploadManager;
     }
+
+    public DownloadManager getDownloadManager() {
+        return downloadManager;
+    }
+
+    public void setDownloadManager(DownloadManager downloadManager) {
+        this.downloadManager = downloadManager;
+    }
+
+
 
     Session getSessionInfos()
     {
@@ -134,7 +147,10 @@ public class DataManagerClient
                 {
                     FileInputStream fileIn = new FileInputStream(userFile.getPath());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                    UserAccount comparisonAccount = (UserAccount) objectIn.readObject();
+                    Object obj = objectIn.readObject();
+                    System.out.println(userFile.getName());
+                    System.out.println(obj.getClass());
+                    UserAccount comparisonAccount = (UserAccount) obj;
                     //UserAccount comparisonAccount = (UserAccount) obj;
                     if(comparisonAccount.getLogin().equals(login))
                     {
@@ -292,13 +308,14 @@ public class DataManagerClient
      * un message au serveur pour partager l'information.
      * @param fileToMakeUnavailable fichier à rendre indisponible
      */
-    public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
+    public void makeLocalFileUnavailable(FileHandlerInfos fileToMakeUnavailable){
         /*
         Ici on ne supprime pas les parties de fichier sur le disque parce que
         dans l'éventualité ou on rendrait le fichier dispo de nouveau, on
         override les fileParts  qui existent déjà donc les laisser en mémoire
         ne pose pas de problème.
          */
+        System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
         this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
         // Supression du fichier en local
         UserAccount currentUser = this.sessionInfos.getCurrentUser();
@@ -383,6 +400,12 @@ public class DataManagerClient
 
         // Communication des changements au serveur pour qu'il se mette à jour
         this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
+    }
+
+    public void downloadFile(FileHandler fileToDownload)
+    {
+        // créer une fct DownloadManager::Download ?
+
     }
 
 }
