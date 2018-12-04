@@ -24,7 +24,7 @@ public class updateUserInfoMsg extends UserMessage{
         DataServerToComm dataInterface = cms.getDataInterface();
         dataInterface.updateUserChanges(user);
 	    /** Création du message pour le broadcast des informations**/
-	    //updatedAccountMsg message = new updatedAccountMsg((UserStats)this.user); //TODO FIX USERSTATS
-	    //cms.broadcast(message);
+	    updatedAccountMsg message = new updatedAccountMsg(this.user);
+	    cms.broadcast(message);
 	}
 }
