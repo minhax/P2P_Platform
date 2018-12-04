@@ -225,6 +225,8 @@ public class DataManagerClient
             registerSuccess = false;
         }
 
+        System.out.println("SAUVEGARDE" +user.getFirstName()+ " " +user.getPassword());
+
         return registerSuccess;
     }
 
