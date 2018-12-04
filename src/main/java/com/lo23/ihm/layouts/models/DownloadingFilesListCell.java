@@ -50,8 +50,6 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
 
-                    System.out.println("Ajout de la note pour l'objet : " + lastItem);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -78,8 +76,6 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
                     stage.setTitle("Commentaire d'un fichier");
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
-
-                    System.out.println("Ajout d'un commentaire pour l'objet : " + lastItem);
 
                 } catch (Exception e) {
                     e.printStackTrace();
