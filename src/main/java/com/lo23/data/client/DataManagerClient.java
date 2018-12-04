@@ -50,22 +50,16 @@ public class DataManagerClient
      * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
-
     /**
      * Gestionnaire pour le téléchargement de fichiers
      */
     private DownloadManager downloadManager;
-    /**
-     * Référence du DataManagerClient pour le design pattern Singleton
-     */
-    static private DataManagerClient instance;
 
     /**
      * Constructeur de DataManagerClient
      */
-    private DataManagerClient()
+    public DataManagerClient()
     {
-        super();
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
         this.downloadManager = new DownloadManager();
@@ -75,27 +69,14 @@ public class DataManagerClient
         this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
     }
 
-    static public DataManagerClient getInstance(){
-        if(DataManagerClient.instance == null){
-            instance = new DataManagerClient();
-        }
-        return instance;
-    }
-
     UploadManager getUploadManager ()
     {
         return this.uploadManager;
     }
 
-    public DownloadManager getDownloadManager() {
+    DownloadManager getDownloadManager() {
         return downloadManager;
     }
-
-    public void setDownloadManager(DownloadManager downloadManager) {
-        this.downloadManager = downloadManager;
-    }
-
-
 
     Session getSessionInfos()
     {
