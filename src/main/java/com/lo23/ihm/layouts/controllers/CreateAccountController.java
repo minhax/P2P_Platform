@@ -62,6 +62,7 @@ public class CreateAccountController implements Initializable {
 
             try{
                 api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
+                api.requestCheckCredentials(loginTextField.getText(),passwordField.getText());
             }
             catch(DataException de){
                 de.printStackTrace();
