@@ -166,7 +166,8 @@ class DownloadManager
     {
         try {
             byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
-            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + fileToBuild.getTitle() + "." + fileToBuild.getType());
+            String title = fileToBuild.getTitle().replaceAll("\\W+", "_");
+            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + title + "." + fileToBuild.getType());
             int bytesRead;
             for (int i = 0; i < fileToBuild.getNbBlocks(); i++)
             {
