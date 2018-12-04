@@ -39,7 +39,6 @@
 		    <artifactId>controlsfx</artifactId>
 		    <version>8.40.14</version>
 		</dependency>
-
     </dependencies>
 
     <build>

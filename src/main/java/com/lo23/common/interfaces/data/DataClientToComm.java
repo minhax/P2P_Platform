@@ -60,7 +60,7 @@ public interface DataClientToComm
      * d'un autre utilisateur ayant subi des modifications
      * @param newlyModifiedUser profil autre utilisateur modifié
      */
-    void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser);
+    void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser);
 
     /**
      * Notifie les clients distants de la déconnexion d'un autre

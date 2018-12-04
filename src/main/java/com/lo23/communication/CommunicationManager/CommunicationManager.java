@@ -41,11 +41,13 @@ public abstract class CommunicationManager {
 			Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
 			while (addresses.hasMoreElements()) {
 				InetAddress addr = addresses.nextElement();
-				String ip = addr.getCanonicalHostName().toString();
-				if (ip.regionMatches(0, "172", 0, 3)) {
-					System.out.println("Ajout de l'adresse IP " + ip);
-					return ip;
-				} else
+                String hostname = addr.getHostName();
+                if (hostname.contains("utc")){
+                    String ip = addr.getHostAddress();
+                    System.out.println(ip);
+                    return ip;
+                }
+                else
 					continue;
 			}
 		}

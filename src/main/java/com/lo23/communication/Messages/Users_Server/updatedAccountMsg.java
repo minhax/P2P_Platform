@@ -7,9 +7,8 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.Messages.UserMessage;
 
 public class updatedAccountMsg extends UserMessage{
-	protected UserStats us;
-	public updatedAccountMsg(UserStats ui){
-		this.us = ui;
+	public updatedAccountMsg(UserIdentity ui){
+		this.user = ui;
 	}
 	public void treatment()
 	{
@@ -21,6 +20,6 @@ public class updatedAccountMsg extends UserMessage{
 
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterfaceClient = cms.getDataInterface();
-		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(us);
+		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(user);
 	}
 }
