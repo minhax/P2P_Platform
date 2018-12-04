@@ -74,7 +74,6 @@ public class ConnectionController implements Initializable {
                 Stage stage = (Stage) connectionPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-                stage.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -91,7 +90,6 @@ public class ConnectionController implements Initializable {
             Stage stage = (Stage) connectionPane.getScene().getWindow();
             stage.setTitle("Creation de compte");
             stage.setScene(new Scene(root));
-            stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }

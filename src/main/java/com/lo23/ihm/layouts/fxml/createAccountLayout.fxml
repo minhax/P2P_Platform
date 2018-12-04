@@ -21,5 +21,6 @@
       <TextField id="ageTextField" fx:id="ageTextField" layoutX="283.0" layoutY="248.0" />
       <Label fx:id="ageErrorLabel" layoutX="274.0" layoutY="274.0" prefHeight="18.0" prefWidth="396.0" text="Doit obligatoirement etre un nombre" textFill="RED" />
       <Button id="subscriptionButton" layoutX="274.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountClicked" style="-fx-background-color: #00BFFF;" text="S'inscrire !" />
+      <Button layoutX="22.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#OnBackToCoClicked" style="-fx-background-color: #00BFFF;" text="retour" />
    </children>
 </AnchorPane>

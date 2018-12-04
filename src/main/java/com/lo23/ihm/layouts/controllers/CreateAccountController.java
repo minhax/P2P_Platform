@@ -71,10 +71,22 @@ public class CreateAccountController implements Initializable {
                 Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-                stage.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    public void OnBackToCoClicked() {
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = (Stage) accountFormPane.getScene().getWindow();
+            stage.setTitle("Fenêtre principale");
+            stage.setScene(new Scene(root));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
