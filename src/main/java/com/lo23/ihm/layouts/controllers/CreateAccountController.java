@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CreateAccountController implements Initializable {
@@ -32,7 +31,7 @@ public class CreateAccountController implements Initializable {
     private Label emptyFieldLabel, ageErrorLabel;
 
     @FXML
-    private AnchorPane acountFormPane;
+    private AnchorPane accountFormPane;
 
     private CreateAccountModel model;
 
@@ -69,13 +68,27 @@ public class CreateAccountController implements Initializable {
             try {
                 FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
-                Stage stage = (Stage) acountFormPane.getScene().getWindow();
+                Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    public void OnBackToCoClicked() {
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = (Stage) accountFormPane.getScene().getWindow();
+            stage.setTitle("Fenêtre principale");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
