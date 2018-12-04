@@ -125,7 +125,7 @@ class DownloadManager
      * @param fileToDownload le fichier à télécharger
      * @param part la partie du fichier à télécharger
      */
-    void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
+   void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
         Vector<UserIdentity> sources = this
                 .getDataManagerClient()
                 .getSessionInfos()
@@ -133,33 +133,30 @@ class DownloadManager
                 .getUsersThatProposeFile(fileToDownload);
 
         sources.remove(userSource);
-
         // TODO send  query to comm again
-    }
+   }
 
    void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
         // TODO : store the fileParts, and check if it's completed or not
         long nbBlocks = fileHandler.getNbBlocks();
+        // Check how many parts exists
+        File dir = new File("files/fileparts");
+        File[] files = dir.listFiles((d, name) -> name.startsWith(fileHandler.getHash()));
+        long existingPartsNumber = files.length;
 
-        // check how many parts exist
-        //todo regex and check number of existing parts, and remove hardcore
-        long existingPartsNumber = 0;
+       try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
+           fos.write(data);
+       } catch (IOException e) {
+           System.out.println("Error when storing file part in disk");
+           e.printStackTrace();
+       }
 
-        //all parts collected
-        if (existingPartsNumber == nbBlocks) {
-            this.mergeFileparts(fileHandler);
-        } else if (existingPartsNumber < nbBlocks) {
-            // Store the part in the disk
-            try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
-                fos.write(data);
-            } catch (IOException e) {
-                System.out.println("Error when storing file part in disk");
-                e.printStackTrace();
-            }
-
-        } else {
-            throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
-        }
+       // All parts collected
+       if (existingPartsNumber == nbBlocks) {
+           this.mergeFileparts(fileHandler);
+       } else if (existingPartsNumber > nbBlocks) {
+           throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
+       }
     }
 
     void mergeFileparts (FileHandler fileToBuild)
