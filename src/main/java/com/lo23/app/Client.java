@@ -32,9 +32,9 @@ public class Client extends Application {
         // Code de gestion du FXML
         FXMLLoader fxmlLoader = new FXMLLoader();
         // TODO: déclarer le controller de IHM
-        // Controller controller = new Controller(params); // EXEMPLE
+        // Controller controller = new Controller(); // EXEMPLE
         fxmlLoader.setController(controller);
-        // controller.setDataClientToCommApi(dataManagerClient.getDataClientToIhm());
+        // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
         fxmlLoader.setLocation(getClass().getResource("connectionLayout.fxml"));
 
         Parent root = fxmlLoader.load();
