@@ -8,16 +8,13 @@ import com.lo23.data.Const;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.io.*;
 import java.nio.file.Files;
 import java.util.Vector;
 
-public class DownloadManager
+class DownloadManager
 {
     private Vector<FileHandler> inQueue;
     private Vector<DownloadHandler> inProgress;
@@ -69,9 +66,9 @@ public class DownloadManager
      * source le même nombre de blocs.
      * @param fileToDownload le fichier à télécharger.
      */
-    public void download(FileHandler fileToDownload)
+    void download(FileHandler fileToDownload)
     {
-        long nbBlocks = (long) Math.ceil(fileToDownload.getSize() / Const.FILEPART_SIZE);
+        long nbBlocks = fileToDownload.getNbBlocks();
 
         Vector<UserIdentity> sources = this
                 .getDataManagerClient()
@@ -105,7 +102,7 @@ public class DownloadManager
      * @param file les métadonnées du ficheir en question
      * @param part l'index de la partie du fichier.
      */
-    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+    void getFilePart(User userAsking, User userSource, FileHandler file, long part){
         try{
             byte[] data = new byte[Const.FILEPART_SIZE];
             File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
@@ -128,7 +125,7 @@ public class DownloadManager
      * @param fileToDownload le fichier à télécharger
      * @param part la partie du fichier à télécharger
      */
-    public void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
+    void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
         Vector<UserIdentity> sources = this
                 .getDataManagerClient()
                 .getSessionInfos()
@@ -140,9 +137,9 @@ public class DownloadManager
         // TODO send  query to comm again
     }
 
-   public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+   void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
         // TODO : store the fileParts, and check if it's completed or not
-        long nbBlocks = (long) Math.ceil(fileHandler.getSize() / Const.FILEPART_SIZE);
+        long nbBlocks = fileHandler.getNbBlocks();
 
         // check how many parts exist
         //todo regex and check number of existing parts, and remove hardcore
@@ -150,7 +147,7 @@ public class DownloadManager
 
         //all parts collected
         if (existingPartsNumber == nbBlocks) {
-
+            this.mergeFileparts(fileHandler);
         } else if (existingPartsNumber < nbBlocks) {
             // Store the part in the disk
             try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
@@ -162,6 +159,26 @@ public class DownloadManager
 
         } else {
             throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
+        }
+    }
+
+    void mergeFileparts (FileHandler fileToBuild)
+    {
+        try {
+            byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
+            String title = fileToBuild.getTitle().replaceAll("\\W+", "_");
+            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + title + "." + fileToBuild.getType());
+            int bytesRead;
+            for (int i = 0; i < fileToBuild.getNbBlocks(); i++)
+            {
+                FileInputStream filepart = new FileInputStream("files/fileparts/" + fileToBuild.getHash() + ".part" + i);
+                bytesRead = filepart.read(segment);
+                fileBuilt.write(segment, 0, bytesRead);
+                filepart.close();
+            }
+            fileBuilt.close();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
         }
     }
 }
