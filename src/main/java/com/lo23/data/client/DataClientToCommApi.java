@@ -10,6 +10,7 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Objet qui implémente l'API de Data pour Comm.
@@ -80,13 +81,40 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files)
+    public void notifyOtherUserConnectedToAll(UserStats newlyConnectedUser, List<FileHandlerInfos> files)
     {
+        this.host.getSessionInfos().mergeUserIntoLoggedUsers(newlyConnectedUser);
+        for(int i = 0; i < files.size(); i++){
+            this.host.getSessionInfos().getDirectory().addProposedFile(newlyConnectedUser, files.get(i));
+        }
 
     }
 
     @Override
-    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+    public void getFilePart(User userAsking, User userSource, FileHandler file, long part)
+    {
         this.host.getDownloadManager().getFilePart(userAsking, userSource, file, part);
+    }
+
+    @Override
+    public void notifyAskForFilePartAgain(User source, FileHandler file, long part){
+
+        Vector<UserIdentity> sources = this
+                .host
+                .getSessionInfos()
+                .getDirectory()
+                .getUsersThatProposeFile(file);
+
+        int indexToRemove = -1;
+
+        for(int i = 0; i < sources.size(); i++){
+            if(sources.elementAt(i).getId().equals(source.getId())){
+                indexToRemove = i;
+            }
+        }
+        sources.remove(indexToRemove);
+
+        int chosenSourceIndex = (int) Math.random() * indexToRemove;
+        // TODO demander le FilePart à comm'.
     }
 }
