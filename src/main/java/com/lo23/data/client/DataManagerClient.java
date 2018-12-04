@@ -326,23 +326,22 @@ public class DataManagerClient
      * Met à jour le profil utilisateur en local et
      * envoie une demande de propagation d'information
      * au serveur
-     * @param modifiedUser nouveau profil
      */
-    public void changeUserInfos(UserAccount modifiedUser)
+    public void changeUserInfos(String login, String password, String firstname, String lastname, int age)
     {
-        this.sessionInfos.getCurrentUser().setPassword(modifiedUser.getPassword());
+        this.sessionInfos.getCurrentUser().setPassword(password);
         // Si autre chose que le mdp a été changé
-        if (!this.sessionInfos.getCurrentUser().getFirstName().equals(modifiedUser.getFirstName())
-                || !this.sessionInfos.getCurrentUser().getLastName().equals(modifiedUser.getLastName())
-                || this.sessionInfos.getCurrentUser().getAge() != modifiedUser.getAge())
+        if (!this.sessionInfos.getCurrentUser().getFirstName().equals(firstname)
+                || !this.sessionInfos.getCurrentUser().getLastName().equals(lastname)
+                || this.sessionInfos.getCurrentUser().getAge() != age)
         {
             // Mise à jour de l'utilisateur connecté
-            this.sessionInfos.getCurrentUser().setFirstName(modifiedUser.getFirstName());
-            this.sessionInfos.getCurrentUser().setLastName(modifiedUser.getLastName());
-            this.sessionInfos.getCurrentUser().setAge(modifiedUser.getAge());
+            this.sessionInfos.getCurrentUser().setFirstName(firstname);
+            this.sessionInfos.getCurrentUser().setLastName(lastname);
+            this.sessionInfos.getCurrentUser().setAge(age);
 
             // Communication des changements au serveur pour qu'il se mette à jour
-            this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
+            this.commToDataClientAPI.sendUserChangesToServer(this.getSessionInfos().getCurrentUser());
         }
     }
 
