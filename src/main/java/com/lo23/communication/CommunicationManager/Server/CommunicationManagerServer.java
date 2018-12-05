@@ -16,7 +16,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	
 	private DataServerToComm dataInterface;
 	private CommToDataServerAPI commInterface;
-	private LinkedHashMap<String,String> clientAndServerIP;
+	private LinkedHashMap<ClientInfo,String> clientInfoAndServerIP;
 	
 	/** Constructeur privé
 	 * Récupère un objet interface de DataServer et CommServer
@@ -35,7 +35,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 			} catch (Exception ex) {
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
-			clientAndServerIP = new LinkedHashMap<>();
+			clientInfoAndServerIP = new LinkedHashMap<>();
 		}
 	
 	
@@ -74,20 +74,20 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * ...
 	 * @return void
 	 **/
-	public void addEntryInClientAndServerIPArray(String client, String server)
+	public void addEntryInClientAndServerIPArray(ClientInfo client, String server)
 	{
 		/** efface la valeur precedemment enregistre pour le client si elle existe**/
 		//Penser a mettre une exception
-		this.clientAndServerIP.put(client, server);
+		this.clientInfoAndServerIP.put(client, server);
 	}
-	public void removeUserFromTable(String userIPAddress)
+	public void removeUserFromTable(ClientInfo client)
 			throws CommException
 	{
 		/** On vérifie que la valeur de la clé (adresse IP du client ) existe bien dans la table**/
-		if (!(this.clientAndServerIP.containsKey(userIPAddress)))
-				throw new CommException("L'adresse IP n'est pas presente dans la table", userIPAddress);
+		if (!(this.clientInfoAndServerIP.containsKey(client)))
+				throw new CommException("Le client n'est pas present dans la table", client);
 			else
-			this.clientAndServerIP.remove(userIPAddress);
+			this.clientInfoAndServerIP.remove(client);
 	}
 	
 	/**
@@ -100,10 +100,12 @@ public class CommunicationManagerServer extends CommunicationManager {
 	public void broadcast(Message m)
 	throws EmptyStackException
 	{
-		for(Map.Entry<String,String> entry : this.clientAndServerIP.entrySet())
+		for(Map.Entry<ClientInfo,String> entry : this.clientInfoAndServerIP.entrySet())
 		{
-			String IpAdress = entry.getKey();
-			Client c = new Client(m, 1026, IpAdress); /*TODO FIX hardcode por */
+			/** On récupère les informations liées au client dans la structure de données : son adresse IP et son port **/
+			ClientInfo client = entry.getKey();
+			
+			//Client c = new Client(m, 1026, IpAdress); /*TODO FIX hardcode por */
 		}
 		//Exception a rajouter?
 	}
