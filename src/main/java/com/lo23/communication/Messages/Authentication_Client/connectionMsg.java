@@ -50,6 +50,7 @@ public class connectionMsg extends Authentication {
 		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		connectedUserMsg message=new connectedUserMsg(this.userStats, this.fileInfo);
+		message.setPort(this.getPort());
 		cms.broadcast(message);
 	}
 	
