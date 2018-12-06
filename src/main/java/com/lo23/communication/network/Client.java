@@ -17,8 +17,7 @@ public class Client implements Serializable {
 
     public Client(Message msg,
                   int portServ, String addrServ, // port & IP of the server central
-                  int peerPortServ, String addrPeerServ, // port & IP of the peer on which you want to DL
-                  int clientPortServ) // port on which the client act as a server
+                  int peerPortServ, String addrPeerServ) // port & IP of the peer on which you want to DL)
     {
 
         this.msg = msg;
@@ -26,7 +25,7 @@ public class Client implements Serializable {
         this.addrServ = addrServ;
         this.peerPortServ = peerPortServ;
         this.addrPeerServ = addrPeerServ;
-        this.clientPortServ = 1026;
+        this.clientPortServ = msg.getPort();
 
         try{
             if (msg.isToServ()){
@@ -94,6 +93,7 @@ public class Client implements Serializable {
 
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
