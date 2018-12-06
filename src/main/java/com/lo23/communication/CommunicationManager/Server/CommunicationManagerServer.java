@@ -104,7 +104,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 		{
 			String IpAdress = entry.getKey();
 			Client c = new Client(m , 1026, IpAdress, 0, null, 0); /*TODO FIX hardcode por */
-
 		}
 		//Exception a rajouter?
 	}

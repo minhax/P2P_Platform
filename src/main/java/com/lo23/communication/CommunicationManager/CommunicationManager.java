@@ -6,23 +6,43 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public abstract class CommunicationManager {
-	
+
 	protected String ip;
-	
+
 	public String getIp() {
 		return this.ip;
 	}
 
-/**
- * Retourne et affiche l'adresse IP sur le serveur UTC de la machine appelante
- *
- * @param
- * ... TODO FIX HARDCODE EQUALS
- * @return String IPadress
-**/
+	/**
+	 * Retourne et affiche l'adresse IP sur le serveur UTC de la machine appelante
+	 *
+	 * @param
+	 * @return String IPadress
+	 **/
 	public static String findIPadress() throws Exception {
-		
-		Enumeration<NetworkInterface> interfaces = null;
+		try {
+			Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
+			while (net.hasMoreElements()) {
+				NetworkInterface networkInterface = net.nextElement();
+				Enumeration<InetAddress> add = networkInterface.getInetAddresses();
+				while (add.hasMoreElements()) {
+					InetAddress a = add.nextElement();
+					if (!a.isLoopbackAddress() && !a.getHostAddress().contains(":")) {
+//	                    if (Debug.debug)
+//	                    {
+//	                        Log.d(TAG, "getIPV4 : " + a.getHostAddress());
+//	                    }
+						return a.getHostAddress();
+					}
+				}
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}
+		/**Enumeration<NetworkInterface> interfaces = null;
 		try {
 			interfaces = NetworkInterface.getNetworkInterfaces();
 		} catch (SocketException e) {
@@ -51,7 +71,7 @@ public abstract class CommunicationManager {
 				}
 				else
 					continue;
-			}
+			} **/
 			/*
 			while (addresses.hasMoreElements()) {
 				InetAddress addr = addresses.nextElement();
@@ -64,7 +84,6 @@ public abstract class CommunicationManager {
 					continue;
 			}
 			*/
-		}
+	/**	}
 		return null;
-	}
-}
+	}**/
