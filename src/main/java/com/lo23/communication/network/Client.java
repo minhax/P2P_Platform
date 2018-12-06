@@ -59,7 +59,7 @@ public class Client implements Serializable {
                 clientSocket.close();
             }
             else
-                clientAsServer(addrPeerServ, peerPortServ, msg);
+                clientAsServer(addrPeerServ, msg);
 
 
             // socket client remains open until socket timeout (default timeout)
@@ -75,12 +75,12 @@ public class Client implements Serializable {
     }
 
     @SuppressWarnings({ "unused", "resource" })
-    public static void clientAsServer(String clientAsServerAddr, int clientAsServerPort, Message msg)
+    public static void clientAsServer(String clientAsServerAddr, Message msg)
     {
         try
         {
 
-            Socket clientAsServerSocket = new Socket(clientAsServerAddr, clientAsServerPort);
+            Socket clientAsServerSocket = new Socket(clientAsServerAddr, msg.getPort());
 
             ObjectOutputStream objOS = new ObjectOutputStream(clientAsServerSocket.getOutputStream());
             objOS.flush();
