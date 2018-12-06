@@ -13,41 +13,22 @@ public abstract class CommunicationManager {
 		return this.ip;
 	}
 
-	/**
-	 * Retourne et affiche l'adresse IP sur le serveur UTC de la machine appelante
-	 *
-	 * @param
-	 * @return String IPadress
-	 **/
+/**
+ * Retourne et affiche l'adresse IP sur le serveur UTC de la machine appelante
+ *
+ * @param
+
+ * @return String IPadress
+**/
 	public static String findIPadress() throws Exception {
-		try {
-			Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
-			while (net.hasMoreElements()) {
-				NetworkInterface networkInterface = net.nextElement();
-				Enumeration<InetAddress> add = networkInterface.getInetAddresses();
-				while (add.hasMoreElements()) {
-					InetAddress a = add.nextElement();
-					if (!a.isLoopbackAddress() && !a.getHostAddress().contains(":")) {
-//	                    if (Debug.debug)
-//	                    {
-//	                        Log.d(TAG, "getIPV4 : " + a.getHostAddress());
-//	                    }
-						return a.getHostAddress();
-					}
-				}
-			}
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-}
-		/**Enumeration<NetworkInterface> interfaces = null;
+
+		Enumeration<NetworkInterface> interfaces = null;
 		try {
 			interfaces = NetworkInterface.getNetworkInterfaces();
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
+
 		while (interfaces.hasMoreElements()) {
 			NetworkInterface networkInterface = interfaces.nextElement();
 			// drop inactive
@@ -59,6 +40,7 @@ public abstract class CommunicationManager {
 			}
 			// smth we can explore
 			Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+			/*
 			while (addresses.hasMoreElements())
 			{
 				InetAddress addr = addresses.nextElement();
@@ -71,8 +53,8 @@ public abstract class CommunicationManager {
 				}
 				else
 					continue;
-			} **/
-			/*
+			}
+			*/
 			while (addresses.hasMoreElements()) {
 				InetAddress addr = addresses.nextElement();
 				String ip = addr.getCanonicalHostName().toString();
@@ -83,7 +65,8 @@ public abstract class CommunicationManager {
 				 else
 					continue;
 			}
-			*/
-	/**	}
+
+		}
 		return null;
-	}**/
+	}
+}

@@ -25,5 +25,5 @@ public class updatedAccountMsg extends UserMessage{
 		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(us);
 	}
 
-    public boolean isToServ(){return true;}
+    public boolean isToServ(){return false;}
 }

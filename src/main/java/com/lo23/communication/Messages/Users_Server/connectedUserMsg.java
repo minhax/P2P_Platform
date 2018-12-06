@@ -29,5 +29,5 @@ public class connectedUserMsg extends UserMessage{
 		dataInterface.notifyOtherUserConnectedToAll(this.user,this.fhInfo);
 	}
 
-    public boolean isToServ(){return true;}
+    public boolean isToServ(){return false;}
 }
