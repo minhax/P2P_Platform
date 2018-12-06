@@ -64,7 +64,7 @@ public class Tests
 			int port = sc.nextInt();
 
             connectionMsg msgC = new connectionMsg(userstats, newList);
-					Client c = new Client(msgC, port, addr, 0, null, 0);
+					Client c = new Client(msgC, port, addr, 0, null);
 		}
 		else{
 			System.out.println("wrong choice =.= ");
