@@ -25,7 +25,7 @@ public class Client implements Serializable {
         this.addrServ = addrServ;
         this.peerPortServ = peerPortServ;
         this.addrPeerServ = addrPeerServ;
-        this.clientPortServ = msg.getPort();
+        this.clientPortServ = 0;
 
         try{
             if (msg.isToServ()){
@@ -43,13 +43,8 @@ public class Client implements Serializable {
                 System.out.println("Creation du flux ");
                 System.out.println();
 
-                // Client act as a server
-
-                if (available(clientPortServ)){
-                    PeerSendSocket objServer = new PeerSendSocket(clientPortServ);
-                    objServer.start();
-                }
                 msg.setPort(clientSocket.getLocalPort());
+                this.clientPortServ = clientSocket.getLocalPort();
                 System.out.println("Envoi du message" + msg.toString());
 
                 objOS.writeObject(msg); // client send data to the server
@@ -57,6 +52,13 @@ public class Client implements Serializable {
                 objOS.flush();
 
                 clientSocket.close();
+    
+                // Client act as a server
+    
+                if (available(msg.getPort())){
+                    PeerSendSocket objServer = new PeerSendSocket(this.clientPortServ);
+                    objServer.start();
+                }
             }
             else
                 clientAsServer(addrPeerServ, msg);
