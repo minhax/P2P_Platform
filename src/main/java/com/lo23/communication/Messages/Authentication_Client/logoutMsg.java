@@ -24,7 +24,7 @@ public class logoutMsg extends Authentication {
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
 		try {
-			cms.removeUserFromTable(this.UserIPAdress);
+			cms.removeUserFromMap(this.UserIPAdress);
 		}catch(CommException e){
 			System.out.println("Message: \t");
 			System.out.println(e.getMessage());

@@ -32,6 +32,8 @@ public class ServerHandler extends Thread implements Serializable
             System.out.println("waiting object from client : " + peerId);
             System.out.println();
 
+            while(true) {
+
 
                 Object msg = objIS.readObject(); // server read data from the client
 
@@ -43,6 +45,7 @@ public class ServerHandler extends Thread implements Serializable
                 System.out.println("end of the treatment");
 
                 objOS.flush();
+            }
 
         }
         catch (Exception e){

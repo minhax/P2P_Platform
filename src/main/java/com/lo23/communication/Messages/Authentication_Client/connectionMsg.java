@@ -47,9 +47,9 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
+		cms.addEntryMap(this.myIp, this.getPort());
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
-		connectedUserMsg message=new connectedUserMsg(this.userStats, this.fileInfo);
+		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo);
 		message.setPort(this.getPort());
 		cms.broadcast(message);
 	}
