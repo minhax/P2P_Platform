@@ -81,13 +81,7 @@ public class CommToDataClientAPI implements CommToDataClient
         Client c = new Client(msg, portServer, addrServer, 0, null);
     }
 
-
-    @Override
-    public void sendUserChanges(UserIdentity user){
-
-    }
-
-    @Override
+        @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();

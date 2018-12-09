@@ -82,7 +82,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	{
 		//efface la valeur precedemment enregistre pour le client si elle existe
 		//Penser a mettre une exception
-		this.clientAndServerIP.put(client, server);
+		this.clientInfoAndServerIP.put(client, server);
 	}
 
 
@@ -93,7 +93,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 		if (!(this.clientAndServerIP.containsKey(userIPAddress)))
 				throw new CommException("L'adresse IP n'est pas presente dans la table", userIPAddress);
 			else
-			this.clientAndServerIP.remove(userIPAddress);
+			this.clientInfoAndServerIP.remove(client);
 	}
 	*/
 

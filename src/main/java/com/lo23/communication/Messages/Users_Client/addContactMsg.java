@@ -10,7 +10,6 @@ public class addContactMsg extends UserMessage{
 		this.user = ui;
 	}
 	public void treatment(){
-		//CommToDataServer.addContact(this.user()); // Il faut remplacer CommToDataServer avec l'interface que l'on donne en parametre
 	}
 
 	public boolean isToServ(){return true;}
