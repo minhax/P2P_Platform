@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -30,6 +31,9 @@ public class UpdateProfileController implements Initializable {
     
     @FXML
     private Label errorUpdateLabel;
+    
+    @FXML
+    private AnchorPane updateUserPane;
     
     private UpdateProfileModel model;
     
@@ -86,12 +90,9 @@ public class UpdateProfileController implements Initializable {
     @FXML
     void Previous() {
     	 try {
-             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
+             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
              Parent root = fxmlloader.load();
-             Stage stage = new Stage();
-
-             stage.initModality(Modality.APPLICATION_MODAL);
-             stage.setOpacity(1);
+             Stage stage = (Stage) updateUserPane.getScene().getWindow();
              stage.setTitle("Fenêtre principale");
              stage.setScene(new Scene(root));
          } catch (Exception e) {
