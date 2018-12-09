@@ -23,4 +23,6 @@ public class makeFileUnavailableMsg extends FileMessage {
 		dataInterface.removeFileSource(fi, user);
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

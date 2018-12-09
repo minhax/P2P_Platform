@@ -30,4 +30,6 @@ public class connectedUserMsg extends UserMessage{
 		
 		dataInterface.notifyOtherUserConnectedToAll(this.us,this.fhInfo);
 	}
+
+    public boolean isToServ(){return false;}
 }

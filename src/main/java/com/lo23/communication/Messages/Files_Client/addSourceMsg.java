@@ -11,4 +11,6 @@ public class addSourceMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

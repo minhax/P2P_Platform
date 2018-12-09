@@ -22,4 +22,6 @@ public class updatedAccountMsg extends UserMessage{
 		DataClientToComm dataInterfaceClient = cms.getDataInterface();
 		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(user);
 	}
+
+    public boolean isToServ(){return false;}
 }

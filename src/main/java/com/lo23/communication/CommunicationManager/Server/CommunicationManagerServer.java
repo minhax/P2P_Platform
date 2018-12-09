@@ -9,14 +9,15 @@ import com.lo23.data.server.DataServerToCommAPI;
 import com.lo23.communication.network.Client;
 
 import java.util.EmptyStackException;
-import java.util.LinkedHashMap;
+// import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CommunicationManagerServer extends CommunicationManager {
 	
 	private DataServerToComm dataInterface;
 	private CommToDataServerAPI commInterface;
-	private LinkedHashMap<ClientInfo,String> clientInfoAndServerIP;
+	private HashMap<String, Integer>  clientIptoPort;
 	
 	/** Constructeur privé
 	 * Récupère un objet interface de DataServer et CommServer
@@ -35,7 +36,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 			} catch (Exception ex) {
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
-			clientInfoAndServerIP = new LinkedHashMap<>();
+			clientIptoPort = new HashMap<>();
 		}
 	
 	
@@ -66,30 +67,49 @@ public class CommunicationManagerServer extends CommunicationManager {
 	{
 		return Instance;
 	}
-	
-	/**
+
+
+	/*
+
+
 	 * Ajoute une clé [IP Client et IP Serveur] dans une LinkedHashMap
 	 *
 	 * @param IP client et IP ServerClass
 	 * ...
 	 * @return void
-	 **/
-	public void addEntryInClientAndServerIPArray(ClientInfo client, String server)
+
+	public void addEntryInClientAndServerIPArray(String client, String server)
 	{
-		/** efface la valeur precedemment enregistre pour le client si elle existe**/
+		//efface la valeur precedemment enregistre pour le client si elle existe
 		//Penser a mettre une exception
 		this.clientInfoAndServerIP.put(client, server);
 	}
-	public void removeUserFromTable(ClientInfo client)
+
+
+	public void removeUserFromTable(String userIPAddress)
 			throws CommException
 	{
-		/** On vérifie que la valeur de la clé (adresse IP du client ) existe bien dans la table**/
-		if (!(this.clientInfoAndServerIP.containsKey(client)))
-				throw new CommException("Le client n'est pas present dans la table", client);
+		/// On vérifie que la valeur de la clé (adresse IP du client ) existe bien dans la table
+		if (!(this.clientAndServerIP.containsKey(userIPAddress)))
+				throw new CommException("L'adresse IP n'est pas presente dans la table", userIPAddress);
 			else
 			this.clientInfoAndServerIP.remove(client);
 	}
-	
+	*/
+
+	public void addEntryMap(String clientAddr, int clientPort)
+    {
+        this.clientIptoPort.put(clientAddr, clientPort);
+    }
+
+    public void removeUserFromMap(String userIpAddr) throws CommException
+    {
+        if (!(this.clientIptoPort.containsKey(userIpAddr)))
+            throw new CommException("L'adresse IP n'est pas presente dans la table", userIpAddr);
+        else
+            this.clientIptoPort.remove(userIpAddr);
+    }
+
 	/**
 	 * Envoie un message à toutes les machines connectées
 	 *
@@ -97,15 +117,13 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * Parse la table et recupere chaque cle (IPUser)
 	 * @return void
 	 **/
-	public void broadcast(Message m)
-	throws EmptyStackException
+	public void broadcast(Message m) throws EmptyStackException
 	{
-		for(Map.Entry<ClientInfo,String> entry : this.clientInfoAndServerIP.entrySet())
+		for(Map.Entry<String, Integer> entry : this.clientIptoPort.entrySet())
 		{
-			/** On récupère les informations liées au client dans la structure de données : son adresse IP et son port **/
-			ClientInfo client = entry.getKey();
-			
-			//Client c = new Client(m, 1026, IpAdress); /*TODO FIX hardcode por */
+			String addrClient = entry.getKey();
+			int portClient = this.clientIptoPort.get(addrClient);
+			Client c = new Client(m , 1026, null, portClient, addrClient);/*TODO FIX hardcode por */
 		}
 		//Exception a rajouter?
 	}

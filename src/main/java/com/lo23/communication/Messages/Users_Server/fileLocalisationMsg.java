@@ -9,6 +9,6 @@ public class fileLocalisationMsg extends UserMessage{
 		this.user = ui;
 	}
 	public void treatment(){
-	
 	}
+    public boolean isToServ(){return true;}
 }

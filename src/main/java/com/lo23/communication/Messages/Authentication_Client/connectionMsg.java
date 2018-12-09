@@ -48,13 +48,11 @@ public class connectionMsg extends Authentication {
 		
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
-		
-		/** On crée l'objet client avec adresse IP et port du client **/
-		ClientInfo client = new ClientInfo(this.UserIPAdress,this.UserPort);
-		/** ajout dans la structure de données du serveur **/
-		cms.addEntryInClientAndServerIPArray(client, ServerIpAdress);
-		/**broadcast du message de connection vers tout les utilisateurs connectés**/
-		connectedUserMsg message=new connectedUserMsg(this.userStats, this.fileInfo);
+
+		cms.addEntryMap(this.myIp, this.getPort());
+		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
+		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo);
+		message.setPort(this.getPort());
 		cms.broadcast(message);
 	}
 	
@@ -66,5 +64,7 @@ public class connectionMsg extends Authentication {
 	public String getMyIp() {
 		return UserIPAdress;
 	}
+
+	public boolean isToServ(){return true;}
 }
 

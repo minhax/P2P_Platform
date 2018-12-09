@@ -11,4 +11,6 @@ public class addContactMsg extends UserMessage{
 	}
 	public void treatment(){
 	}
+
+	public boolean isToServ(){return true;}
 }

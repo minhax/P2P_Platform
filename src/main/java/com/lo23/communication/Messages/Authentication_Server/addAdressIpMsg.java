@@ -26,5 +26,7 @@ public class addAdressIpMsg extends Authentication {
 	}
 	public String getIp()
 	{ return ip;}
+
+	public boolean isToServ(){return true;}
 	
 }

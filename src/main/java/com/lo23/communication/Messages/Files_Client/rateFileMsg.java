@@ -17,4 +17,6 @@ public class rateFileMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

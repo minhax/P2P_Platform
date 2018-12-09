@@ -27,7 +27,7 @@ public class logoutMsg extends Authentication {
 		DataServerToComm dataInterface = cms.getDataInterface();
 		ClientInfo client = new ClientInfo(this.UserIPAdress,this.UserPort);
 		try {
-			cms.removeUserFromTable(client);
+			cms.removeUserFromMap(this.UserIPAdress);
 		}catch(CommException e){
 			System.out.println("Message: \t");
 			System.out.println(e.getMessage());
@@ -38,4 +38,6 @@ public class logoutMsg extends Authentication {
 		dataInterface.removeDisconnectedUser(this.userStats);
 
 	}
+
+	public boolean isToServ(){return true;}
 }

@@ -20,4 +20,6 @@ public class addCommentMsg extends FileMessage {
 	public void treatment(){
 		//CommToDataServer.addComment( this.getFile(), this.getComment());
 	}
+
+    public boolean isToServ(){return true;}
 }
