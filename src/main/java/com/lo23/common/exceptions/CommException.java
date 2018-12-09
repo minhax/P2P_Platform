@@ -7,9 +7,9 @@ import com.lo23.communication.CommunicationManager.Server.ClientInfo;
  */
 
 public class CommException extends Exception{
-	public CommException(String message, ClientInfo client)
+	public CommException(String message, String userIPAdress)
 	{
 		super(message);
-		System.out.println("Demande de suppression de l'adresse IP : " + client.getIPAdress()+ "Sur le port:" + client.getPort());
+		System.out.println("Demande de suppression de l'adresse IP : " + userIPAdress);
 	}
 }
