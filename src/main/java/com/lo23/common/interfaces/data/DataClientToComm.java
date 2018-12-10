@@ -38,7 +38,7 @@ public interface DataClientToComm
      * proposé au partage
      * @param newSharedFile fichier proposé
      */
-    void notifyNewSharedFileToAll(FileHandler newSharedFile);
+    void notifyNewSharedFileToAll(FileHandlerInfos newSharedFile, UserIdentity source);
 
     /**
      * Notifie DataClient d'une nouvelle source pour

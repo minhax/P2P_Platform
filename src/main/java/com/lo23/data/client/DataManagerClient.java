@@ -147,7 +147,10 @@ public class DataManagerClient
                 {
                     FileInputStream fileIn = new FileInputStream(userFile.getPath());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                    UserAccount comparisonAccount = (UserAccount) objectIn.readObject();
+                    Object obj = objectIn.readObject();
+                    System.out.println(userFile.getName());
+                    System.out.println(obj.getClass());
+                    UserAccount comparisonAccount = (UserAccount) obj;
                     //UserAccount comparisonAccount = (UserAccount) obj;
                     if(comparisonAccount.getLogin().equals(login))
                     {
@@ -305,13 +308,14 @@ public class DataManagerClient
      * un message au serveur pour partager l'information.
      * @param fileToMakeUnavailable fichier à rendre indisponible
      */
-    public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
+    public void makeLocalFileUnavailable(FileHandlerInfos fileToMakeUnavailable){
         /*
         Ici on ne supprime pas les parties de fichier sur le disque parce que
         dans l'éventualité ou on rendrait le fichier dispo de nouveau, on
         override les fileParts  qui existent déjà donc les laisser en mémoire
         ne pose pas de problème.
          */
+        System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
         this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
         // Supression du fichier en local
         UserAccount currentUser = this.sessionInfos.getCurrentUser();

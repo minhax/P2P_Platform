@@ -50,9 +50,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyNewSharedFileToAll(FileHandler newSharedFile)
+    public void notifyNewSharedFileToAll(FileHandlerInfos newSharedFile, UserIdentity source)
     {
-
+        this.host.getSessionInfos().getDirectory().addProposedFile(source, newSharedFile);
     }
 
     @Override
