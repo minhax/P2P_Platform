@@ -87,19 +87,17 @@ public class DataManagerClient
         return this.uploadManager;
     }
 
-    public DownloadManager getDownloadManager() {
+    DownloadManager getDownloadManager() {
         return downloadManager;
     }
-
-    public void setDownloadManager(DownloadManager downloadManager) {
-        this.downloadManager = downloadManager;
-    }
-
-
 
     Session getSessionInfos()
     {
         return sessionInfos;
+    }
+
+    public void setDownloadManager(DownloadManager downloadManager) {
+        this.downloadManager = downloadManager;
     }
 
     /**
@@ -115,7 +113,7 @@ public class DataManagerClient
         return this.dataClientToCommApi;
     }
 
-    CommToDataClient getCommToDataClientApi ()
+    public CommToDataClient getCommToDataClientApi ()
     {
         return this.commToDataClientAPI;
     }
@@ -404,8 +402,11 @@ public class DataManagerClient
 
     public void downloadFile(FileHandler fileToDownload)
     {
-        // créer une fct DownloadManager::Download ?
+       downloadManager.download(fileToDownload);
+    }
 
+    public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        this.downloadManager.storeNewFilePart(fileHandler, blocNumber, data);
     }
 
 }

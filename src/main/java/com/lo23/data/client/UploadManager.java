@@ -23,25 +23,24 @@ class UploadManager
      * @return Handler avec les métadonnées du fichier
      */
     FileHandlerInfos prepareToShare (String path, String title, String desc) {
-        try
-        {
-            File fileToShare = new File(path);
-            // On récupère le hash du contenu du fichier
-            String hash = hashFile(fileToShare);
-            // On calcule le nombre de blocks du fichier selon sa taille
-            // Nombre de blocks = taille / taille d'un block
-            int sizeOfFile = (int) ((fileToShare.length() / Const.FILEPART_SIZE) +
-                    (fileToShare.length() % Const.FILEPART_SIZE));
-            // On instancie le handler associé
-            FileHandlerInfos handler = new FileHandlerInfos(hash, title, fileToShare.length(),
-                    Files.probeContentType(Paths.get(fileToShare.getPath())), sizeOfFile, desc);
-            // On découpe le fichier en plusieurs parties pour le téléchargement
-            segmentFile(path, handler);
-            return handler;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        File fileToShare = new File(path);
+        // On récupère le hash du contenu du fichier
+        String hash = hashFile(fileToShare);
+        // On calcule le nombre de blocks du fichier selon sa taille
+        // Nombre de blocks = taille / taille d'un block
+        int sizeOfFile = (int) ((fileToShare.length() / Const.FILEPART_SIZE) +
+                ((fileToShare.length() % Const.FILEPART_SIZE) >0 ? 1 : 0));
+        // On récupère l'extension du fichier
+        String extension = "";
+        int i = fileToShare.getName().lastIndexOf('.');
+        if (i > 0) {
+            extension = fileToShare.getName().substring(i+1);
         }
+        // On instancie le handler associé
+        FileHandlerInfos handler = new FileHandlerInfos(hash, title, fileToShare.length(), extension, sizeOfFile, desc);
+        // On découpe le fichier en plusieurs parties pour le téléchargement
+        segmentFile(path, handler);
+        return handler;
     }
 
     /**
@@ -49,19 +48,20 @@ class UploadManager
      * @param path Chemin du fichier sur le disque
      * @param handler Handler de métadonnées du fichier
      */
-    private void segmentFile (String path, FileHandler handler)
+    void segmentFile (String path, FileHandler handler)
     {
         try
         {
             FileInputStream toSplit = new FileInputStream(path);
             byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
             int part = 0; // Numéro de la partie actuelle
-            while (toSplit.read(segment) != -1) { // Tant qu'on  lit des octets dans le fichier source
+            int bytesRead;
+            while ((bytesRead = toSplit.read(segment)) != -1) { // Tant qu'on  lit des octets dans le fichier source
                 // On crée le fichier .part
                 FileOutputStream filepart = new FileOutputStream("files/fileparts/" +
                         handler.getHash() + ".part" + part);
                 // On écrit le contenu au format binaire
-                filepart.write(segment);
+                filepart.write(segment, 0, bytesRead);
                 filepart.close();
                 part++;
             }
