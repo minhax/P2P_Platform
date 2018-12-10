@@ -195,10 +195,13 @@ public class ConnectionsManager
         // TO DO : Propagation des infos
     }
 
-    public void addCommentToFile(Comment comment, FileHandlerInfos fileToComment) throws DataException
-    {
+    public void addCommentToFile(Comment comment, FileHandlerInfos fileToComment) throws DataException {
         fileToComment.addComment(comment);
         this.directory.updateFilesAfterModification(fileToComment);
         // TO DO : Propagation des infos
+    }
+
+    public List<UserIdentity> getUsersThatProposeFile(FileHandler file){
+        return this.directory.getUsersThatProposeFile(file);
     }
 }

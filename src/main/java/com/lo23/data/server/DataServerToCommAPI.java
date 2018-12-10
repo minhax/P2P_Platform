@@ -12,6 +12,7 @@ import com.lo23.common.user.UserStats;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 public class DataServerToCommAPI implements DataServerToComm
 {
@@ -71,7 +72,8 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public List<UserIdentity> requestFileLocationServer(FileHandler file)
     {
-        return null;
+        List<UserIdentity> returnedUsers = this.manager.connections.getUsersThatProposeFile(file);
+        return returnedUsers;
     }
 
     @Override
