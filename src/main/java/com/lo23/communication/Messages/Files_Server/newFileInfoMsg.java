@@ -24,5 +24,5 @@ public class newFileInfoMsg extends FileMessage{
 	
 	}
 
-    public boolean isToServ(){return true;}
+    public boolean isToServ(){return false;}
 }

@@ -27,5 +27,5 @@ public class fileSourceMsg extends FileMessage{
 		//dataInterface.notifyNewSharedFileToAll();
 	}
 
-    public boolean isToServ(){return true;}
+    public boolean isToServ(){return false;}
 }

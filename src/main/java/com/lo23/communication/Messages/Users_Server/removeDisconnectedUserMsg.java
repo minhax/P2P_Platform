@@ -29,5 +29,5 @@ public class removeDisconnectedUserMsg extends UserMessage{
 		dataInterface.notifyOtherUserDisconnectedToAll(this.user,this.fhInfos);
 	}
 
-    public boolean isToServ(){return true;}
+    public boolean isToServ(){return false;}
 }

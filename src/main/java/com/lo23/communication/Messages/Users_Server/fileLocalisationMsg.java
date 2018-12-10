@@ -10,5 +10,5 @@ public class fileLocalisationMsg extends UserMessage{
 	}
 	public void treatment(){
 	}
-    public boolean isToServ(){return true;}
+    public boolean isToServ(){return false;}
 }

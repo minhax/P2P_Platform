@@ -13,5 +13,5 @@ public class updateFileMsg extends FileMessage{
 	
 	}
 
-    public boolean isToServ(){return true;}
+    public boolean isToServ(){return false;}
 }

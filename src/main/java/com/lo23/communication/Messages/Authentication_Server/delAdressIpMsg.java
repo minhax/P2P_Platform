@@ -14,5 +14,5 @@ public class delAdressIpMsg extends Authentication {
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		cms.setAddressIpServer(null);
 	}
-	public boolean isToServ(){return true;}
+	public boolean isToServ(){return false;}
 }
