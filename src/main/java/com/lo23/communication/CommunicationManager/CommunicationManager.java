@@ -40,7 +40,7 @@ public abstract class CommunicationManager {
 			}
 			// smth we can explore
 			Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
-
+/*
 			while (addresses.hasMoreElements())
 			{
 				InetAddress addr = addresses.nextElement();
@@ -55,7 +55,7 @@ public abstract class CommunicationManager {
 					continue;
 			}
 
-			/*
+			*/
 			while (addresses.hasMoreElements()) {
 				InetAddress addr = addresses.nextElement();
 				String ip = addr.getCanonicalHostName().toString();
@@ -66,7 +66,7 @@ public abstract class CommunicationManager {
 				 else
 					continue;
 			}
-			*/
+
 
 		}
 		return null;

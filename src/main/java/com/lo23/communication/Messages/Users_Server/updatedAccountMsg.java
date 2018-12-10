@@ -18,8 +18,8 @@ public class updatedAccountMsg extends UserMessage{
 		 * Appel la methode notifyOtherUserUpdatedAccountToAll
 		 */
 
-		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		DataClientToComm dataInterfaceClient = cms.getDataInterface();
+		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+		DataClientToComm dataInterfaceClient = cmc.getDataInterface();
 		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(user);
 	}
 

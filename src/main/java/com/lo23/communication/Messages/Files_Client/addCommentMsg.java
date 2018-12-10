@@ -18,7 +18,24 @@ public class addCommentMsg extends FileMessage {
 		return comment;
 	}
 	public void treatment(){
-		//CommToDataServer.addComment( this.getFile(), this.getComment());
+
+		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+		DataServerToComm dataInterface = cms.getDataInterface();
+		/** On récupère et stocke l'adresse IP du serveur
+		 */
+		String ServerIpAdress = cms.getIP();
+
+		System.out.println("Mon ip = " + this.UserIPAdress);
+		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
+
+		dataInterface.addNewConnectedUser(this.userStats);
+		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
+
+		cms.addEntryMap(this.UserIPAdress, this.getPort());
+		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
+		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo);
+		message.setPort(this.getPort());
+		cms.broadcast(message);
 	}
 
     public boolean isToServ(){return true;}
