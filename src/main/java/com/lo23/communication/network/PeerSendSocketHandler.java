@@ -26,7 +26,7 @@ public class PeerSendSocketHandler extends Thread implements Serializable
             objOS.flush();
 
             ObjectInputStream objIS = new ObjectInputStream(sendThreadSocket.getInputStream());
-            
+
             while(true)
             {
                 Object msg = objIS.readObject();
@@ -43,7 +43,8 @@ public class PeerSendSocketHandler extends Thread implements Serializable
             }
         }
         catch(Exception e)
-        {            
+        {
+            e.printStackTrace();
         }
     }
 }

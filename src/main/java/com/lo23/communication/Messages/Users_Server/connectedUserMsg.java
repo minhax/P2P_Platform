@@ -15,7 +15,7 @@ public class connectedUserMsg extends UserMessage{
 	private UserStats us;
 	
 	public connectedUserMsg(UserStats ui, List<FileHandlerInfos> fi){
-		this.user = ui;
+		this.us = ui;
 		this.fhInfo = fi;
 	}
 	/**

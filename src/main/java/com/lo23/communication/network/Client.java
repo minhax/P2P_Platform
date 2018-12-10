@@ -87,7 +87,7 @@ public class Client implements Serializable {
             ObjectOutputStream objOS = new ObjectOutputStream(clientAsServerSocket.getOutputStream());
             objOS.flush();
 
-            ObjectInputStream objIS = new ObjectInputStream(clientAsServerSocket.getInputStream());
+    //        ObjectInputStream objIS = new ObjectInputStream(clientAsServerSocket.getInputStream());
 
             objOS.writeObject(msg);
 
