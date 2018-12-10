@@ -11,11 +11,11 @@ import com.lo23.communication.Messages.FileMessage;
 import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 public class sendUpdatedFileMsg extends FileMessage{
-	private User usr;
+	private User user;
 
 	public sendUpdatedFileMsg(FileHandlerInfos fi, User user){
 		this.file = fi;
-		this.usr = user;
+		this.user = user;
 	}
 	
 	public void treatment(){
@@ -27,7 +27,7 @@ public class sendUpdatedFileMsg extends FileMessage{
 
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         DataClientToComm dataInterfaceClient = cmc.getDataInterface();
-        dataInterfaceClient.notifyUpdatedSharedFileToAll(this.file,this.usr);
+        dataInterfaceClient.notifyUpdatedSharedFileToAll(this.file,this.user);
 	
 	}
 
