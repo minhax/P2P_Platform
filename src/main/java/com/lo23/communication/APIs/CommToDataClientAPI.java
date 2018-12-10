@@ -14,6 +14,8 @@ import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
 import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
 import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
+import com.lo23.communication.Messages.Files_Client.addCommentMsg;
+import com.lo23.communication.Messages.Files_Client.rateFileMsg;
 import com.lo23.communication.network.Client;
 
 
@@ -90,13 +92,19 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void sendCommentedFile(Comment comment, FileHandler commentedFile){
-
+    public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
+        addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
+        Client c = new Client(msg, 1026, ip, 0, null);
     }
 
     @Override
-    public void sendRatedFile(Rating rating, FileHandler ratedFile){
-
+    public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
+        rateFileMsg msg = new rateFileMsg(ratedFile, rating, user);
+        Client c = new Client(msg, 1026, ip, 0, null);
     }
 
     /**
