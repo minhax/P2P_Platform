@@ -1,5 +1,6 @@
 package com.lo23.data.server;
 
+import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
@@ -191,6 +192,13 @@ public class ConnectionsManager
     {
         fileToRate.addRating(rating);
         this.directory.updateFilesAfterModification(fileToRate);
+        // TO DO : Propagation des infos
+    }
+
+    public void addCommentToFile(Comment comment, FileHandlerInfos fileToComment) throws DataException
+    {
+        fileToComment.addComment(comment);
+        this.directory.updateFilesAfterModification(fileToComment);
         // TO DO : Propagation des infos
     }
 }
