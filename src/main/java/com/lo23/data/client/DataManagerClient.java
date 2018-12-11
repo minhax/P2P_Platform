@@ -358,7 +358,7 @@ public class DataManagerClient
      */
     public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
     {
-
+        System.out.println("Ceci est un ajout de commentaire");
         // Récupération de la liste des fichiers partagés
         Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
         boolean found = false;
