@@ -103,7 +103,7 @@ public class CommToDataClientAPI implements CommToDataClient
     public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
-        rateFileMsg msg = new rateFileMsg(ratedFile, rating, user);
+        rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
         Client c = new Client(msg, 1026, ip, 0, null);
     }
 
