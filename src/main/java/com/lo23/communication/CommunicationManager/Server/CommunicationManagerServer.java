@@ -127,5 +127,16 @@ public class CommunicationManagerServer extends CommunicationManager {
 		}
 		//Exception a rajouter?
 	}
+	/**
+	 * Envoie un message à une seule machine d'intérèt
+	 *
+	 * @param Message m
+	 * Parse la table et recupere chaque cle (IPUser)
+	 * @return void
+	 **/
+	public void sendMessage(Message m) throws EmptyStackException
+	{
+		Client c = new Client(m,1026,null,m.getPort(),m.getIpAdress());
+	}
 	
 }
