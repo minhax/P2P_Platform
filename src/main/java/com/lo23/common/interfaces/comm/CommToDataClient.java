@@ -45,14 +45,14 @@ public interface CommToDataClient
      * @param comment Commentaire
      * @param commentedFile Fichier commenté
      */
-    void sendCommentedFile(Comment comment, FileHandler commentedFile);
+    void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user);
 
     /**
      * Envoie une nouvelle note attribuée à un fichier
      * @param rating note à ajouter au fichier
      * @param ratedFile fichier noté
      */
-    void sendRatedFile(Rating rating, FileHandler ratedFile);
+    void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user);
 
     /**
      * Envoie une nouvelle note attribuée à un fichier
