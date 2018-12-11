@@ -10,7 +10,7 @@ public interface IhmToDataClient {
      * @param fileInfo informations du fichier qui vient d'être ajouté
      * @param user l'utilisateur qui a mis a disposition ce fichier
      */
-     void UpdateAvailableFiles(FileHandlerInfos fileInfo, UserIdentity user);
+     void updateAvailableFiles(FileHandlerInfos fileInfo, UserIdentity user);
 
     /**
      * Met à jour la liste des fichiers de l'utilisateur concerné

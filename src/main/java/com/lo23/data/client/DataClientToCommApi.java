@@ -84,11 +84,23 @@ public class DataClientToCommApi implements DataClientToComm
     @Override
     public void notifyOtherUserConnectedToAll(UserStats newlyConnectedUser, List<FileHandlerInfos> files)
     {
+
+        System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());
+
         this.host.getSessionInfos().mergeUserIntoLoggedUsers(newlyConnectedUser);
         for(int i = 0; i < files.size(); i++){
             this.host.getSessionInfos().getDirectory().addProposedFile(newlyConnectedUser, files.get(i));
         }
+//        this.host.getIHMToDataClientAPI()
 
+        System.out.println("ConnectedUsers" + this.host.getSessionInfos().getOtherLoggedUsers().size());
+
+        this.host.getSessionInfos().getOtherLoggedUsers().forEach(e ->
+                {
+                    System.out.println("First name : " + e.getFirstName());
+                    System.out.println("ID : " + e.getId());
+                }
+                    );
     }
 
     @Override
