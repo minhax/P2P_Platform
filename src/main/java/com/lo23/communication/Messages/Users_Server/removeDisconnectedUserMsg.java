@@ -2,7 +2,6 @@ package com.lo23.communication.Messages.Users_Server;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
-import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.Messages.UserMessage;
@@ -10,10 +9,14 @@ import com.lo23.communication.Messages.UserMessage;
 import java.util.List;
 
 public class removeDisconnectedUserMsg extends UserMessage{
-	private static final long serialVersionUID = 44L;
 	
-	public removeDisconnectedUserMsg(UserIdentity ui){
+	protected List<FileHandlerInfos> fhInfos;
+	private CommunicationManagerClient commManager;
+	
+	public removeDisconnectedUserMsg(UserIdentity ui, List<FileHandlerInfos> fi, CommunicationManagerClient cmc){
 		this.user = ui;
+		this.fhInfos = fi;
+		this.commManager=cmc;
 	}
 	/**
 	 * Traitement est applique du cote client
@@ -22,10 +25,9 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
 	public void treatment(){
-		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		DataClientToComm dataInterface = cms.getDataInterface();
+		DataClientToComm dataInterface = this.commManager.getDataInterface();
 		
-		dataInterface.notifyOtherUserDisconnectedToAll(this.user);
+		dataInterface.notifyOtherUserDisconnectedToAll(this.user,this.fhInfos);
 	}
 
     public boolean isToServ(){return false;}

@@ -12,9 +12,12 @@ public class logoutMsg extends Authentication {
 	private static final long serialVersionUID = 10002L;
 	protected String UserIPAdress;
 	private int UserPort;
-	public logoutMsg(UserStats us, String ipAdress){
+	private CommunicationManagerServer commManager;
+
+	public logoutMsg(UserStats us, String ipAdress, CommunicationManagerServer cms){
 		this.userStats= us;
 		this.UserIPAdress =ipAdress;
+		this.commManager=cms;
 	}
 	/**
 	 * Recupere le cms
@@ -24,15 +27,13 @@ public class logoutMsg extends Authentication {
 	 * @param UserStats utilisateur statistiques
 	 */
 	public void treatment(){
-
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
+		DataServerToComm dataInterface = this.commManager.getDataInterface();
 		/** On récupère et stocke l'adresse IP du serveur
 		 */
 		String ServerIpAdress = cms.getIP();
 
 		try {
-			cms.removeUserFromMap(this.UserIPAdress);
+			this.commManager.removeUserFromMap(this.UserIPAdress);
 		}catch(CommException e){
 			System.out.println("Message: \t");
 			System.out.println(e.getMessage());
@@ -45,14 +46,7 @@ public class logoutMsg extends Authentication {
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		removeDisconnectedUserMsg message = new removeDisconnectedUserMsg(this.userStats);
 		message.setPort(this.getPort());
-		cms.broadcast(message);
-
-
-
-
-
-
-
+		this.commManager.broadcast(message);
 	}
 
 	public boolean isToServ(){return true;}

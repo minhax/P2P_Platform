@@ -11,28 +11,28 @@ import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 import com.lo23.communication.Messages.Message;
 
 public class addCommentMsg extends FileMessage {
-	private static final long serialVersionUID = 85L;
+	
 	private Comment comment;
 	private User user;
-	public addCommentMsg(FileHandlerInfos fi, Comment c, User usr){
+	private CommunicationManagerServer commManager;
+	public addCommentMsg(FileHandlerInfos fi, Comment c, User usr, CommunicationManagerServer cms){
 		this.file = fi;
 		this.comment = c;
 		this.user = usr;
+		this.commManager=cms;
 	}
 	
 	public Comment getComment() {
 		return comment;
 	}
 	public void treatment(){
-
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
-		
-		dataInterface.updateFileWithNewComment(this.file, this.comment, this.user);
+		DataServerToComm dataInterface = this.commManager.getDataInterface();
+		file.addComment(this.getComment());
+		dataInterface.updateFileChanges(this.file);
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		sendUpdatedFileMsg message = new sendUpdatedFileMsg(this.file, this.user);
 		message.setPort(this.getPort());
-		cms.broadcast(message);
+		this.commManager.broadcast(message);
 	}
 
     public boolean isToServ(){return true;}

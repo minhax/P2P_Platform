@@ -10,26 +10,28 @@ import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 
 
 public class rateFileMsg extends FileMessage {
-	private static final long serialVersionUID = 61L;
+	
 	protected Rating rate;
 	private User user;
+	private CommunicationManagerServer commManager;
 	
-	public rateFileMsg(Rating r, FileHandlerInfos fi, User usr){
+	public rateFileMsg(FileHandlerInfos fi, Rating r, User usr, CommunicationManagerServer cms){
 		this.file = fi;
 		this.rate = r;
 		this.user = usr;
+		this.commManager=cms;
 	}
 	
 	public void treatment(){
 
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
-		
-		dataInterface.updateFileWithNewRating(this.file, this.rate, this.user);
+		DataServerToComm dataInterface = this.commManager.getDataInterface();
+
+		this.file.addRating(this.rate);
+		dataInterface.updateFileChanges(this.file);
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		sendUpdatedFileMsg message = new sendUpdatedFileMsg(this.file, this.user);
 		message.setPort(this.getPort());
-		cms.broadcast(message);
+		this.commManager.broadcast(message);
 	}
 
 	public boolean isToServ(){return true;}

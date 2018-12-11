@@ -13,10 +13,12 @@ public class connectedUserMsg extends UserMessage{
 	private static final long serialVersionUID = 46L;
 	protected List<FileHandlerInfos> fhInfo;
 	private UserStats us;
+	private CommunicationManagerClient commManager;
 	
-	public connectedUserMsg(UserStats ui, List<FileHandlerInfos> fi){
+	public connectedUserMsg(UserStats ui, List<FileHandlerInfos> fi, CommunicationManagerClient cmc){
 		this.us = ui;
 		this.fhInfo = fi;
+		this.commManager=cmc;
 	}
 	/**
 	 * Traitement est applique du cote client
@@ -25,8 +27,7 @@ public class connectedUserMsg extends UserMessage{
 	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
 	public void treatment(){
-		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		DataClientToComm dataInterface = cms.getDataInterface();
+		DataClientToComm dataInterface = this.commManager.getDataInterface();
 		
 		dataInterface.notifyOtherUserConnectedToAll(this.us,this.fhInfo);
 	}
