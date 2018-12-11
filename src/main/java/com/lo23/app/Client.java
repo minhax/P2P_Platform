@@ -19,10 +19,9 @@ public class Client extends Application {
     public void start(Stage primaryStage)
             throws Exception
     {
-        // TODO Auto-generated method stub
         // On instancie les Manager côté client
         DataManagerClient dataManagerClient = new DataManagerClient();
-        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+        CommunicationManagerClient commManagerClient = new CommunicationManagerClient();
 
         // On échange les API
         dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());

@@ -27,7 +27,7 @@ public class CommToDataClientAPI implements CommToDataClient
     private CommunicationManagerClient commManagerClient ;
 
     /* Constructeur */
-    private CommToDataClientAPI(CommunicationManagerClient cmc)
+    public CommToDataClientAPI(CommunicationManagerClient cmc)
     {
 
         this.commManagerClient=cmc;

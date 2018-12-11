@@ -30,7 +30,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	public CommunicationManagerServer()
 		{
 			this.commInterface = new CommToDataServerAPI(this);
-			this.dataInterface= new DataServerToComm(this);
+			this.dataInterface = null;
 			
 			try {
 				this.clientIptoPort = findIPadress();
