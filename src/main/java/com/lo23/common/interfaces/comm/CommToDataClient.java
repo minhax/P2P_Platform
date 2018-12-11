@@ -15,16 +15,9 @@ public interface CommToDataClient
      * métadonnées d'un fichier
      * @param file fichier mis à jour
      */
-
-    void sendFileChanges(FileHandler file);
-
-    /**
-     * Envoie les modifications relatives à un utilisateur (communication avec le serveur)
-     * @param user utilisateur concerné
-     */
+   
     void sendUserChangesToServer(UserIdentity user);
 
-    void sendFileChanges(Rating rate, FileHandler file);
 
     /**
      * Rend indisponible un fichier (communication avec le serveur)
@@ -38,7 +31,7 @@ public interface CommToDataClient
      * @param user utilisateur qui le rend indisponible
      * @param file fichier que l'on rend indisponible
      */
-    void sendFileChanges(User user, FileHandler file);
+    void sendUpdatedFileInfo(FileHandlerInfos file, UserIdentity user);
 
     /**
      * Transmet l'ajout d'un nouveau commentaire sur un fichier

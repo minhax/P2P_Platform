@@ -11,11 +11,8 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Files_Client.*;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
-import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
-import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
-import com.lo23.communication.Messages.Files_Client.addCommentMsg;
-import com.lo23.communication.Messages.Files_Client.rateFileMsg;
 import com.lo23.communication.network.Client;
 
 
@@ -57,15 +54,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
     /*========= Implémentation des méthodes ============= */
 
-    @Override
-    public void sendFileChanges(FileHandler file){
-
-    }
-
-    @Override
-    public void sendFileChanges(Rating rate, FileHandler file){
-
-    }
 
     @Override
     public void sendUserChangesToServer(UserIdentity user) {
@@ -146,35 +134,20 @@ public class CommToDataClientAPI implements CommToDataClient
         System.out.println("Client cree");
         Client c = new Client(message, portServ, serverIP, 0, null);
     }
-
-    /*@Override
-    public void connect(UserStats user, long IP){
-        // A priori même rôle que requestUserConnexion (à changer plus tard si besoin)
-
-    }*/
-
-
+    
     @Override
     public void requestAddSource(FileHandler file, UserIdentity user){
     
     }
     
     @Override
-    public void sendFileChanges(User user, FileHandler file){
-
+    public void sendUpdatedFileInfo( FileHandlerInfos file, UserIdentity user){
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
+        updateFileInfoMsg message=new updateFileInfoMsg(file, user);
+        Client client=new Client(message, 1026, ip, 0, null);
     }
-
-    //A priori pas utile puisque l'ajout d'un fichier (méthode requestUploadFile) ajoute la source automatiquement
-    /*@Override
-    public void requestAddSource(FileHandlerInfos file, UserIdentity user){
-        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-        Server server=new Server();
-        addSourceMsg message=new addSourceMsg(file, user);
-        server.sendMessage(message);
-        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
-    }*/
-
-
+    
     @Override
     public void requestUploadFile(FileHandlerInfos file, UserIdentity user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
