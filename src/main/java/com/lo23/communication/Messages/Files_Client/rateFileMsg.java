@@ -14,7 +14,7 @@ public class rateFileMsg extends FileMessage {
 	protected Rating rate;
 	private User user;
 	
-	public rateFileMsg(FileHandlerInfos fi, Rating r, User usr){
+	public rateFileMsg(Rating r, FileHandlerInfos fi, User usr){
 		this.file = fi;
 		this.rate = r;
 		this.user = usr;
@@ -24,9 +24,8 @@ public class rateFileMsg extends FileMessage {
 
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
-
-		this.file.addRating(this.rate);
-		dataInterface.updateFileChanges(this.file);
+		
+		dataInterface.updateFileWithNewRating(this.file, this.rate, this.user);
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		sendUpdatedFileMsg message = new sendUpdatedFileMsg(this.file, this.user);
 		message.setPort(this.getPort());
