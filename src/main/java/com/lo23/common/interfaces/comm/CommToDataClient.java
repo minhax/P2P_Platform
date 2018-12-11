@@ -112,13 +112,7 @@ public interface CommToDataClient
      * @param file fichier partagé
      * @param user utilisateur qui devient source pour ce fichier
      */
-    void sendNewFileSource(FileHandler file, UserIdentity user);
 
-    /**
-     * Upload le fichier
-     * @param file fichier partagé
-     * @param user utilisateur qui upload
-     */
     void uploadFile(FileHandlerInfos file, UserIdentity user);
 
     /**
