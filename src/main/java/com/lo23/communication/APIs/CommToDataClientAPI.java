@@ -24,33 +24,28 @@ import java.util.List;
 public class CommToDataClientAPI implements CommToDataClient
 {
 
-    protected static CommunicationManagerClient commManagerClient ;
+    private CommunicationManagerClient commManagerClient ;
 
     /* Constructeur */
-    private CommToDataClientAPI()
+    private CommToDataClientAPI(CommunicationManagerClient cmc)
     {
-        commManagerClient=CommunicationManagerClient.getInstance();
+
+        this.commManagerClient=cmc;
     }
 
-    /* Initialisation du singleton*/
-    private static CommToDataClientAPI Instance;
+
 
     /* Accesseurs */
-    public static CommToDataClientAPI getInstance()
-    {
-        if (Instance == null)
-            Instance = new CommToDataClientAPI();
-        return Instance;
-    }
 
     public static CommunicationManagerClient getCommunicationManager()
     {
-        return commManagerClient;
+        return this.commManagerClient;
     }
 
 
     public void setCommunicationManager(CommunicationManagerClient commManager)
     {
+
         this.commManagerClient=commManager;
     }
 
@@ -75,34 +70,30 @@ public class CommToDataClientAPI implements CommToDataClient
          * cree un message de type updateUserInfoMsg pour la modification des infos de l'utilisateur user
          * cree un objet Client qui permet d'envoyer le message au serveur via socket
          */
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         //A modifier plus tard ==> cms.getPort()
         int portServer = 1026;
-        String addrServer = cmc.getAddressIpServer();
+        String addrServer = this.commManagerClient.getAddressIpServer();
         updateUserInfoMsg msg = new updateUserInfoMsg(user);
         Client c = new Client(msg, portServer, addrServer, 0, null);
     }
 
         @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
+        String ip = this.commManagerClient.getAddressIpServer();
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
         Client client=new Client(message, 1026, ip, 0, null);
     }
 
     @Override
     public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
+        String ip = this.commManagerClient.getAddressIpServer();
         addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
         Client c = new Client(msg, 1026, ip, 0, null);
     }
 
     @Override
     public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
+        String ip = this.commManagerClient.getAddressIpServer();
         rateFileMsg msg = new rateFileMsg(ratedFile, rating, user);
         Client c = new Client(msg, 1026, ip, 0, null);
     }
@@ -118,16 +109,15 @@ public class CommToDataClientAPI implements CommToDataClient
      **/
     @Override
     public void requestLogoutToServer(UserStats user){
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String myIPAdress = null;
         int portServ = 1026;
         try {
-            myIPAdress = CommunicationManager.findIPadress();
+            myIPAdress = this.commManagerClient.findIPadress();
         }catch (Exception e){
             e.printStackTrace();
         }
         logoutMsg message=new logoutMsg(user, myIPAdress);
-        Client c = new Client(message, portServ, cmc.getAddressIpServer(), 0, null);
+        Client c = new Client(message, portServ, this.commManagerClient.getAddressIpServer(), 0, null);
         System.out.println("[COM] Deconnexion reussie");
     }
 
@@ -139,8 +129,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        cmc.setAddressIpServer(serverIP);
+        this.commManagerClient.setAddressIpServer(serverIP);
         int portServ = 1026;
         connectionMsg message = new connectionMsg(user, fi);
         System.out.println("Client cree");
@@ -178,8 +167,7 @@ public class CommToDataClientAPI implements CommToDataClient
     @Override
     public void requestUploadFile(FileHandlerInfos file, UserIdentity user){ //TODO Fix le parametre UserIdentity ou User?
         //TODO: rajouter exception
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
+        String ip = this.commManagerClient.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
         Client client=new Client(message, 1026, ip, 0, null);
 
@@ -195,11 +183,10 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void uploadFile(FileHandlerInfos fi, UserIdentity user){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         int portServ = 1026;
         uploadFileMsg message = new uploadFileMsg(fi,user );
         System.out.println("Client cree");
-        Client c = new Client(message, portServ, cmc.getAddressIpServer(), 0, null);
+        Client c = new Client(message, portServ, this.commManagerClient.getAddressIpServer(), 0, null);
     }
 
     @Override

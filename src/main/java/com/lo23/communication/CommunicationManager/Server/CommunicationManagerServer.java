@@ -27,12 +27,13 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * ...
 	 * @return void
 	 **/
-	private CommunicationManagerServer()
+	public CommunicationManagerServer()
 		{
-			this.commInterface = CommToDataServerAPI.getInstance();
+			this.commInterface = new CommToDataServerAPI(this);
+			this.dataInterface= new DataServerToComm(this);
 			
 			try {
-				this.ip = findIPadress();
+				this.clientIptoPort = findIPadress();
 			} catch (Exception ex) {
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
