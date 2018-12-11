@@ -63,9 +63,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyUpdatedSharedFileToAll(FileHandler modifiedFile)
+    public void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user)
     {
-
+        //TODO modifier dans le directory le fichier concerné
     }
 
     @Override

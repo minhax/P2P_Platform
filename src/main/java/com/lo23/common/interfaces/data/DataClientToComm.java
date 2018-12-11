@@ -52,8 +52,9 @@ public interface DataClientToComm
      * Notifie les clients distants des modifications
      * apportées à un fichier partagé
      * @param modifiedFile fichier modifié
+     * @param user Utilisateur ayant modifé son fichier
      */
-    void notifyUpdatedSharedFileToAll(FileHandler modifiedFile);
+    void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user);
 
     /**
      * Notifie les clients distants du profil
