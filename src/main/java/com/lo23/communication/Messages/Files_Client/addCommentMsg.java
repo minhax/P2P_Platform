@@ -11,7 +11,7 @@ import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 import com.lo23.communication.Messages.Message;
 
 public class addCommentMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 85L;
 	private Comment comment;
 	private User user;
 	public addCommentMsg(FileHandlerInfos fi, Comment c, User usr){

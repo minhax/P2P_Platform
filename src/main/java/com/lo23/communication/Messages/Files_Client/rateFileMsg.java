@@ -10,7 +10,7 @@ import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 
 
 public class rateFileMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 61L;
 	protected Rating rate;
 	private User user;
 	

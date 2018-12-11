@@ -10,6 +10,7 @@ import com.lo23.communication.Messages.UserMessage;
 import java.util.List;
 
 public class removeDisconnectedUserMsg extends UserMessage{
+	private static final long serialVersionUID = 44L;
 	
 	public removeDisconnectedUserMsg(UserIdentity ui){
 		this.user = ui;

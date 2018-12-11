@@ -1,6 +1,5 @@
 package com.lo23.data.client;
 
-import com.lo23.common.exceptions.DataException;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
@@ -51,32 +50,20 @@ class Session
      */
     void mergeUserIntoLoggedUsers(UserIdentity user)
     {
-
-        UserStats tmp = null;
-        for (UserStats usr :
-                this.getOtherLoggedUsers() )
+        boolean userFound = false;
+        for(UserStats usr : this.getOtherLoggedUsers())
         {
-            if (usr.getId().equals(user.getId())){
-                tmp = usr;
+            if(usr.getId().equals(user.getId()))
+            {
+                this.getOtherLoggedUsers().remove(usr);
+                this.getOtherLoggedUsers().add((UserStats)user);
+                userFound = true;
             }
         }
-
-        if (tmp == null){
-            System.out.println("On ne trouve pas le UserStats correspondant");
-            //throw new DataException("On ne trouve pas le UserStats correspondant");
-        }
-
-        // Si le user n'est pas déjà dans la liste
-        if(!this.getOtherLoggedUsers().contains(tmp))
+        // Si l'utilisateur n'a pas été trouvé
+        if(!userFound)
         {
-            // Ajouter le user
-            this.getOtherLoggedUsers().add(tmp);
-        }
-        else
-        {
-            // Remplacer l'un par l'autre FIXME sale ?
-            this.getOtherLoggedUsers().remove(tmp);
-            this.getOtherLoggedUsers().add(tmp);
+            this.getOtherLoggedUsers().add((UserStats)user);
         }
     }
 

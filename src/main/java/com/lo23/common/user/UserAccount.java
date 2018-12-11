@@ -12,6 +12,10 @@ import java.util.Vector;
  */
 public class UserAccount extends UserStats
 {
+
+    private static final long serialVersionUID = 100000000001L;
+
+
     /**
      * Mot de passe du compte utilisateur
      */
