@@ -5,6 +5,8 @@ package com.lo23.common.user;
  */
 public class UserStats extends UserIdentity
 {
+    private static final long serialVersionUID = 100000000001L;
+
     /**
      * Nombre de fichiers téléversés
      */

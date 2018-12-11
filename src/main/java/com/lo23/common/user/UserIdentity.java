@@ -5,6 +5,7 @@ package com.lo23.common.user;
  */
 public class UserIdentity extends User
 {
+    private static final long serialVersionUID = 100000000001L;
 
     /**
      * Prénom de l'utilisateur
