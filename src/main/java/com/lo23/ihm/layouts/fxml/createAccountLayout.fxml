@@ -7,26 +7,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane fx:id="accountFormPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="437.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.CreateAccountController">
+<AnchorPane fx:id="accountFormPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="450.0" style="-fx-background-color: #79a8ff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.CreateAccountController">
    <children>
-      <Label fx:id="emptyFieldLabel" layoutX="43.0" layoutY="41.0" prefHeight="18.0" prefWidth="353.0" text="Tous les champs doivent obligatoirement être renseignés" textFill="RED" />
-      <Label id="lastnameLabel" layoutX="54.0" layoutY="89.0" text="Nom" textFill="WHITE" />
-      <TextField id="lastnameTextField" fx:id="lastnameTextField" layoutX="157.0" layoutY="84.0" style="-fx-prompt-text-fill: #ffffff; -fx-background-color: #79a8ff;" />
-      <Line endX="66.0" layoutX="258.0" layoutY="111.0" startX="-100.0" stroke="WHITE" />
-      <Label id="firstnameLabel" layoutX="53.0" layoutY="128.0" text="Prénom" textFill="WHITE" />
-      <TextField id="firstnameTextField" fx:id="firstnameTextField" layoutX="157.0" layoutY="123.0" style="-fx-prompt-text-fill: #ffffff; -fx-background-color: #79a8ff;" />
-      <Line endX="66.0" layoutX="258.0" layoutY="151.0" startX="-100.0" stroke="WHITE" />
-      <Label id="loginLabel" layoutX="51.0" layoutY="177.0" text="Login" textFill="WHITE" />
-      <TextField id="loginTextField" fx:id="loginTextField" layoutX="157.0" layoutY="172.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
-      <Line endX="66.0" layoutX="258.0" layoutY="200.0" startX="-100.0" stroke="WHITE" />
-      <Label id="passwordLabel" layoutX="54.0" layoutY="217.0" text="Mot de passe" textFill="WHITE" />
-      <PasswordField id="passwordField" fx:id="passwordField" layoutX="157.0" layoutY="212.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
-      <Line endX="66.0" layoutX="258.0" layoutY="239.0" startX="-100.0" stroke="WHITE" />
-      <Label id="ageLabel" layoutX="56.0" layoutY="263.0" text="Âge" textFill="WHITE" />
-      <TextField id="ageTextField" fx:id="ageTextField" layoutX="157.0" layoutY="258.0" style="-fx-prompt-text-fill: #ffffff; -fx-background-color: #79a8ff;" />
-      <Line endX="66.0" layoutX="258.0" layoutY="285.0" startX="-100.0" stroke="WHITE" />
-      <Label fx:id="ageErrorLabel" layoutX="77.0" layoutY="301.0" prefHeight="18.0" prefWidth="228.0" text="Doit obligatoirement etre un nombre" textFill="RED" />
-      <Button id="subscriptionButton" layoutX="148.0" layoutY="327.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountClicked" style="-fx-background-color: #79ebff;" text="S'inscrire !" />
-      <Button layoutX="62.0" layoutY="327.0" mnemonicParsing="false" onMouseClicked="#OnBackToCoClicked" style="-fx-background-color: #8d79ff;" text="Retour" />
+      <Label fx:id="emptyFieldLabel" layoutX="42.0" layoutY="44.0" prefHeight="18.0" prefWidth="353.0" text="Tous les champs doivent obligatoirement être renseignés" textFill="RED" />
+      <Label id="lastnameLabel" layoutX="60.0" layoutY="80.0" text="Nom" textFill="WHITE" />
+      <TextField id="lastnameTextField" fx:id="lastnameTextField" layoutX="180.0" layoutY="70.0" prefHeight="34.0" prefWidth="167.0" style="-fx-prompt-text-fill: #ffffff; -fx-background-color: #79a8ff;" />
+      <Line endX="66.0" layoutX="280.0" layoutY="105.0" startX="-100.0" stroke="WHITE" />
+      <Label id="firstnameLabel" layoutX="60.0" layoutY="140.0" text="Prénom" textFill="WHITE" />
+      <TextField id="firstnameTextField" fx:id="firstnameTextField" layoutX="180.0" layoutY="130.0" prefHeight="34.0" prefWidth="167.0" style="-fx-prompt-text-fill: #ffffff; -fx-background-color: #79a8ff;" />
+      <Line endX="66.0" layoutX="280.0" layoutY="165.0" startX="-100.0" stroke="WHITE" />
+      <Label id="loginLabel" layoutX="60.0" layoutY="200.0" text="Login" textFill="WHITE" />
+      <TextField id="loginTextField" fx:id="loginTextField" layoutX="180.0" layoutY="190.0" prefHeight="34.0" prefWidth="167.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+      <Line endX="66.0" layoutX="280.0" layoutY="225.0" startX="-100.0" stroke="WHITE" />
+      <Label id="passwordLabel" layoutX="60.0" layoutY="260.0" text="Mot de passe" textFill="WHITE" />
+      <PasswordField id="passwordField" fx:id="passwordField" layoutX="180.0" layoutY="250.0" prefHeight="34.0" prefWidth="167.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+      <Line endX="66.0" layoutX="280.0" layoutY="285.0" startX="-100.0" stroke="WHITE" />
+      <Label id="ageLabel" layoutX="60.0" layoutY="320.0" text="Âge" textFill="WHITE" />
+      <TextField id="ageTextField" fx:id="ageTextField" layoutX="180.0" layoutY="310.0" prefHeight="34.0" prefWidth="167.0" style="-fx-prompt-text-fill: #ffffff; -fx-background-color: #79a8ff;" />
+      <Line endX="66.0" layoutX="280.0" layoutY="345.0" startX="-100.0" stroke="WHITE" />
+      <Label fx:id="ageErrorLabel" layoutX="150.0" layoutY="352.0" prefHeight="18.0" prefWidth="228.0" text="Doit obligatoirement etre un nombre" textFill="RED" />
+      <Button id="subscriptionButton" layoutX="235.0" layoutY="415.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountClicked" prefHeight="34.0" prefWidth="160.0" style="-fx-background-color: #79ebff;" text="S'inscrire" />
+      <Button layoutX="42.0" layoutY="415.0" mnemonicParsing="false" onMouseClicked="#OnBackToCoClicked" prefHeight="34.0" prefWidth="160.0" style="-fx-background-color: #8d79ff;" text="Retour" />
    </children>
 </AnchorPane>
