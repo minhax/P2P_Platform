@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
@@ -131,11 +132,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        ObservableList<FileHandler> data = FXCollections.observableArrayList();
-        data.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
-                new FileHandler("hash2", "document 2", 1554, "document2", 32),
-                new FileHandler("hash3", "document 3", 15152, "document3", 64));
-
         listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
             @Override
             public ListCell<FileHandler> call(ListView<FileHandler> listView) {
@@ -155,9 +151,10 @@ public class MainController implements Initializable {
             }
         });
 
-        listViewAvailableFiles.setItems(data);
+
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getMyFiles();
         listViewMyFiles.setItems(data);
-        listViewDownloading.setItems(data);
 
 
         //pour test
@@ -190,7 +187,30 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void OnChangeToTabMyFiles() {
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getMyFiles();
+        listViewMyFiles.setItems(data);
+    }
+
+
+    @FXML
+    public void OnChangeToTabAvailable() {
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getFilesSharedByOthers();
+        listViewAvailableFiles.setItems(data);
+    }
+
+    @FXML
+    public void OnChangeToTabDownloading() {
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getDownloadingFiles();
+        listViewDownloading.setItems(data);
+    }
+
+    @FXML
     public void OnServerParametersButtonClicked() {
+
     }
 
 
@@ -257,11 +277,56 @@ public class MainController implements Initializable {
             stage.setTitle("Ajout d'un Fichier");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
+            // TODO :  Gérer les fichiers ici
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+
+        ObservableList<FileHandler> data = getMyFiles();
+        listViewMyFiles.setItems(data);
+
     }
+
+
+    private ObservableList<FileHandler> getMyFiles() {
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        List<FileHandlerInfos> fhsharedbyme = api.requestFilesSharedByMe();
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        if(fhsharedbyme != null && !fhsharedbyme.isEmpty()) {
+            data.addAll(fhsharedbyme);
+        }
+        return data;
+    }
+
+    private ObservableList<FileHandler> getFilesSharedByOthers() {
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        List<FileHandler> fhsharedbyothers = api.requestFilesSharedByOthers();
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        if(fhsharedbyothers != null && !fhsharedbyothers.isEmpty()) {
+            data.addAll(fhsharedbyothers);
+        }
+        return data;
+    }
+
+    private ObservableList<FileHandler> getDownloadingFiles() {
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        List<FileHandler> in_queue = api.requestInQueueFiles();
+
+        ObservableList<FileHandler> data = FXCollections.observableArrayList();
+        if(in_queue != null && !in_queue.isEmpty()) {
+            data.addAll(in_queue);
+        }
+
+        List<FileHandler> downloading = api.requestInProgressFiles();
+        if(downloading != null && !downloading.isEmpty()) {
+            data.addAll(downloading);
+        }
+        return data;
+    }
+
+
 
 }

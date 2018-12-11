@@ -14,6 +14,8 @@ import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
 import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
 import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
+import com.lo23.communication.Messages.Files_Client.addCommentMsg;
+import com.lo23.communication.Messages.Files_Client.rateFileMsg;
 import com.lo23.communication.network.Client;
 
 
@@ -78,31 +80,31 @@ public class CommToDataClientAPI implements CommToDataClient
         int portServer = 1026;
         String addrServer = cmc.getAddressIpServer();
         updateUserInfoMsg msg = new updateUserInfoMsg(user);
-        Client c = new Client(msg, portServer, addrServer);
+        Client c = new Client(msg, portServer, addrServer, 0, null);
     }
 
-
-    @Override
-    public void sendUserChanges(UserIdentity user){
-
-    }
-
-    @Override
+        @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
-        Client client=new Client(message, 1026, ip);
+        Client client=new Client(message, 1026, ip, 0, null);
     }
 
     @Override
-    public void sendCommentedFile(Comment comment, FileHandler commentedFile){
-
+    public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
+        addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
+        Client c = new Client(msg, 1026, ip, 0, null);
     }
 
     @Override
-    public void sendRatedFile(Rating rating, FileHandler ratedFile){
-
+    public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        String ip = cmc.getAddressIpServer();
+        rateFileMsg msg = new rateFileMsg(ratedFile, rating, user);
+        Client c = new Client(msg, 1026, ip, 0, null);
     }
 
     /**
@@ -125,7 +127,7 @@ public class CommToDataClientAPI implements CommToDataClient
             e.printStackTrace();
         }
         logoutMsg message=new logoutMsg(user, myIPAdress);
-        Client c = new Client(message, portServ, cmc.getAddressIpServer());
+        Client c = new Client(message, portServ, cmc.getAddressIpServer(), 0, null);
         System.out.println("[COM] Deconnexion reussie");
     }
 
@@ -142,7 +144,7 @@ public class CommToDataClientAPI implements CommToDataClient
         int portServ = 1026;
         connectionMsg message = new connectionMsg(user, fi);
         System.out.println("Client cree");
-        Client c = new Client(message, portServ, serverIP);
+        Client c = new Client(message, portServ, serverIP, 0, null);
     }
 
     /*@Override
@@ -179,7 +181,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
-        Client client=new Client(message, 1026, ip);
+        Client client=new Client(message, 1026, ip, 0, null);
 
         //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
     }
@@ -197,7 +199,7 @@ public class CommToDataClientAPI implements CommToDataClient
         int portServ = 1026;
         uploadFileMsg message = new uploadFileMsg(fi,user );
         System.out.println("Client cree");
-        Client c = new Client(message, portServ, cmc.getAddressIpServer());
+        Client c = new Client(message, portServ, cmc.getAddressIpServer(), 0, null);
     }
 
     @Override

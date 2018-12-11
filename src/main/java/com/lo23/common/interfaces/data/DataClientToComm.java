@@ -60,7 +60,7 @@ public interface DataClientToComm
      * d'un autre utilisateur ayant subi des modifications
      * @param newlyModifiedUser profil autre utilisateur modifié
      */
-    void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser);
+    void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser);
 
     /**
      * Notifie les clients distants de la déconnexion d'un autre
@@ -77,7 +77,7 @@ public interface DataClientToComm
      * @param newlyConnectedUser autre utilisateur connecté
      * @param files fichiers dont cet utilisateur est la source
      */
-    void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files);
+    void notifyOtherUserConnectedToAll(UserStats newlyConnectedUser, List<FileHandlerInfos> files);
 
     /**
      * Fonction qui permet d'obtenir le filePart numéro "part" du fichier
@@ -88,4 +88,12 @@ public interface DataClientToComm
      * @param part
      */
     void getFilePart(User userAsking, User userSource, FileHandler file, long part);
+
+    /**
+     * Fonction qui redemande un fichier après reprise sur erreur
+     * @param source la source chez qui ça a planté
+     * @param file le fichier que l'on veut
+     * @param part la partie que l'on veut.
+     */
+    void notifyAskForFilePartAgain(User source, FileHandler file, long part);
 }

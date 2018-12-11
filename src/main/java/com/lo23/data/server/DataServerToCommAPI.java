@@ -56,7 +56,10 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public void updateUserChanges(UserIdentity user)
     {
-
+        UserIdentity u = this.manager.connections.getDirectory().getUser(user.getId());
+        u.setAge(user.getAge());
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
     }
 
     @Override

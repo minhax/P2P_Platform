@@ -6,9 +6,9 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public abstract class CommunicationManager {
-	
+
 	protected String ip;
-	
+
 	public String getIp() {
 		return this.ip;
 	}
@@ -17,17 +17,18 @@ public abstract class CommunicationManager {
  * Retourne et affiche l'adresse IP sur le serveur UTC de la machine appelante
  *
  * @param
- * ... TODO FIX HARDCODE EQUALS
+
  * @return String IPadress
 **/
 	public static String findIPadress() throws Exception {
-		
+
 		Enumeration<NetworkInterface> interfaces = null;
 		try {
 			interfaces = NetworkInterface.getNetworkInterfaces();
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
+
 		while (interfaces.hasMoreElements()) {
 			NetworkInterface networkInterface = interfaces.nextElement();
 			// drop inactive
@@ -39,15 +40,34 @@ public abstract class CommunicationManager {
 			}
 			// smth we can explore
 			Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+/*
+			while (addresses.hasMoreElements())
+			{
+				InetAddress addr = addresses.nextElement();
+				String hostname = addr.getHostName();
+				String s = "utc";
+				if (hostname.contains(s)) {
+					String ip = addr.getHostAddress();
+					System.out.println(ip);
+					return ip;
+				}
+				else
+					continue;
+			}
+
+			*/
 			while (addresses.hasMoreElements()) {
 				InetAddress addr = addresses.nextElement();
 				String ip = addr.getCanonicalHostName().toString();
 				if (ip.regionMatches(0, "172", 0, 3)) {
 					System.out.println("Ajout de l'adresse IP " + ip);
 					return ip;
-				} else
+				}
+				 else
 					continue;
 			}
+
+
 		}
 		return null;
 	}

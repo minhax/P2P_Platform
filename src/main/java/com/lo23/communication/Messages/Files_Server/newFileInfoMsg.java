@@ -23,4 +23,6 @@ public class newFileInfoMsg extends FileMessage{
 		dataInterface.notifyNewSharedFileToAll(this.file, this.user);
 	
 	}
+
+    public boolean isToServ(){return false;}
 }

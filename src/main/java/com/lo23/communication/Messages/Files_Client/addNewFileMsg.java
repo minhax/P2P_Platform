@@ -17,4 +17,6 @@ public class addNewFileMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

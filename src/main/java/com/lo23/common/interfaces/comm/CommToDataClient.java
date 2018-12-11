@@ -27,12 +27,6 @@ public interface CommToDataClient
     void sendFileChanges(Rating rate, FileHandler file);
 
     /**
-     * Envoie les modifications relatives à un utilisateur
-     * @param user utilisateur concerné
-     */
-    void sendUserChanges(UserIdentity user);
-
-    /**
      * Rend indisponible un fichier (communication avec le serveur)
      * @param file fichier que l'on rend indisponible
      * @param user utilisateur qui le rend indisponible
