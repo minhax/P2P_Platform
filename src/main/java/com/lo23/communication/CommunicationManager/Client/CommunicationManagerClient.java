@@ -19,10 +19,11 @@ public class CommunicationManagerClient extends CommunicationManager{
 	 * Récupère l'adresse IP de la machine sur le réseau UTC
 	 * @param
 	 **/
-	private CommunicationManagerClient()
+	public CommunicationManagerClient()
 	{
 		/** Initialisation des variables privees du CMC **/
-		this.commInterface = CommToDataClientAPI.getInstance();
+		this.commInterface = new CommToDataClientAPI(this);
+		this.dataInterface = new DataClientToComm(this);
 		this.addressIpServer = null;
 		
 		try {
@@ -38,6 +39,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 	{
 		return Instance;
 	}
+
 	/** Getteur et setteur d'interfaces **/
 	public String getAddressIpServer()
 	{

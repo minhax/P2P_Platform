@@ -3,62 +3,36 @@ package com.lo23.communication.APIs;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Files_Server.fileSourceMsg;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
-import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 import java.util.List;
 
 public class CommToDataServerAPI implements CommToDataServer {
 
 
-    protected static CommunicationManagerServer commManagerServer ;
+    private CommunicationManagerServer commManagerServer;
 
     /* Constructeur */
-    private CommToDataServerAPI()
+    private CommToDataServerAPI(CommunicationManagerServer cms)
     {
-        commManagerServer= CommunicationManagerServer.getInstance();
+        this.commManagerServer= cms;
     }
 
-    /* Initialisation du singleton*/
-    private static CommToDataServerAPI Instance=new CommToDataServerAPI();
-
-    /* Accesseurs */
-    public static CommToDataServerAPI getInstance()
-    {
-        return Instance;
-    }
-
-    public static CommunicationManagerServer getCommunicationManager()
-    {
-        return commManagerServer;
-    }
-
-
-    public void setCommunicationManager(CommunicationManagerServer commManager)
-    {
-        this.commManagerServer=commManager;
-    }
 
 
     /*========= Implémentation des méthodes ============= */
 
     @Override
     public void removeDisconnectedUser(UserIdentity user, List<FileHandlerInfos> fileInfos){
-        removeDisconnectedUserMsg message=new removeDisconnectedUserMsg(user, fileInfos);
-        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-        cms.broadcast(message);
+
     }
 
     @Override
     public void sendConnectedUserToAll(UserIdentity user, List<FileHandlerInfos> fileInfos){
-        connectedUserMsg message=new connectedUserMsg(user, fileInfos);
-        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-        cms.broadcast(message);
-
+    
     }
 
     @Override
@@ -81,8 +55,7 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     @Override
     public void sendNewFileSource(FileHandlerInfos file, UserIdentity user){
-        fileSourceMsg message=new fileSourceMsg(file, user);
-        commManagerServer.broadcast(message);
+
     }
 
 }

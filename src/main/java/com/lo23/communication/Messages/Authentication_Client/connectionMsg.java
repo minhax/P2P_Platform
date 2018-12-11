@@ -1,21 +1,26 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.user.User;
 import com.lo23.common.user.UserStats;
+import com.lo23.communication.CommunicationManager.Server.ClientInfo;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
+import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
+
 import java.util.List;
 
 public class connectionMsg extends Authentication {
-	private String myIp;
+	private String UserIPAdress;
+	private int UserPort; /** A initialiser !**/
 	private List<FileHandlerInfos> fileInfo;
 
 	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
 		this.userStats = us;
 		this.fileInfo = files;
 		try {
-			this.myIp = CommunicationManagerServer.findIPadress();
+			this.UserIPAdress = CommunicationManagerServer.findIPadress();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -38,15 +43,17 @@ public class connectionMsg extends Authentication {
 		 */
 		String ServerIpAdress = cms.getIP();
 		
-		System.out.println("Mon ip = " + this.myIp);
+		System.out.println("Mon ip = " + this.UserIPAdress);
 		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
 		
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
-		/**Faire le broadcast **/
-		
+		cms.addEntryMap(this.UserIPAdress, this.getPort());
+		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
+		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo);
+		message.setPort(this.getPort());
+		cms.broadcast(message);
 	}
 	
 	public List<FileHandlerInfos> getFileInfo() {
@@ -55,7 +62,9 @@ public class connectionMsg extends Authentication {
 	
 	
 	public String getMyIp() {
-		return myIp;
+		return UserIPAdress;
 	}
+
+	public boolean isToServ(){return true;}
 }
 

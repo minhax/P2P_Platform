@@ -206,4 +206,16 @@ public class DirectoryUserFiles
     {
         return userFiles;
     }
+
+    public UserIdentity getUser(UUID id){
+        for (UserIdentity temp :
+                this.userFiles.keySet())
+        {
+            if(temp.getId().equals(id)){
+                return temp;
+            }
+        }
+        System.out.println("User n'existe pas dans le repertoire");
+        return null;
+    }
 }
