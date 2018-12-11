@@ -135,7 +135,7 @@ public class DataManagerClient
         boolean retValue = false;
         // TODO hash password for comparison
         File[] listOfUserFiles = new File("files/accounts").listFiles();
-
+        System.out.println(login + " - " + password);
         String hashedPassword = hashPassword(password);
 
         // Etude de chaque fichier utilisateur
@@ -148,14 +148,16 @@ public class DataManagerClient
                     FileInputStream fileIn = new FileInputStream(userFile.getPath());
                     ObjectInputStream objectIn = new ObjectInputStream(fileIn);
                     Object obj = objectIn.readObject();
-                    System.out.println(userFile.getName());
-                    System.out.println(obj.getClass());
                     UserAccount comparisonAccount = (UserAccount) obj;
-                    //UserAccount comparisonAccount = (UserAccount) obj;
+                    System.out.println(comparisonAccount.getLogin());
+                    System.out.println(comparisonAccount.getPassword());
+                    System.out.println("Hash of g" + hashPassword("g"));
                     if(comparisonAccount.getLogin().equals(login))
                     {
+                        System.out.println("good user but not pass");
                         if(comparisonAccount.checkPassword(hashedPassword))
                         {
+                            System.out.println("User found");
                             this.sessionInfos.setCurrentUser(comparisonAccount);
                             retValue = true;
                         }
@@ -330,7 +332,7 @@ public class DataManagerClient
      * envoie une demande de propagation d'information
      * au serveur
      */
-    public void changeUserInfos(String login, String password, String firstname, String lastname, int age)
+    public void changeUserInfos(String password, String firstname, String lastname, int age)
     {
         this.sessionInfos.getCurrentUser().setPassword(password);
         // Si autre chose que le mdp a été changé
@@ -338,6 +340,7 @@ public class DataManagerClient
                 || !this.sessionInfos.getCurrentUser().getLastName().equals(lastname)
                 || this.sessionInfos.getCurrentUser().getAge() != age)
         {
+            System.out.println("Autre chose que le mot de passe a été changé");
             // Mise à jour de l'utilisateur connecté
             this.sessionInfos.getCurrentUser().setFirstName(firstname);
             this.sessionInfos.getCurrentUser().setLastName(lastname);

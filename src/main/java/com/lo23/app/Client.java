@@ -8,11 +8,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
 public class Client extends Application {
     public static void main (String[] args)
     {
         System.out.println("*** LO23 SWAG CLIENT APPLICATION ***");
 
+        File accountsPath = new File("files/accounts");
+        if(!accountsPath.exists()){
+            accountsPath.mkdirs();
+        }
+
+        File usersPath = new File("files/fileparts");
+        if(!usersPath.exists()){
+            usersPath.mkdirs();
+        }
         // On instancie les Manager côté serveur
         DataManagerClient dataManagerClient = DataManagerClient.getInstance();
         CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();

@@ -121,7 +121,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     {
 
         //UserAccount modifiedUser = new UserAccount(login, firstname, lastname, age, password);
-        this.host.changeUserInfos(login, host.hashPassword(password), firstname, lastname, age);
+        this.host.changeUserInfos(host.hashPassword(password), firstname, lastname, age);
     }
 
     @Override

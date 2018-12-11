@@ -61,6 +61,8 @@ public class UserAccount extends UserStats
      * @return Retourne true si le mot de passe soumis est le bon
      */
     public boolean checkPassword(String submittedPassword) {
+        System.out.println("Password submitted" + submittedPassword);
+        System.out.println("Password of candidate" + this.getPassword());
         return this.password.equals(submittedPassword);
     }
 
