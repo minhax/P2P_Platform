@@ -33,7 +33,7 @@ public class PeerSendSocket extends Thread implements Serializable
     	
     	catch (Exception e)
         {
-    		
-    	}
+            e.printStackTrace();
+        }
     }    
 } 
