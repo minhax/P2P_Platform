@@ -416,6 +416,7 @@ public class DataManagerClient
 
     public void updateFileInfo(FileHandlerInfos updatedFile) {
         this.sessionInfos.getDirectory().updateFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
+        this.getCommToDataClientApi().sendUpdatedFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
     }
 
 }
