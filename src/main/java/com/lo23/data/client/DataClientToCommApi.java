@@ -75,9 +75,10 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser)
-    {
 
+    public void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser)
+    {
+        this.host.removeConnectedUser(newlyDisconnectedUser);
     }
 
     @Override

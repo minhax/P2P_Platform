@@ -67,9 +67,8 @@ public interface DataClientToComm
      * utilisateur et donc de son retrait en tant que source
      * des fichiers qu'il propose
      * @param newlyDisconnectedUser autre utilisateur déconnecté
-     * @param files fichiers dont cet utilisateur est la source
      */
-    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandlerInfos> files);
+    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser);
 
     /**
      * Notifie les clients distants de la connexion d'un autre

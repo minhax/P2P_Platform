@@ -410,4 +410,8 @@ public class DataManagerClient
 
     }
 
+    public void removeConnectedUser(User disconectedUser) {
+        this.sessionInfos.getDirectory().removeUser(disconectedUser);
+    }
+
 }
