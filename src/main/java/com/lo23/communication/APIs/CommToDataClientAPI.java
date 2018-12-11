@@ -176,23 +176,13 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){ //TODO Fix le parametre UserIdentity ou User?
-        //TODO: rajouter exception
+    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
         Client client=new Client(message, 1026, ip, 0, null);
-
-        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
     }
-
-
-    @Override
-    public void sendNewFileSource(FileHandler file, UserIdentity user){
-        //A priori la même chose que addNewFileSource ?
-
-    }
-
+    
     @Override
     public void uploadFile(FileHandlerInfos fi, UserIdentity user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
