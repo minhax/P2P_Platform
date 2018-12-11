@@ -110,7 +110,7 @@ public class CommToDataClientAPI implements CommToDataClient
     /**
      * Demande de déconnexion de l'utilisateur sur le serveur
      *
-     * @param UserStats user
+     * @param user utilisateur à déconnecter
      * Récupère instance cms
      * Récupère l'adresse IP de la machine, et le serveur sur lequel il est via getAdressIPServer()
      * Crée logout Msg + Client
