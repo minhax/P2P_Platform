@@ -27,9 +27,8 @@ public class addCommentMsg extends FileMessage {
 
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
-
-		file.addComment(this.getComment());
-		dataInterface.updateFileChanges(this.file);
+		
+		dataInterface.updateFileChanges(this.file, this.comment, this.user);
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		sendUpdatedFileMsg message = new sendUpdatedFileMsg(this.file, this.user);
 		message.setPort(this.getPort());
