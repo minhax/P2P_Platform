@@ -94,7 +94,7 @@ public class CommToDataClientAPI implements CommToDataClient
     @Override
     public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
         String ip = this.commManagerClient.getAddressIpServer();
-        rateFileMsg msg = new rateFileMsg(ratedFile, rating, user);
+        rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
         Client c = new Client(msg, 1026, ip, 0, null);
     }
 
@@ -170,15 +170,6 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = this.commManagerClient.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
         Client client=new Client(message, 1026, ip, 0, null);
-
-        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
-    }
-
-
-    @Override
-    public void sendNewFileSource(FileHandler file, UserIdentity user){
-        //A priori la même chose que addNewFileSource ?
-
     }
 
     @Override

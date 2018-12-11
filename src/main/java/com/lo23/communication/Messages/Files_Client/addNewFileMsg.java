@@ -6,7 +6,7 @@ import com.lo23.communication.Messages.FileMessage;
 
 
 public class addNewFileMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 84L;
 	protected UserIdentity user;
 	
 	public addNewFileMsg(FileHandlerInfos fi, UserIdentity u){

@@ -63,9 +63,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyUpdatedSharedFileToAll(FileHandler modifiedFile)
+    public void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user)
     {
-
+        //TODO modifier dans le directory le fichier concerné
     }
 
     @Override
@@ -75,9 +75,10 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandlerInfos> files)
-    {
 
+    public void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser)
+    {
+        this.host.removeConnectedUser(newlyDisconnectedUser);
     }
 
     @Override

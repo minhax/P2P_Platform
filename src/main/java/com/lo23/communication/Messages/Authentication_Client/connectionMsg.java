@@ -13,10 +13,12 @@ import java.util.List;
 
 public class connectionMsg extends Authentication {
 	private String UserIPAdress;
+	private static final long serialVersionUID = 100521L;
 	private int UserPort; /** A initialiser !**/
 	private List<FileHandlerInfos> fileInfo;
 
 	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
+		
 		this.userStats = us;
 		this.fileInfo = files;
 		try {

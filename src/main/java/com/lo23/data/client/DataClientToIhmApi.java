@@ -109,9 +109,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestUpdateFileInfo(FileHandler modifiedFile)
+    public void requestUpdateFileInfo(FileHandlerInfos modifiedFile)
     {
-
+        this.host.updateFileInfo(modifiedFile);
     }
 
     @Override

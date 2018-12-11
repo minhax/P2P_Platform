@@ -10,7 +10,7 @@ import com.lo23.communication.Messages.UserMessage;
 import java.util.List;
 
 public class connectedUserMsg extends UserMessage{
-	
+	private static final long serialVersionUID = 46L;
 	protected List<FileHandlerInfos> fhInfo;
 	private UserStats us;
 	

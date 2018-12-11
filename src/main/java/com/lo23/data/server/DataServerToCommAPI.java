@@ -1,5 +1,7 @@
 package com.lo23.data.server;
 
+import com.lo23.common.Comment;
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataServerToComm;
@@ -60,9 +62,9 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewFileToServer(FileHandlerInfos file, User user)
+    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
     {
-       //TODO this.manager.connections.addFileToDirectory(user, file);
+        this.manager.connections.addFileToDirectory(user, file);
     }
 
     @Override
@@ -72,8 +74,15 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void updateFileChanges(FileHandlerInfos file)
+    public void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user)
     {
+      //  this.manager.connections.
+        //TODO : merge newComment into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
+    }
 
+    @Override
+    public void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user)
+    {
+        //TODO : merge newRating into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
     }
 }

@@ -70,7 +70,7 @@ public interface DataClientToIhm
      * Envoie à Data un fichier qui a subi des modifications
      * @param modifiedFile fichier modifié
      */
-    void requestUpdateFileInfo(FileHandler modifiedFile);
+    void requestUpdateFileInfo(FileHandlerInfos modifiedFile);
 
     /**
      * Demande à Data le profil de l'utilisateur connecté
