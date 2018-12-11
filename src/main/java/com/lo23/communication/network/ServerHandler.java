@@ -32,20 +32,20 @@ public class ServerHandler extends Thread implements Serializable
             System.out.println("waiting object from client : " + peerId);
             System.out.println();
 
-            while(true){
+            while(true) {
+
 
                 Object msg = objIS.readObject(); // server read data from the client
 
                 Message msgCast = (Message) msg;
 
                 System.out.println("treatment of the message : " + msgCast.toString());
+                this.socket.close();
                 msgCast.treatment(); // treatment of the data sent
                 System.out.println("end of the treatment");
 
-                objOS.wait();
+                objOS.flush();
             }
-
-
 
         }
         catch (Exception e){

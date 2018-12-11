@@ -17,4 +17,6 @@ public class downloadMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

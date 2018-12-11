@@ -12,4 +12,6 @@ public class searchFileMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

@@ -9,20 +9,13 @@ import java.io.Serializable;
 
 public class PeerSendSocket extends Thread implements Serializable
 {
-    int peerPort;
-    
-    String  addrPeer = null;
+    int portServerPeer;
     ServerSocket SendServerSocket;  
     Socket SocketSend = null;
-  
-    public PeerSendSocket() {}
    
-    PeerSendSocket(int peerServerPort, String addrPeer)
+    public PeerSendSocket(int portServerPeer)
     {
-    	
-    	this.peerPort = peerServerPort;
-    	
-    	this.addrPeer = addrPeer;    
+    	this.portServerPeer = portServerPeer;
     }
     
     public void run()
@@ -31,11 +24,11 @@ public class PeerSendSocket extends Thread implements Serializable
     	try
         {
     		
-    		    SendServerSocket = new ServerSocket(peerPort);
+    		    SendServerSocket = new ServerSocket(portServerPeer);
     			
     		    SocketSend = SendServerSocket.accept();
     			
-    			new PeerSendSocketHandler(SocketSend, addrPeer).start();
+    			new PeerSendSocketHandler(SocketSend).start();
         } 
     	
     	catch (Exception e)

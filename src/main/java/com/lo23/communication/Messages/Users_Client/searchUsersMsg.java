@@ -11,4 +11,6 @@ public class searchUsersMsg extends UserMessage{
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

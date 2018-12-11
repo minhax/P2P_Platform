@@ -1,6 +1,8 @@
 package com.lo23.common.interfaces.data;
 
 
+import com.lo23.common.Comment;
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
@@ -54,7 +56,7 @@ public interface DataServerToComm
      * @param file fichier à ajouter
      * @param user utilisateur qui partage le fichier
      */
-    void addNewFileToServer(FileHandlerInfos file, User user);
+    void addNewFileToServer(FileHandlerInfos file, UserIdentity user);
 
     /**
      * Retourne la liste des utilisateurs sources
@@ -67,7 +69,17 @@ public interface DataServerToComm
     /**
      * Met à jour les informations d'un fichier
      * @param file fichier à mettre à jour
+     * @param newComment le nouveau commentaire
+     * @param user l'utilisateur responsable des changements
      */
-    void updateFileChanges(FileHandlerInfos file);
+    void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user);
+
+    /**
+     * Met à jour les informations d'un fichier
+     * @param file fichier à mettre à jour
+     * @param newRating le nouveau rating
+     * @param user l'utilisateur responsable des changements
+     */
+    void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user);
 
 }

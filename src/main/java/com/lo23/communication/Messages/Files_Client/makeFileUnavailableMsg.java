@@ -1,11 +1,12 @@
 package com.lo23.communication.Messages.Files_Client;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
-import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.User;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.FileMessage;
+import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
+import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 
 public class makeFileUnavailableMsg extends FileMessage {
 
@@ -19,8 +20,16 @@ public class makeFileUnavailableMsg extends FileMessage {
 	public void treatment(){
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
-		FileHandler fi=(FileHandler) file;
-		dataInterface.removeFileSource(fi, user);
-	
+		/** On récupère et stocke l'adresse IP du serveur
+		 */
+		dataInterface.removeFileSource(this.file, this.user);
+
+		/**Broadcast du message pour le fichier indisponible vers tout les utilisateurs connectés**/
+		sendUpdatedFileMsg message= new sendUpdatedFileMsg(this.file, this.user);
+		message.setPort(this.getPort());
+		cms.broadcast(message);
+
 	}
+
+	public boolean isToServ(){return true;}
 }

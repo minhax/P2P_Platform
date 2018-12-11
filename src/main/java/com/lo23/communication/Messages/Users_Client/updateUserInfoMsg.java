@@ -20,11 +20,17 @@ public class updateUserInfoMsg extends UserMessage{
          * Recupere son interface de dataServer
          * Appel la methode updateUserChanges
          */
-        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-        DataServerToComm dataInterface = cms.getDataInterface();
-        dataInterface.updateUserChanges(user);
+		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+		DataServerToComm dataInterface = cms.getDataInterface();
+		/** On récupère et stocke l'adresse IP du serveur
+		 */
+		dataInterface.updateUserChanges(user);
+
 	    /** Création du message pour le broadcast des informations**/
 	    updatedAccountMsg message = new updatedAccountMsg(this.user);
+		message.setPort(this.getPort());
 	    cms.broadcast(message);
 	}
+
+    public boolean isToServ(){return true;}
 }

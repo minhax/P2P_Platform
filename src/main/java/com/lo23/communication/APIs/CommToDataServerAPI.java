@@ -46,9 +46,7 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     @Override
     public void removeDisconnectedUser(UserIdentity user, List<FileHandlerInfos> fileInfos){
-        removeDisconnectedUserMsg message=new removeDisconnectedUserMsg(user, fileInfos);
-        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-        cms.broadcast(message);
+
     }
 
     @Override
@@ -76,9 +74,7 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     @Override
     public void sendNewFileSource(FileHandlerInfos file, UserIdentity user){
-        fileSourceMsg message = new fileSourceMsg(file, user);
-        CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-        cms.broadcast(message);
+
     }
 
 }
