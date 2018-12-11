@@ -374,7 +374,7 @@ public class DataManagerClient
         }
 
         // Communication des changements au serveur
-        this.getCommToDataClientApi().sendCommentedFile(comment, (FileHandler) commentedFile);
+        this.getCommToDataClientApi().sendCommentedFile(comment, commentedFile, this.sessionInfos.getCurrentUser());
     }
 
     /**
@@ -401,7 +401,7 @@ public class DataManagerClient
         }
 
         // Communication des changements au serveur pour qu'il se mette à jour
-        this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
+        this.getCommToDataClientApi().sendRatedFile(rating, ratedFile, this.sessionInfos.getCurrentUser());
     }
 
     public void downloadFile(FileHandler fileToDownload)

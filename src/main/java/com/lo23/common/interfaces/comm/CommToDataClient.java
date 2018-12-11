@@ -51,6 +51,7 @@ public interface CommToDataClient
      * Envoie une nouvelle note attribuée à un fichier
      * @param rating note à ajouter au fichier
      * @param ratedFile fichier noté
+     * @param user Utilisateur qui a noté le fichier
      */
     void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user);
 
