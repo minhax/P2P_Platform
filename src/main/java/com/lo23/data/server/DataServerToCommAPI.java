@@ -80,6 +80,7 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user)
     {
+      //  this.manager.connections.
         //TODO : merge newComment into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
     }
 

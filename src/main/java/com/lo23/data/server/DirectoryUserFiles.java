@@ -343,4 +343,10 @@ public class DirectoryUserFiles
         System.out.println("User n'existe pas dans le repertoire");
         return null;
     }
+
+    public void updateFileInfo(FileHandlerInfos updatedFile, UserIdentity user) {
+        //user : user responsable de la modif
+        //updatedFile : FileHandlerInfos contenant les modifications
+        // TODO :
+    }
 }
