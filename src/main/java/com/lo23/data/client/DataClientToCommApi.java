@@ -87,7 +87,6 @@ public class DataClientToCommApi implements DataClientToComm
         for(int i = 0; i < files.size(); i++){
             this.host.getSessionInfos().getDirectory().addProposedFile(newlyConnectedUser, files.get(i));
         }
-
     }
 
     @Override
