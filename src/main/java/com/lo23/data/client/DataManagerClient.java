@@ -414,4 +414,8 @@ public class DataManagerClient
         this.sessionInfos.getDirectory().removeUser(disconectedUser);
     }
 
+    public void updateFileInfo(FileHandlerInfos updatedFile) {
+        this.sessionInfos.getDirectory().updateFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
+    }
+
 }
