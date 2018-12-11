@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -31,8 +32,16 @@ public class UpdateProfileController implements Initializable {
     @FXML
     private Label errorUpdateLabel;
     
-    private UpdateProfileModel model;
+    @FXML
+    private AnchorPane updateUserPane;
     
+    private UpdateProfileModel model;
+
+    private DataClientToIhm api;
+
+    public UpdateProfileController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new UpdateProfileModel();
@@ -52,7 +61,6 @@ public class UpdateProfileController implements Initializable {
     	}
     	else {
             // Integration data
-			DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
 			api.requestSubmitUserChanges(loginUpdateField.getText(),passwordUpdateField.getText(),nameUpdateField.getText(),familynameUpdateField.getText(),Integer.parseInt(ageUpdateField.getText()));
             //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
@@ -86,15 +94,11 @@ public class UpdateProfileController implements Initializable {
     @FXML
     void Previous() {
     	 try {
-             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
+             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
              Parent root = fxmlloader.load();
-             Stage stage = new Stage();
-
-             stage.initModality(Modality.APPLICATION_MODAL);
-             stage.setOpacity(1);
+             Stage stage = (Stage) updateUserPane.getScene().getWindow();
              stage.setTitle("Fenêtre principale");
              stage.setScene(new Scene(root));
-             stage.showAndWait();
          } catch (Exception e) {
              e.printStackTrace();
          }
