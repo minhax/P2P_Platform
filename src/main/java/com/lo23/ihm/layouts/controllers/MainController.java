@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.data.client.DataClientToIhmApi;
 import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
 import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
@@ -138,12 +139,17 @@ public class MainController implements Initializable {
 
     private Timer refreshTimer;
     private int period = 10000;
+    private DataClientToIhm api;
 
 
     //gestion recherche de fichier
     private ObservableList<String> choices = FXCollections.observableArrayList();
     private List<FileHandlerInfos> researchResults = new ArrayList<FileHandlerInfos>();
 
+
+    public MainController(DataClientToIhm dataAPI) {
+        api=dataAPI;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         incorrectIP.setVisible(false);
@@ -192,7 +198,7 @@ public class MainController implements Initializable {
         listViewMyFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
             @Override
             public ListCell<FileHandler> call(ListView<FileHandler> listView) {
-                return new MyFilesListCell();
+                return new MyFilesListCell(api);
             }
         });
         listViewDownloading.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
@@ -260,8 +266,7 @@ public class MainController implements Initializable {
     public void OnServerParametersButtonClicked() {
         String new_ip = changeServerIpAdressTextField.getText();
         Pattern pat = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
-        if(pat.matcher(new_ip).matches()) {
-            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        if(pat.matcher(new_ip).matches())
             if(api.requestConnectionToServer(new_ip)) {
                 //TODO : ne pas fermer, mais plutôt réactualiser toute la page ? À réétudier quand l'application restera sur la même fenêtre
 
@@ -282,7 +287,7 @@ public class MainController implements Initializable {
             } else {
                 incorrectIP.setVisible(true);
             }
-        } else {
+         else {
             incorrectIP.setVisible(true);
         }
     }
@@ -290,7 +295,6 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnDisconnectButtonClicked() {
-       DataManagerClient.getInstance().getDataClientToIhmApi().requestLogout();
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
             Parent root = fxmlloader.load();
@@ -308,7 +312,6 @@ public class MainController implements Initializable {
 
     private void refreshContactsWindow() {
         //décommenter à l'intégration
-        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         connectedUsers = api.requestConnectedUsers();
         if(connectedUsers!=null) {
 
@@ -329,8 +332,11 @@ public class MainController implements Initializable {
     @FXML
     public void OnUpdateUserButtonClicked() {
         try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
-            Parent root = fxmlloader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            UpdateProfileController controller = new UpdateProfileController(api); // EXEMPLE
+            fxmlLoader.setController(controller);
+            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
+            Parent root = fxmlLoader.load();
             Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
             stage.setScene(new Scene(root));
@@ -345,9 +351,11 @@ public class MainController implements Initializable {
         // Ouvre le fenêtre d'ajout d'un fichier
 
         try {
-
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
-            Parent root = fxmlloader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            PartageController controller = new PartageController(api); // EXEMPLE
+            fxmlLoader.setController(controller);
+            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
+            Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -368,7 +376,6 @@ public class MainController implements Initializable {
 
 
     private ObservableList<FileHandler> getMyFiles() {
-        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         List<FileHandler> fhsharedbyme = api.requestFilesSharedByMe();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
@@ -379,7 +386,6 @@ public class MainController implements Initializable {
     }
 
     private ObservableList<FileHandler> getFilesSharedByOthers() {
-        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         List<FileHandler> fhsharedbyothers = api.requestFilesSharedByOthers();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
@@ -390,7 +396,6 @@ public class MainController implements Initializable {
     }
 
     private ObservableList<FileHandler> getDownloadingFiles() {
-        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         List<FileHandler> in_queue = api.requestInQueueFiles();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();

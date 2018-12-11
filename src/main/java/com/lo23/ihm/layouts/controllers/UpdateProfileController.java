@@ -36,7 +36,12 @@ public class UpdateProfileController implements Initializable {
     private AnchorPane updateUserPane;
     
     private UpdateProfileModel model;
-    
+
+    private DataClientToIhm api;
+
+    public UpdateProfileController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new UpdateProfileModel();
@@ -56,7 +61,6 @@ public class UpdateProfileController implements Initializable {
     	}
     	else {
             // Integration data
-			DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
 			api.requestSubmitUserChanges(loginUpdateField.getText(),passwordUpdateField.getText(),nameUpdateField.getText(),familynameUpdateField.getText(),Integer.parseInt(ageUpdateField.getText()));
             //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());

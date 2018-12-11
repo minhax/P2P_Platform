@@ -32,11 +32,15 @@ public class CommentController {
     public FileHandler getFile(){
         return this.file;
     }
-    
-    
+
+    private DataClientToIhm api;
+
+
+    public CommentController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
     @FXML
     void Validate() {
-        DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
         this.comment = new Comment(commentArea.getText(), api.requestAccountInfos());
         // A décommenter pour data
         // api.requestCommentFile(this.comment, getFile());

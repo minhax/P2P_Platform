@@ -35,6 +35,9 @@ public class CreateAccountController implements Initializable {
 
     private CreateAccountModel model;
 
+    private DataClientToIhm api;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new CreateAccountModel();
@@ -55,7 +58,7 @@ public class CreateAccountController implements Initializable {
             ageErrorLabel.setVisible(true);
         } else {
             // A decommenté et verifier les champs pendant l'integration
-            DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
+
 
             try {
                 api.createAccount(loginTextField.getText(), passwordField.getText(), firstnameTextField.getText(), lastnameTextField.getText(), Integer.parseInt(ageTextField.getText()));
