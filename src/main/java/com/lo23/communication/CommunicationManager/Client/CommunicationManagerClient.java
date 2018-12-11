@@ -32,13 +32,6 @@ public class CommunicationManagerClient extends CommunicationManager{
 			System.out.print("Erreur dans la recuperation de l'adresse IP");
 		}
 	}
-	
-	/** Singleton **/
-	private static CommunicationManagerClient Instance = new CommunicationManagerClient();
-	public static CommunicationManagerClient getInstance()
-	{
-		return Instance;
-	}
 
 	/** Getteur et setteur d'interfaces **/
 	public String getAddressIpServer()

@@ -12,10 +12,12 @@ import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 public class sendUpdatedFileMsg extends FileMessage{
 	private User user;
+	private CommunicationManagerClient commManager;
 
-	public sendUpdatedFileMsg(FileHandlerInfos fi, User user){
+	public sendUpdatedFileMsg(FileHandlerInfos fi, User user, CommunicationManagerClient cmc){
 		this.file = fi;
 		this.user = user;
+		this.commManager=cmc;
 	}
 	
 	public void treatment(){
@@ -24,9 +26,7 @@ public class sendUpdatedFileMsg extends FileMessage{
          * Recupere son interface de dataClient
          * Appel la methode notifyOtherUserUpdatedAccountToAll
          */
-
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        DataClientToComm dataInterfaceClient = cmc.getDataInterface();
+        DataClientToComm dataInterfaceClient = this.commManager.getDataInterface();
         dataInterfaceClient.notifyUpdatedSharedFileToAll(this.file,this.user);
 	
 	}

@@ -3,6 +3,7 @@ package com.lo23.communication.Messages.Authentication_Client;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserStats;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.ClientInfo;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
@@ -15,10 +16,14 @@ public class connectionMsg extends Authentication {
 	private String UserIPAdress;
 	private int UserPort; /** A initialiser !**/
 	private List<FileHandlerInfos> fileInfo;
+	private CommunicationManagerServer commManagerServer;
+	private CommunicationManagerClient commManagerClient;
 
-	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
+	public connectionMsg(UserStats us, List<FileHandlerInfos> files, CommunicationManagerServer cms, CommunicationManagerClient cmc){
 		this.userStats = us;
 		this.fileInfo = files;
+		this.commManagerServer=cms;
+		this.commManagerClient=cmc;
 		try {
 			this.UserIPAdress = CommunicationManagerServer.findIPadress();
 		}catch(Exception e)
@@ -36,12 +41,11 @@ public class connectionMsg extends Authentication {
 		 * Appel la methode addNewConnectedUser pour lui transmettre son objet user Stats
 		 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 		 */
-		
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
+
+		DataServerToComm dataInterface = this.commManagerServer.getDataInterface();
 		/** On récupère et stocke l'adresse IP du serveur
 		 */
-		String ServerIpAdress = cms.getIP();
+		String ServerIpAdress = this.commManagerServer.getIP();
 		
 		System.out.println("Mon ip = " + this.UserIPAdress);
 		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
@@ -49,11 +53,11 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		cms.addEntryMap(this.UserIPAdress, this.getPort());
+		this.commManagerServer.addEntryMap(this.UserIPAdress, this.getPort());
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
-		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo);
+		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo, this.commManagerClient);
 		message.setPort(this.getPort());
-		cms.broadcast(message);
+		this.commManagerServer.broadcast(message);
 	}
 	
 	public List<FileHandlerInfos> getFileInfo() {

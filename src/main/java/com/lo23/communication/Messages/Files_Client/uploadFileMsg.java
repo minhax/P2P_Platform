@@ -12,23 +12,24 @@ import com.lo23.communication.Messages.Files_Server.newFileInfoMsg;
 public class uploadFileMsg extends FileMessage {
 	
 	protected UserIdentity user;
+	private CommunicationManagerServer commManager;
 	
-	public uploadFileMsg(FileHandlerInfos fi, UserIdentity u){
+	public uploadFileMsg(FileHandlerInfos fi, UserIdentity u, CommunicationManagerServer cms){
 		this.file = fi;
 		this.user = u;
+		this.commManager=cms;
 	}
 	
 	public void treatment(){
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
+		DataServerToComm dataInterface = this.commManager.getDataInterface();
 		/** On récupère et stocke l'adresse IP du serveur
 		 */
 		System.out.println("[COM]Stockage du fichier" + this.file.getHash());
 		/** Envoi des données à data **/
 		dataInterface.addNewFileToServer(this.file, this.user);
 		/** Création du message pour le broadcast des informations**/
-		newFileInfoMsg message = new newFileInfoMsg(this.file,this.user);
-		cms.broadcast(message);
+		newFileInfoMsg message = new newFileInfoMsg(this.file,this.user, this.commManager);
+		this.commManager.broadcast(message);
 	}
 
 	public boolean isToServ(){return true;}

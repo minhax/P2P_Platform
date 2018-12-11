@@ -11,10 +11,12 @@ import java.util.List;
 public class removeDisconnectedUserMsg extends UserMessage{
 	
 	protected List<FileHandlerInfos> fhInfos;
+	private CommunicationManagerClient commManager;
 	
-	public removeDisconnectedUserMsg(UserIdentity ui, List<FileHandlerInfos> fi){
+	public removeDisconnectedUserMsg(UserIdentity ui, List<FileHandlerInfos> fi, CommunicationManagerClient cmc){
 		this.user = ui;
 		this.fhInfos = fi;
+		this.commManager=cmc;
 	}
 	/**
 	 * Traitement est applique du cote client
@@ -23,8 +25,7 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
 	public void treatment(){
-		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		DataClientToComm dataInterface = cms.getDataInterface();
+		DataClientToComm dataInterface = this.commManager.getDataInterface();
 		
 		dataInterface.notifyOtherUserDisconnectedToAll(this.user,this.fhInfos);
 	}
