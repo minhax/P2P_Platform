@@ -20,7 +20,7 @@ class Session
     /**
      * Autres utilisateurs connectés
      */
-    private Vector<UserStats> otherLoggedUsers;
+    private Vector<UserStats> otherLoggedUsers = new Vector<>();
 
     private DirectoryUserFiles directory;
 
@@ -63,7 +63,7 @@ class Session
         // Si l'utilisateur n'a pas été trouvé
         if(!userFound)
         {
-            this.getOtherLoggedUsers().add((UserStats)user);
+            this.otherLoggedUsers.add((UserStats)user);
         }
     }
 
