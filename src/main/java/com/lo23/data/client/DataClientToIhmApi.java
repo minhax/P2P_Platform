@@ -219,10 +219,10 @@ public class DataClientToIhmApi implements DataClientToIhm
     public void requestFileDownload(FileHandler fileToDownload)
     {
         if (fileToDownload != null)
-        {
-            //this.host.downloadFile(fileToDownload);
-        }
-    };
+            this.host.downloadFile(fileToDownload);
+        else
+            throw new NullPointerException("Error in DataClientToIHM::requestFileDownload : the fileToDownload can't be null");
+    }
 
     @Override
     public Vector<FileHandler> requestInQueueFiles(){

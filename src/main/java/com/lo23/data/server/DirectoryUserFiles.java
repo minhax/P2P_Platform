@@ -1,5 +1,9 @@
 package com.lo23.data.server;
 
+import com.lo23.common.Comment;
+import com.lo23.common.Rating;
+import com.lo23.common.Tag;
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
@@ -196,6 +200,127 @@ public class DirectoryUserFiles
             }
         }
     }
+
+    /**
+     * Remplace un fichier proposé par sa version modifiée
+     * @param modifiedFile Version modifiée d'un fichier
+     */
+
+    public void updateFilesAfterModification(FileHandlerInfos modifiedFile) throws DataException
+    {
+        if (modifiedFile==null)
+        {
+            throw new DataException("Modified file is null");
+        }
+        System.out.println("Le fichier à remplacer contient " + modifiedFile.getRatings().size());
+
+        // On recherche si le fichier est proposé
+        int found = 0;
+        for (FileHandlerInfos proposedFileToModify : this.getProposedFiles())
+        {
+            if(proposedFileToModify.getHash().equals(modifiedFile.getHash()))
+            {
+                found = 1;
+                // MODIFICATION DU FICHIER DANS FILESUSER
+                proposedFileToModify.setDesc(modifiedFile.getDesc());
+
+                Iterator oldRatings = proposedFileToModify.getRatings().iterator();
+                while(oldRatings.hasNext())
+                {
+                    proposedFileToModify.removeRating((Rating)oldRatings.next());
+                }
+
+                Iterator newRatings = modifiedFile.getRatings().iterator();
+                while (newRatings.hasNext())
+                {
+                    Rating newRating = (Rating) newRatings.next();
+                    proposedFileToModify.addRating(newRating);
+                }
+
+                // modification des commentaires
+                Iterator oldComments = proposedFileToModify.getComments().iterator();
+                while(oldComments.hasNext())
+                {
+                    proposedFileToModify.removeComment((Comment)oldComments.next());
+                }
+
+                Iterator newComments = modifiedFile.getComments().iterator();
+                while (newComments.hasNext())
+                {
+                    Comment newComment = (Comment) newComments.next();
+                    proposedFileToModify.addComment(newComment);
+                }
+
+                Iterator oldTags = proposedFileToModify.getTags().iterator();
+                while(oldTags.hasNext())
+                {
+                    proposedFileToModify.removeTag((Tag)oldTags.next());
+                }
+
+                Iterator newTags = modifiedFile.getTags().iterator();
+                while (newTags.hasNext())
+                {
+                    Tag newTag = (Tag) newTags.next();
+                    proposedFileToModify.addTag(newTag);
+                }
+
+
+                // MODIFICATION DU FICHIER DANS USERFILES
+                for (UserIdentity userThatProposesFile : this.getUsersThatProposeFile(proposedFileToModify))
+                {
+                    System.out.println("We found users that do propose the file");
+                    Vector<FileHandlerInfos> proposedFiles = this.getFilesProposedByUser(userThatProposesFile);
+                    for (FileHandlerInfos fileToModify : proposedFiles)
+                    {
+                        if(fileToModify.getHash().equals(modifiedFile.getHash())) {
+                            System.out.println("We found the file among the others that the users propose");
+                            // modification de la description
+                            fileToModify.setDesc(modifiedFile.getDesc());
+
+                            // modification des ratings. Loin d'être optimisé
+                            Iterator oldRatingsUserFile = proposedFileToModify.getRatings().iterator();
+                            while (oldRatingsUserFile.hasNext())
+                            {
+                                fileToModify.removeRating((Rating) oldRatingsUserFile.next());
+                            }
+                            Iterator newRatingsUserFile = proposedFileToModify.getRatings().iterator();
+                            while (newRatingsUserFile.hasNext())
+                            {
+                                fileToModify.addRating((Rating)newRatingsUserFile.next());
+                            }
+
+                            Iterator oldCommentsUserFile = proposedFileToModify.getComments().iterator();
+                            while (oldCommentsUserFile.hasNext())
+                            {
+                                fileToModify.removeComment((Comment) oldCommentsUserFile.next());
+                            }
+                            Iterator newCommentsUserFile = proposedFileToModify.getComments().iterator();
+                            while (newCommentsUserFile.hasNext())
+                            {
+                                fileToModify.addComment((Comment)newCommentsUserFile.next());
+                            }
+
+                            Iterator oldTagsUserFile = proposedFileToModify.getTags().iterator();
+                            while (oldTagsUserFile.hasNext())
+                            {
+                                fileToModify.removeTag((Tag) oldTagsUserFile.next());
+                            }
+                            Iterator newTagsUserFile = proposedFileToModify.getTags().iterator();
+                            while (newTagsUserFile.hasNext())
+                            {
+                                fileToModify.addTag((Tag)newTagsUserFile.next());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (found==0)
+        {
+            throw new DataException("The modified file does not seem proposed by anyone on the network");
+        }
+    }
+
 
     public HashMap<FileHandlerInfos, Vector<UserIdentity>> getFilesUser()
     {
