@@ -9,9 +9,13 @@ import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.common.user.UserStats;
 import com.lo23.data.Const;
 
 import java.io.File;
+
+import java.util.Iterator;
+
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -143,7 +147,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         // makeLocalFileUnavailable
         // TODO appel à la méthode de comm qui rend le fichier indispo
         // Où est-ce qu'on trouve user d'ici ?
-        // host.getDataClientToComm().removeUserAsSourceFile(file, user)
+        // host.getDataClientToCommApi().removeUserAsSourceFile(file, user)
     }
 
     @Override
@@ -178,7 +182,23 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public List<UserIdentity> requestSearchUser(String searchTerm)
     {
-        return null;
+        Vector<UserStats> loggedUser = this.host.getSessionInfos().getLoggedUsers();
+
+        Iterator i = loggedUser.iterator();
+        Vector<UserIdentity> returnedUsers = new Vector<>();
+
+        // On parcourt la liste des utilisateurs connectés
+        while (i.hasNext()){
+            UserStats user = (UserStats) i.next();
+            // Si le terme recherché est présent dans les infos de l'utilisateur, on l'ajoute à la liste retournée.
+            if (user.getFirstName().contains(searchTerm)
+                    || user.getLastName().contains(searchTerm)
+                    || user.getLogin().contains(searchTerm)){
+                returnedUsers.add((UserIdentity)user);
+            }
+        }
+
+        return returnedUsers;
     }
 
     @Override
