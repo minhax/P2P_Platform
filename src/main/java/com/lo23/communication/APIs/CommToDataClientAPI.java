@@ -33,23 +33,6 @@ public class CommToDataClientAPI implements CommToDataClient
         this.commManagerClient=cmc;
     }
 
-
-
-    /* Accesseurs */
-
-    public static CommunicationManagerClient getCommunicationManager()
-    {
-        return this.commManagerClient;
-    }
-
-
-    public void setCommunicationManager(CommunicationManagerClient commManager)
-    {
-
-        this.commManagerClient=commManager;
-    }
-
-
     /*========= Implémentation des méthodes ============= */
 
     @Override
