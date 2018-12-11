@@ -111,6 +111,7 @@ public class Client implements Serializable {
             return true;
         }
         catch (IOException e) {
+            e.printStackTrace();
         }
         finally {
             if (servSockets != null) {
@@ -118,6 +119,7 @@ public class Client implements Serializable {
                     servSockets.close();
                 }
                 catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }

@@ -7,33 +7,26 @@ import java.io.Serializable;
 
 // Peer To Send Socket 
 
-public class PeerSendSocket extends Thread implements Serializable
-{
+public class PeerSendSocket extends Thread implements Serializable {
     int portServerPeer;
-    ServerSocket SendServerSocket;  
+    ServerSocket SendServerSocket;
     Socket SocketSend = null;
-   
-    public PeerSendSocket(int portServerPeer)
-    {
-    	this.portServerPeer = portServerPeer;
+
+    public PeerSendSocket(int portServerPeer) {
+        this.portServerPeer = portServerPeer;
     }
-    
-    public void run()
-    {
-    	
-    	try
-        {
-    		
-    		    SendServerSocket = new ServerSocket(portServerPeer);
-    			
-    		    SocketSend = SendServerSocket.accept();
-    			
-    			new PeerSendSocketHandler(SocketSend).start();
-        } 
-    	
-    	catch (Exception e)
-        {
+
+    public void run() {
+
+        try {
+
+            SendServerSocket = new ServerSocket(portServerPeer);
+
+            SocketSend = SendServerSocket.accept();
+
+            new PeerSendSocketHandler(SocketSend).start();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }    
+    }
 } 

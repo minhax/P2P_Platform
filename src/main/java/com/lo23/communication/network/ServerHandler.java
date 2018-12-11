@@ -49,6 +49,7 @@ public class ServerHandler extends Thread implements Serializable
 
         }
         catch (Exception e){
+            e.printStackTrace();
         }
 
     }
