@@ -8,7 +8,7 @@ import com.lo23.communication.Messages.UserMessage;
 import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 public class updateUserInfoMsg extends UserMessage{
-	
+	private static final long serialVersionUID = 50L;
 	public updateUserInfoMsg(UserIdentity ui)
     {
 		this.user = ui;

@@ -7,6 +7,7 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.Messages.UserMessage;
 
 public class updatedAccountMsg extends UserMessage{
+	private static final long serialVersionUID = 43L;
 	public updatedAccountMsg(UserIdentity ui){
 		this.user = ui;
 	}

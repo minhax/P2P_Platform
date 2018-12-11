@@ -9,7 +9,7 @@ import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 
 
 public class requestFileLocationMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 60L;
 	protected UserIdentity user;
 	
 	public requestFileLocationMsg(FileHandlerInfos fi, UserIdentity u){

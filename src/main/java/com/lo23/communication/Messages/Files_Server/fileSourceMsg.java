@@ -10,7 +10,7 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.Messages.FileMessage;
 
 public class fileSourceMsg extends FileMessage{
-	
+	private static final long serialVersionUID = 53L;
 	protected UserIdentity user;
 	//TODO: est-ce qu'un user ne suffirait pas ? -> dans ce cas, il faut aussi modifier la méthode dans l'API de data et dans CommToDataServer
 	public fileSourceMsg(FileHandlerInfos fi, UserIdentity u){

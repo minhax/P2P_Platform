@@ -12,7 +12,7 @@ import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 public class sendUpdatedFileMsg extends FileMessage{
 	private User usr;
-
+	private static final long serialVersionUID = 51L;
 	public sendUpdatedFileMsg(FileHandlerInfos fi, User user){
 		this.file = fi;
 		this.usr = user;

@@ -10,7 +10,7 @@ import com.lo23.communication.Messages.Files_Server.newFileInfoMsg;
 
 
 public class uploadFileMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 55L;
 	protected UserIdentity user;
 	
 	public uploadFileMsg(FileHandlerInfos fi, UserIdentity u){

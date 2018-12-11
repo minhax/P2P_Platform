@@ -9,7 +9,7 @@ import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 
 public class makeFileUnavailableMsg extends FileMessage {
-
+	private static final long serialVersionUID = 78L;
 	User user;
 	
 	public makeFileUnavailableMsg(FileHandlerInfos fi, User us){

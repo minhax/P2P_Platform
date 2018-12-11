@@ -9,7 +9,7 @@ import com.lo23.communication.Messages.FileMessage;
 public class newFileInfoMsg extends FileMessage{
 	
 	protected UserIdentity user;
-	
+	private static final long serialVersionUID = 52L;
 	public newFileInfoMsg(FileHandlerInfos fi, UserIdentity u){
 		this.file = fi;
 		this.user = u;

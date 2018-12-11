@@ -6,7 +6,7 @@ import com.lo23.communication.Messages.FileMessage;
 
 
 public class giveRightsToFileMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 79L;
 	protected String rights;
 	
 	public giveRightsToFileMsg(FileHandlerInfos fi, String r){

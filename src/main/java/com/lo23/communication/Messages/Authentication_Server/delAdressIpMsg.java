@@ -7,6 +7,7 @@ import com.lo23.communication.Messages.Authentication;
  * /
  */
 public class delAdressIpMsg extends Authentication {
+	private static final long serialVersionUID = 88L;
 	public delAdressIpMsg(){}
 	
 	public void treatment()
