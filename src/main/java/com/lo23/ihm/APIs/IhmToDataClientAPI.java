@@ -1,4 +1,4 @@
-package com.lo23.ihm.layouts.applications;
+package com.lo23.ihm.APIs;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
@@ -7,10 +7,10 @@ import com.lo23.ihm.layouts.controllers.MainController;
 
 import java.util.List;
 
-public class IhmApi implements IhmToDataClient {
+public class IhmToDataClientAPI implements IhmToDataClient {
 
     private MainController controller;
-    public IhmApi(MainController controller) {
+    public IhmToDataClientAPI(MainController controller) {
         this.controller = controller;
     }
 
