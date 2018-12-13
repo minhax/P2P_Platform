@@ -5,7 +5,14 @@ import com.lo23.common.user.UserIdentity;
 import java.util.List;
 
 public interface IhmToDataClient {
-    /**
+    
+	/**
+     * Met a jour la liste des utilisateurs connectés
+     * @param user le nouvel utilisateur connecté au serveur
+     */
+	void UpdateConnectedUsers(UserIdentity user);
+	
+	/**
      * Met a jour la liste des fichiers disponibles avec un nouveau fichier
      * @param fileInfo informations du fichier qui vient d'être ajouté
      * @param user l'utilisateur qui a mis a disposition ce fichier

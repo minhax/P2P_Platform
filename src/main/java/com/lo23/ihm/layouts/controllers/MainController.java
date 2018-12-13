@@ -423,5 +423,10 @@ public class MainController implements Initializable {
 
         listViewAvailableFiles.setItems(donnees);
     }
+    
+    public List<UserIdentity> getConnectedUsers()
+    {
+    	return this.connectedUsers;
+    }
 
 }
