@@ -1,5 +1,6 @@
 package com.lo23.common.interfaces.ihm;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
 import java.util.List;
@@ -45,7 +46,7 @@ public interface IhmToDataClient {
      * Mets à jour la barre de progression du télechargement
      * @param percentage pourcentage de complétion duj télechargement
      */
-    void showPercentageComplete(float percentage);
+    void showPercentageComplete(FileHandler file, float percentage);
 
 
 }

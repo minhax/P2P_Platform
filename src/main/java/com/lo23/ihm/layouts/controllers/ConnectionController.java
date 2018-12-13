@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.data.client.DataClientToIhmApi;
 import com.lo23.data.client.DataManagerClient;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.ConnectionModel;
 
 import javafx.event.ActionEvent;
@@ -77,6 +78,9 @@ public class ConnectionController implements Initializable {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 MainController controller = new MainController(api); // EXEMPLE
+                IhmToDataClientAPI IhmAPI = new IhmToDataClientAPI(controller);
+                //api.setIhmAPI(IhmAPI);
+                // TODO : demander à implementer ce bout de code pour que Data puisse utiliser notre API de leur coté
                 fxmlLoader.setController(controller);
                 fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlLoader.load();

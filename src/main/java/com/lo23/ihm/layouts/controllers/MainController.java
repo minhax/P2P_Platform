@@ -7,12 +7,9 @@ import java.util.regex.Pattern;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.data.client.DataClientToIhmApi;
-import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
 import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
 import com.lo23.ihm.layouts.models.MyFilesListCell;
-import javafx.beans.property.ReadOnlyListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -27,7 +24,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -428,5 +424,7 @@ public class MainController implements Initializable {
     {
     	return this.connectedUsers;
     }
+
+    public ObservableList<DownloadingFilesListCell> getCurrentlyShowingDownloadingFiles() { return listViewDownloading.getItems();}
 
 }

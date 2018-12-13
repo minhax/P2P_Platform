@@ -1,9 +1,12 @@
 package com.lo23.ihm.APIs;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.ihm.layouts.controllers.MainController;
+import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -44,10 +47,17 @@ public class IhmToDataClientAPI implements IhmToDataClient {
     }
 
     @Override
-    public void showPercentageComplete(float percentage) {
+    public void showPercentageComplete(FileHandler file, float percentage) {
     	
     	//A ajouter à la structure des fichiers en download
-    	
+        ObservableList<DownloadingFilesListCell> items = controller.getCurrentlyShowingDownloadingFiles();
+
+        for (DownloadingFilesListCell item : items) {
+            if(item.checkEqualFile(file)) {
+                item.updatePourcentage(file, percentage);
+                return;
+            }
+        }
     }
 
 	@Override
