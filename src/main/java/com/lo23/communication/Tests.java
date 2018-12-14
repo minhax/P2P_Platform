@@ -2,7 +2,6 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.network.ServerSocket;
 import com.lo23.communication.network.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 
