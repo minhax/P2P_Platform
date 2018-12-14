@@ -5,6 +5,7 @@ import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.Messages.UserMessage;
+import com.lo23.common.user.User;
 
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	 */
 	public void treatment(){
 		DataClientToComm dataInterface = this.commManager.getDataInterface();
-		
-		dataInterface.notifyOtherUserDisconnectedToAll(this.user,this.fhInfos);
+		User user = (User)this.user;
+		dataInterface.notifyOtherUserDisconnectedToAll(user, this.fhInfos, this.commManager);
 	}
 
     public boolean isToServ(){return false;}

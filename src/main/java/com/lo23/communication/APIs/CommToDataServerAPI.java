@@ -18,6 +18,7 @@ public class CommToDataServerAPI implements CommToDataServer {
     /* Constructeur */
     public CommToDataServerAPI(CommunicationManagerServer cms)
     {
+
         this.commManagerServer= cms;
     }
 

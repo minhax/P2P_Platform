@@ -17,7 +17,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	
 	private DataServerToComm dataInterface;
 	private CommToDataServerAPI commInterface;
-	private HashMap<String, Integer>  clientIptoPort;
+	private HashMap<String, Integer> clientIptoPort;
 	
 	/** Constructeur privé
 	 * Récupère un objet interface de DataServer et CommServer
@@ -33,11 +33,11 @@ public class CommunicationManagerServer extends CommunicationManager {
 			this.dataInterface = null;
 			
 			try {
-				this.clientIptoPort = findIPadress();
+				this.clientIptoPort.put(CommunicationManager.findIpAdress());
 			} catch (Exception ex) {
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
-			clientIptoPort = new HashMap<>();
+			this.clientIptoPort = new HashMap<>();
 		}
 	
 	

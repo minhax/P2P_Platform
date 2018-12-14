@@ -27,8 +27,10 @@ public class CommToDataClientAPI implements CommToDataClient
 
     private CommunicationManagerClient commManagerClient ;
     private CommunicationManagerServer commManagerServer ;
+
+
     /* Constructeur */
-    private CommToDataClientAPI(CommunicationManagerClient cmc, CommunicationManagerServer cms)
+    public CommToDataClientAPI(CommunicationManagerClient cmc, CommunicationManagerServer cms)
     {
 
         this.commManagerClient=cmc;
@@ -39,8 +41,9 @@ public class CommToDataClientAPI implements CommToDataClient
 
     /* Accesseurs */
 
-    public static CommunicationManagerClient getCommunicationManager()
+    public CommunicationManagerClient getCommunicationManager()
     {
+
         return this.commManagerClient;
     }
 
@@ -174,7 +177,7 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestUploadFile(FileHandlerInfos file, UserIdentity user){ //TODO Fix le parametre UserIdentity ou User?
         //TODO: rajouter exception
         String ip = this.commManagerClient.getAddressIpServer();
-        uploadFileMsg message=new uploadFileMsg(file, user);
+        uploadFileMsg message=new uploadFileMsg(file, user, this.commManagerServer);
         Client client=new Client(message, 1026, ip, 0, null);
     }
 
