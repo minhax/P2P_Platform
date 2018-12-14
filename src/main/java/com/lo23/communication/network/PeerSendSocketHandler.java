@@ -13,17 +13,15 @@ public class PeerSendSocketHandler extends Thread implements Serializable {
     Socket sendThreadSocket;
 
     public PeerSendSocketHandler(Socket sendThreadSocket) {
+
         this.sendThreadSocket = sendThreadSocket;
     }
 
     @SuppressWarnings("unused")
     public void run() {
         try {
-            ObjectOutputStream objOS = new ObjectOutputStream(sendThreadSocket.getOutputStream());
-            objOS.flush();
 
             ObjectInputStream objIS = new ObjectInputStream(sendThreadSocket.getInputStream());
-
 
             Object msg = objIS.readObject();
 
@@ -31,11 +29,12 @@ public class PeerSendSocketHandler extends Thread implements Serializable {
 
             System.out.println("treatment of the message : " + msgCast.toString());
 
+            this.sendThreadSocket.close();
+
             msgCast.treatment(); // treatment of the data sent
 
             System.out.println("end of the treatment");
 
-            objOS.flush();
 
         } catch (Exception e) {
             e.printStackTrace();

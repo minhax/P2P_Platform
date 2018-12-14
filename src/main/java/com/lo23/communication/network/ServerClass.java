@@ -35,9 +35,11 @@ public class ServerClass
 			try
 			{
 				socket = serverSocket.accept();
+
 				++peerId;
 				System.out.println("server established connection with peer " + peerId);
-				new ServerHandler(socket, peerId).start();
+
+				new ServerHandler(socket, peerId).start(); // creation de nouveau thread pour le server
 			}
 
 			catch (IOException e)

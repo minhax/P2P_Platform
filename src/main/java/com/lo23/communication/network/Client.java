@@ -8,16 +8,16 @@ import java.io.Serializable;
 
 public class Client implements Serializable {
 
-    private Message msg;
-    private int portServ;
-    private String addrServ;
-    private int peerPortServ;
-    private String addrPeerServ;
-    private int clientPortServ;
+    private Message msg; // Message qu'on transfert sur le reseau
+    private int portServ; // Le port du server central (hardcoder a 1026)
+    private String addrServ; // L'adresse du server central
+    private int peerPortServ; // Le port du client qui agit en tant que server (pour recevoir des messages)
+    private String addrPeerServ; // L'adresse du client
+    private int clientPortServ; // Le port sur lequel le client ouvre sa socket
 
     public Client(Message msg,
-                  int portServ, String addrServ, // port & IP of the server central
-                  int peerPortServ, String addrPeerServ) // port & IP of the peer on which you want to DL)
+                  int portServ, String addrServ,
+                  int peerPortServ, String addrPeerServ)
     {
 
         this.msg = msg;
@@ -28,6 +28,9 @@ public class Client implements Serializable {
         this.clientPortServ = 0;
 
         try{
+            /*
+                Si le message est pour le server central
+             */
             if (msg.isToServ()){
                 // socket Client to Server Central
 
@@ -38,67 +41,69 @@ public class Client implements Serializable {
                 ObjectOutputStream objOS = new ObjectOutputStream(clientSocket.getOutputStream());
                 objOS.flush();
 
-                ObjectInputStream objIS = new ObjectInputStream(clientSocket.getInputStream());
-
                 System.out.println("Creation du flux ");
                 System.out.println();
 
                 msg.setPort(clientSocket.getLocalPort());
+
                 this.clientPortServ = clientSocket.getLocalPort();
+
                 System.out.println("Envoi du message" + msg.toString());
 
                 objOS.writeObject(msg); // client send data to the server
 
-                objOS.flush();
-
                 clientSocket.close();
     
                 // Client act as a server
-    
-                if (available(msg.getPort())){
+
+                /*
+                    Si le port est disponible, on peut ouvrir un ServerSocket sur ce Client,
+                    sinon on ne fait rien
+                 */
+                if (available(msg.getPort()))
+                {
                     PeerSendSocket objServer = new PeerSendSocket(this.clientPortServ);
                     objServer.start();
                 }
             }
+
+            /*
+                Sinon le message est pour un client
+             */
             else
                 clientAsServer(addrPeerServ, peerPortServ, msg);
 
-
-            // socket client remains open until socket timeout (default timeout)
-//            for (;;)
-//            {
-//                Object o = objIS.readObject(); // client read data from the server
-//                System.out.println(o);
-//            }
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    /*
+        Permet de communiquer avec un Client en tant que Server
+     */
     @SuppressWarnings({ "unused", "resource" })
     public static void clientAsServer(String clientAsServerAddr, int clientAsServerPort, Message msg)
     {
         try
         {
-
             Socket clientAsServerSocket = new Socket(clientAsServerAddr, clientAsServerPort); //msg.getPort());
 
             ObjectOutputStream objOS = new ObjectOutputStream(clientAsServerSocket.getOutputStream());
             objOS.flush();
 
-    //        ObjectInputStream objIS = new ObjectInputStream(clientAsServerSocket.getInputStream());
-
             objOS.writeObject(msg);
 
-            objOS.flush();
-
+            clientAsServerSocket.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /*
+        Methode qui verifie si un port est disponible ou non
+     */
     public static boolean available(int port)
     {
         if (port < 1 || port > 65535) {

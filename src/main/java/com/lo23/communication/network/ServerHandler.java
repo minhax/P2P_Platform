@@ -24,28 +24,24 @@ public class ServerHandler extends Thread implements Serializable
     {
         try
         {
-            ObjectOutputStream objOS = new ObjectOutputStream(socket.getOutputStream());
-            objOS.flush();
-
             ObjectInputStream objIS = new ObjectInputStream(socket.getInputStream());
 
             System.out.println("waiting object from client : " + peerId);
             System.out.println();
 
-            while(true) {
 
+            Object msg = objIS.readObject(); // server read data from the client
 
-                Object msg = objIS.readObject(); // server read data from the client
+            Message msgCast = (Message) msg;
 
-                Message msgCast = (Message) msg;
+            System.out.println("treatment of the message : " + msgCast.toString());
 
-                System.out.println("treatment of the message : " + msgCast.toString());
-                this.socket.close();
-                msgCast.treatment(); // treatment of the data sent
-                System.out.println("end of the treatment");
+            this.socket.close();
 
-                objOS.flush();
-            }
+            msgCast.treatment(); // treatment of the data sent
+
+            System.out.println("end of the treatment");
+
 
         }
         catch (Exception e){
