@@ -12,27 +12,6 @@ public interface IhmToDataClient {
      * @param user le nouvel utilisateur connecté au serveur
      */
 	void UpdateConnectedUsers(UserIdentity user);
-	
-	/**
-     * Met a jour la liste des fichiers disponibles avec un nouveau fichier
-     * @param fileInfo informations du fichier qui vient d'être ajouté
-     * @param user l'utilisateur qui a mis a disposition ce fichier
-     */
-     void UpdateAvailableFiles(FileHandlerInfos fileInfo, UserIdentity user);
-
-    /**
-     * Met à jour la liste des fichiers de l'utilisateur concerné
-     * @param userInfo utilisateur concerné par la mise a jour
-     * @param fileInfo ensemble des fichiers nouvellement ajouté par l'utilisateur
-     */
-     void sendUpdates(UserIdentity userInfo, List<FileHandlerInfos> fileInfo);
-
-    /**
-     * Ajoute une source à la liste des utilisateurs mettant à disposition un ficher
-     * @param fileInfo : le fichier concerné
-     * @param user : utilisateur mettant à disposition un fichier
-     */
-    void addFileSource(FileHandlerInfos fileInfo, UserIdentity user);
 
     /**
      * Affiche l'utilisateur mettant à disposition le fichier

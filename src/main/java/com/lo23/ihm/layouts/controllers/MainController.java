@@ -14,6 +14,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import com.lo23.common.user.UserIdentity;
+import com.lo23.data.client.DataManagerClient;
+
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -307,7 +309,6 @@ public class MainController implements Initializable {
     }
 
     private void refreshContactsWindow() {
-        //décommenter à l'intégration
         connectedUsers = api.requestConnectedUsers();
         if(connectedUsers!=null) {
 
@@ -408,17 +409,14 @@ public class MainController implements Initializable {
 
     public void researchFile(String searchItem, String searchMethod)
     {
-        //décommenter à l'integ
-        //DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
-        //researchResults = api.requestSearchFile(searchItem);
-
-        //pour test
-        researchResults.add(new FileHandlerInfos("hash", "title", 200, "type", 1, "desc"));
+        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+        researchResults = api.requestSearchFile(searchItem);
 
         ObservableList<FileHandlerInfos> donnees = FXCollections.observableArrayList(researchResults);
 
         listViewAvailableFiles.setItems(donnees);
     }
+
     
     public List<UserIdentity> getConnectedUsers()
     {
