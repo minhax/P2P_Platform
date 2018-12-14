@@ -5,8 +5,7 @@ import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.APIs.CommToDataServerAPI;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Message;
-import com.lo23.data.server.DataServerToCommAPI;
-import com.lo23.communication.network.Client;
+import com.lo23.communication.network.Client.Client;
 
 import java.util.EmptyStackException;
 // import java.util.LinkedHashMap;
@@ -122,7 +121,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 		{
 			String addrClient = entry.getKey();
 			int portClient = this.clientIptoPort.get(addrClient);
-			Client c = new Client(m, addrClient);/*TODO FIX hardcode por */
+			Client c = new Client(m, addrClient, portClient);/*TODO FIX hardcode por */
 		}
 		//Exception a rajouter?
 	}

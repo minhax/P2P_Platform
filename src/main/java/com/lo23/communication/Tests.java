@@ -2,7 +2,7 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.network.Client;
+import com.lo23.communication.network.Client.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 
 import java.io.BufferedReader;
@@ -63,7 +63,7 @@ public class Tests
 			int port = sc.nextInt();
 
             connectionMsg msgC = new connectionMsg(userstats, newList);
-					Client c = new Client(msgC,addr);
+					Client c = new Client(msgC,addr, port);
 		}
 		else{
 			System.out.println("wrong choice =.= ");

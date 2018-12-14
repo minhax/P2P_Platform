@@ -16,7 +16,8 @@ import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
 import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
 import com.lo23.communication.Messages.Files_Client.addCommentMsg;
 import com.lo23.communication.Messages.Files_Client.rateFileMsg;
-import com.lo23.communication.network.Client;
+import com.lo23.communication.network.Client.Client;
+import com.lo23.data.Const;
 
 
 import java.util.List;
@@ -80,7 +81,7 @@ public class CommToDataClientAPI implements CommToDataClient
         int portServer = 1026;
         String addrServer = cmc.getAddressIpServer();
         updateUserInfoMsg msg = new updateUserInfoMsg(user);
-        Client c = new Client(msg, addrServer);
+        Client c = new Client(msg, addrServer, Const.SERVER_DEFAULT_PORT);
     }
 
         @Override
@@ -88,7 +89,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
-        Client c = new Client(message, ip);
+        Client c = new Client(message, ip, Const.SERVER_DEFAULT_PORT);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
-        Client c = new Client(msg, ip);
+        Client c = new Client(msg, ip, Const.SERVER_DEFAULT_PORT);
     }
 
     @Override
@@ -104,7 +105,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
-        Client c = new Client(msg, ip);
+        Client c = new Client(msg, ip, Const.SERVER_DEFAULT_PORT);
     }
 
     /**
@@ -127,7 +128,7 @@ public class CommToDataClientAPI implements CommToDataClient
             e.printStackTrace();
         }
         logoutMsg message=new logoutMsg(user, myIPAdress);
-        Client c = new Client(message, cmc.getAddressIpServer());
+        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         System.out.println("[COM] Deconnexion reussie");
     }
 
@@ -144,7 +145,7 @@ public class CommToDataClientAPI implements CommToDataClient
         int portServ = 1026;
         connectionMsg message = new connectionMsg(user, fi);
         System.out.println("Client cree");
-        Client c = new Client(message, serverIP);
+        Client c = new Client(message, serverIP, Const.SERVER_DEFAULT_PORT);
     }
 
     /*@Override
@@ -180,7 +181,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
-        Client c = new Client(message, ip);
+        Client c = new Client(message, ip, Const.SERVER_DEFAULT_PORT);
     }
     
     @Override
@@ -188,7 +189,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         uploadFileMsg message = new uploadFileMsg(fi,user );
         System.out.println("Client cree");
-        Client c = new Client(message, cmc.getAddressIpServer());
+        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
     }
 
     @Override
