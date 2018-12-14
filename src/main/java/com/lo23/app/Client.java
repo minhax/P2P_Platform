@@ -17,6 +17,12 @@ public class Client extends Application {
     }
 
     @Override
+    public void start(Stage stage) throws Exception {
+
+    }
+
+    /*
+    @Override
     public void start(Stage primaryStage)
             throws Exception
     {
@@ -38,5 +44,5 @@ public class Client extends Application {
         primaryStage.setTitle("My Application");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-    }
+    }*/
 }
