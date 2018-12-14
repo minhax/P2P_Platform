@@ -23,7 +23,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * Récupère un objet interface de DataServer et CommServer
 	 * Récupère l'adresse IP de la machine sur le réseau UTC
 	 * Instancie la LinkedHashMap
-	 * @param IP client et IP ServerClass
 	 * ...
 	 * @return void
 	 **/
@@ -123,7 +122,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 		{
 			String addrClient = entry.getKey();
 			int portClient = this.clientIptoPort.get(addrClient);
-			Client c = new Client(m , 1026, null, portClient, addrClient);/*TODO FIX hardcode por */
+			Client c = new Client(m, addrClient);/*TODO FIX hardcode por */
 		}
 		//Exception a rajouter?
 	}

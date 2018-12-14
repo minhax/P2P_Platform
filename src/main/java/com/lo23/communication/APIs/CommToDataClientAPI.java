@@ -80,7 +80,7 @@ public class CommToDataClientAPI implements CommToDataClient
         int portServer = 1026;
         String addrServer = cmc.getAddressIpServer();
         updateUserInfoMsg msg = new updateUserInfoMsg(user);
-        Client c = new Client(msg, portServer, addrServer, 0, null);
+        Client c = new Client(msg, addrServer);
     }
 
         @Override
@@ -88,7 +88,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
-        Client client=new Client(message, 1026, ip, 0, null);
+        Client c = new Client(message, ip);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
-        Client c = new Client(msg, 1026, ip, 0, null);
+        Client c = new Client(msg, ip);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
-        Client c = new Client(msg, 1026, ip, 0, null);
+        Client c = new Client(msg, ip);
     }
 
     /**
@@ -127,7 +127,7 @@ public class CommToDataClientAPI implements CommToDataClient
             e.printStackTrace();
         }
         logoutMsg message=new logoutMsg(user, myIPAdress);
-        Client c = new Client(message, portServ, cmc.getAddressIpServer(), 0, null);
+        Client c = new Client(message, cmc.getAddressIpServer());
         System.out.println("[COM] Deconnexion reussie");
     }
 
@@ -144,7 +144,7 @@ public class CommToDataClientAPI implements CommToDataClient
         int portServ = 1026;
         connectionMsg message = new connectionMsg(user, fi);
         System.out.println("Client cree");
-        Client c = new Client(message, portServ, serverIP, 0, null);
+        Client c = new Client(message, serverIP);
     }
 
     /*@Override
@@ -180,16 +180,15 @@ public class CommToDataClientAPI implements CommToDataClient
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String ip = cmc.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
-        Client client=new Client(message, 1026, ip, 0, null);
+        Client c = new Client(message, ip);
     }
     
     @Override
     public void uploadFile(FileHandlerInfos fi, UserIdentity user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        int portServ = 1026;
         uploadFileMsg message = new uploadFileMsg(fi,user );
         System.out.println("Client cree");
-        Client c = new Client(message, portServ, cmc.getAddressIpServer(), 0, null);
+        Client c = new Client(message, cmc.getAddressIpServer());
     }
 
     @Override
