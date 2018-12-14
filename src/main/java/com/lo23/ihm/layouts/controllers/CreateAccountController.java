@@ -38,6 +38,10 @@ public class CreateAccountController implements Initializable {
     private DataClientToIhm api;
 
 
+    public CreateAccountController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new CreateAccountModel();
@@ -69,8 +73,19 @@ public class CreateAccountController implements Initializable {
             System.out.println(loginTextField.getText() + passwordField.getText() + firstnameTextField.getText() + lastnameTextField.getText() + ageTextField.getText());
 
             try {
-                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
+                Stage stage = (Stage) accountFormPane.getScene().getWindow();
+                stage.setTitle("Fenêtre principale");
+                stage.setScene(new Scene(root));*/
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                // TODO: déclarer le controller de IHM
+                MainController controller = new MainController(api); // EXEMPLE
+                fxmlLoader.setController(controller);
+                // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+                fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                Parent root = fxmlLoader.load();
                 Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));

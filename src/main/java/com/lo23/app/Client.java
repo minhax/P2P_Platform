@@ -36,7 +36,7 @@ public class Client extends Application {
         ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi()); // EXEMPLE
         fxmlLoader.setController(controller);
         // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
-        fxmlLoader.setLocation(getClass().getResource("connectionLayout.fxml"));
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
 
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("My Application");

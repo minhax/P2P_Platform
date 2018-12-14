@@ -76,7 +76,7 @@ public class ConnectionController implements Initializable {
 
             }
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
+                /*FXMLLoader fxmlLoader = new FXMLLoader();
                 MainController controller = new MainController(api); // EXEMPLE
                 IhmToDataClientAPI IhmAPI = new IhmToDataClientAPI(controller);
                 //api.setIhmAPI(IhmAPI);
@@ -86,7 +86,20 @@ public class ConnectionController implements Initializable {
                 Parent root = fxmlLoader.load();
                 Stage stage = (Stage) connectionPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
+                stage.setScene(new Scene(root));*/
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                // TODO: déclarer le controller de IHM
+                MainController controller = new MainController(api); // EXEMPLE
+                fxmlLoader.setController(controller);
+                // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+                fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage stage = (Stage) connectionPane.getScene().getWindow();
+                stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -98,11 +111,23 @@ public class ConnectionController implements Initializable {
     @FXML
     public void OnCreateAccountLoaderClicked(ActionEvent event) {
         try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("createAccountLayout.fxml"));
-            Parent root = fxmlloader.load();
+            /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("createAccountLayout.fxml"));*/
+
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            // TODO: déclarer le controller de IHM
+            CreateAccountController controller = new CreateAccountController(api); // EXEMPLE
+            fxmlLoader.setController(controller);
+            // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("createAccountLayout.fxml"));
+
+
+            Parent root = fxmlLoader.load();
             Stage stage = (Stage) connectionPane.getScene().getWindow();
             stage.setTitle("Creation de compte");
             stage.setScene(new Scene(root));
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

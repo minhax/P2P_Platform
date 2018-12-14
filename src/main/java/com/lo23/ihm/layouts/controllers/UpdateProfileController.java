@@ -94,8 +94,16 @@ public class UpdateProfileController implements Initializable {
     @FXML
     void Previous() {
     	 try {
-             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
-             Parent root = fxmlloader.load();
+             //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+             FXMLLoader fxmlLoader = new FXMLLoader();
+             // TODO: déclarer le controller de IHM
+             MainController controller = new MainController(api); // EXEMPLE
+             fxmlLoader.setController(controller);
+             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+             fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
+
+
+             Parent root = fxmlLoader.load();
              Stage stage = (Stage) updateUserPane.getScene().getWindow();
              stage.setTitle("Fenêtre principale");
              stage.setScene(new Scene(root));

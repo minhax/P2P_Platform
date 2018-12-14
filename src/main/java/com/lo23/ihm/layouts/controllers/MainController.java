@@ -294,8 +294,15 @@ public class MainController implements Initializable {
     @FXML
     public void OnDisconnectButtonClicked() {
         try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
-            Parent root = fxmlloader.load();
+            //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            // TODO: déclarer le controller de IHM
+            ConnectionController controller = new ConnectionController(api); // EXEMPLE
+            fxmlLoader.setController(controller);
+            // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+
+            Parent root = fxmlLoader.load();
             Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
             stage.setScene(new Scene(root));
@@ -329,10 +336,18 @@ public class MainController implements Initializable {
     @FXML
     public void OnUpdateUserButtonClicked() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
+            /*FXMLLoader fxmlLoader = new FXMLLoader();
             UpdateProfileController controller = new UpdateProfileController(api); // EXEMPLE
             fxmlLoader.setController(controller);
-            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));*/
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            // TODO: déclarer le controller de IHM
+            UpdateProfileController controller = new UpdateProfileController(api); // EXEMPLE
+            fxmlLoader.setController(controller);
+            // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
+
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
@@ -351,7 +366,10 @@ public class MainController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             PartageController controller = new PartageController(api); // EXEMPLE
             fxmlLoader.setController(controller);
-            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
+            //fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
+
+
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
