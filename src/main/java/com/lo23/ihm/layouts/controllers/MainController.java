@@ -409,7 +409,7 @@ public class MainController implements Initializable {
 
     public void researchFile(String searchItem, String searchMethod)
     {
-        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
+
         researchResults = api.requestSearchFile(searchItem);
 
         ObservableList<FileHandlerInfos> donnees = FXCollections.observableArrayList(researchResults);
