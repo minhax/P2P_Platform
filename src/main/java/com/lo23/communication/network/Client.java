@@ -16,9 +16,9 @@ public class Client implements Serializable{
 
     private Message msg; // Message qu'on transfert sur le reseau
     //private int portServ; // Le port du server central (hardcoder a 1026) /** In constant file
-    //private int peerPortServ; // Le port du client qui agit en tant que server (pour recevoir des messages)
+    private int serverPort; // Le port du client qui agit en tant que server (pour recevoir des messages)
     private String serverAdress; // L'adresse du client
-    private int involvedPort; // Le port sur lequel le client ouvre sa socket
+    private int clientPort; // Le port sur lequel le client ouvre sa socket
     private boolean jobDone;
     public Client(Message msg,
                   String serverAdress)
@@ -29,18 +29,18 @@ public class Client implements Serializable{
         //this.addrServ = addrServ;
         //this.peerPortServ = peerPortServ;
         this.serverAdress = serverAdress;
-        this.involvedPort = Const.INVOLVED_PORT;
+        this.serverPort = Const.INVOLVED_PORT;
         this.jobDone = false;
         while(!this.jobDone)
         {
-            this.start(this.serverAdress,this.involvedPort);
+            this.start(this.serverAdress,this.serverPort);
         }
     }
     
     /**
      * Create socket between a client (initialize connection) and a server
      * @param serveradress
-     * @param involvedPort
+     * @param clientPort
      * Increment involvedPort if occupied on server, to try another socket connection
      */
     public void start(String serverAdress, int port)
@@ -48,6 +48,7 @@ public class Client implements Serializable{
             Socket socket;
             try {
                 socket = new Socket(serverAdress,port);
+                socket.getLocalPort();
                 this.setJobDone(true);
                 /**TODO TREATEMENT**/
                 socket.close();
@@ -55,7 +56,7 @@ public class Client implements Serializable{
         
                 e.printStackTrace();
             }    finally {
-                this.involvedPort++;
+                this.clientPort++;
             }
         }
         public void setJobDone(boolean value)
