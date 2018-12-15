@@ -10,7 +10,7 @@ import com.lo23.common.user.User;
 import java.util.List;
 
 public class removeDisconnectedUserMsg extends UserMessage{
-	
+
 	protected List<FileHandlerInfos> fhInfos;
 	private CommunicationManagerClient commManager;
 	
@@ -28,7 +28,7 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	public void treatment(){
 		DataClientToComm dataInterface = this.commManager.getDataInterface();
 		User user = (User)this.user;
-		dataInterface.notifyOtherUserDisconnectedToAll(user, this.fhInfos, this.commManager);
+		dataInterface.notifyOtherUserDisconnectedToAll(user);
 	}
 
     public boolean isToServ(){return false;}

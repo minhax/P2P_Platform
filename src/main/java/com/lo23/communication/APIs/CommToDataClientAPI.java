@@ -89,21 +89,21 @@ public class CommToDataClientAPI implements CommToDataClient
         @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
         String ip = this.commManagerClient.getAddressIpServer();
-        makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user, this.commManagerServer);
+        makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user, this.commManagerServer, this.commManagerClient);
         Client client=new Client(message, 1026, ip, 0, null);
     }
 
     @Override
     public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
         String ip = this.commManagerClient.getAddressIpServer();
-        addCommentMsg msg = new addCommentMsg(commentedFile, comment, user, this.commManagerServer);
+        addCommentMsg msg = new addCommentMsg(commentedFile, comment, user, this.commManagerServer, this.commManagerClient);
         Client c = new Client(msg, 1026, ip, 0, null);
     }
 
     @Override
     public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
         String ip = this.commManagerClient.getAddressIpServer();
-        rateFileMsg msg = new rateFileMsg(ratedFile, rating, user, this.commManagerServer);
+        rateFileMsg msg = new rateFileMsg(ratedFile, rating, user, this.commManagerServer, this.commManagerClient);
         Client c = new Client(msg, 1026, ip, 0, null);
     }
 
@@ -117,7 +117,7 @@ public class CommToDataClientAPI implements CommToDataClient
      * @return void
      **/
     @Override
-    public void requestLogoutToServer(UserStats user){
+    public void requestLogoutToServer(UserStats user, List<FileHandlerInfos> userFiles){
         String myIPAdress = null;
         int portServ = 1026;
         try {
@@ -125,7 +125,7 @@ public class CommToDataClientAPI implements CommToDataClient
         }catch (Exception e){
             e.printStackTrace();
         }
-        logoutMsg message=new logoutMsg(user, myIPAdress, this.commManagerServer);
+        logoutMsg message=new logoutMsg(user, myIPAdress, userFiles, this.commManagerServer, this.commManagerClient);
         Client c = new Client(message, portServ, this.commManagerClient.getAddressIpServer(), 0, null);
         System.out.println("[COM] Deconnexion reussie");
     }
@@ -177,14 +177,14 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestUploadFile(FileHandlerInfos file, UserIdentity user){ //TODO Fix le parametre UserIdentity ou User?
         //TODO: rajouter exception
         String ip = this.commManagerClient.getAddressIpServer();
-        uploadFileMsg message=new uploadFileMsg(file, user, this.commManagerServer);
+        uploadFileMsg message=new uploadFileMsg(file, user, this.commManagerServer, this.commManagerClient);
         Client client=new Client(message, 1026, ip, 0, null);
     }
 
     @Override
     public void uploadFile(FileHandlerInfos fi, UserIdentity user){
         int portServ = 1026;
-        uploadFileMsg message = new uploadFileMsg(fi,user, this.commManagerServer);
+        uploadFileMsg message = new uploadFileMsg(fi,user, this.commManagerServer, this.commManagerClient);
         System.out.println("Client cree");
         Client c = new Client(message, portServ, this.commManagerClient.getAddressIpServer(), 0, null);
     }

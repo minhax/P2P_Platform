@@ -2,14 +2,12 @@ package com.lo23.communication.CommunicationManager.Server;
 
 import com.lo23.common.exceptions.CommException;
 import com.lo23.common.interfaces.data.DataServerToComm;
-import com.lo23.communication.APIs.CommToDataServerAPI;
-import com.lo23.communication.CommunicationManager.CommunicationManager;
+import com.lo23.communication.APIs.*;
+import com.lo23.communication.CommunicationManager.*;
 import com.lo23.communication.Messages.Message;
-import com.lo23.data.server.DataServerToCommAPI;
-import com.lo23.communication.network.Client;
+import com.lo23.communication.network.*;
 
 import java.util.EmptyStackException;
-// import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +31,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 			this.dataInterface = null;
 			
 			try {
-				this.clientIptoPort.put(CommunicationManager.findIpAdress());
+				this.clientIptoPort.put(this.findIPadress(), 1026);
 			} catch (Exception ex) {
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
@@ -60,13 +58,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	public String getIP()
 	{
 		return this.ip;
-	}
-	/** Singleton **/
-
-	private static CommunicationManagerServer Instance = new CommunicationManagerServer();
-	public static CommunicationManagerServer getInstance()
-	{
-		return Instance;
 	}
 
 

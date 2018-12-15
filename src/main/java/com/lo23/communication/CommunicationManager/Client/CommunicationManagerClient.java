@@ -5,9 +5,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import com.lo23.common.interfaces.data.DataClientToComm;
-import com.lo23.communication.APIs.CommToDataClientAPI;
-import com.lo23.communication.CommunicationManager.Server;
-import com.lo23.communication.CommunicationManager;
+import com.lo23.communication.APIs.*;
+import com.lo23.communication.CommunicationManager.*;
+import com.lo23.communication.*;
+import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 
 public class CommunicationManagerClient extends CommunicationManager{
 
@@ -30,7 +31,7 @@ public class CommunicationManagerClient extends CommunicationManager{
 		this.addressIpServer = null;
 
 		try {
-			this.addressIpServer = CommunicationManager.findIPadress();
+			this.addressIpServer = this.findIPadress();
 		} catch (Exception ex) {
 			System.out.print("Erreur dans la recuperation de l'adresse IP");
 		}

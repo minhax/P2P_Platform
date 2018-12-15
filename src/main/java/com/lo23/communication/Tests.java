@@ -2,6 +2,8 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
+import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.network.ServerClass;
 import com.lo23.communication.network.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
@@ -31,6 +33,11 @@ public class Tests
 		ArrayList<FileHandlerInfos> newList = new ArrayList<>();
 		newList.add(fi);
 		String myIP = null;
+
+		//communicationManagers
+		CommunicationManagerClient cmc=new CommunicationManagerClient();
+		CommunicationManagerServer cms=new CommunicationManagerServer();
+
 		try {
 			myIP = Inet4Address.getLocalHost().getHostAddress();
 		}catch (UnknownHostException e)
@@ -63,7 +70,7 @@ public class Tests
 			System.out.println("enter the port : ");
 			int port = sc.nextInt();
 
-            connectionMsg msgC = new connectionMsg(userstats, newList);
+            connectionMsg msgC = new connectionMsg(userstats, newList, cms, cmc);
 					Client c = new Client(msgC, port, addr, 0, null);
 		}
 		else{

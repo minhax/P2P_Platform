@@ -1,10 +1,8 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
-import com.lo23.common.user.User;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
-import com.lo23.communication.CommunicationManager.Server.ClientInfo;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
@@ -61,14 +59,18 @@ public class connectionMsg extends Authentication {
 	}
 	
 	public List<FileHandlerInfos> getFileInfo() {
+
 		return fileInfo;
 	}
 	
 	
-	public String getMyIp() {
+	public String getMyIp()
+	{
 		return UserIPAdress;
 	}
 
-	public boolean isToServ(){return true;}
+	public boolean isToServ(){
+		return true;
+	}
 }
 
