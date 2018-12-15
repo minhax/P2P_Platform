@@ -1,4 +1,4 @@
-package com.lo23.communication.network;
+package com.lo23.communication.network.Client;
 
 import com.lo23.communication.Messages.Message;
 
@@ -27,7 +27,7 @@ public class SendMessage extends Thread {
 	/**
 	 * Numéro de port sur lequel envoyer le message
 	 */
-	private int port;
+	private int destinationPort;
 	
 	/**
 	 * Port local
@@ -35,22 +35,17 @@ public class SendMessage extends Thread {
 	private int localPort;
 	
 	/**
-	 * booléen
-	 */
-	private boolean jobDone;
-	/**
 	 * Constructeur de la classe
 	 *
 	 * @param address   Socket pour l'envoi du message
 	 * @param port      Port à utiliser
 	 * @param msg       Message à transmettre
 	 */
-	public SendMessage(String address, Integer port, Message msg) {
-		this.socket = null;
+	public SendMessage(Socket s, String address, Integer port, Message msg) {
+		this.socket = s;
 		this.msg = msg;
 		this.address = address;
-		this.port = port;
-		this.output = null;
+		this.destinationPort = port;
 	}
 	
 	/**
@@ -59,19 +54,26 @@ public class SendMessage extends Thread {
 	@Override
 	public void run() {
 		try {
-			this.socket = new Socket(this.address, this.port);
-			output = new ObjectOutputStream(this.socket.getOutputStream());
+			/**
+			 * Recuperation de l'output stream
+			 * Envoi du message
+			 */
+			try {
+				this.output = new ObjectOutputStream(this.socket.getOutputStream());
+			}catch(IOException e)
+			{
+				e.printStackTrace();
+				System.out.println(" Impossible de recuperer l'output stream");
+			}
 			this.msg.setPort(this.localPort);
+			
 			output.writeObject(this.msg);
 			output.flush(); // check si correct pendat test
 			output.close();
 			socket.close();
 		} catch (IOException exc) {
 			exc.printStackTrace();
+			System.out.println("Erreur lors de l'envoi du msg = " + msg + " a destination de =" + address + " sur le port = " + this.localPort);
 		}
-	}
-	public int getLocalPort()
-	{
-		return this.localPort;
 	}
 }

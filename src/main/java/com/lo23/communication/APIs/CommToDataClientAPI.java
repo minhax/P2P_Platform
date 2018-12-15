@@ -82,6 +82,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String addrServer = cmc.getAddressIpServer();
         updateUserInfoMsg msg = new updateUserInfoMsg(user);
         Client c = new Client(msg, addrServer, Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
         @Override
@@ -90,6 +91,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = cmc.getAddressIpServer();
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
         Client c = new Client(message, ip, Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     @Override
@@ -98,6 +100,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = cmc.getAddressIpServer();
         addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
         Client c = new Client(msg, ip, Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     @Override
@@ -106,6 +109,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = cmc.getAddressIpServer();
         rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
         Client c = new Client(msg, ip, Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     /**
@@ -129,6 +133,7 @@ public class CommToDataClientAPI implements CommToDataClient
         }
         logoutMsg message=new logoutMsg(user, myIPAdress);
         Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
         System.out.println("[COM] Deconnexion reussie");
     }
 
@@ -146,6 +151,7 @@ public class CommToDataClientAPI implements CommToDataClient
         connectionMsg message = new connectionMsg(user, fi);
         System.out.println("Client cree");
         Client c = new Client(message, serverIP, Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     /*@Override
@@ -182,6 +188,7 @@ public class CommToDataClientAPI implements CommToDataClient
         String ip = cmc.getAddressIpServer();
         uploadFileMsg message=new uploadFileMsg(file, user);
         Client c = new Client(message, ip, Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
     
     @Override
@@ -190,6 +197,7 @@ public class CommToDataClientAPI implements CommToDataClient
         uploadFileMsg message = new uploadFileMsg(fi,user );
         System.out.println("Client cree");
         Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     @Override

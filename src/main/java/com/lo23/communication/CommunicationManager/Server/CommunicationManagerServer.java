@@ -121,9 +121,15 @@ public class CommunicationManagerServer extends CommunicationManager {
 		{
 			String addrClient = entry.getKey();
 			int portClient = this.clientIptoPort.get(addrClient);
-			Client c = new Client(m, addrClient, portClient);/*TODO FIX hardcode por */
+			try{
+				Client c = new Client(m, addrClient, portClient);
+				c.start();
+			}catch (Exception e)
+			{
+				e.printStackTrace();
+				System.out.println("Erreur dans la creation du client");
+			}
 		}
-		//Exception a rajouter?
 	}
 	
 }

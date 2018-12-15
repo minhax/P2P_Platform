@@ -4,64 +4,58 @@ import com.lo23.data.Const;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
-
-import java.io.IOException;
-import java.net.*;
 
 /**
- * Server class for
+ * Class serveur
+ * Cree un Serveur Socket sur le port 8000 + nombre d'utilisateurs connectes.
+ * Lance un thread pour recuperer les messages entrants.
  */
 public class ServerSock extends  Thread{
-    
-    private int currentPort; // Server port
+	
+	/**
+	 * Nombre d'utilisateurs connectes
+	 */
+	private static int usersConnected = 0;
+	/**
+	 * Port de depart du serveur
+	 */
+	private int firstPort;
     
     /**
      * Serveur de socket
      */
     private ServerSocket serverSocket;
-    /**
-     * booléan pour l'écoute du serversocket
-     */
-    private Boolean isListening;
-    /**
-     * Méthode de fermeture du serverSocket
-     */
-    public void closeServerSocket(){
-        isListening = false;
-        try {
-            serverSocket.close();
-        }catch (IOException err){
-            err.printStackTrace();
-        }
-    }
     
-    /**
-     * Constructeur de la classe
-     * @param manager Référence vers la classe principale du module
-     */
     public ServerSock(){
-        this.currentPort = Const.SERVER_DEFAULT_PORT;
+        this.firstPort = Const.SERVER_DEFAULT_PORT;
     }
     
     /**
-     * Récéption d'un message sur le réseau
+     * Ouverture d'un serveurSocket sur le port par default
      */
     @Override
     public void run() {
+	    //isListening = true;
         try {
-            this.serverSocket = new ServerSocket(this.currentPort);
-            isListening = true;
-            while (isListening) {
-                Socket socket = this.serverSocket.accept();
-                /** TODO COde pour lecture des messages avec un nouveau thread
-                ReadMessage readMessageService = new ReadMessage(this.manager, socket);
-                readMessageService.start();
-                 **/
-            }
-        } catch (IOException exc) {
-            exc.printStackTrace();
+	        this.serverSocket = new ServerSocket(this.firstPort + this.usersConnected);
+	        System.out.println("Creation d'un serveur socket sur le port " + this.serverSocket.getLocalPort());
+        }catch (Exception e)
+        {
+        	e.printStackTrace();
+        	int port = this.firstPort + this.usersConnected;
+	        System.out.println("Erreur de creation de Server Socket sur le port = " + port);
         }
-    }
-    
+            try{
+		        AcceptConnexion connexion = new AcceptConnexion(this.serverSocket);
+		        connexion.start();
+	        /** On arrive ici, quand la connexion a réussi avec un autre, ce qui implique qu'il faut ouvrir un autre server Socket sur un autre port pour continuer a ecouter
+	         *
+	         */
+	            this.usersConnected++;
+            }catch(Exception e)
+            {
+            	e.printStackTrace();
+	            System.out.println("Echec du lancement de la connexion et recuperation de message serveur");
+            }
+        }
 }

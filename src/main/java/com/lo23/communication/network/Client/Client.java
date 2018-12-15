@@ -1,70 +1,108 @@
 package com.lo23.communication.network.Client;
 
-import java.io.*;
-import java.net.*;
-
 import com.lo23.communication.Messages.Message;
-import com.lo23.communication.network.SendMessage;
-import com.lo23.data.Const;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.Socket;
 
 /**
  * Client for socket communication
  * Careful, the Central Server can act as a Client if he's sending messages to Peers
  */
-public class Client implements Serializable{
-
-    private Message msg; // Message qu'on transfert sur le reseau
-    //private int portServ; // Le port du server central (hardcoder a 1026) /** In constant file
+public class Client extends Thread implements Serializable{
+    
+    /**
+     * Message que l'on diffuse sur le reseau
+     */
+    private Message msg;
+    /**
+     * Port destination
+     */
     private int destinationPort; // Le port destination
+    /**
+     * Adresse IP de destination
+     */
     private String destinationAdress; // L'adresse du client
+    /**
+     * Boolean pour indiquer la fin de la transmission du message
+     */
     private boolean jobDone;
+    
+    /**
+     * Socket de communication avec le serveur
+     */
+    private Socket socket;
+    
+    /**
+     * Constructeur
+     * @param msg
+     * @param destinationAdress
+     * @param destinationPort
+     */
     public Client(Message msg,
                   String destinationAdress, int destinationPort)
     {
-        //this.portServ = portServ;
-        //this.addrServ = addrServ;
         this.msg = msg;
         this.destinationAdress = destinationAdress;
         this.destinationPort = destinationPort;
         this.jobDone = false;
-
-        this.start(this.msg, this.destinationAdress,this.destinationPort);
+        /**
+         * Lancement de la routine d'envoi du message
+         */
     }
     
+
+    
+    @Override
+    public void run(){
+        try {
+            this.start(this.msg, this.destinationAdress, this.destinationPort);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("msg = " + msg + "Destination = " + destinationAdress + "port = " + destinationPort);
+        }
+    }
     /**
-     * Create socket between a client (initialize connection) and a server
-     * @param serveradress
-     * @param clientPort
-     * Increment involvedPort if occupied on server, to try another socket connection
+     * Creation de la socket, connexion et envoi du message. Si le port n'est pas disponible, incremente le port et reessaye
+     * @param msg
+     * @param destinationAdress
+     * @param destinationPort
      */
     public void start(Message msg ,String destinationAdress, int destinationPort)
     {
         /**
-         *  Création de la socket
-         *  Récupération du port local
-         *  Envoi du message
-         *  Fermeture de la socket
-         * **/
+         * Tant que le message n'est pas envoye, on reessaye l'ouverture de sockets
+         */
         while (!this.jobDone) {
-            try {
-                /**
-                 * SendMessageSocket implemente Thread
-                 * Ouvre une socket, en cas d'echec, retourne une exception qui sera catch dans ce bloc
-                 * quitte la boucle des que le message est envoye
-                 */
-                SendMessage sendMessageSocket = new SendMessage(destinationAdress, destinationPort, msg);
-                sendMessageSocket.start();
-                this.jobDone = true;
-            } catch (Exception e) {
+            try{
+                this.socket = new Socket(this.destinationAdress, this.destinationPort);
+                try {
+                    /**
+                     * SendMessageSocket implemente Thread
+                     * Ouvre une socket, en cas d'echec, retourne une exception qui sera catch dans ce bloc
+                     * quitte la boucle des que le message est envoye
+                     */
+                    SendMessage sendMessageSocket = new SendMessage(socket,destinationAdress, destinationPort, msg);
+                    sendMessageSocket.start();
+                    /**
+                     * Message envoye, on modifie la valeur du booleen
+                     */
+                    this.jobDone = true;
+                } catch (Exception e) {
+                    System.out.println("Port " + destinationPort + " non disponible");
+                    e.printStackTrace();
+                } finally {
+                    /**
+                     * Execute meme si une erreur survient
+                     * incremente le port de destination pour pouvoir retenter une connexion socket
+                     */
+                    this.destinationPort++;
+                }
+        }catch(IOException e)
+            {
                 e.printStackTrace();
-            } finally {
-                /**
-                 * Morceau de code execute meme si une erreur survient
-                 * incremente le port de destination pour pouvoir retenter une connexion socket
-                 */
-                this.destinationPort++;
             }
         }
     }

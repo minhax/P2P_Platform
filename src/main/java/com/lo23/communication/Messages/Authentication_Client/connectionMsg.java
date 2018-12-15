@@ -58,15 +58,6 @@ public class connectionMsg extends Authentication {
 		cms.broadcast(message);
 	}
 	
-	public List<FileHandlerInfos> getFileInfo() {
-		return fileInfo;
-	}
-	
-	
-	public String getMyIp() {
-		return UserIPAdress;
-	}
-
 	public boolean isToServ(){return true;}
 }
 
