@@ -95,7 +95,7 @@ public class Client extends Thread implements Serializable{
                  * Execute meme si une erreur survient
                  * incremente le port de destination pour pouvoir retenter une connexion socket
                  */
-                this.destinationPort++;
+                //this.destinationPort++;
             }
         }
     }

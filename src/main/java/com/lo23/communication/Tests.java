@@ -2,9 +2,13 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
+import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.network.Client.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.network.Serveur.ServerSock;
+import com.lo23.data.client.DataManagerClient;
+import com.lo23.data.server.DataManagerServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,7 +59,14 @@ public class Tests
 		}
 		if(test == 1)
 		{
-
+			
+			DataManagerServer dataManagerServer = new DataManagerServer("LO23 Swag");
+			CommunicationManagerServer commManager = CommunicationManagerServer.getInstance();
+			
+			// On partage les APIs entre les Manager
+			dataManagerServer.setCommToDataServer(commManager.getCommInterface());
+			commManager.setDataInterface(dataManagerServer.getDataServerToCommApi());
+			
 			while(true) {
 				if (ServerSock.createNewServer)
 				{
@@ -77,7 +88,12 @@ public class Tests
 		}
 		else if(test == 2)
 		{
-
+			DataManagerClient dataManagerClient = DataManagerClient.getInstance();
+			CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+			
+			dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
+			commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());
+			
             connectionMsg msgC = new connectionMsg(userstats, newList);
             Client c = new Client(msgC,"172.25.29.199", 1026);
             c.start();

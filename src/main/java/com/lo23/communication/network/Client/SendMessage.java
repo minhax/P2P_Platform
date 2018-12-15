@@ -69,8 +69,11 @@ public class SendMessage extends Thread {
 			
 			output.writeObject(this.msg);
 			output.flush(); // check si correct pendat test
+			System.out.println("Message envoyé");
 			output.close();
+			System.out.println("Fermeture de l'output stream");
 			socket.close();
+			System.out.println("Fermeture de la socket");
 		} catch (IOException exc) {
 			exc.printStackTrace();
 			System.out.println("Erreur lors de l'envoi du msg = " + msg + " a destination de =" + address + " sur le port = " + this.localPort);

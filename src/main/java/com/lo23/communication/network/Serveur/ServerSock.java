@@ -66,7 +66,7 @@ public class ServerSock extends  Thread{
         	 createNewServer = value;
 
         }
-        public boolean getCrateNewServer(){
+        public boolean getCreateNewServer(){
     	return this.createNewServer;
         }
 }
