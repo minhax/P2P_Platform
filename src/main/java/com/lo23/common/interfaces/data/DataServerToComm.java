@@ -10,6 +10,7 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Interface destinée à l'équipe Comm pour communiquer avec la partie Data Serveur.
@@ -65,6 +66,12 @@ public interface DataServerToComm
      * @return liste des utilisateurs possédant le fichier
      */
     List<UserIdentity> requestFileLocationServer(FileHandler file);
+
+    /**
+     * Retourne la liste des utilisateurs actuellement connectés sur le réseau
+     * @return liste des utilisateurs connectés
+     */
+    Vector<UserIdentity> fetchConnectedUsersList();
 
     /**
      * Met à jour les informations d'un fichier
