@@ -52,8 +52,6 @@ public class Client extends Thread implements Serializable{
          */
     }
     
-
-    
     @Override
     public void run(){
         try {
@@ -76,33 +74,28 @@ public class Client extends Thread implements Serializable{
          * Tant que le message n'est pas envoye, on reessaye l'ouverture de sockets
          */
         while (!this.jobDone) {
-            try{
+            try {
                 this.socket = new Socket(this.destinationAdress, this.destinationPort);
+                this.jobDone = true;
                 try {
                     /**
                      * SendMessageSocket implemente Thread
-                     * Ouvre une socket, en cas d'echec, retourne une exception qui sera catch dans ce bloc
                      * quitte la boucle des que le message est envoye
                      */
-                    SendMessage sendMessageSocket = new SendMessage(socket,destinationAdress, destinationPort, msg);
+                    SendMessage sendMessageSocket = new SendMessage(socket, destinationAdress, destinationPort, msg);
                     sendMessageSocket.start();
-                    /**
-                     * Message envoye, on modifie la valeur du booleen
-                     */
-                    this.jobDone = true;
                 } catch (Exception e) {
-                    System.out.println("Port " + destinationPort + " non disponible");
                     e.printStackTrace();
-                } finally {
-                    /**
-                     * Execute meme si une erreur survient
-                     * incremente le port de destination pour pouvoir retenter une connexion socket
-                     */
-                    this.destinationPort++;
                 }
-        }catch(IOException e)
-            {
+            } catch (IOException e) {
+                System.out.println("Port " + destinationPort + " non disponible");
                 e.printStackTrace();
+            } finally {
+                /**
+                 * Execute meme si une erreur survient
+                 * incremente le port de destination pour pouvoir retenter une connexion socket
+                 */
+                this.destinationPort++;
             }
         }
     }

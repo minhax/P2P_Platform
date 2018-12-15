@@ -15,9 +15,12 @@ public class AcceptConnexion extends Thread {
 	 */
 	private Socket socket = null;
 	
-	public AcceptConnexion(ServerSocket ss)
+	private ServerSock server = null;
+	
+	public AcceptConnexion(ServerSock server, ServerSocket ss)
 	{
 		this.socketserver = ss;
+		this.server = server;
 	}
 	
 	@Override
@@ -25,11 +28,11 @@ public class AcceptConnexion extends Thread {
 	
 			try{
 				while(true){
-					
+					System.out.println("En attente de connexion d'un client");
 					socket = socketserver.accept();
 					System.out.println("Socket ouverte sur le port: " + socket.getLocalPort());
-					System.out.println("Connexion demandée par un client");
-					
+					this.server.setCreateNewServer(true);
+					ServerSock.usersConnected++;
 					ReadMessage read = new ReadMessage(socket);
 					read.start();
 				}

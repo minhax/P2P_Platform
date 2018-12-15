@@ -4,6 +4,7 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.network.Client.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
+import com.lo23.communication.network.Serveur.ServerSock;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +12,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.net.*;
 import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
 
 public class Tests
 {
@@ -52,18 +55,31 @@ public class Tests
 		}
 		if(test == 1)
 		{
-			//ServerSocket s = new ServerSocket();
+
+			while(true) {
+				if (ServerSock.createNewServer)
+				{
+					ServerSock s = new ServerSock();
+					s.start();
+					ServerSock.createNewServer = false;
+				}
+				else
+				{
+					try{
+						sleep(2000);
+				
+					}catch(InterruptedException e)
+					{
+					e.printStackTrace();
+					}
+				}
+			}
 		}
 		else if(test == 2)
 		{
-			Scanner sc = new Scanner(System.in);
-			System.out.println("enter the IP address : ");
-			String addr = sc.nextLine();
-			System.out.println("enter the port : ");
-			int port = sc.nextInt();
 
             connectionMsg msgC = new connectionMsg(userstats, newList);
-            Client c = new Client(msgC,addr, port);
+            Client c = new Client(msgC,"172.25.29.199", 1026);
             c.start();
 		}
 		else{

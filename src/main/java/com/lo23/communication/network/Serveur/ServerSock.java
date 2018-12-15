@@ -15,7 +15,7 @@ public class ServerSock extends  Thread{
 	/**
 	 * Nombre d'utilisateurs connectes
 	 */
-	private static int usersConnected = 0;
+	public static int usersConnected = 0;
 	/**
 	 * Port de depart du serveur
 	 */
@@ -25,13 +25,19 @@ public class ServerSock extends  Thread{
      * Serveur de socket
      */
     private ServerSocket serverSocket;
+	
+	/**
+	 * Indique si un utilisateur s'est connecté
+	 *
+	 */
+	public static boolean createNewServer = true;
     
     public ServerSock(){
         this.firstPort = Const.SERVER_DEFAULT_PORT;
     }
     
     /**
-     * Ouverture d'un serveurSocket sur le port par default
+     * Ouverture d'un serveurSocket sur le port par default + le nombre d'utilisateurs connectes.
      */
     @Override
     public void run() {
@@ -45,17 +51,22 @@ public class ServerSock extends  Thread{
         	int port = this.firstPort + this.usersConnected;
 	        System.out.println("Erreur de creation de Server Socket sur le port = " + port);
         }
-            try{
-		        AcceptConnexion connexion = new AcceptConnexion(this.serverSocket);
-		        connexion.start();
-	        /** On arrive ici, quand la connexion a réussi avec un autre, ce qui implique qu'il faut ouvrir un autre server Socket sur un autre port pour continuer a ecouter
-	         *
-	         */
-	            this.usersConnected++;
-            }catch(Exception e)
-            {
-            	e.printStackTrace();
-	            System.out.println("Echec du lancement de la connexion et recuperation de message serveur");
-            }
+        try{
+            System.out.println("Initialisation de la connexion");
+	        AcceptConnexion connexion = new AcceptConnexion(this, this.serverSocket);
+	        connexion.start();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Echec de creation du nouveau serversocket");
+        }
+    }
+        public static void setCreateNewServer(boolean value)
+        {
+        	 createNewServer = value;
+
+        }
+        public boolean getCrateNewServer(){
+    	return this.createNewServer;
         }
 }

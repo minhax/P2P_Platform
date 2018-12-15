@@ -38,12 +38,13 @@ public class ReadMessage extends Thread implements Serializable {
 	@Override
 	public void run() {
 		try {
+			System.out.println("Lecture du message");
 			Object msg = this.input.readObject();
 			Message msgCast = (Message) msg;
-			System.out.println("Message treatment begins");
+			System.out.println("Traitement du message");
 			try {
 				msgCast.treatment();
-				System.out.println("End of treatment");
+				System.out.println("Fin du traitement");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
