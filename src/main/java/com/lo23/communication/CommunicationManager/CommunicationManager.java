@@ -63,7 +63,7 @@ public abstract class CommunicationManager {
             }
         }
         return null; **/
- return "192.18.1.32";
+ return "192.168.1.32";
     }
 
 

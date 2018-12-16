@@ -49,10 +49,9 @@ public class ServerSock extends  Thread{
 	    //isListening = true;
      
 	    try {
+		    this.serverSocket = new ServerSocket(this.firstPort);
 		    while (true) {
 		    
-				this.serverSocket = new ServerSocket(this.firstPort);
-				
 				System.out.println("Creation d'un serveur socket sur le port " + this.serverSocket.getLocalPort());
 			    System.out.println("En attente de connexion d'un client");
 			    
