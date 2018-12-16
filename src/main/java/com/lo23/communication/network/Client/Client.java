@@ -1,6 +1,7 @@
 package com.lo23.communication.network.Client;
 
 import com.lo23.communication.Messages.Message;
+import com.lo23.communication.network.Serveur.ReadMessage;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -75,6 +76,7 @@ public class Client extends Thread implements Serializable{
          */
         while (!this.jobDone) {
             try {
+                System.out.println("[Client] Creation de la socket vers " + destinationAdress + "port " + destinationPort);
                 this.socket = new Socket(this.destinationAdress, this.destinationPort);
                 this.jobDone = true;
                 try {
@@ -82,8 +84,11 @@ public class Client extends Thread implements Serializable{
                      * SendMessageSocket implemente Thread
                      * quitte la boucle des que le message est envoye
                      */
+
                     SendMessage sendMessageSocket = new SendMessage(socket, destinationAdress, destinationPort, msg);
                     sendMessageSocket.start();
+                    
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

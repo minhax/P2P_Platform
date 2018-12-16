@@ -6,6 +6,7 @@ import com.lo23.communication.APIs.CommToDataServerAPI;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Message;
 import com.lo23.communication.network.Client.Client;
+import com.lo23.data.Const;
 
 import java.util.EmptyStackException;
 // import java.util.LinkedHashMap;
@@ -120,8 +121,10 @@ public class CommunicationManagerServer extends CommunicationManager {
 		for(Map.Entry<String, Integer> entry : this.clientIptoPort.entrySet())
 		{
 			String addrClient = entry.getKey();
-			int portClient = this.clientIptoPort.get(addrClient);
+			//int portClient = this.clientIptoPort.get(addrClient);
+			int portClient = Const.CLIENT_DEFAULT_PORT;
 			try{
+				System.out.println("Creation du client pour le broadcast vers " + addrClient + " sur le port " + portClient);
 				Client c = new Client(m, addrClient, portClient);
 				c.start();
 			}catch (Exception e)

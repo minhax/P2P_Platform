@@ -65,7 +65,7 @@ public class SendMessage extends Thread {
 				e.printStackTrace();
 				System.out.println(" Impossible de recuperer l'output stream");
 			}
-			this.msg.setPort(this.localPort);
+			this.msg.setPort(this.socket.getLocalPort());
 			
 			output.writeObject(this.msg);
 			output.flush(); // check si correct pendat test

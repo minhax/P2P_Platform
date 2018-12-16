@@ -13,5 +13,5 @@ public class Const
      */
     public static final int FILEPART_SIZE = 4;
     public static final int SERVER_DEFAULT_PORT = 1026;
-    public static final int CLIENT_DEFAULT_PORT = 1026;
+    public static final int CLIENT_DEFAULT_PORT = 1027;
 }

@@ -7,6 +7,7 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.communication.network.Client.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.network.Serveur.ServerSock;
+import com.lo23.data.Const;
 import com.lo23.data.client.DataManagerClient;
 import com.lo23.data.server.DataManagerServer;
 
@@ -66,7 +67,7 @@ public class Tests
 			// On partage les APIs entre les Manager
 			dataManagerServer.setCommToDataServer(commManager.getCommInterface());
 			commManager.setDataInterface(dataManagerServer.getDataServerToCommApi());
-			
+			/**
 			while(true) {
 				if (ServerSock.createNewServer)
 				{
@@ -84,7 +85,9 @@ public class Tests
 					e.printStackTrace();
 					}
 				}
-			}
+			}**/
+			ServerSock s = new ServerSock();
+			s.start();
 		}
 		else if(test == 2)
 		{
@@ -95,8 +98,13 @@ public class Tests
 			commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());
 			
             connectionMsg msgC = new connectionMsg(userstats, newList);
-            Client c = new Client(msgC,"172.25.29.199", 1026);
+			/** Creation d'un client pour envoyer le message
+			 *
+			 */
+			Client c = new Client(msgC,"192.168.1.32", 1026);
             c.start();
+            ServerSock server = new ServerSock(Const.CLIENT_DEFAULT_PORT);
+            server.start();
 		}
 		else{
 			System.out.println("wrong choice =.= ");

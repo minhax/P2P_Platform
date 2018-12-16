@@ -2,7 +2,6 @@ package com.lo23.communication.Messages.Authentication_Client;
 
 import com.lo23.common.exceptions.CommException;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.CommunicationManager.Server.ClientInfo;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;

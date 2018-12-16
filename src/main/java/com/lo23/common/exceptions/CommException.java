@@ -1,7 +1,5 @@
 package com.lo23.common.exceptions;
 
-import com.lo23.communication.CommunicationManager.Server.ClientInfo;
-
 /**
  * Classe représentant une erreur spécifique levée par une méthode du groupe Data.
  */
