@@ -169,7 +169,8 @@ public class DataManagerClient
     public boolean logout()
     {
         // TODO catch erreur eventuelle.
-        this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
+        UserAccount currentUser = this.sessionInfos.getCurrentUser();
+        this.getCommToDataClientApi().requestLogoutToServer(currentUser, currentUser.getProposedFiles());
         this.saveUserInfo(this.getSessionInfos().getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
         return true; //TODO return to user logout successful ?
