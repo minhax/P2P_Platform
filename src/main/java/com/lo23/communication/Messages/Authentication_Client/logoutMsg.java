@@ -45,13 +45,6 @@ public class logoutMsg extends Authentication {
 		removeDisconnectedUserMsg message = new removeDisconnectedUserMsg(this.userStats);
 		message.setPort(this.getPort());
 		cms.broadcast(message);
-
-
-
-
-
-
-
 	}
 
 	public boolean isToServ(){return true;}
