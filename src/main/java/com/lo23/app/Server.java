@@ -1,6 +1,7 @@
 package com.lo23.app;
 
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
+import com.lo23.communication.network.Serveur.ServerSock;
 import com.lo23.data.server.DataManagerServer;
 
 import java.util.Scanner;
@@ -20,9 +21,10 @@ public class Server {
         // On partage les APIs entre les Manager
         dataManagerServer.setCommToDataServer(commManager.getCommInterface());
         commManager.setDataInterface(dataManagerServer.getDataServerToCommApi());
-
-        //ServerClass s = new ServerClass();
-
+    
+        ServerSock s = new ServerSock();
+        s.start();
+        
         System.out.println("Serveur lancé");
 
         Scanner consoleInput = new Scanner(System.in);

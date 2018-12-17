@@ -1,7 +1,6 @@
 package com.lo23.communication.network.Client;
 
 import com.lo23.communication.Messages.Message;
-import com.lo23.communication.network.Serveur.ReadMessage;
 
 import java.io.IOException;
 import java.io.Serializable;
