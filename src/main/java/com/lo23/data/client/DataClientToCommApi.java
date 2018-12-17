@@ -83,7 +83,10 @@ public class DataClientToCommApi implements DataClientToComm
 
     @Override
     public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
-
+        Vector<UserStats> connectedUsers = this.host.getSessionInfos().getOtherLoggedUsers();
+        for (UserIdentity user : liste.keySet()){
+            System.out.println("Est connecté l'utilisateur : " + user.getLogin());
+        }
     }
 
         //System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());
