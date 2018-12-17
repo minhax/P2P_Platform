@@ -9,8 +9,10 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 public class DataServerToCommAPI implements DataServerToComm
 {
@@ -22,12 +24,19 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewConnectedUser(UserStats user)
+    public HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
         // La partie Comm devrait notifier tous les clients de la nouvelle connexion
         this.manager.commToDataApi.sendConnectedUserToAll(user,
                 this.manager.connections.getDirectory().getFilesProposedByUser(user));
+
+        return this.manager.getDirectory().getUserFiles();
+    }
+
+    @Override
+    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(){
+        return this.manager.getDirectory().getUserFiles();
     }
 
     @Override
@@ -42,10 +51,12 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void removeDisconnectedUser(User user)
+    public UserStats removeDisconnectedUser(UserStats user)
     {
         // this.manager.commToDataApi.removeDisconnectedUser(user, this.manager.connections.getUserFiles(user));
         this.manager.connections.disconnectUser(user);
+        // TODO renvoi des éléments qu'il faut à savoir les users encore connectés + les fichiers dispo
+        return user;
     }
 
     @Override
@@ -88,4 +99,5 @@ public class DataServerToCommAPI implements DataServerToComm
     {
         //TODO : merge newRating into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
     }
+
 }

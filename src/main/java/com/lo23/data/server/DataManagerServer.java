@@ -52,4 +52,8 @@ public class DataManagerServer
     {
         return this.toCommApi;
     }
+
+    public DirectoryUserFiles getDirectory(){
+        return this.connections.getDirectory();
+    }
 }

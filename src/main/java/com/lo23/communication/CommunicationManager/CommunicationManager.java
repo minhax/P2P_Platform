@@ -21,7 +21,6 @@ public abstract class CommunicationManager {
      * @return String IPadress
      **/
     public static String findIPadress() throws Exception {
-/**
         Enumeration<NetworkInterface> interfaces = null;
         try {
             interfaces = NetworkInterface.getNetworkInterfaces();
@@ -62,8 +61,8 @@ public abstract class CommunicationManager {
                     continue;
             }
         }
-        return null; **/
- return "192.168.1.32";
+        return null;
+        //return "192.168.1.32";
     }
 
 

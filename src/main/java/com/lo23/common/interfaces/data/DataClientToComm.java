@@ -6,7 +6,9 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 public interface DataClientToComm
 {
@@ -69,7 +71,7 @@ public interface DataClientToComm
      * des fichiers qu'il propose
      * @param newlyDisconnectedUser autre utilisateur déconnecté
      */
-    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser);
+    void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser);
 
     /**
      * Notifie les clients distants de la connexion d'un autre
@@ -78,7 +80,7 @@ public interface DataClientToComm
      * @param newlyConnectedUser autre utilisateur connecté
      * @param files fichiers dont cet utilisateur est la source
      */
-    void notifyOtherUserConnectedToAll(UserStats newlyConnectedUser, List<FileHandlerInfos> files);
+    void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste);
 
     /**
      * Fonction qui permet d'obtenir le filePart numéro "part" du fichier

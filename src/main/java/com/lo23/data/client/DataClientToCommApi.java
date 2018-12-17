@@ -9,6 +9,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -75,18 +76,18 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-
-    public void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser)
+    public void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser)
     {
         this.host.removeConnectedUser(newlyDisconnectedUser);
     }
 
     @Override
-    public void notifyOtherUserConnectedToAll(UserStats newlyConnectedUser, List<FileHandlerInfos> files)
-    {
+    public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
 
-        System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());
+    }
 
+        //System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());
+/*
         this.host.getSessionInfos().mergeUserIntoLoggedUsers(newlyConnectedUser);
         for(int i = 0; i < files.size(); i++){
             this.host.getSessionInfos().getDirectory().addProposedFile(newlyConnectedUser, files.get(i));
@@ -101,7 +102,7 @@ public class DataClientToCommApi implements DataClientToComm
                     System.out.println("ID : " + e.getId());
                 }
                     );
-    }
+         */
 
     @Override
     public void getFilePart(User userAsking, User userSource, FileHandler file, long part)
