@@ -27,8 +27,8 @@ public class connectedUserMsg extends UserMessage{
 	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
 	public void treatment(){
-		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		DataClientToComm dataInterface = cms.getDataInterface();
+		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+		DataClientToComm dataInterface = cmc.getDataInterface();
 		
 		dataInterface.notifyOtherUserConnectedToAll(this.usersInfoAndFiles);
 	}

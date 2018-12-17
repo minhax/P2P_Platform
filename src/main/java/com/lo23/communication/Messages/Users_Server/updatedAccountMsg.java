@@ -21,6 +21,7 @@ public class updatedAccountMsg extends UserMessage{
 
 		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterfaceClient = cmc.getDataInterface();
+
 		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(user);
 	}
 
