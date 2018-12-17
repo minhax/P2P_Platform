@@ -4,6 +4,7 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.Messages.UserMessage;
 
@@ -11,9 +12,10 @@ import java.util.List;
 
 public class removeDisconnectedUserMsg extends UserMessage{
 	private static final long serialVersionUID = 44L;
+	private UserStats usr;
 	
-	public removeDisconnectedUserMsg(UserIdentity ui){
-		this.user = ui;
+	public removeDisconnectedUserMsg(UserStats ui){
+		this.usr = ui;
 	}
 	/**
 	 * Traitement est applique du cote client
@@ -25,7 +27,7 @@ public class removeDisconnectedUserMsg extends UserMessage{
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
 		
-		dataInterface.notifyOtherUserDisconnectedToAll(this.user);
+		dataInterface.notifyOtherUserDisconnectedToAll(this.usr);
 	}
 
     public boolean isToServ(){return false;}

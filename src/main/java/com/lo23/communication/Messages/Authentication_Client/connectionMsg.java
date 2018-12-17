@@ -1,13 +1,17 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 public class connectionMsg extends Authentication {
 	private String UserIPAdress;
@@ -50,9 +54,15 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
 		cms.addEntryMap(this.UserIPAdress, this.getPort());
-		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
-		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo);
+		
+		/**
+		 * Recuperation de la liste des utilisateurs connectés
+		 */
+		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles();
+		
+		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles);
 		message.setPort(this.getPort());
+		
 		cms.broadcast(message);
 	}
 	

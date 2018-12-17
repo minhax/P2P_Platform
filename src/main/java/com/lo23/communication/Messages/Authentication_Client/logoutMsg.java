@@ -8,9 +8,10 @@ import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
 
 public class logoutMsg extends Authentication {
+	
 	private static final long serialVersionUID = 10002L;
 	protected String UserIPAdress;
-	private int UserPort;
+	
 	public logoutMsg(UserStats us, String ipAdress){
 		this.userStats= us;
 		this.UserIPAdress =ipAdress;
