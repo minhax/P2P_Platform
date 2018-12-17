@@ -40,17 +40,7 @@ public class CommToDataServerAPI implements CommToDataServer {
 
 
     /*========= Implémentation des méthodes ============= */
-
-    @Override
-    public void removeDisconnectedUser(UserIdentity user, List<FileHandlerInfos> fileInfos){
-
-    }
-
-    @Override
-    public void sendConnectedUserToAll(UserIdentity user, List<FileHandlerInfos> fileInfos){
     
-    }
-
     @Override
     public void sendFileLoc(List<UserIdentity> sourceUsers){
 

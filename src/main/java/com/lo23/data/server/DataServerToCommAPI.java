@@ -27,9 +27,6 @@ public class DataServerToCommAPI implements DataServerToComm
     public HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
-        // La partie Comm devrait notifier tous les clients de la nouvelle connexion
-        this.manager.commToDataApi.sendConnectedUserToAll(user,
-                this.manager.connections.getDirectory().getFilesProposedByUser(user));
 
         return this.manager.getDirectory().getUserFiles();
     }
