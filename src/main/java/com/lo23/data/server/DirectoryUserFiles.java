@@ -125,17 +125,18 @@ public class DirectoryUserFiles
     public void removeUser(User user) throws IllegalArgumentException
     {
         Utils.throwExceptionIfNull("User should not be null", user);
-        Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
+        //Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
 
-        // Suppression de tous les fichiers de l'utilisateur
-        Vector<FileHandlerInfos> tmp = new Vector<>();
-        tmp.addAll(this.getFilesProposedByUser(user));
-        FileHandlerInfos f;
+        if(this.userFiles.get(user)!=null) {
+            // Suppression de tous les fichiers de l'utilisateur
+            Vector<FileHandlerInfos> tmp = new Vector<>();
+            tmp.addAll(this.getFilesProposedByUser(user));
+            FileHandlerInfos f;
 
-        for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext();)
-        {
-            f = i.next();
-            this.removeProposedFile(user, f);
+            for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext(); ) {
+                f = i.next();
+                this.removeProposedFile(user, f);
+            }
         }
     }
 
