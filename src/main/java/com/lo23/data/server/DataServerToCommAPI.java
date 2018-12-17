@@ -27,7 +27,7 @@ public class DataServerToCommAPI implements DataServerToComm
     public HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
-        System.out.println("COOO SUR LE RESEAUUUEZHDSKJEHJDHNKJEFNK: " +  user.getLogin());
+        System.out.println("CONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
         return this.requestUserFiles();
     }
 
@@ -50,9 +50,11 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public UserStats removeDisconnectedUser(UserStats user)
     {
+        System.out.println("Nb de connectés avant la déconnexion : " + this.manager.connections.getConnectedUsers().size());
+        System.out.println("DECONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
         // this.manager.commToDataApi.removeDisconnectedUser(user, this.manager.connections.getUserFiles(user));
         this.manager.connections.disconnectUser(user);
-        // TODO renvoi des éléments qu'il faut à savoir les users encore connectés + les fichiers dispo
+        System.out.println("Nb de connectés après la déconnexion : " + this.manager.connections.getConnectedUsers().size());
         return user;
     }
 

@@ -76,19 +76,24 @@ public class DataClientToCommApi implements DataClientToComm
     @Override
     public void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser)
     {
+        System.out.println("----- DECONNEXION COTE CLIENT -------");
+        System.out.println("Nb de connectés avant la déconnexion : " + this.host.getSessionInfos().getOtherLoggedUsers().size());
         this.host.removeConnectedUser(newlyDisconnectedUser);
         System.out.println("S'est déconnecté l'utilisateur : " + newlyDisconnectedUser.getLogin());
+        System.out.println("Nb de connectés après la déconnexion : " + this.host.getSessionInfos().getOtherLoggedUsers().size());
     }
 
     @Override
     public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
         Vector<UserStats> connectedUsers = this.host.getSessionInfos().getOtherLoggedUsers();
+        System.out.println("----- CONNEXION COTE CLIENT -------");
         // mergeUserIntoLoggedUsers s'occupe d'insérer chaque utilisateur
         // connecté dans les infos de session s'ils n'y apparaissent pas déjà
         for (UserIdentity user : liste.keySet()){
             System.out.println("Est connecté l'utilisateur : " + user.getLogin());
             this.host.getSessionInfos().mergeUserIntoLoggedUsers(user);
         }
+        // MAJ des fichiers proposés dans le DirectoryUserFiles côté Session sur le client
         for(UserIdentity user : liste.keySet()){
             Vector<FileHandlerInfos> proposedFiles = liste.get(user);
             Iterator it = proposedFiles.iterator();
@@ -97,7 +102,7 @@ public class DataClientToCommApi implements DataClientToComm
                 this.host.getSessionInfos().getDirectory().addProposedFile(user, file);
             }
         }
-
+        System.out.println("----- FIN CONNEXION COTE CLIENT -------");
     }
 
         //System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());
