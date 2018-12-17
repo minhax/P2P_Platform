@@ -225,4 +225,14 @@ public class DirectoryUserFiles
         //updatedFile : FileHandlerInfos contenant les modifications
         // TODO :
     }
+
+    /**
+     * Méthode houbi houba pour gagner du temps sur le traitement.
+     * Que Dieu me pardonne pour ça, la vérité
+     * @param uf Le HashMap qui deviendra l'attribut UserFiles ...
+     */
+    public void setUserFiles(HashMap<UserIdentity, Vector<FileHandlerInfos>> uf)
+    {
+        this.userFiles = uf;
+    }
 }

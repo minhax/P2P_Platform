@@ -27,6 +27,7 @@ public class DataServerToCommAPI implements DataServerToComm
     public HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
+        System.out.println("COOO SUR LE RESEAUUUEZHDSKJEHJDHNKJEFNK: " +  user.getLogin());
         return this.requestUserFiles();
     }
 

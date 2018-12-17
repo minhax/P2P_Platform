@@ -9,9 +9,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Objet qui implémente l'API de Data pour Comm.
@@ -79,14 +77,27 @@ public class DataClientToCommApi implements DataClientToComm
     public void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser)
     {
         this.host.removeConnectedUser(newlyDisconnectedUser);
+        System.out.println("S'est déconnecté l'utilisateur : " + newlyDisconnectedUser.getLogin());
     }
 
     @Override
     public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
         Vector<UserStats> connectedUsers = this.host.getSessionInfos().getOtherLoggedUsers();
+        // mergeUserIntoLoggedUsers s'occupe d'insérer chaque utilisateur
+        // connecté dans les infos de session s'ils n'y apparaissent pas déjà
         for (UserIdentity user : liste.keySet()){
             System.out.println("Est connecté l'utilisateur : " + user.getLogin());
+            this.host.getSessionInfos().mergeUserIntoLoggedUsers(user);
         }
+        for(UserIdentity user : liste.keySet()){
+            Vector<FileHandlerInfos> proposedFiles = liste.get(user);
+            Iterator it = proposedFiles.iterator();
+            while(it.hasNext()){
+                FileHandlerInfos file = (FileHandlerInfos) it.next();
+                this.host.getSessionInfos().getDirectory().addProposedFile(user, file);
+            }
+        }
+
     }
 
         //System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());
