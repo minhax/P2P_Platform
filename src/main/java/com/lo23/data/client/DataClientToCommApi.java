@@ -9,7 +9,9 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Objet qui implémente l'API de Data pour Comm.
@@ -50,9 +52,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyNewSharedFileToAll(FileHandler newSharedFile)
+    public void notifyNewSharedFileToAll(FileHandlerInfos newSharedFile, UserIdentity source)
     {
-
+        this.host.getSessionInfos().getDirectory().addProposedFile(source, newSharedFile);
     }
 
     @Override
@@ -62,31 +64,74 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyUpdatedSharedFileToAll(FileHandler modifiedFile)
+    public void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user)
     {
-
+        //TODO modifier dans le directory le fichier concerné
     }
 
     @Override
-    public void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser)
+    public void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser)
     {
         this.host.getSessionInfos().mergeUserIntoLoggedUsers(newlyModifiedUser);
     }
 
     @Override
-    public void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandlerInfos> files)
+    public void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser)
     {
-
+        this.host.removeConnectedUser(newlyDisconnectedUser);
     }
 
     @Override
-    public void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files)
-    {
-
+    public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
+        Vector<UserStats> connectedUsers = this.host.getSessionInfos().getOtherLoggedUsers();
+        for (UserIdentity user : liste.keySet()){
+            System.out.println("Est connecté l'utilisateur : " + user.getLogin());
+        }
     }
 
+        //System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());
+/*
+        this.host.getSessionInfos().mergeUserIntoLoggedUsers(newlyConnectedUser);
+        for(int i = 0; i < files.size(); i++){
+            this.host.getSessionInfos().getDirectory().addProposedFile(newlyConnectedUser, files.get(i));
+        }
+//        this.host.getIHMToDataClientAPI()
+
+        System.out.println("ConnectedUsers" + this.host.getSessionInfos().getOtherLoggedUsers().size());
+
+        this.host.getSessionInfos().getOtherLoggedUsers().forEach(e ->
+                {
+                    System.out.println("First name : " + e.getFirstName());
+                    System.out.println("ID : " + e.getId());
+                }
+                    );
+         */
+
     @Override
-    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+    public void getFilePart(User userAsking, User userSource, FileHandler file, long part)
+    {
         this.host.getDownloadManager().getFilePart(userAsking, userSource, file, part);
+    }
+
+    @Override
+    public void notifyAskForFilePartAgain(User source, FileHandler file, long part){
+
+        Vector<UserIdentity> sources = this
+                .host
+                .getSessionInfos()
+                .getDirectory()
+                .getUsersThatProposeFile(file);
+
+        int indexToRemove = -1;
+
+        for(int i = 0; i < sources.size(); i++){
+            if(sources.elementAt(i).getId().equals(source.getId())){
+                indexToRemove = i;
+            }
+        }
+        sources.remove(indexToRemove);
+
+        int chosenSourceIndex = (int) Math.random() * indexToRemove;
+        // TODO demander le FilePart à comm'.
     }
 }

@@ -1,6 +1,7 @@
 package com.lo23.data.client;
 
 import com.lo23.common.user.UserAccount;
+import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.data.server.DirectoryUserFiles;
 
@@ -19,7 +20,7 @@ class Session
     /**
      * Autres utilisateurs connectés
      */
-    private Vector<UserStats> otherLoggedUsers;
+    private Vector<UserStats> otherLoggedUsers = new Vector<>();
 
     private DirectoryUserFiles directory;
 
@@ -47,19 +48,22 @@ class Session
      * utilisateurs connectés
      * @param user utilisateur à ajouter
      */
-    void mergeUserIntoLoggedUsers(UserStats user)
+    void mergeUserIntoLoggedUsers(UserIdentity user)
     {
-        // Si le user n'est pas déjà dans la liste
-        if(!this.getOtherLoggedUsers().contains(user))
+        boolean userFound = false;
+        for(UserStats usr : this.getOtherLoggedUsers())
         {
-            // Ajouter le user
-            this.getOtherLoggedUsers().add(user);
+            if(usr.getId().equals(user.getId()))
+            {
+                this.getOtherLoggedUsers().remove(usr);
+                this.getOtherLoggedUsers().add((UserStats)user);
+                userFound = true;
+            }
         }
-        else
+        // Si l'utilisateur n'a pas été trouvé
+        if(!userFound)
         {
-            // Remplacer l'un par l'autre FIXME sale ?
-            this.getOtherLoggedUsers().remove(user);
-            this.getOtherLoggedUsers().add(user);
+            this.otherLoggedUsers.add((UserStats)user);
         }
     }
 

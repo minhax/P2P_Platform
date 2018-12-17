@@ -1,13 +1,17 @@
 package com.lo23.common.interfaces.data;
 
 
+import com.lo23.common.Comment;
+import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Interface destinée à l'équipe Comm pour communiquer avec la partie Data Serveur.
@@ -19,7 +23,7 @@ public interface DataServerToComm
      * utilisateurs connectés
      * @param newlyConnectedUser utilisateur à ajouter
      */
-    void addNewConnectedUser(UserStats newlyConnectedUser);
+    HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats newlyConnectedUser);
 
     /**
      * Ajoute les fichiers proposés par un utilisateur
@@ -33,7 +37,7 @@ public interface DataServerToComm
      * Déconnecte un utilisateur
      * @param disconnectingUser utilisateur à déconnecter
      */
-    void removeDisconnectedUser(User disconnectingUser);
+    UserStats removeDisconnectedUser(UserStats disconnectingUser);
 
     /**
      * Retire une source des sources d'un fichier
@@ -67,7 +71,22 @@ public interface DataServerToComm
     /**
      * Met à jour les informations d'un fichier
      * @param file fichier à mettre à jour
+     * @param newComment le nouveau commentaire
+     * @param user l'utilisateur responsable des changements
      */
-    void updateFileChanges(FileHandlerInfos file);
+    void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user);
 
+    /**
+     * Met à jour les informations d'un fichier
+     * @param file fichier à mettre à jour
+     * @param newRating le nouveau rating
+     * @param user l'utilisateur responsable des changements
+     */
+    void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user);
+
+    /**
+     * Retourne le UserFiles du Directory du serveur
+     * @return le UserFiles
+     */
+    HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles();
 }

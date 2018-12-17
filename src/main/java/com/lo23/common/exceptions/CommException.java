@@ -5,9 +5,9 @@ package com.lo23.common.exceptions;
  */
 
 public class CommException extends Exception{
-	public CommException(String message, String ipadresse)
+	public CommException(String message, String userIPAdress)
 	{
 		super(message);
-		System.out.println("Demande de suppression de l'adresse IP : " + ipadresse);
+		System.out.println("Demande de suppression de l'adresse IP : " + userIPAdress);
 	}
 }

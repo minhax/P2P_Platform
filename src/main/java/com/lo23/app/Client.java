@@ -1,6 +1,8 @@
 package com.lo23.app;
 
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
+import com.lo23.communication.network.Serveur.ServerSock;
+import com.lo23.data.Const;
 import com.lo23.data.client.DataManagerClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +18,15 @@ public class Client extends Application {
         // On instancie les Manager côté serveur
         DataManagerClient dataManagerClient = DataManagerClient.getInstance();
         CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
-
+    
         dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
         commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());
         // TODO: partager l'API avec IHM sans Singleton
-
+        /**
+         * Ouverture d'un serveur socket sur le port 1029 pour le client, afin d'ecouter les messages entrants
+         */
+        ServerSock server = new ServerSock(Const.CLIENT_DEFAULT_PORT);
+        server.start();
         launch(args);
     }
 

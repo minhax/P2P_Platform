@@ -70,8 +70,9 @@ public class DataClientToIhmApi implements DataClientToIhm
             throw new DataException("Error while accessing current user");
         // On ajoute le handler aux fichiers proposés par l'utilisateur
         currUser.addProposedFile(filehandler);
-
+        System.out.println("Hash :" + filehandler.getHash());
         // TODO: prévenir le serveur qu'un fichier est proposé
+        host.getCommToDataClientApi().requestUploadFile(filehandler, currUser);
     }
 
     @Override
@@ -104,9 +105,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestUpdateFileInfo(FileHandler modifiedFile)
+    public void requestUpdateFileInfo(FileHandlerInfos modifiedFile)
     {
-
+        this.host.updateFileInfo(modifiedFile);
     }
 
     @Override
@@ -118,8 +119,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestSubmitUserChanges(String login, String password, String firstname, String lastname, int age)
     {
-        UserAccount modifiedUser = new UserAccount(login, firstname, lastname, age, password);
-        this.host.changeUserInfos(modifiedUser);
+
+        //UserAccount modifiedUser = new UserAccount(login, firstname, lastname, age, password);
+        this.host.changeUserInfos(login, host.hashPassword(password), firstname, lastname, age);
     }
 
     @Override
@@ -134,7 +136,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         {
             // Signifie que le fichier existe bien
             if(listOfParts[i].getName().matches(hash)){
-                host.makeLocalFileUnavailable(file);
+                //host.makeLocalFileUnavailable(file);
             }
         }
 

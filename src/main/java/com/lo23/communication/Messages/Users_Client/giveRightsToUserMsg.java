@@ -4,7 +4,7 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.Messages.UserMessage;
 
 public class giveRightsToUserMsg extends UserMessage{
-	
+	private static final long serialVersionUID = 48L;
 	protected String rights;
 	
 	public giveRightsToUserMsg(UserIdentity ui, String r){
@@ -14,4 +14,6 @@ public class giveRightsToUserMsg extends UserMessage{
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

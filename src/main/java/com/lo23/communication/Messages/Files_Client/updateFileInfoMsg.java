@@ -5,7 +5,7 @@ import com.lo23.communication.Messages.FileMessage;
 
 
 public class updateFileInfoMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 57L;
 	protected String champ;
 	
 	public updateFileInfoMsg(FileHandlerInfos fi, String s){
@@ -16,4 +16,6 @@ public class updateFileInfoMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

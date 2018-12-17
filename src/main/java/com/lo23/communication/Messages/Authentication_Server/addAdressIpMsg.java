@@ -9,6 +9,7 @@ import java.io.Serializable;
  * /
  */
 public class addAdressIpMsg extends Authentication {
+	private static final long serialVersionUID = 87L;
 	protected String ip;
 	public addAdressIpMsg(String ipAddress)
 	{
@@ -26,5 +27,7 @@ public class addAdressIpMsg extends Authentication {
 	}
 	public String getIp()
 	{ return ip;}
+
+	public boolean isToServ(){return false;}
 	
 }

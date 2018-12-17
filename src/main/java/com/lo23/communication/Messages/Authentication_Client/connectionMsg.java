@@ -1,21 +1,30 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
+import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 public class connectionMsg extends Authentication {
-	private String myIp;
+	private String UserIPAdress;
+	private static final long serialVersionUID = 100521L;
+	private int UserPort; /** A initialiser !**/
 	private List<FileHandlerInfos> fileInfo;
 
 	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
+		
 		this.userStats = us;
 		this.fileInfo = files;
 		try {
-			this.myIp = CommunicationManagerServer.findIPadress();
+			this.UserIPAdress = CommunicationManagerServer.findIPadress();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -38,23 +47,25 @@ public class connectionMsg extends Authentication {
 		 */
 		String ServerIpAdress = cms.getIP();
 		
-		System.out.println("Mon ip = " + this.myIp);
+		System.out.println("Mon ip = " + this.UserIPAdress);
 		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
 		
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		cms.addEntryInClientAndServerIPArray(this.myIp, ServerIpAdress);
+		cms.addEntryMap(this.UserIPAdress, this.getPort());
 		
+		/**
+		 * Recuperation de la liste des utilisateurs connectés
+		 */
+		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles();
+		
+		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles);
+		message.setPort(this.getPort());
+		
+		cms.broadcast(message);
 	}
 	
-	public List<FileHandlerInfos> getFileInfo() {
-		return fileInfo;
-	}
-	
-	
-	public String getMyIp() {
-		return myIp;
-	}
+	public boolean isToServ(){return true;}
 }
 

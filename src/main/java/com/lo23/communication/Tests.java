@@ -2,9 +2,15 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.network.ServerClass;
-import com.lo23.communication.network.Client;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
+import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
+import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.network.Client.Client;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
+import com.lo23.communication.network.Serveur.ServerSock;
+import com.lo23.data.Const;
+import com.lo23.data.client.DataManagerClient;
+import com.lo23.data.server.DataManagerServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,9 +19,11 @@ import java.util.ArrayList;
 import java.net.*;
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class Tests
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 
 		/** Tests de l'appel de le methode connect depuis un objet independant
@@ -53,18 +61,63 @@ public class Tests
 		}
 		if(test == 1)
 		{
-			ServerClass s = new ServerClass();
+			
+			DataManagerServer dataManagerServer = new DataManagerServer("LO23 Swag");
+			CommunicationManagerServer commManager = CommunicationManagerServer.getInstance();
+			
+			// On partage les APIs entre les Manager
+			dataManagerServer.setCommToDataServer(commManager.getCommInterface());
+			commManager.setDataInterface(dataManagerServer.getDataServerToCommApi());
+			/**
+			while(true) {
+				if (ServerSock.createNewServer)
+				{
+					ServerSock s = new ServerSock();
+					s.start();
+					ServerSock.createNewServer = false;
+				}
+				else
+				{
+					try{
+						sleep(2000);
+				
+					}catch(InterruptedException e)
+					{
+					e.printStackTrace();
+					}
+				}
+			}**/
+			ServerSock s = new ServerSock();
+			s.start();
 		}
 		else if(test == 2)
 		{
-			Scanner sc = new Scanner(System.in);
-			System.out.println("enter the IP address : ");
-			String addr = sc.nextLine();
-			System.out.println("enter the port : ");
-			int port = sc.nextInt();
-
+			DataManagerClient dataManagerClient = DataManagerClient.getInstance();
+			CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+			
+			dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
+			commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());
+			ServerSock server = new ServerSock(Const.CLIENT_DEFAULT_PORT);
+			server.start();
+			
+			
             connectionMsg msgC = new connectionMsg(userstats, newList);
-					Client c = new Client(msgC, port, addr);
+			/** Creation d'un client pour envoyer le message
+			 *
+			 */
+			Client c = new Client(msgC,"192.168.1.32", Const.SERVER_DEFAULT_PORT);
+            c.start();
+
+            try {
+	            sleep(5000);
+            }catch(Exception e)
+            {
+            	e.printStackTrace();
+            }
+			String ip = commManagerClient.findIPadress();
+	        logoutMsg msgL = new logoutMsg(userstats,ip );
+			Client l = new Client(msgL,"192.168.1.32", Const.SERVER_DEFAULT_PORT);
+			l.start();
 		}
 		else{
 			System.out.println("wrong choice =.= ");
