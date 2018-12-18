@@ -39,8 +39,11 @@ public class UpdateProfileController implements Initializable {
 
     private DataClientToIhm api;
 
+    private WindowsLoader wl;
+
     public UpdateProfileController(DataClientToIhm dataAPI){
         api=dataAPI;
+        wl= new WindowsLoader();
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,7 +55,8 @@ public class UpdateProfileController implements Initializable {
 
     @FXML
     public void Validate() {
-    	if (passwordUpdateField.getText() == null || familynameUpdateField.getText() == null || nameUpdateField.getText() == null || ageUpdateField.getText() == null)
+    	if (passwordUpdateField.getText() == null || familynameUpdateField.getText() == null
+                || nameUpdateField.getText() == null || ageUpdateField.getText() == null)
         {
             errorUpdateLabel.setVisible(true);
         }
@@ -92,22 +96,6 @@ public class UpdateProfileController implements Initializable {
 
     @FXML
     void Previous() {
-    	 try {
-             //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
-             FXMLLoader fxmlLoader = new FXMLLoader();
-             // TODO: déclarer le controller de IHM
-             MainController controller = new MainController(api); // EXEMPLE
-             fxmlLoader.setController(controller);
-             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
-             fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
-
-
-             Parent root = fxmlLoader.load();
-             Stage stage = (Stage) updateUserPane.getScene().getWindow();
-             stage.setTitle("Fenêtre principale");
-             stage.setScene(new Scene(root));
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
+        wl.MainLoader(updateUserPane.getScene(), api);
     }
 }

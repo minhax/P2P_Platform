@@ -85,7 +85,6 @@ public class PartageController {
         assert tagsFichier != null : "fx:id=\"tagsFichier\" was not injected: check your FXML file 'fenetrePartageLayout.fxml'.";
         assert nomFichier != null : "fx:id=\"nomFichier\" was not injected: check your FXML file 'fenetrePartageLayout.fxml'.";
         assert enregistrerButton != null : "fx:id=\"enregistrerButton\" was not injected: check your FXML file 'fenetrePartageLayout.fxml'.";
-
     }
 
     @FXML
@@ -101,9 +100,6 @@ public class PartageController {
         //sourceFichier.setText(userAccount.getLogin());
         nomFichier.setText(selectedFile.getName());
         tailleFichier.setText(humanReadableByteCount(selectedFile.length(),true));
-
-
-
     }
 
     @FXML
@@ -117,8 +113,6 @@ public class PartageController {
 
     @FXML
     public void OnEnregistrerButtonClicked (){
-
-
 
         if (selectedFile == null) {
 
@@ -143,21 +137,16 @@ public class PartageController {
 
             Stage stage = (Stage) enregistrerButton.getScene().getWindow();
             stage.close();
-
         }
-
-
     }
 
     // Prends la taille du fichier en bytes et donne un string avec la taille du fichier et ses unités en SI ou Binaire
     public static String humanReadableByteCount(long bytes, boolean si) {
-
         int unit = si ? 1000 : 1024;
         if (bytes < unit) return bytes + " B";
         int exp = (int) (Math.log(bytes) / Math.log(unit));
         String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
-
     }
 
 }

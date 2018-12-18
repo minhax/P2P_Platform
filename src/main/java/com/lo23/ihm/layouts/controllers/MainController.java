@@ -144,13 +144,40 @@ public class MainController implements Initializable {
     private ObservableList<String> choices = FXCollections.observableArrayList();
     private List<FileHandlerInfos> researchResults = new ArrayList<FileHandlerInfos>();
 
+    private WindowsLoader wl;
+    /*
+
+    SECTION INITIALISATION + CONSTRUCTEUR
+
+     */
 
     public MainController(DataClientToIhm dataAPI) {
         api=dataAPI;
+        wl= new WindowsLoader();
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         incorrectIP.setVisible(false);
+
+        listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new AvailableFilesListCell();
+            }
+        });
+        listViewMyFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new MyFilesListCell(api);
+            }
+        });
+        listViewDownloading.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
+            @Override
+            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
+                return new DownloadingFilesListCell();
+            }
+        });
+
 
         choices.addAll("Nom", "Auteur", "Tags");
         chooseResearchBox.setItems(choices);
@@ -187,28 +214,6 @@ public class MainController implements Initializable {
             }
         });
 
-        listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
-            @Override
-            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
-                return new AvailableFilesListCell();
-            }
-        });
-        listViewMyFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
-            @Override
-            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
-                return new MyFilesListCell(api);
-            }
-        });
-        listViewDownloading.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
-            @Override
-            public ListCell<FileHandler> call(ListView<FileHandler> listView) {
-                return new DownloadingFilesListCell();
-            }
-        });
-
-
-
-
 
         //pour test
         user = new UserIdentity("login", "Prénom", "Nom", 21);
@@ -228,6 +233,12 @@ public class MainController implements Initializable {
         binding();
     }
 
+    /*
+
+    SECTION UTILISATEUR/CONTACTS
+
+     */
+
     @FXML
     public void OnRefreshConnectedUsersClicked() {
         try {
@@ -236,79 +247,6 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
-    }
-
-    @FXML
-    public void OnChangeToTabMyFiles() {
-        // TODO :  Gérer les fichiers ici
-        ObservableList<FileHandler> data = getMyFiles();
-        listViewMyFiles.setItems(data);
-    }
-
-
-    @FXML
-    public void OnChangeToTabAvailable() {
-        // TODO :  Gérer les fichiers ici
-        ObservableList<FileHandler> data = getFilesSharedByOthers();
-        listViewAvailableFiles.setItems(data);
-    }
-
-    @FXML
-    public void OnChangeToTabDownloading() {
-        // TODO :  Gérer les fichiers ici
-        ObservableList<FileHandler> data = getDownloadingFiles();
-        listViewDownloading.setItems(data);
-    }
-
-    @FXML
-    public void OnServerParametersButtonClicked() {
-        String new_ip = changeServerIpAdressTextField.getText();
-        Pattern pat = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
-        if(pat.matcher(new_ip).matches())
-            if(api.requestConnectionToServer(new_ip)) {
-                //TODO : ne pas fermer, mais plutôt réactualiser toute la page ? À réétudier quand l'application restera sur la même fenêtre
-
-                ((Stage) this.mainHBox.getScene().getWindow()).close();
-                try {
-                    FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
-                    Parent root = fxmlloader.load();
-                    Stage stage = new Stage();
-
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setOpacity(1);
-                    stage.setTitle("Fenêtre principale");
-                    stage.setScene(new Scene(root));
-                    stage.showAndWait();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                incorrectIP.setVisible(true);
-            }
-         else {
-            incorrectIP.setVisible(true);
-        }
-    }
-
-
-    @FXML
-    public void OnDisconnectButtonClicked() {
-        try {
-            //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            // TODO: déclarer le controller de IHM
-            ConnectionController controller = new ConnectionController(api); // EXEMPLE
-            fxmlLoader.setController(controller);
-            // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
-            fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
-
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) mainHBox.getScene().getWindow();
-            stage.setTitle("Édition du compte");
-            stage.setScene(new Scene(root));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void binding() {
@@ -335,28 +273,41 @@ public class MainController implements Initializable {
 
     @FXML
     public void OnUpdateUserButtonClicked() {
-        try {
-            /*FXMLLoader fxmlLoader = new FXMLLoader();
-            UpdateProfileController controller = new UpdateProfileController(api); // EXEMPLE
-            fxmlLoader.setController(controller);
-            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));*/
-
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            // TODO: déclarer le controller de IHM
-            UpdateProfileController controller = new UpdateProfileController(api); // EXEMPLE
-            fxmlLoader.setController(controller);
-            // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
-            fxmlLoader.setLocation(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));
-
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) mainHBox.getScene().getWindow();
-            stage.setTitle("Édition du compte");
-            stage.setScene(new Scene(root));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        wl.UpdateProfileLoader(mainHBox.getScene(), api);
     }
 
+    public List<UserIdentity> getConnectedUsers()
+    {
+        return this.connectedUsers;
+    }
+
+    /*
+
+    SECTION FICHIER
+
+     */
+
+    @FXML
+    public void OnChangeToTabMyFiles() {
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getMyFiles();
+        listViewMyFiles.setItems(data);
+    }
+
+
+    @FXML
+    public void OnChangeToTabAvailable() {
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getFilesSharedByOthers();
+        listViewAvailableFiles.setItems(data);
+    }
+
+    @FXML
+    public void OnChangeToTabDownloading() {
+        // TODO :  Gérer les fichiers ici
+        ObservableList<FileHandler> data = getDownloadingFiles();
+        listViewDownloading.setItems(data);
+    }
 
     @FXML
     public void OnAddDocumentButtonClicked(){
@@ -366,9 +317,7 @@ public class MainController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             PartageController controller = new PartageController(api); // EXEMPLE
             fxmlLoader.setController(controller);
-            //fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("fenetrePartageLayout.fxml"));
-
 
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
@@ -382,11 +331,8 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         ObservableList<FileHandler> data = getMyFiles();
         listViewMyFiles.setItems(data);
-
     }
 
 
@@ -427,7 +373,6 @@ public class MainController implements Initializable {
 
     public void researchFile(String searchItem, String searchMethod)
     {
-
         researchResults = api.requestSearchFile(searchItem);
 
         ObservableList<FileHandlerInfos> donnees = FXCollections.observableArrayList(researchResults);
@@ -435,12 +380,48 @@ public class MainController implements Initializable {
         listViewAvailableFiles.setItems(donnees);
     }
 
-    
-    public List<UserIdentity> getConnectedUsers()
-    {
-    	return this.connectedUsers;
+    public ObservableList<DownloadingFilesListCell> getCurrentlyShowingDownloadingFiles() { return listViewDownloading.getItems();}
+
+
+    /*
+
+    SECTION DIVERS
+
+     */
+    @FXML
+    public void OnServerParametersButtonClicked() {
+        String new_ip = changeServerIpAdressTextField.getText();
+        Pattern pat = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+        if(pat.matcher(new_ip).matches())
+            if(api.requestConnectionToServer(new_ip)) {
+                //TODO : ne pas fermer, mais plutôt réactualiser toute la page ? À réétudier quand l'application restera sur la même fenêtre
+
+                ((Stage) this.mainHBox.getScene().getWindow()).close();
+                try {
+                    FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                    Parent root = fxmlloader.load();
+                    Stage stage = new Stage();
+
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setOpacity(1);
+                    stage.setTitle("Fenêtre principale");
+                    stage.setScene(new Scene(root));
+                    stage.showAndWait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                incorrectIP.setVisible(true);
+            }
+         else {
+            incorrectIP.setVisible(true);
+        }
     }
 
-    public ObservableList<DownloadingFilesListCell> getCurrentlyShowingDownloadingFiles() { return listViewDownloading.getItems();}
+
+    @FXML
+    public void OnDisconnectButtonClicked() {
+        wl.ConnectionLoader(mainHBox.getScene(), api);
+    }
 
 }

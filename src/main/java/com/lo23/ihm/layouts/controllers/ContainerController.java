@@ -10,7 +10,5 @@ public class ContainerController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
 	}
-
 }

@@ -46,7 +46,6 @@ public class ratingController implements Initializable {
                 ratingLabel.setText("Rating : "+ t1.toString());
             }
         });
-
     }
 
     public void setFile(FileHandler file){
@@ -66,7 +65,6 @@ public class ratingController implements Initializable {
 
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
-
     }
 
     public void onCancelButtonClicked (){
@@ -74,7 +72,5 @@ public class ratingController implements Initializable {
         // Ferme la fenêtre, ne fait rien avec les données saisies
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
-
     }
-
 }

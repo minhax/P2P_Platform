@@ -37,9 +37,12 @@ public class CreateAccountController implements Initializable {
 
     private DataClientToIhm api;
 
+    private WindowsLoader wl;
+
 
     public CreateAccountController(DataClientToIhm dataAPI){
         api=dataAPI;
+        wl= new WindowsLoader();
     }
 
     @Override
@@ -49,63 +52,38 @@ public class CreateAccountController implements Initializable {
         ageErrorLabel.setVisible(false);
         binding();
         // TODO Auto-generated method stub
-
     }
 
     @FXML
     public void OnCreateAccountClicked() {
-        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null) {
+        if (loginTextField.getText() == null || passwordField.getText() == null
+                || firstnameTextField.getText() == null || lastnameTextField.getText() == null
+                || ageTextField.getText() == null) {
             emptyFieldLabel.setVisible(true);
-        } else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty()) {
+        } else if (loginTextField.getText() == null || passwordField.getText().isEmpty()
+                || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty()
+                || ageTextField.getText().isEmpty()) {
             emptyFieldLabel.setVisible(true);
         } else if (!ageTextField.getText().matches("\\d+")) {
             ageErrorLabel.setVisible(true);
         } else {
             // A decommenté et verifier les champs pendant l'integration
-
-
             try {
                 api.createAccount(loginTextField.getText(), passwordField.getText(), firstnameTextField.getText(), lastnameTextField.getText(), Integer.parseInt(ageTextField.getText()));
             } catch (DataException de) {
                 de.printStackTrace();
                 // TODO génrer l'exception qui signifie que la création de compte a échoué.
             }
+            //TODO Retirer ça, c'est pas très très secure
             System.out.println(loginTextField.getText() + passwordField.getText() + firstnameTextField.getText() + lastnameTextField.getText() + ageTextField.getText());
 
-            try {
-                /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
-                Parent root = fxmlloader.load();
-                Stage stage = (Stage) accountFormPane.getScene().getWindow();
-                stage.setTitle("Fenêtre principale");
-                stage.setScene(new Scene(root));*/
-
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                // TODO: déclarer le controller de IHM
-                MainController controller = new MainController(api); // EXEMPLE
-                fxmlLoader.setController(controller);
-                // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
-                fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
-                Parent root = fxmlLoader.load();
-                Stage stage = (Stage) accountFormPane.getScene().getWindow();
-                stage.setTitle("Fenêtre principale");
-                stage.setScene(new Scene(root));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            wl.MainLoader(accountFormPane.getScene(), api);
         }
     }
 
     @FXML
     public void OnBackToCoClicked() {
-        try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
-            Parent root = fxmlloader.load();
-            Stage stage = (Stage) accountFormPane.getScene().getWindow();
-            stage.setTitle("Fenêtre principale");
-            stage.setScene(new Scene(root));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        wl.ConnectionLoader(accountFormPane.getScene(), api);
     }
 
 

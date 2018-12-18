@@ -26,14 +26,12 @@ public class ContactsController {
 
     private ListProperty<String> userListProperty ;
 
-
     public void initialize(URL location, ResourceBundle resources)
     {
         //refreshConnectedUsers();
         binding();
         userListProperty.set(FXCollections.observableArrayList(userList));
         // TODO Auto-generated method stub
-
     }
 
     @FXML
@@ -48,12 +46,10 @@ public class ContactsController {
         {
             e.printStackTrace();
         }
-
     }
 
     private void binding()
     {
         this.contactsListView.itemsProperty().bind(userListProperty);
     }
-
 }
