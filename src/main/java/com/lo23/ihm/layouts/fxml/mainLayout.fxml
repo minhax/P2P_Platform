@@ -12,14 +12,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="mainHBox" fx:id="mainHBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.MainController">
+<HBox id="mainHBox" fx:id="mainHBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.MainController">
    <children>
-      <AnchorPane id="leftPane" fx:id="leftPane" prefHeight="400.0" prefWidth="160.0" style="-fx-border-style: solid;">
+      <AnchorPane id="leftPane" fx:id="leftPane" prefHeight="400.0" prefWidth="160.0" style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc;">
          <children>
             <Label id="detailsLabel" layoutX="58.0" layoutY="14.0" text="DETAILS" />
          </children>
       </AnchorPane>
-      <VBox id="middleVBox" fx:id="middleVBox" prefHeight="400.0" prefWidth="280.0" style="-fx-border-style: solid;">
+      <VBox id="middleVBox" fx:id="middleVBox" prefHeight="400.0" prefWidth="280.0" style="-fx-background-color: #79a8ff #79a8ff #79a8ff #79a8ff;">
          <children>
             <VBox prefHeight="47.0" prefWidth="278.0">
                <children>
@@ -79,11 +79,11 @@
             </AnchorPane>
          </children>
       </VBox>
-      <VBox id="rightVBox" fx:id="rightVBox" prefHeight="400.0" prefWidth="160.0" style="-fx-border-style: solid;">
+      <VBox id="rightVBox" fx:id="rightVBox" prefHeight="400.0" prefWidth="160.0" style="-fx-background-color: #6287cc #6287cc;">
          <children>
-            <HBox id="rightTopHBox" fx:id="rightTopHBox" prefHeight="47.0" prefWidth="157.0">
+            <HBox id="rightTopHBox" fx:id="rightTopHBox" prefHeight="47.0" prefWidth="157.0" style="-fx-background-color: #6287cc #6287cc;">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #6287cc #6287cc;">
                      <children>
                         <Label id="usernameLabel" fx:id="usernameLabel" layoutX="9.0" layoutY="5.0" text="USER" />
                         <Button fx:id="updateUserButton" layoutX="9.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#OnUpdateUserButtonClicked" prefHeight="5.0" prefWidth="97.0" style="-fx-font-size: 8px; -fx-background-color: #87CEFA;" text="Modifier" />
@@ -96,9 +96,9 @@
                   <Insets bottom="10.0" left="5.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <AnchorPane id="onlineUsersPane" fx:id="onlineUsersPane" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane id="onlineUsersPane" fx:id="onlineUsersPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #6287cc #6287cc;">
                <children>
-                  <ListView fx:id="contactsListView" prefHeight="180.0" prefWidth="158.0" />
+                  <ListView fx:id="contactsListView" prefHeight="180.0" prefWidth="158.0" style="-fx-background-color: #6287cc #6287cc;" />
                   <Button fx:id="refreshConnectedUsersButton" layoutX="100.0" layoutY="181.0" mnemonicParsing="false" onAction="#OnRefreshConnectedUsersClicked" style="-fx-font-size: 8;" text="Actualiser" />
                </children></AnchorPane>
             <TextField id="researchUserTextField" fx:id="researchUserTextField" prefHeight="25.0" prefWidth="229.0" promptText="Rechercher un utilisateur ..." style="-fx-font-size: small;">
