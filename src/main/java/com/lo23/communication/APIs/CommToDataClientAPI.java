@@ -4,18 +4,18 @@ import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.filehandler.*;
 import com.lo23.common.interfaces.comm.CommToDataClient;
+import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
+import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Files_Client.*;
+import com.lo23.communication.Messages.Files_Server.sendFileMsg;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
-import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
-import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
-import com.lo23.communication.Messages.Files_Client.addCommentMsg;
-import com.lo23.communication.Messages.Files_Client.rateFileMsg;
 import com.lo23.communication.network.Client.Client;
 import com.lo23.data.Const;
 
@@ -26,11 +26,14 @@ public class CommToDataClientAPI implements CommToDataClient
 {
 
     protected static CommunicationManagerClient commManagerClient ;
+    protected static CommunicationManagerServer commManagerServer;
 
     /* Constructeur */
     private CommToDataClientAPI()
     {
+
         commManagerClient=CommunicationManagerClient.getInstance();
+        commManagerServer=CommunicationManagerServer.getInstance();
     }
 
     /* Initialisation du singleton*/
@@ -213,6 +216,41 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestFileLoc(FileHandler file, UserIdentity user){
 
 
+    }
+
+    @Override
+    public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part){
+        //CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        try {
+            CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+            getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
+            String ipUserSource = cms.findUserIp(userSource.getId());
+            Client c = new Client(message, ipUserSource, Const.CLIENT_DEFAULT_PORT);
+            c.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // Pour les tests
+            CommunicationManagerClient cmc = CommunicationManagerClient.getInstance(); // Client ask again
+            DataClientToComm dataInterface = cmc.getDataInterface();
+            dataInterface.notifyAskForFilePartAgain(userSource, file, part);
+        }
+    }
+
+
+    @Override
+    public void sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content){
+        //Depuis la source jusqu'à l'utilisateur demandeur
+        try {
+            sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
+            String ipUserAsking = this.commManagerServer.findUserIp(userSource.getId());
+            Client client = new Client(message, ipUserAsking, Const.CLIENT_DEFAULT_PORT);
+            client.start();
+        }
+        catch (Exception e){
+            e.printStackTrace(); // Pour les test
+            System.out.println("Client deconnecte, arret du telechargement");
+
+        }
     }
 
 }
