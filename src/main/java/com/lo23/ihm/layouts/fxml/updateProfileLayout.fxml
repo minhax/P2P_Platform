@@ -16,7 +16,7 @@
       <TextField fx:id="nameUpdateField" layoutX="192.0" layoutY="220.0" prefHeight="38.0" prefWidth="290.0" promptText="Prénom ..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
       <TextField fx:id="ageUpdateField" layoutX="192.0" layoutY="276.0" prefHeight="38.0" prefWidth="290.0" promptText="Âge..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
       <Button fx:id="validateUpdateButton" layoutX="192.0" layoutY="341.0" mnemonicParsing="false" onAction="#Validate" prefHeight="27.0" prefWidth="290.0" style="-fx-background-color: #79ebff#79ebff;" text="Valider" />
-      <Button fx:id="previousButton" layoutX="33.0" layoutY="32.0" mnemonicParsing="false" onAction="#Previous" style="-fx-background-color: #9370DB#9370DB;" text="&lt;- Précédent" />
+      <Button fx:id="previousButton" layoutX="33.0" layoutY="32.0" mnemonicParsing="false" onAction="#Previous" style="-fx-background-color: #ffffff;" text="&lt;- Précédent" />
       <Label fx:id="errorUpdateLabel" layoutX="224.0" layoutY="385.0" prefHeight="17.0" prefWidth="226.0" text="Tous les champs sont obligatoires" textFill="#d30d0d" />
       <Line endX="179.0" layoutX="303.0" layoutY="97.0" startX="-111.0" stroke="WHITE" />
       <Line endX="179.0" layoutX="303.0" layoutY="148.0" startX="-111.0" stroke="WHITE" />
