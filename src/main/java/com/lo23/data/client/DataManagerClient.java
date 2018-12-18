@@ -190,6 +190,7 @@ public class DataManagerClient
         this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
         this.saveUserInfo(this.getSessionInfos().getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
+        this.getSessionInfos().getDirectory().removeUser(this.sessionInfos.getCurrentUser());
         return true; //TODO return to user logout successful ?
     }
 
