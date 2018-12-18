@@ -50,12 +50,13 @@ public class DirectoryUserFiles
                 throw new IllegalStateException("This user already propose this file !");
             }
         } catch (NullPointerException npe){
-
+            npe.printStackTrace();
         }
 
         // On vérifie si l'utilisateur propose déjà des fichiers, si ce n'est pas le cas on l'ajoute à la map
         if (this.userFiles.get(user) == null)
         {
+            System.out.println("L'utilisateur ne possedait pas de fichier");
             Vector<FileHandlerInfos> v = new Vector<>();
             v.add(file);
             this.userFiles.put(user, v);
@@ -63,6 +64,7 @@ public class DirectoryUserFiles
         // Sinon on ajoute simplement le fichier
         else
         {
+            System.out.println("L'utilisateur possedait des fichiers");
             this.userFiles.get(user).add(file);
         }
 
@@ -234,5 +236,9 @@ public class DirectoryUserFiles
     public void setUserFiles(HashMap<UserIdentity, Vector<FileHandlerInfos>> uf)
     {
         this.userFiles = uf;
+    }
+    public void addUsertoUserFiles(UserIdentity user)
+    {
+        this.userFiles.put(user, new Vector<>());
     }
 }

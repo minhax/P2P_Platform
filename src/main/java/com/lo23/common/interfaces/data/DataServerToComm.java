@@ -23,7 +23,7 @@ public interface DataServerToComm
      * utilisateurs connectés
      * @param newlyConnectedUser utilisateur à ajouter
      */
-    HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats newlyConnectedUser);
+    void addNewConnectedUser(UserStats newlyConnectedUser);
 
     /**
      * Ajoute les fichiers proposés par un utilisateur

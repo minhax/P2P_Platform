@@ -24,11 +24,10 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats user)
+    public void addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
         System.out.println("CONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
-        return this.requestUserFiles();
     }
 
     @Override
