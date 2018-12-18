@@ -94,7 +94,7 @@ public class UserAccount extends UserStats
      */
     public Vector<FileHandlerInfos> getProposedFiles()
     {
-        return new Vector<>(this.proposedFiles);
+        return this.proposedFiles;
     }
 
     public String getLastConnectionServerIP()

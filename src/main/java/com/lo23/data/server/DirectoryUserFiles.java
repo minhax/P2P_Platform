@@ -7,19 +7,13 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Utils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Annuaire permettant de gérer les fichiers proposés par les utilisateurs.
  */
 public class DirectoryUserFiles
 {
-    @Override
-    public String toString() {
-        return "DirectoryUserFiles{" +
-                "userFiles=" + userFiles.size() +
-                ", filesUser=" + filesUser.size() +
-                '}';
-    }
 
     /**
      * Map contenant les fichiers proposés par les utilisateurs.
@@ -59,50 +53,6 @@ public class DirectoryUserFiles
         existentSources.add(user);
         this.filesUser.put(file, existentSources);
 
-
-//
-//
-//        // On vérifie que les paramètres passés sont valides, sinon on lève une exception.
-//        Utils.throwExceptionIfNull("User should not be null", user);
-//        Utils.throwExceptionIfNull("File should not be null", file);
-//
-//        System.out.println("le user " + user.getLogin() + " a un fichier du nom : " + file.getTitle());
-//        // On lève une exception si l'utilisateur propose déjà ce fichier
-//        try {
-//            if (this.userFiles.get(user).contains(file) && this.filesUser.get(file).contains(user) ){
-//                throw new IllegalStateException("This user already propose this file !");
-//            }
-//        } catch (NullPointerException npe){
-//            npe.printStackTrace();
-//        }
-//
-//        // On vérifie si l'utilisateur propose déjà des fichiers, si ce n'est pas le cas on l'ajoute à la map
-//        if (this.userFiles.get(user) == null)
-//        {
-//            System.out.println("L'utilisateur n'avait pas de fichier");
-//            Vector<FileHandlerInfos> v = new Vector<>();
-//            v.add(file);
-//            this.userFiles.put(user, v);
-//        }
-//        // Sinon on ajoute simplement le fichier
-//        else
-//        {
-//            System.out.println("L'utilisateur possedait des fichiers");
-//            this.userFiles.get(user).add(file);
-//        }
-//
-//        // On vérifie si le fichier est déjà proposé, si ce n'est pas le cas on l'ajoute à la map
-//        if (this.filesUser.get(file) == null)
-//        {
-//            Vector<UserIdentity> v = new Vector<>();
-//            v.add(user);
-//            this.filesUser.put(file, v);
-//        }
-//        // Sinon on ajoute simplement le fichier
-//        else
-//        {
-//            this.filesUser.get(file).add(user);
-//        }
     }
 
 
@@ -144,50 +94,69 @@ public class DirectoryUserFiles
 
     /**
      * Permet de supprimer un utilisateur et tous ses fichiers de l'annuaire
-     * @param user Utilisateur à supprimer
+     * @param userToRemove Utilisateur à supprimer
      */
-    public void removeUser(User user) throws IllegalArgumentException
+    public void removeUser(User userToRemove) throws IllegalArgumentException
     {
-        Utils.throwExceptionIfNull("User should not be null", user);
+        Utils.throwExceptionIfNull("User should not be null", userToRemove);
 
         // JAVA 8 ne supporte pas d'utiliser des variables non finales dans le corps des fonctions, donc je passe par un array
         // Dégueu mais ça marche
         FileHandlerInfos[] sourceConcerned = new FileHandlerInfos[1];
 
         // Maj de userFiles
-        this.userFiles.remove(user);
+        this.userFiles.remove(userToRemove);
+//
+//        // Maj de filesUser, un peu plus complexe :
+//
+//        // On itère pour trouver pour quels fichiers l'user est source
+//        // TODO : remplacer sourceConcerned par un vector pour gérer le cas ou l'user est source de plusieurs fichiers
+//        this.filesUser.forEach((file,sources) -> {
+//            sources.forEach(userIdentity -> {
+//                if (userIdentity.equals(userToRemove)) {
+//                    sourceConcerned[0] = file;
+//                }
+//            });
+//        });
+//
 
-        // Maj de filesUser, un peu plus complexe :
-
-        // On itère pour trouver pour quels fichiers l'user est source
-        // TODO : remplacer sourceConcerned par un vector pour gérer le cas ou l'user est source de plusieurs fichiers
-        this.filesUser.forEach((file,sources) -> {
-            sources.forEach(userIdentity -> {
-                if (userIdentity.equals(user)) {
-                    sourceConcerned[0] = file;
-                }
-            });
+        this.filesUser.forEach((file, sources) -> {
+            sources.removeIf(userIdentity -> userIdentity.equals(userToRemove));
         });
 
-        boolean[] removeEntry = new boolean[1];
-        removeEntry[0] = false;
+        // enlève les fichiers qui n'ont plus aucune source
+        this.filesUser.entrySet().removeIf(entry -> entry.getValue().isEmpty());
 
-        // On remove la source dans le vecteur de fichier correspondant
-        this.filesUser.forEach((file,sources) -> {
-            if (file.equals(sourceConcerned[0])) {
-                System.out.println("FILE REMOVED SUCCESSFULLY");
-                sources.remove(user);
-            }
-            //Si c'était la dernière source, ce booléen passe à true pour pouvoir enlever l'entrée dans la map
-            if (sources.size()==0)
-                removeEntry[0] = true;
-        });
+        System.out.println("MAP SIZE ===== " + this.filesUser.size() + "OULOULOU");
 
-        if (removeEntry[0]) {
-            //C'était la dernière source, on enlève l'entrée de la map
-            this.filesUser.remove(sourceConcerned[0]);
-        }
+//
+//        boolean[] removeEntry = new boolean[1];
+//        removeEntry[0] = false;
+//
+//
+//        // On remove la source dans le vecteur de fichier correspondant
+//        this.filesUser.forEach((file,sources) -> {
+//            if (file.equals(sourceConcerned[0])) {
+//                System.out.println("FILE REMOVED SUCCESSFULLY");
+//                sources.remove(userToRemove);
+//            }
+//            //Si c'était la dernière source, ce booléen passe à true pour pouvoir enlever l'entrée dans la map
+//            if (sources.size()==0)
+//                removeEntry[0] = true;
+//        });
+//
+//        if (removeEntry[0]) {
+//            //C'était la dernière source, on enlève l'entrée de la map
+//            this.filesUser.remove(sourceConcerned[0]);
+//        }
+//
+
+
+
     }
+
+
+
 
     /**
      * Permet de récupérer les fichiers proposés par un utilisateur

@@ -179,6 +179,8 @@ public class DataManagerClient
     public boolean serverLogin(String serverIp){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
 
+        System.out.println("SIZEQSQQSZZEE " + this.sessionInfos.getCurrentUser().getProposedFiles().size());
+
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
         commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
                 userToConnect.getProposedFiles(),
@@ -193,8 +195,9 @@ public class DataManagerClient
     public boolean logout()
     {
         // TODO catch erreur eventuelle.
-        this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
         this.saveUserInfo(this.getSessionInfos().getCurrentUser());
+        this.sessionInfos.getCurrentUser().getProposedFiles().clear();
+        this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
         return true; //TODO return to user logout successful ?
     }

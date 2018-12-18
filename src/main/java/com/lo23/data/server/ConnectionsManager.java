@@ -72,6 +72,7 @@ public class ConnectionsManager
         {
             for (Iterator<FileHandlerInfos> i = userFiles.iterator(); i.hasNext();)
             {
+                System.out.println("ADD FILE TO DIRECTORY");
                 FileHandlerInfos f = i.next();
                 this.directory.addProposedFile(user, f);
             }

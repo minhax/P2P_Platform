@@ -51,6 +51,7 @@ public class connectionMsg extends Authentication {
 		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
 		
 		dataInterface.addNewConnectedUser(this.userStats);
+		//Décommenter la ligne suivante peut-être ? est-ce à com de faire ça ou est-ce inclut dans le addNewConnectedUser
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
 		cms.addEntryMap(this.UserIPAdress, this.getPort());
