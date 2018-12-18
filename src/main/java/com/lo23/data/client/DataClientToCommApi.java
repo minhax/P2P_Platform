@@ -83,6 +83,7 @@ public class DataClientToCommApi implements DataClientToComm
         this.host.getSessionInfos().getOtherLoggedUsers().remove(newlyDisconnectedUser);
         System.out.println("S'est déconnecté l'utilisateur : " + newlyDisconnectedUser.getLogin());
         System.out.println("Nb de connectés après la déconnexion : " + this.host.getSessionInfos().getOtherLoggedUsers().size());
+        System.out.println("Nb de fichier proposés après la déconnexion côté client : " + this.host.getSessionInfos().getDirectory().getProposedFiles().size());
         System.out.println("----- FIN DECONNEXION COTE CLIENT -------");
     }
 
