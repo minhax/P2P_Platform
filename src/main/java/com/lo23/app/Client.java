@@ -26,9 +26,9 @@ public class Client extends Application {
         /**
          * Ouverture d'un serveur socket sur le port 1029 pour le client, afin d'ecouter les messages entrants
          */
-        /*ServerSock server = new ServerSock(Const.CLIENT_DEFAULT_PORT);
+        ServerSock server = new ServerSock(Const.CLIENT_DEFAULT_PORT);
         server.start();
-        launch(args);*/
+        launch(args);
     }
 
     @Override
