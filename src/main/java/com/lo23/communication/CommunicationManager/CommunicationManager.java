@@ -28,38 +28,41 @@ public abstract class CommunicationManager {
             e.printStackTrace();
         }
 
-        while (interfaces.hasMoreElements()) {
-            NetworkInterface networkInterface = interfaces.nextElement();
-            // drop inactive
-            try {
-                if (!networkInterface.isUp())
-                    continue;
-            } catch (SocketException e) {
-                e.printStackTrace();
-            }
-            // smth we can explore
-            Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+        if (interfaces != null){
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = interfaces.nextElement();
+                // drop inactive
+                try {
+                    if (!networkInterface.isUp())
+                        continue;
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                }
+                // smth we can explore
+                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
 
-            while (addresses.hasMoreElements()) {
+                while (addresses.hasMoreElements()) {
 
-                InetAddress addr = addresses.nextElement();
-                String ip = addr.getCanonicalHostName();
-                String hostname = addr.getHostName();
+                    InetAddress addr = addresses.nextElement();
+                    String ip = addr.getCanonicalHostName();
+                    String hostname = addr.getHostName();
 
-                // addr.getCanonicalHostName() -> windows / linux "hostname" + "ip" FQDN
+                    // addr.getCanonicalHostName() -> windows / linux "hostname" + "ip" FQDN
 
-                // addr.getCanonicalHostName() -> mac "ip"
+                    // addr.getCanonicalHostName() -> mac "ip"
 
-                if (ip.regionMatches(0, "172", 0, 3)) {
-                    System.out.println("Ajout de l'adresse IP " + ip);
-                    return ip;
-                } else if (hostname.contains("utc")) {
-                    String ip2 = addr.getHostAddress();
-                    System.out.println("Ajout de l'adresse IP " + ip2);
-                    return ip2;
+                    if (ip.regionMatches(0, "172", 0, 3)) {
+                        System.out.println("Ajout de l'adresse IP " + ip);
+                        return ip;
+                    } else if (hostname.contains("utc")) {
+                        String ip2 = addr.getHostAddress();
+                        System.out.println("Ajout de l'adresse IP " + ip2);
+                        return ip2;
+                    }
                 }
             }
         }
+
         return null;
     }
 }
