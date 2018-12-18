@@ -90,7 +90,19 @@ public class DataClientToCommApi implements DataClientToComm
 
         System.out.println("notify :: connectedUsers.size = " + connectedUsers.size());
 
-//
+        //set les users connectés + la hashmap correspondant aux utilisateurs connectés avec leurs fichiers
+        this.host.getSessionInfos().setOtherLoggedUsers(connectedUsers);
+        this.host.getSessionInfos().getDirectory().setUserFiles(liste);
+
+        System.out.println("POST MERGE");
+
+        System.out.println("connectedUsers.size = " + this.host.getSessionInfos().getOtherLoggedUsers().size());
+        System.out.println("userFiles.size = " + this.host.getSessionInfos().getDirectory().getUserFiles().size());
+
+
+
+
+
 //        System.out.println("Liste de com.size = " + liste.size());
 //        System.out.println("----- CONNEXION COTE CLIENT -------");
 //

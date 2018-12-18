@@ -20,7 +20,7 @@ class Session
     /**
      * Autres utilisateurs connectés
      */
-    private Vector<UserStats> otherLoggedUsers = new Vector<>();
+    private Vector<UserIdentity> otherLoggedUsers = new Vector<>();
 
     private DirectoryUserFiles directory;
 
@@ -38,9 +38,17 @@ class Session
         this.currentUser = currentUser;
     }
 
-    Vector<UserStats> getOtherLoggedUsers()
+    Vector<UserIdentity> getOtherLoggedUsers()
     {
         return new Vector<>(otherLoggedUsers);
+    }
+
+    void setOtherLoggedUsers(Vector<UserIdentity> otherLoggedUsers)
+    {
+        if (otherLoggedUsers == null)
+            throw new NullPointerException(("Data:Session:: trying to set a null vector"));
+
+        this.otherLoggedUsers = otherLoggedUsers;
     }
 
     /**
@@ -51,19 +59,19 @@ class Session
     void mergeUserIntoLoggedUsers(UserIdentity user)
     {
         boolean userFound = false;
-        for(UserStats usr : this.getOtherLoggedUsers())
+        for(UserIdentity usr : this.getOtherLoggedUsers())
         {
             if(usr.getId().equals(user.getId()))
             {
                 this.getOtherLoggedUsers().remove(usr);
-                this.getOtherLoggedUsers().add((UserStats)user);
+                this.getOtherLoggedUsers().add(user);
                 userFound = true;
             }
         }
         // Si l'utilisateur n'a pas été trouvé
         if(!userFound)
         {
-            this.otherLoggedUsers.add((UserStats)user);
+            this.otherLoggedUsers.add(user);
         }
     }
 
