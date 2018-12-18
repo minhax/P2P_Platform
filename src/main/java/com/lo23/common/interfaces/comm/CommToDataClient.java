@@ -124,5 +124,8 @@ public interface CommToDataClient
     void requestFileLoc(FileHandler file, UserIdentity user);
     
     void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part);
+
+
+    public void  sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content);
 }
 

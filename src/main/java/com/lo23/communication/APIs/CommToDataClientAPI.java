@@ -14,6 +14,7 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Files_Client.*;
+import com.lo23.communication.Messages.Files_Server.sendFileMsg;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
 import com.lo23.communication.network.Client.Client;
 import com.lo23.data.Const;
@@ -232,6 +233,23 @@ public class CommToDataClientAPI implements CommToDataClient
             CommunicationManagerClient cmc = CommunicationManagerClient.getInstance(); // Client ask again
             DataClientToComm dataInterface = cmc.getDataInterface();
             dataInterface.notifyAskForFilePartAgain(userSource, file, part);
+        }
+    }
+
+
+    @Override
+    public void sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content){
+        //Depuis la source jusqu'à l'utilisateur demandeur
+        try {
+            sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
+            String ipUserAsking = this.commManagerServer.findUserIp(userSource.getId());
+            Client client = new Client(message, ipUserAsking, Const.CLIENT_DEFAULT_PORT);
+            client.start();
+        }
+        catch (Exception e){
+            e.printStackTrace(); // Pour les test
+            System.out.println("Client deconnecte, arret du telechargement");
+
         }
     }
 

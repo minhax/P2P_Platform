@@ -27,7 +27,6 @@ public interface CommToDataServer {
      */
     public void sendNewFileSource(FileHandlerInfos file, UserIdentity user);
 
-    public void  sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content);
 }
 
 
