@@ -6,7 +6,7 @@ import com.lo23.communication.Messages.FileMessage;
 
 
 public class downloadMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 83L;
 	protected UserIdentity user;
 	
 	public downloadMsg(FileHandlerInfos fi, UserIdentity u){
@@ -17,4 +17,6 @@ public class downloadMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

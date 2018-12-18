@@ -129,17 +129,18 @@ public class DirectoryUserFiles
     public void removeUser(User user) throws IllegalArgumentException
     {
         Utils.throwExceptionIfNull("User should not be null", user);
-        Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
+        //Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
 
-        // Suppression de tous les fichiers de l'utilisateur
-        Vector<FileHandlerInfos> tmp = new Vector<>();
-        tmp.addAll(this.getFilesProposedByUser(user));
-        FileHandlerInfos f;
+        if(this.userFiles.get(user)!=null) {
+            // Suppression de tous les fichiers de l'utilisateur
+            Vector<FileHandlerInfos> tmp = new Vector<>();
+            tmp.addAll(this.getFilesProposedByUser(user));
+            FileHandlerInfos f;
 
-        for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext();)
-        {
-            f = i.next();
-            this.removeProposedFile(user, f);
+            for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext(); ) {
+                f = i.next();
+                this.removeProposedFile(user, f);
+            }
         }
     }
 
@@ -330,5 +331,33 @@ public class DirectoryUserFiles
     public HashMap<UserIdentity, Vector<FileHandlerInfos>> getUserFiles()
     {
         return userFiles;
+    }
+
+    public UserIdentity getUser(UUID id){
+        for (UserIdentity temp :
+                this.userFiles.keySet())
+        {
+            if(temp.getId().equals(id)){
+                return temp;
+            }
+        }
+        System.out.println("User n'existe pas dans le repertoire");
+        return null;
+    }
+
+    public void updateFileInfo(FileHandlerInfos updatedFile, UserIdentity user) {
+        //user : user responsable de la modif
+        //updatedFile : FileHandlerInfos contenant les modifications
+        // TODO :
+    }
+
+    /**
+     * Méthode houbi houba pour gagner du temps sur le traitement.
+     * Que Dieu me pardonne pour ça, la vérité
+     * @param uf Le HashMap qui deviendra l'attribut UserFiles ...
+     */
+    public void setUserFiles(HashMap<UserIdentity, Vector<FileHandlerInfos>> uf)
+    {
+        this.userFiles = uf;
     }
 }

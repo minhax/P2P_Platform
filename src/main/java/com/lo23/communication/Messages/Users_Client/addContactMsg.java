@@ -5,11 +5,13 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.Messages.UserMessage;
 
 public class addContactMsg extends UserMessage{
-
+	
+	private static final long serialVersionUID = 47L;
 	public addContactMsg(UserIdentity ui){
 		this.user = ui;
 	}
 	public void treatment(){
-		//CommToDataServer.addContact(this.user()); // Il faut remplacer CommToDataServer avec l'interface que l'on donne en parametre
 	}
+
+	public boolean isToServ(){return true;}
 }

@@ -63,10 +63,11 @@ public class CreateAccountController implements Initializable {
         } else {
             // A decommenté et verifier les champs pendant l'integration
 
-
-            try {
-                api.createAccount(loginTextField.getText(), passwordField.getText(), firstnameTextField.getText(), lastnameTextField.getText(), Integer.parseInt(ageTextField.getText()));
-            } catch (DataException de) {
+            try{
+                api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
+                api.requestCheckCredentials(loginTextField.getText(),passwordField.getText());
+            }
+            catch(DataException de){
                 de.printStackTrace();
                 // TODO génrer l'exception qui signifie que la création de compte a échoué.
             }

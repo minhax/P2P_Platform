@@ -19,14 +19,16 @@ public class IhmToDataClientAPI implements IhmToDataClient {
     }
 
     @Override
-    public UserIdentity updateFileDownload(UserIdentity userInfo) { //Comprend pas trop a quoi ça sert
+    public UserIdentity updateFileDownload(UserIdentity userInfo)
+    { //Comprend pas trop a quoi ça sert
     	
         return userInfo;
         
     }
 
     @Override
-    public void showPercentageComplete(FileHandler file, float percentage) {
+    public void showPercentageComplete(FileHandler file, float percentage)
+    {
     	
     	//A ajouter à la structure des fichiers en download
         ObservableList<DownloadingFilesListCell> items = controller.getCurrentlyShowingDownloadingFiles();
@@ -40,9 +42,21 @@ public class IhmToDataClientAPI implements IhmToDataClient {
     }
 
 	@Override
-	public void UpdateConnectedUsers(UserIdentity user) {
+	public void UpdateConnectedUsers(UserIdentity user)
+    {
 		
 		controller.getConnectedUsers().add(user);
 		
 	}
+
+    @Override
+    public void updateAvailableFiles(FileHandlerInfos fileInfo, UserIdentity user) {
+        // TODO
+    }
+
+    @Override
+    public void sendUpdates(UserIdentity userInfo, List<FileHandlerInfos> fileInfo)
+    {
+        // TODO
+    }
 }

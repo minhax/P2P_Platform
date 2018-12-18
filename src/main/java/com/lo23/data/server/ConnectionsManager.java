@@ -63,18 +63,17 @@ public class ConnectionsManager
         }
 
         // On récupère les fichiers proposés par l'user qui se connecte pour mettre à jour le directory
-        /*
+
         // fetchUsersProposedFiles(user) à implémenter
-        Vector<FileHandlerInfos> userFiles = fetchUsersProposedFiles(user)
+        Set<FileHandlerInfos> userFiles = getProposedFiles();
         if (userFiles!=null)
         {
             for (Iterator<FileHandlerInfos> i = userFiles.iterator(); i.hasNext();)
             {
-                f = i.next();
+                FileHandlerInfos f = i.next();
                 this.directory.addProposedFile(user, f);
             }
         }
-        */
         // On connecte l'utilisateur
         this.connectedUsers.add(user);
     }

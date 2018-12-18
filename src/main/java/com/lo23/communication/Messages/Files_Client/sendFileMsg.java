@@ -5,7 +5,7 @@ import com.lo23.communication.Messages.FileMessage;
 
 
 public class sendFileMsg extends FileMessage {
-	
+	private static final long serialVersionUID = 58L;
 	public sendFileMsg(FileHandlerInfos fi){
 		this.file = fi;
 	}
@@ -13,4 +13,6 @@ public class sendFileMsg extends FileMessage {
 	public void treatment(){
 	
 	}
+
+	public boolean isToServ(){return true;}
 }

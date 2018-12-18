@@ -6,7 +6,9 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 public interface DataClientToComm
 {
@@ -54,24 +56,24 @@ public interface DataClientToComm
      * Notifie les clients distants des modifications
      * apportées à un fichier partagé
      * @param modifiedFile fichier modifié
+     * @param user Utilisateur ayant modifé son fichier
      */
-    void notifyUpdatedSharedFileToAll(FileHandler modifiedFile);
+    void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user);
 
     /**
      * Notifie les clients distants du profil
      * d'un autre utilisateur ayant subi des modifications
      * @param newlyModifiedUser profil autre utilisateur modifié
      */
-    void notifyOtherUserUpdatedAccountToAll(UserStats newlyModifiedUser);
+    void notifyOtherUserUpdatedAccountToAll(UserIdentity newlyModifiedUser);
 
     /**
      * Notifie les clients distants de la déconnexion d'un autre
      * utilisateur et donc de son retrait en tant que source
      * des fichiers qu'il propose
      * @param newlyDisconnectedUser autre utilisateur déconnecté
-     * @param files fichiers dont cet utilisateur est la source
      */
-    void notifyOtherUserDisconnectedToAll(User newlyDisconnectedUser, List<FileHandlerInfos> files);
+    void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser);
 
     /**
      * Notifie les clients distants de la connexion d'un autre
@@ -80,7 +82,7 @@ public interface DataClientToComm
      * @param newlyConnectedUser autre utilisateur connecté
      * @param files fichiers dont cet utilisateur est la source
      */
-    void notifyOtherUserConnectedToAll(UserIdentity newlyConnectedUser, List<FileHandlerInfos> files);
+    void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste);
 
     /**
      * Fonction qui permet d'obtenir le filePart numéro "part" du fichier
@@ -91,4 +93,12 @@ public interface DataClientToComm
      * @param part
      */
     void getFilePart(User userAsking, User userSource, FileHandler file, long part);
+
+    /**
+     * Fonction qui redemande un fichier après reprise sur erreur
+     * @param source la source chez qui ça a planté
+     * @param file le fichier que l'on veut
+     * @param part la partie que l'on veut.
+     */
+    void notifyAskForFilePartAgain(User source, FileHandler file, long part);
 }

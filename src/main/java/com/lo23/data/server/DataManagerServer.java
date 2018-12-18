@@ -2,7 +2,6 @@ package com.lo23.data.server;
 
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
-import com.lo23.common.user.UserStats;
 
 /**
  * Classe qui va gérer la partie Data du serveur.
@@ -52,5 +51,9 @@ public class DataManagerServer
     public DataServerToComm getDataServerToCommApi ()
     {
         return this.toCommApi;
+    }
+
+    public DirectoryUserFiles getDirectory(){
+        return this.connections.getDirectory();
     }
 }

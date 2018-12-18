@@ -14,7 +14,10 @@ import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
 import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
 import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
-import com.lo23.communication.network.Client;
+import com.lo23.communication.Messages.Files_Client.addCommentMsg;
+import com.lo23.communication.Messages.Files_Client.rateFileMsg;
+import com.lo23.communication.network.Client.Client;
+import com.lo23.data.Const;
 
 
 import java.util.List;
@@ -67,42 +70,57 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void sendUserChangesToServer(UserIdentity user) {
+        
         /**
-         * recupere le CommunicationManager cote Client
-         * recupere l'addresse du serveur
-         * cree un message de type updateUserInfoMsg pour la modification des infos de l'utilisateur user
-         * cree un objet Client qui permet d'envoyer le message au serveur via socket
+         * Récupération du Cmc et de l'adresseIP du server
          */
+        
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        //A modifier plus tard ==> cms.getPort()
-        int portServer = 1026;
-        String addrServer = cmc.getAddressIpServer();
+        
+        /**
+         * Création du message
+         */
+        
         updateUserInfoMsg msg = new updateUserInfoMsg(user);
-        Client c = new Client(msg, portServer, addrServer);
+        
+        /**
+         * @param msg : message a envoyer
+         * @param ipServer : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
+        
+        Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
-
-    @Override
-    public void sendUserChanges(UserIdentity user){
-
-    }
-
-    @Override
+        @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
+        
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
-        Client client=new Client(message, 1026, ip);
+        
+        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     @Override
-    public void sendCommentedFile(Comment comment, FileHandler commentedFile){
-
+    public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        
+        addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
+        
+        Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     @Override
-    public void sendRatedFile(Rating rating, FileHandler ratedFile){
-
+    public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        
+        rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
+        
+        Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     /**
@@ -118,14 +136,16 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestLogoutToServer(UserStats user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String myIPAdress = null;
-        int portServ = 1026;
+        
         try {
             myIPAdress = CommunicationManager.findIPadress();
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println("[API] Erreur dans la recherche d'adresse IP");
         }
         logoutMsg message=new logoutMsg(user, myIPAdress);
-        Client c = new Client(message, portServ, cmc.getAddressIpServer());
+        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
         System.out.println("[COM] Deconnexion reussie");
     }
 
@@ -139,10 +159,12 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         cmc.setAddressIpServer(serverIP);
-        int portServ = 1026;
+        
         connectionMsg message = new connectionMsg(user, fi);
-        System.out.println("Client cree");
-        Client c = new Client(message, portServ, serverIP);
+    
+        System.out.println(" Demande de connexion pour l'utilisateur :" + user.getId() + " " + user.getLogin());
+        Client c = new Client(message, serverIP, Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     /*@Override
@@ -174,30 +196,24 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){ //TODO Fix le parametre UserIdentity ou User?
-        //TODO: rajouter exception
+    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-        String ip = cmc.getAddressIpServer();
+
         uploadFileMsg message=new uploadFileMsg(file, user);
-        Client client=new Client(message, 1026, ip);
 
-        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
+        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
-
-
-    @Override
-    public void sendNewFileSource(FileHandler file, UserIdentity user){
-        //A priori la même chose que addNewFileSource ?
-
-    }
-
+    
     @Override
     public void uploadFile(FileHandlerInfos fi, UserIdentity user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        int portServ = 1026;
+        
         uploadFileMsg message = new uploadFileMsg(fi,user );
+        
         System.out.println("Client cree");
-        Client c = new Client(message, portServ, cmc.getAddressIpServer());
+        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        c.start();
     }
 
     @Override

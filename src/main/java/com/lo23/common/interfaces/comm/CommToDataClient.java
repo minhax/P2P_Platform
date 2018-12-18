@@ -27,12 +27,6 @@ public interface CommToDataClient
     void sendFileChanges(Rating rate, FileHandler file);
 
     /**
-     * Envoie les modifications relatives à un utilisateur
-     * @param user utilisateur concerné
-     */
-    void sendUserChanges(UserIdentity user);
-
-    /**
      * Rend indisponible un fichier (communication avec le serveur)
      * @param file fichier que l'on rend indisponible
      * @param user utilisateur qui le rend indisponible
@@ -51,14 +45,15 @@ public interface CommToDataClient
      * @param comment Commentaire
      * @param commentedFile Fichier commenté
      */
-    void sendCommentedFile(Comment comment, FileHandler commentedFile);
+    void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user);
 
     /**
      * Envoie une nouvelle note attribuée à un fichier
      * @param rating note à ajouter au fichier
      * @param ratedFile fichier noté
+     * @param user Utilisateur qui a noté le fichier
      */
-    void sendRatedFile(Rating rating, FileHandler ratedFile);
+    void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user);
 
     /**
      * Envoie une nouvelle note attribuée à un fichier
@@ -118,13 +113,7 @@ public interface CommToDataClient
      * @param file fichier partagé
      * @param user utilisateur qui devient source pour ce fichier
      */
-    void sendNewFileSource(FileHandler file, UserIdentity user);
 
-    /**
-     * Upload le fichier
-     * @param file fichier partagé
-     * @param user utilisateur qui upload
-     */
     void uploadFile(FileHandlerInfos file, UserIdentity user);
 
     /**

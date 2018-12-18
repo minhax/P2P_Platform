@@ -179,6 +179,7 @@ public class DataManagerClient
     {
         // TODO catch erreur eventuelle.
         this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
+        this.saveUserInfo(this.getSessionInfos().getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
         return true; //TODO return to user logout successful ?
     }
@@ -208,6 +209,8 @@ public class DataManagerClient
             i.printStackTrace();
             registerSuccess = false;
         }
+
+        System.out.println("SAUVEGARDE" +user.getFirstName()+ " " +user.getPassword());
 
         return registerSuccess;
     }
@@ -311,23 +314,22 @@ public class DataManagerClient
      * Met à jour le profil utilisateur en local et
      * envoie une demande de propagation d'information
      * au serveur
-     * @param modifiedUser nouveau profil
      */
-    public void changeUserInfos(UserAccount modifiedUser)
+    public void changeUserInfos(String login, String password, String firstname, String lastname, int age)
     {
-        this.sessionInfos.getCurrentUser().setPassword(modifiedUser.getPassword());
+        this.sessionInfos.getCurrentUser().setPassword(password);
         // Si autre chose que le mdp a été changé
-        if (!this.sessionInfos.getCurrentUser().getFirstName().equals(modifiedUser.getFirstName())
-                || !this.sessionInfos.getCurrentUser().getLastName().equals(modifiedUser.getLastName())
-                || this.sessionInfos.getCurrentUser().getAge() != modifiedUser.getAge())
+        if (!this.sessionInfos.getCurrentUser().getFirstName().equals(firstname)
+                || !this.sessionInfos.getCurrentUser().getLastName().equals(lastname)
+                || this.sessionInfos.getCurrentUser().getAge() != age)
         {
             // Mise à jour de l'utilisateur connecté
-            this.sessionInfos.getCurrentUser().setFirstName(modifiedUser.getFirstName());
-            this.sessionInfos.getCurrentUser().setLastName(modifiedUser.getLastName());
-            this.sessionInfos.getCurrentUser().setAge(modifiedUser.getAge());
+            this.sessionInfos.getCurrentUser().setFirstName(firstname);
+            this.sessionInfos.getCurrentUser().setLastName(lastname);
+            this.sessionInfos.getCurrentUser().setAge(age);
 
             // Communication des changements au serveur pour qu'il se mette à jour
-            this.commToDataClientAPI.sendUserChangesToServer((UserIdentity)modifiedUser);
+            this.commToDataClientAPI.sendUserChangesToServer(this.getSessionInfos().getCurrentUser());
         }
     }
 
@@ -357,7 +359,7 @@ public class DataManagerClient
         }
 
         // Communication des changements au serveur
-        this.getCommToDataClientApi().sendCommentedFile(comment, (FileHandler) commentedFile);
+        this.getCommToDataClientApi().sendCommentedFile(comment, commentedFile, this.sessionInfos.getCurrentUser());
     }
 
     /**
@@ -384,7 +386,7 @@ public class DataManagerClient
         }
 
         // Communication des changements au serveur pour qu'il se mette à jour
-        this.getCommToDataClientApi().sendRatedFile(rating, (FileHandler)ratedFile);
+        this.getCommToDataClientApi().sendRatedFile(rating, ratedFile, this.sessionInfos.getCurrentUser());
     }
 
     public void downloadFile(FileHandler fileToDownload)
@@ -394,6 +396,16 @@ public class DataManagerClient
 
     public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
         this.downloadManager.storeNewFilePart(fileHandler, blocNumber, data);
+    }
+
+    public void removeConnectedUser(User disconectedUser) {
+        this.sessionInfos.getDirectory().removeUser(disconectedUser);
+    }
+
+    public void updateFileInfo(FileHandlerInfos updatedFile) {
+        this.sessionInfos.getDirectory().updateFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
+       // this.getCommToDataClientApi().sendUpdatedFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
+
     }
 
 }

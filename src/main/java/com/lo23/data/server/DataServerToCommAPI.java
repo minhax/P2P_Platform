@@ -10,6 +10,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -24,12 +25,16 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewConnectedUser(UserStats user)
+    public HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
-        // La partie Comm devrait notifier tous les clients de la nouvelle connexion
-        this.manager.commToDataApi.sendConnectedUserToAll(user,
-                this.manager.connections.getDirectory().getFilesProposedByUser(user));
+        System.out.println("CONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
+        return this.requestUserFiles();
+    }
+
+    @Override
+    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(){
+        return this.manager.getDirectory().getUserFiles();
     }
 
     @Override
@@ -44,10 +49,14 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void removeDisconnectedUser(User user)
+    public UserStats removeDisconnectedUser(UserStats user)
     {
+        System.out.println("Nb de connectés avant la déconnexion : " + this.manager.connections.getConnectedUsers().size());
+        System.out.println("DECONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
         // this.manager.commToDataApi.removeDisconnectedUser(user, this.manager.connections.getUserFiles(user));
         this.manager.connections.disconnectUser(user);
+        System.out.println("Nb de connectés après la déconnexion : " + this.manager.connections.getConnectedUsers().size());
+        return user;
     }
 
     @Override
@@ -60,13 +69,16 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public void updateUserChanges(UserIdentity user)
     {
-        this.manager.connections.modifyConnectedUser(user);
+        UserIdentity u = this.manager.connections.getDirectory().getUser(user.getId());
+        u.setAge(user.getAge());
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
     }
 
     @Override
-    public void addNewFileToServer(FileHandlerInfos file, User user)
+    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
     {
-       //TODO this.manager.connections.addFileToDirectory(user, file);
+        this.manager.connections.addFileToDirectory(user, file);
     }
 
     @Override
@@ -77,9 +89,16 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void updateFileChanges(FileHandlerInfos file)
+    public void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user)
     {
+      //  this.manager.connections.
+        //TODO : merge newComment into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
+    }
 
+    @Override
+    public void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user)
+    {
+        //TODO : merge newRating into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
     }
 
     @Override
