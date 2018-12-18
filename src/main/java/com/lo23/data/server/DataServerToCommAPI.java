@@ -33,10 +33,8 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(UserIdentity user){
-        HashMap<UserIdentity, Vector<FileHandlerInfos>> infos = new HashMap<>();
-        infos.put(user, this.manager.getDirectory().getFilesProposedByUser(user));
-        return infos;
+    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(){
+        return this.manager.getDirectory().getUserFiles();
     }
 
     @Override
