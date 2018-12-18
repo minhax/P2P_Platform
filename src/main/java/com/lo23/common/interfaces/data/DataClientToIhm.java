@@ -174,4 +174,5 @@ public interface DataClientToIhm
      * @return Vector des téléchargements en cours.
      */
     Vector<FileHandler> requestInProgressFiles();
+    
 }
