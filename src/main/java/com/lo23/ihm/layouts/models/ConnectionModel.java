@@ -7,6 +7,9 @@ public class ConnectionModel {
 
     private StringProperty user, password, server, port;
 
+    /**
+     * Instancie la classe ConnectionModel
+     */
     public ConnectionModel()
     {
         this.user=new SimpleStringProperty();
@@ -15,51 +18,63 @@ public class ConnectionModel {
         this.port=new SimpleStringProperty();
     }
 
-    public String getUser() {
+    public String getUser()
+    {
         return user.get();
     }
 
-    public StringProperty userProperty() {
+    public StringProperty userProperty()
+    {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(String user)
+    {
         this.user.set(user);
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password.get();
     }
 
-    public StringProperty passwordProperty() {
+    public StringProperty passwordProperty()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password.set(password);
     }
 
-    public String getServer() {
+    public String getServer()
+    {
         return server.get();
     }
 
-    public StringProperty serverProperty() {
+    public StringProperty serverProperty()
+    {
         return server;
     }
 
-    public void setServer(String server) {
+    public void setServer(String server)
+    {
         this.server.set(server);
     }
 
-    public String getPort() {
+    public String getPort()
+    {
         return port.get();
     }
 
-    public StringProperty portProperty() {
+    public StringProperty portProperty()
+    {
         return port;
     }
 
-    public void setPort(String port) {
+    public void setPort(String port)
+    {
         this.port.set(port);
     }
 }

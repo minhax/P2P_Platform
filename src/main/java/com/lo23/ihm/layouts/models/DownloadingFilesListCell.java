@@ -17,24 +17,30 @@ import javafx.stage.Stage;
 
 public class DownloadingFilesListCell extends ListCell<FileHandler> {
 
-    HBox hbox = new HBox();
-    Label titre = new Label("_");
-    Label taille = new Label("_");
-    Label pourcentage = new Label("0%");
-    Button addNote = new Button("Noter");
-    Button addComment = new Button("Commenter");
-    FileHandler lastItem;
+    private HBox hbox = new HBox();
+    private Label titre = new Label("_");
+    private Label taille = new Label("_");
+    private Label pourcentage = new Label("0%");
+    private Button addNote = new Button("Noter");
+    private Button addComment = new Button("Commenter");
+    private FileHandler lastItem;
 
     //TODO : ajouter une barre de progression (et analyser comment la mettre à jour dynamiquement)
 
-    public DownloadingFilesListCell() {
+    /**
+     * Instancie la classe DownloadingFilesListCell
+     */
+    public DownloadingFilesListCell()
+    {
         super();
         hbox.getChildren().addAll(titre, taille, pourcentage, addNote, addComment);
-        addNote.setOnAction(new EventHandler<ActionEvent>() {
+        addNote.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-
-                try {
+            public void handle(ActionEvent event)
+            {
+                try
+                {
 
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getClassLoader().getResource("ratingLayout.fxml"));
@@ -51,18 +57,23 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
 
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
 
             }
         });
 
-        addComment.setOnAction(new EventHandler<ActionEvent>() {
+        //ajout d'un commentaire
+        addComment.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-            	try {
-
+            public void handle(ActionEvent event)
+            {
+            	try
+                {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getClassLoader().getResource("commentLayout.fxml"));
                     Parent root = loader.load();
@@ -78,21 +89,31 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
 
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
         });
     }
 
+    /**
+     * Actualisation d'un fichier dans l'onglet téléchargements
+     * @param item FileHandler
+     * @param empty booléen
+     */
     @Override
-    protected void updateItem(FileHandler item, boolean empty) {
+    protected void updateItem(FileHandler item, boolean empty)
+    {
         super.updateItem(item, empty);
         setText(null);  // No text in label of super class
-        if (empty) {
+        if (empty)
+        {
             lastItem = null;
             setGraphic(null);
-        } else {
+        }
+        else {
             lastItem = item;
             taille.setText(item!=null ? "taille : " + item.getSize() : "taille : <null>");
             titre.setText(item!=null ? item.getTitle() : "<null>");
@@ -100,17 +121,25 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
         }
     }
 
-    public void updatePourcentage(FileHandler item, float pour) {
+    /**
+     * Actualisation du pourcentage de téléchargement
+     * @param item FileHandler
+     * @param pour float
+     */
+    public void updatePourcentage(FileHandler item, float pour)
+    {
         lastItem = item;
         //Mettre à jour la barre de progression
         pourcentage.setText(String.format("%s",pour) + "%");
         setGraphic(hbox);
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     */
     public boolean checkEqualFile(FileHandler file) {
-        if(lastItem.getHash().equals(file.getHash())) {
-            return true;
-        }
-        return false;
+        return lastItem.getHash().equals(file.getHash());
     }
 }

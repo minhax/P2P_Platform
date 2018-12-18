@@ -21,22 +21,28 @@ import com.lo23.ihm.layouts.controllers.CommentController;
 
 
 public class MyFilesListCell extends ListCell<FileHandler>  {
-    HBox hbox = new HBox();
-    Label label = new Label("_");
-    Button addNote = new Button("Noter");
-    Button addComment = new Button("Commenter");
-    Button del = new Button("Supprimer");
-    FileHandler lastItem;
+    private HBox hbox = new HBox();
+    private Label label = new Label("_");
+    private Button addNote = new Button("Noter");
+    private Button addComment = new Button("Commenter");
+    private Button del = new Button("Supprimer");
+    private FileHandler lastItem;
     private DataClientToIhm api;
 
-    public MyFilesListCell(DataClientToIhm dataAPI) {
+    /**
+     * Instancie la classe MyFilesListCell
+     * @param dataAPI instance de DataClientToIhm
+     */
+    public MyFilesListCell(DataClientToIhm dataAPI)
+    {
         super();
         api=dataAPI;
         hbox.getChildren().addAll(label, addNote, addComment, del);
-        addNote.setOnAction(new EventHandler<ActionEvent>() {
+        addNote.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-
+            public void handle(ActionEvent event)
+            {
                 try {
 
                     FXMLLoader loader = new FXMLLoader();
@@ -54,17 +60,23 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
 
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
 
             }
         });
 
-        addComment.setOnAction(new EventHandler<ActionEvent>() {
+        //ajout d'un commentaire
+        addComment.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-            	try {
+            public void handle(ActionEvent event)
+            {
+            	try
+                {
 
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getClassLoader().getResource("commentLayout.fxml"));
@@ -81,15 +93,19 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
 
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
         });
 
-        del.setOnAction(new EventHandler<ActionEvent>() {
+        del.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event)
+            {
                 System.out.println("Suppression de l'objet : " + lastItem);
                 api.requestMakeFileUnavailable(lastItem);
                 updateItem(lastItem,true);
@@ -97,15 +113,23 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
         });
     }
 
+    /**
+     * Actualisation du fichier
+     * @param item FileHandler
+     * @param empty booléen
+     */
     @Override
-    protected void updateItem(FileHandler item, boolean empty) {
+    protected void updateItem(FileHandler item, boolean empty)
+    {
         super.updateItem(item, empty);
         setText(null);  // No text in label of super class
-        if (empty) {
+        if (empty)
+        {
             lastItem = null;
             System.out.println("Deleting Graphics : " + item);
             setGraphic(null);
-        } else {
+        }
+        else {
             lastItem = item;
             label.setText(item!=null ? item.getTitle() : "<null>");
             setGraphic(hbox);

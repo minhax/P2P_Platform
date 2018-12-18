@@ -18,22 +18,28 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AvailableFilesListCell extends ListCell<FileHandler>  {
-    HBox hbox = new HBox();
-    Label titre = new Label("_");
-    Label taille = new Label("_");
-    Button download = new Button("Télécharger");
-    Button addNote = new Button("Noter");
-    Button addComment = new Button("Commenter");
-    FileHandler lastItem;
+    private HBox hbox = new HBox();
+    private Label titre = new Label("_");
+    private Label taille = new Label("_");
+    private Button download = new Button("Télécharger");
+    private Button addNote = new Button("Noter");
+    private Button addComment = new Button("Commenter");
+    private FileHandler lastItem;
 
-    public AvailableFilesListCell() {
+    /**
+     * Instancie la classe AvailableFilesListCell
+     */
+    public AvailableFilesListCell()
+    {
         super();
         hbox.getChildren().addAll(titre, taille, download, addNote, addComment);
-        addNote.setOnAction(new EventHandler<ActionEvent>() {
+        addNote.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-
-                try {
+            public void handle(ActionEvent event)
+            {
+                try
+                {
 
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getClassLoader().getResource("ratingLayout.fxml"));
@@ -50,18 +56,23 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
 
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
 
             }
         });
 
-        addComment.setOnAction(new EventHandler<ActionEvent>() {
+        //ajout d'un commentaire
+        addComment.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
-
-                try {
+            public void handle(ActionEvent event)
+            {
+                try
+                {
 
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getClassLoader().getResource("commentLayout.fxml"));
@@ -78,28 +89,40 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
 
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
         });
 
-        download.setOnAction(new EventHandler<ActionEvent>() {
+        download.setOnAction(new EventHandler<ActionEvent>()
+        {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event)
+            {
                 System.out.println("Clic on Download");
             }
         });
     }
 
+    /**
+     * Actualisation d'un fichier disponible
+     * @param item FileHandler
+     * @param empty booléen
+     */
     @Override
-    protected void updateItem(FileHandler item, boolean empty) {
+    protected void updateItem(FileHandler item, boolean empty)
+    {
         super.updateItem(item, empty);
         setText(null);  // No text in label of super class
-        if (empty) {
+        if (empty)
+        {
             lastItem = null;
             setGraphic(null);
-        } else {
+        }
+        else {
             lastItem = item;
             titre.setText(item!=null ? item.getTitle() : "<null>");
             taille.setText(item!=null ? "taille : " + item.getSize() : "taille : <null>");
