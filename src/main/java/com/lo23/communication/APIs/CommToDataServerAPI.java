@@ -72,13 +72,17 @@ public class CommToDataServerAPI implements CommToDataServer {
     @Override
     public void sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content){
         //Depuis la source jusqu'à l'utilisateur demandeur
-        int portServ=0;
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
-        String ipUserAsking=this.commManagerServer.findUserIp(userSource.getId());
-        Client client = new Client(message, ipUserAsking, Const.CLIENT_DEFAULT_PORT);
-        client.start();
-    }
+        try {
+            sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
+            String ipUserAsking = this.commManagerServer.findUserIp(userSource.getId());
+            Client client = new Client(message, ipUserAsking, Const.CLIENT_DEFAULT_PORT);
+            client.start();
+        }
+        catch (Exception e){
+            e.printStackTrace(); // Pour les test
+            System.out.println("Client deconnecte, arret du telechargement");
 
+        }
+    }
 
 }

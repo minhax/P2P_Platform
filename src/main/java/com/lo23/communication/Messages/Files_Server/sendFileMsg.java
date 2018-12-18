@@ -24,8 +24,8 @@ public class sendFileMsg extends FileMessage {
 	}
 
 	public void treatment(){
-		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		DataClientToComm dataInterface = cms.getDataInterface();
+		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+		DataClientToComm dataInterface = cmc.getDataInterface();
 		dataInterface.receiveFilePart(this.file, this.part, this.content);
 	}
 

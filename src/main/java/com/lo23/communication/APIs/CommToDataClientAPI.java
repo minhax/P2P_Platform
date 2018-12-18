@@ -4,6 +4,7 @@ import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.filehandler.*;
 import com.lo23.common.interfaces.comm.CommToDataClient;
+import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
@@ -225,10 +226,20 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
-        String ipUserSource=this.commManagerServer.findUserIp(userSource.getId());
-        Client c = new Client(message, ipUserSource, Const.CLIENT_DEFAULT_PORT);
-        c.start();
+        //CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        try {
+            CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+            getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
+            String ipUserSource = cms.findUserIp(userSource.getId());
+            Client c = new Client(message, ipUserSource, Const.CLIENT_DEFAULT_PORT);
+            c.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // Pour les tests
+            CommunicationManagerClient cmc = CommunicationManagerClient.getInstance(); // Client ask again
+            DataClientToComm dataInterface = cmc.getDataInterface();
+            dataInterface.notifyAskForFilePartAgain(userSource, file, part);
+        }
     }
+
 }

@@ -5,6 +5,7 @@ import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.FileMessage;
 
@@ -22,9 +23,9 @@ public class getFileMsg extends FileMessage {
 	}
 	
 	public void treatment(){
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
-		//dataInterface.getFilePart(this.userAsking, this.userSource, this.file, this.part);
+		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+		DataClientToComm dataInterface = cms.getDataInterface();
+		dataInterface.getFilePart(this.userAsking, this.userSource, this.file, this.part);
 	}
 	
 	public boolean isToServ(){return true;}
