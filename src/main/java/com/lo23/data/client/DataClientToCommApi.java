@@ -1,7 +1,5 @@
 package com.lo23.data.client;
 
-import com.lo23.common.Comment;
-import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
@@ -86,6 +84,7 @@ public class DataClientToCommApi implements DataClientToComm
 
     @Override
     public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
+
         Vector<UserStats> connectedUsers = this.host.getSessionInfos().getOtherLoggedUsers();
         System.out.println("Taille connectedUsers pré-connexion = " + connectedUsers.size());
 
@@ -105,10 +104,18 @@ public class DataClientToCommApi implements DataClientToComm
             this.host.getSessionInfos().mergeUserIntoLoggedUsers(user);
         }
 
+
+
+
         System.out.println("Taille connectedUsers post-connexion = " + this.host.getSessionInfos().getOtherLoggedUsers().size());
         // MAJ des fichiers proposés dans le DirectoryUserFiles côté Session sur le client
         for(UserIdentity user : liste.keySet()){
             Vector<FileHandlerInfos> proposedFiles = liste.get(user);
+
+            //Fix temporaire, normalement il faudrait que à partir du
+            if(proposedFiles==null)
+                proposedFiles = new Vector<>();
+
             Iterator it = proposedFiles.iterator();
             while(it.hasNext()){
                 FileHandlerInfos file = (FileHandlerInfos) it.next();
