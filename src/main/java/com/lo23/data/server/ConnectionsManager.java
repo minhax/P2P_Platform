@@ -84,7 +84,7 @@ public class ConnectionsManager
      * @throws IllegalArgumentException Exception levée si le paramètre passé est mauvais
      * @throws IllegalStateException Exception levée si l'utilisateur n'est pas connecté
      */
-    public void disconnectUser(User user) throws IllegalArgumentException, IllegalStateException
+    public void disconnectUser(UserIdentity user) throws IllegalArgumentException, IllegalStateException
     {
         // Si le paramètre passé est null
         if (user == null)
@@ -102,10 +102,7 @@ public class ConnectionsManager
         try
         {
             // On deconnecte l'utilsateur
-            System.out.println("Nombre de connectés avant déco : " + this.connectedUsers.size());
             this.connectedUsers.remove(user);
-            System.out.println("Nombre de connectés après déco : " + this.connectedUsers.size());
-
             // On retire les fichiers de l'utilisateur s'il en a
             this.directory.removeUser(user);
         }

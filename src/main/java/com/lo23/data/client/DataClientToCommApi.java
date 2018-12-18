@@ -74,15 +74,9 @@ public class DataClientToCommApi implements DataClientToComm
     @Override
     public void notifyOtherUserDisconnectedToAll(UserStats newlyDisconnectedUser)
     {
-        System.out.println("newlyDisconnectedUser = " + newlyDisconnectedUser);
-        System.out.println("----- DECONNEXION COTE CLIENT -------");
-        System.out.println("Nb de connectés avant la déconnexion : " + this.host.getSessionInfos().getOtherLoggedUsers().size());
         this.host.removeConnectedUser(newlyDisconnectedUser);
         this.host.getSessionInfos().getOtherLoggedUsers().remove(newlyDisconnectedUser);
-        System.out.println("S'est déconnecté l'utilisateur : " + newlyDisconnectedUser.getLogin());
-        System.out.println("Nb de connectés après la déconnexion : " + this.host.getSessionInfos().getOtherLoggedUsers().size());
-        System.out.println("Nb de fichier proposés après la déconnexion côté client : " + this.host.getSessionInfos().getDirectory().getProposedFiles().size());
-        System.out.println("----- FIN DECONNEXION COTE CLIENT -------");
+
     }
 
     @Override

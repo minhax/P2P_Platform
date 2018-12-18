@@ -27,9 +27,6 @@ public class DataServerToCommAPI implements DataServerToComm
     public void addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
-        System.out.println("CONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
-        System.out.println("NB DE CONNECTES DESORMAIS : " +  this.manager.connections.getConnectedUsers().size());
-        System.out.println("DANS LE DIRECTORY : " + this.manager.connections.getDirectory().getUserFiles().keySet().size());
     }
 
     @Override
@@ -42,21 +39,24 @@ public class DataServerToCommAPI implements DataServerToComm
     {
         Iterator<FileHandlerInfos> iterator = filesSharedByUser.iterator();
         FileHandlerInfos file;
+
         while(iterator.hasNext())
         {
             this.manager.connections.addFileToDirectory(user, iterator.next());
         }
+
+        System.out.println("CONNECTED USERS SIZE = " + this.manager.connections.getConnectedUsers().size());
+        System.out.println("FILE USERS SIZE = " + this.manager.getDirectory().getFilesUser().size());
     }
 
     @Override
     public UserStats removeDisconnectedUser(UserStats user)
     {
-        System.out.println("Nb de connectés avant la déconnexion : " + this.manager.connections.getConnectedUsers().size());
-        System.out.println("DECONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
-        // this.manager.commToDataApi.removeDisconnectedUser(user, this.manager.connections.getUserFiles(user));
         this.manager.connections.disconnectUser(user);
-        System.out.println("Nb de connectés après la déconnexion : " + this.manager.connections.getConnectedUsers().size());
-        System.out.println("Nb de connectés après la déconnexion sur diretory: " + this.manager.connections.getConnectedUsers().size());
+
+        System.out.println("CONNECTED USERS SIZE = " + this.manager.connections.getConnectedUsers().size());
+        System.out.println("FILE USERS SIZE = " + this.manager.getDirectory().getFilesUser().size());
+
         return user;
     }
 

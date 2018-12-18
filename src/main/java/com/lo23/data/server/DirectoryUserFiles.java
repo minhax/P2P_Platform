@@ -13,6 +13,14 @@ import java.util.*;
  */
 public class DirectoryUserFiles
 {
+    @Override
+    public String toString() {
+        return "DirectoryUserFiles{" +
+                "userFiles=" + userFiles.size() +
+                ", filesUser=" + filesUser.size() +
+                '}';
+    }
+
     /**
      * Map contenant les fichiers proposés par les utilisateurs.
      */
@@ -40,46 +48,61 @@ public class DirectoryUserFiles
      */
     public void addProposedFile(UserIdentity user, FileHandlerInfos file) throws IllegalStateException, IllegalArgumentException
     {
-        // On vérifie que les paramètres passés sont valides, sinon on lève une exception.
-        Utils.throwExceptionIfNull("User should not be null", user);
-        Utils.throwExceptionIfNull("File should not be null", file);
-        System.out.println("le user " + user.getLogin() + " a un fichier du nom : " + file.getTitle());
-        // On lève une exception si l'utilisateur propose déjà ce fichier
-        try {
-            if (this.userFiles.get(user).contains(file) && this.filesUser.get(file).contains(user) ){
-                throw new IllegalStateException("This user already propose this file !");
-            }
-        } catch (NullPointerException npe){
-            //npe.printStackTrace();
-        }
 
-        // On vérifie si l'utilisateur propose déjà des fichiers, si ce n'est pas le cas on l'ajoute à la map
-        if (this.userFiles.get(user) == null)
-        {
-            System.out.println("L'utilisateur n'avait pas de fichier");
-            Vector<FileHandlerInfos> v = new Vector<>();
-            v.add(file);
-            this.userFiles.put(user, v);
-        }
-        // Sinon on ajoute simplement le fichier
-        else
-        {
-            System.out.println("L'utilisateur possedait des fichiers");
-            this.userFiles.get(user).add(file);
-        }
+        // update userFiles
+        Vector<FileHandlerInfos> existentFiles = this.userFiles.getOrDefault(user, new Vector<>());
+        existentFiles.add(file);
+        this.userFiles.put(user, existentFiles);
 
-        // On vérifie si le fichier est déjà proposé, si ce n'est pas le cas on l'ajoute à la map
-        if (this.filesUser.get(file) == null)
-        {
-            Vector<UserIdentity> v = new Vector<>();
-            v.add(user);
-            this.filesUser.put(file, v);
-        }
-        // Sinon on ajoute simplement le fichier
-        else
-        {
-            this.filesUser.get(file).add(user);
-        }
+        // update filesUser
+        Vector<UserIdentity> existentSources = this.filesUser.getOrDefault(file, new Vector<>());
+        existentSources.add(user);
+        this.filesUser.put(file, existentSources);
+
+
+//
+//
+//        // On vérifie que les paramètres passés sont valides, sinon on lève une exception.
+//        Utils.throwExceptionIfNull("User should not be null", user);
+//        Utils.throwExceptionIfNull("File should not be null", file);
+//
+//        System.out.println("le user " + user.getLogin() + " a un fichier du nom : " + file.getTitle());
+//        // On lève une exception si l'utilisateur propose déjà ce fichier
+//        try {
+//            if (this.userFiles.get(user).contains(file) && this.filesUser.get(file).contains(user) ){
+//                throw new IllegalStateException("This user already propose this file !");
+//            }
+//        } catch (NullPointerException npe){
+//            npe.printStackTrace();
+//        }
+//
+//        // On vérifie si l'utilisateur propose déjà des fichiers, si ce n'est pas le cas on l'ajoute à la map
+//        if (this.userFiles.get(user) == null)
+//        {
+//            System.out.println("L'utilisateur n'avait pas de fichier");
+//            Vector<FileHandlerInfos> v = new Vector<>();
+//            v.add(file);
+//            this.userFiles.put(user, v);
+//        }
+//        // Sinon on ajoute simplement le fichier
+//        else
+//        {
+//            System.out.println("L'utilisateur possedait des fichiers");
+//            this.userFiles.get(user).add(file);
+//        }
+//
+//        // On vérifie si le fichier est déjà proposé, si ce n'est pas le cas on l'ajoute à la map
+//        if (this.filesUser.get(file) == null)
+//        {
+//            Vector<UserIdentity> v = new Vector<>();
+//            v.add(user);
+//            this.filesUser.put(file, v);
+//        }
+//        // Sinon on ajoute simplement le fichier
+//        else
+//        {
+//            this.filesUser.get(file).add(user);
+//        }
     }
 
 
@@ -126,21 +149,60 @@ public class DirectoryUserFiles
     public void removeUser(User user) throws IllegalArgumentException
     {
         Utils.throwExceptionIfNull("User should not be null", user);
-        //Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
 
-        System.out.println("userFiles size = " + userFiles.keySet().size());
+//        HashMap<UserIdentity, Vector<FileHandlerInfos>> userFiles;
 
-        if(this.userFiles.get(user)!=null) {
-            // Suppression de tous les fichiers de l'utilisateur
-            Vector<FileHandlerInfos> tmp = new Vector<>();
-            tmp.addAll(this.getFilesProposedByUser(user));
-            FileHandlerInfos f;
+//        HashMap<FileHandlerInfos, Vector<UserIdentity>> filesUser;
 
-            for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext(); ) {
-                f = i.next();
-                this.removeProposedFile(user, f);
+        UserIdentity[] sourceToRemove = new UserIdentity[1];
+        FileHandlerInfos[] sourceConcerned = new FileHandlerInfos[1];
+
+
+        this.userFiles.remove(user);
+
+        this.filesUser.forEach((file,sources) -> {
+            sources.forEach(userIdentity -> {
+                if (userIdentity.equals(user)) {
+                    System.out.println("USER REMOVED SUCCESSFULLY");
+                    sourceToRemove[0] = userIdentity;
+                    sourceConcerned[0] = file;
+                }
+            });
+        });
+
+        boolean[] removeEntry = new boolean[1];
+        removeEntry[0] = false;
+
+        this.filesUser.forEach((file,sources) -> {
+            if (file.equals(sourceConcerned[0])) {
+                System.out.println("FILE REMOVED SUCCESSFULLY");
+                sources.remove(sourceToRemove[0]);
             }
+            if (sources.size()==0)
+                removeEntry[0] = true;
+        });
+
+        if (removeEntry[0]) {
+            //BUG ICI
+            System.out.println("PASS");
+
+            this.filesUser.remove(sourceConcerned);
         }
+
+//
+//
+//
+//        if(this.userFiles.get(user)!=null) {
+//            // Suppression de tous les fichiers de l'utilisateur
+//            Vector<FileHandlerInfos> tmp = new Vector<>();
+//            tmp.addAll(this.getFilesProposedByUser(user));
+//            FileHandlerInfos f;
+//
+//            for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext(); ) {
+//                f = i.next();
+//                this.removeProposedFile(user, f);
+//            }
+//        }
     }
 
     /**
