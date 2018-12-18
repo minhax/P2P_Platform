@@ -59,8 +59,8 @@ public class connectionMsg extends Authentication {
 		/**
 		 * Recuperation de la liste des utilisateurs connectés
 		 */
-		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles();
-		
+		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles(this.userStats);
+		System.out.println("nb de fichier de la personne connectée : " + listeUsersandFiles.values());
 		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles);
 		message.setPort(this.getPort());
 		

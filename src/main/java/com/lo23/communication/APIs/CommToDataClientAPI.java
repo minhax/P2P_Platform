@@ -169,13 +169,6 @@ public class CommToDataClientAPI implements CommToDataClient
         c.start();
     }
 
-    /*@Override
-    public void connect(UserStats user, long IP){
-        // A priori même rôle que requestUserConnexion (à changer plus tard si besoin)
-
-    }*/
-
-
     @Override
     public void requestAddSource(FileHandler file, UserIdentity user){
     
