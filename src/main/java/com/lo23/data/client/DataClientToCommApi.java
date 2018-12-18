@@ -10,18 +10,19 @@ import com.lo23.common.user.UserStats;
 import java.util.*;
 
 /**
- * Objet qui implémente l'API de Data pour Comm.
+ * API de Data pour Comm.
  */
 public class DataClientToCommApi implements DataClientToComm
 {
     /**
-     * DataManagerClient parent, sur lequel appeler les fonctions privées de Data.
+     * DataManagerClient parent, sur lequel appeler
+     * les fonctions privées de Data
      */
     private DataManagerClient host;
 
     /**
-     * Constructeur de l'objet.
-     * Est en accès package-private pour empêcher l'instanciation hors du groupe Data.
+     * Constructeur de l'API
+     * (en accès package-private pour empêcher l'instanciation hors du groupe Data)
      * @param host DataManagerClient parent de cette API
      */
     DataClientToCommApi (DataManagerClient host)

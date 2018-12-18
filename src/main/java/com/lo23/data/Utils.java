@@ -6,7 +6,7 @@ package com.lo23.data;
 public class Utils
 {
     /**
-     * Méthode qui teste si un objet est null et lève une exception si c'est le cas
+     * Teste si un objet est null et lève une exception si c'est le cas
      * @param text Texte de l'exception à lever
      * @param object Objet à tester
      * @throws NullPointerException Exception levée

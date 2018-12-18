@@ -99,7 +99,7 @@ public class ConnectionsManagerTest
     void testRemovingOnlyDirectoryFileSourceShouldReturnEmptyDirectory()
     {
         this.connectionsManager.addFileToDirectory(userStats1, file1);
-        this.connectionsManager.removeFileSourceFromDirectory(userStats1, (FileHandler) file1);
+        this.connectionsManager.removeFileSourceFromDirectory(userStats1, file1);
         assertTrue(this.connectionsManager.getProposedFiles().size()==0);
     }
 
@@ -108,7 +108,7 @@ public class ConnectionsManagerTest
     {
         this.connectionsManager.addFileToDirectory(userStats1, file1);
         this.connectionsManager.addFileToDirectory(userStats2, file1);
-        this.connectionsManager.removeFileSourceFromDirectory(userStats1, (FileHandler) file1);
+        this.connectionsManager.removeFileSourceFromDirectory(userStats1, file1);
         assertTrue(this.connectionsManager.getProposedFiles().size()==1);
     }
 
@@ -117,7 +117,7 @@ public class ConnectionsManagerTest
     {
         this.connectionsManager.addFileToDirectory(userStats1, file1);
         this.connectionsManager.addFileToDirectory(userStats2, file2);
-        this.connectionsManager.removeFileSourceFromDirectory(userStats1, (FileHandler) file1);
+        this.connectionsManager.removeFileSourceFromDirectory(userStats1, file1);
         assertTrue(this.connectionsManager.getProposedFiles().size()==1);
     }
 

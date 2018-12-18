@@ -21,7 +21,7 @@ public class fileSourceMsg extends FileMessage{
 	{
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
-		FileHandler fi=(FileHandler) file;
+		FileHandler fi= file;
 		dataInterface.notifyNewSourceToAll(fi, user);
 		//dataInterface.notifyNewSharedFileToAll();
 	}

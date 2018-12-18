@@ -52,7 +52,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
     public void setCommunicationManager(CommunicationManagerClient commManager)
     {
-        this.commManagerClient=commManager;
+        commManagerClient=commManager;
     }
 
 

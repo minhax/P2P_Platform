@@ -7,7 +7,6 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Const;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,9 +15,21 @@ import java.util.Vector;
 
 class DownloadManager
 {
+    /**
+     * File des fichiers en attente
+     */
     private Vector<FileHandler> inQueue;
+    /**
+     * Liste des fichiers in progress
+     */
     private Vector<FileHandler> inProgress;
+    /**
+     * API de Comm pour DataClient
+     */
     private CommToDataClient commToDataClientAPI;
+    /**
+     * Manager de DataClient
+     */
     private DataManagerClient dataManagerClient;
 
     public DataManagerClient getDataManagerClient() {
@@ -37,6 +48,9 @@ class DownloadManager
         this.commToDataClientAPI = commToDataClientAPI;
     }
 
+    /**
+     * Constructeur de DownloadManager
+     */
     DownloadManager(){
         this.inQueue = new Vector<FileHandler>();
         this.inProgress = new Vector<FileHandler>();
@@ -134,6 +148,12 @@ class DownloadManager
         // TODO send  query to comm again
    }
 
+    /**
+     * Enregistre une nouvelle partie d'un fichier
+     * @param fileHandler descripteur du fichier
+     * @param blocNumber numéro du bloc
+     * @param data données contenues dans le bloc
+     */
    void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
         // TODO : store the fileParts, and check if it's completed or not
         long nbBlocks = fileHandler.getNbBlocks();
@@ -157,6 +177,10 @@ class DownloadManager
        }
     }
 
+    /**
+     * Fusionne les parties d'un fichier
+     * @param fileToBuild descripteur du fichier à reconstituer
+     */
     void mergeFileparts (FileHandler fileToBuild)
     {
         try {

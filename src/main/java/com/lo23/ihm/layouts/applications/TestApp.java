@@ -9,7 +9,8 @@ import javafx.stage.Stage;
 public class TestApp extends Application {
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage)
+	{
 		// TODO Auto-generated method stub
 		try {
 			Parent root = FXMLLoader.load((getClass().getClassLoader().getResource("connectionLayout.fxml")));

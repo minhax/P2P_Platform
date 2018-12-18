@@ -163,7 +163,7 @@ public class DataManagerClient
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
 
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
-        commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
+        commToDataClientAPI.requestUserConnexion(userToConnect,
                 userToConnect.getProposedFiles(),
                 serverIp);
 
@@ -302,7 +302,7 @@ public class DataManagerClient
         ne pose pas de problème.
          */
         System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
-        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
+        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, this.sessionInfos.getCurrentUser());
         // Supression du fichier en local
         UserAccount currentUser = this.sessionInfos.getCurrentUser();
         currentUser.removeProposedFile(fileToMakeUnavailable);
