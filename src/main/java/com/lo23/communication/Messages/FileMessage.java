@@ -1,11 +1,12 @@
 package com.lo23.communication.Messages;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 
 public abstract class FileMessage extends Message{
-  protected FileHandlerInfos file;
+  protected FileHandler file;
   
-  public FileHandlerInfos getFile()
+  public FileHandler getFile()
   {
     return file;
   }

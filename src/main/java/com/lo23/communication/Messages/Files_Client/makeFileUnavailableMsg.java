@@ -1,18 +1,17 @@
 package com.lo23.communication.Messages.Files_Client;
 
-import com.lo23.common.filehandler.FileHandlerInfos;
-import com.lo23.common.interfaces.data.DataServerToComm;
+import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.interfaces.data.*;
 import com.lo23.common.user.User;
-import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
+import com.lo23.communication.CommunicationManager.Server.*;
 import com.lo23.communication.Messages.FileMessage;
-import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
-import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
+import com.lo23.communication.Messages.Files_Server.*;
 
 public class makeFileUnavailableMsg extends FileMessage {
 	private static final long serialVersionUID = 78L;
 	User user;
 	
-	public makeFileUnavailableMsg(FileHandlerInfos fi, User us){
+	public makeFileUnavailableMsg(FileHandler fi, User us){
 		this.file = fi;
 		this.user=us;
 	}
