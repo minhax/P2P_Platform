@@ -20,6 +20,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -238,8 +239,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestFileDownload(FileHandler fileToDownload)
     {
-        if (fileToDownload != null)
+        if (fileToDownload != null) {
             this.host.downloadFile(fileToDownload);
+        }
         else
             throw new NullPointerException("Error in DataClientToIHM::requestFileDownload : the fileToDownload can't be null");
     }

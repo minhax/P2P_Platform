@@ -53,7 +53,8 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		cms.addEntryMap(this.UserIPAdress, this.getPort());
+		cms.addEntryMap_IPPort(this.UserIPAdress, this.getPort());
+		cms.addEntryMap_IPUID(this.UserIPAdress, this.userStats.getId());
 		
 		/**
 		 * Recuperation de la liste des utilisateurs connectés
