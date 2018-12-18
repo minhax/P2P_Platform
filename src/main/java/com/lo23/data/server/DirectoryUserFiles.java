@@ -150,21 +150,20 @@ public class DirectoryUserFiles
     {
         Utils.throwExceptionIfNull("User should not be null", user);
 
-//        HashMap<UserIdentity, Vector<FileHandlerInfos>> userFiles;
-
-//        HashMap<FileHandlerInfos, Vector<UserIdentity>> filesUser;
-
-        UserIdentity[] sourceToRemove = new UserIdentity[1];
+        // JAVA 8 ne supporte pas d'utiliser des variables non finales dans le corps des fonctions, donc je passe par un array
+        // Dégueu mais ça marche
         FileHandlerInfos[] sourceConcerned = new FileHandlerInfos[1];
 
-
+        // Maj de userFiles
         this.userFiles.remove(user);
 
+        // Maj de filesUser, un peu plus complexe :
+
+        // On itère pour trouver pour quels fichiers l'user est source
+        // TODO : remplacer sourceConcerned par un vector pour gérer le cas ou l'user est source de plusieurs fichiers
         this.filesUser.forEach((file,sources) -> {
             sources.forEach(userIdentity -> {
                 if (userIdentity.equals(user)) {
-                    System.out.println("USER REMOVED SUCCESSFULLY");
-                    sourceToRemove[0] = userIdentity;
                     sourceConcerned[0] = file;
                 }
             });
@@ -173,36 +172,21 @@ public class DirectoryUserFiles
         boolean[] removeEntry = new boolean[1];
         removeEntry[0] = false;
 
+        // On remove la source dans le vecteur de fichier correspondant
         this.filesUser.forEach((file,sources) -> {
             if (file.equals(sourceConcerned[0])) {
                 System.out.println("FILE REMOVED SUCCESSFULLY");
-                sources.remove(sourceToRemove[0]);
+                sources.remove(user);
             }
+            //Si c'était la dernière source, ce booléen passe à true pour pouvoir enlever l'entrée dans la map
             if (sources.size()==0)
                 removeEntry[0] = true;
         });
 
         if (removeEntry[0]) {
-            //BUG ICI
-            System.out.println("PASS");
-
-            this.filesUser.remove(sourceConcerned);
+            //C'était la dernière source, on enlève l'entrée de la map
+            this.filesUser.remove(sourceConcerned[0]);
         }
-
-//
-//
-//
-//        if(this.userFiles.get(user)!=null) {
-//            // Suppression de tous les fichiers de l'utilisateur
-//            Vector<FileHandlerInfos> tmp = new Vector<>();
-//            tmp.addAll(this.getFilesProposedByUser(user));
-//            FileHandlerInfos f;
-//
-//            for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext(); ) {
-//                f = i.next();
-//                this.removeProposedFile(user, f);
-//            }
-//        }
     }
 
     /**
