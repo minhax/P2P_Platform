@@ -52,7 +52,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
     public void setCommunicationManager(CommunicationManagerClient commManager)
     {
-        this.commManagerClient=commManager;
+        commManagerClient=commManager;
     }
 
 
@@ -156,7 +156,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }*/
 
     @Override
-    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
+    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP) {
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         cmc.setAddressIpServer(serverIP);
         
@@ -166,13 +166,6 @@ public class CommToDataClientAPI implements CommToDataClient
         Client c = new Client(message, serverIP, Const.SERVER_DEFAULT_PORT);
         c.start();
     }
-
-    /*@Override
-    public void connect(UserStats user, long IP){
-        // A priori même rôle que requestUserConnexion (à changer plus tard si besoin)
-
-    }*/
-
 
     @Override
     public void requestAddSource(FileHandler file, UserIdentity user){

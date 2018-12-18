@@ -22,8 +22,15 @@ class Session
      */
     private Vector<UserStats> otherLoggedUsers = new Vector<>();
 
+    /**
+     * Annuaire faisant la correspondance entre
+     * utilisateurs et fichiers
+     */
     private DirectoryUserFiles directory;
 
+    /**
+     * Constructeur de Session
+     */
     Session()
     {
         this.directory = new DirectoryUserFiles();
@@ -74,8 +81,9 @@ class Session
 
 
     /**
-     * Permet de mettre à jour l'annuaire de correspondance entre les utilisateurs et les fichiers.
-     * @param newDirectory Dictionnaire à remplacer
+     * Met à jour l'annuaire de correspondance entre
+     * les utilisateurs et les fichiers.
+     * @param newDirectory dictionnaire à remplacer
      */
     void setDirectoryUserFiles(DirectoryUserFiles newDirectory){
         this.directory=newDirectory;

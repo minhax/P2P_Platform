@@ -18,6 +18,7 @@ public class Rating implements Serializable
      * Valeur numérique de la note
      */
     private int value;
+
     /**
      * Utilisateur associé
      */

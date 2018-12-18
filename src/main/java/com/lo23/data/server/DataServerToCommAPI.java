@@ -25,16 +25,19 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats user)
+    public void addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
         System.out.println("CONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
-        return this.requestUserFiles();
+        System.out.println("NB DE CONNECTES DESORMAIS : " +  this.manager.connections.getConnectedUsers().size());
+        System.out.println("DANS LE DIRECTORY : " + this.manager.connections.getDirectory().getUserFiles().keySet().size());
     }
 
     @Override
-    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(){
-        return this.manager.getDirectory().getUserFiles();
+    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(UserIdentity user){
+        HashMap<UserIdentity, Vector<FileHandlerInfos>> infos = new HashMap<>();
+        infos.put(user, this.manager.getDirectory().getFilesProposedByUser(user));
+        return infos;
     }
 
     @Override
@@ -56,6 +59,7 @@ public class DataServerToCommAPI implements DataServerToComm
         // this.manager.commToDataApi.removeDisconnectedUser(user, this.manager.connections.getUserFiles(user));
         this.manager.connections.disconnectUser(user);
         System.out.println("Nb de connectés après la déconnexion : " + this.manager.connections.getConnectedUsers().size());
+        System.out.println("Nb de connectés après la déconnexion sur diretory: " + this.manager.connections.getConnectedUsers().size());
         return user;
     }
 
@@ -84,8 +88,7 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public List<UserIdentity> requestFileLocationServer(FileHandler file)
     {
-        List<UserIdentity> returnedUsers = this.manager.connections.getUsersThatProposeFile(file);
-        return returnedUsers;
+        return this.manager.connections.getUsersThatProposeFile(file);
     }
 
     @Override
@@ -105,7 +108,7 @@ public class DataServerToCommAPI implements DataServerToComm
     public void addFileRating(Rating rating, FileHandlerInfos fileToRate) throws DataException
     {
         this.manager.connections.addRatingToFile(rating, fileToRate);
-    };
+    }
 
     @Override
     public void addFileComment(Comment comment, FileHandlerInfos fileToComment) throws DataException

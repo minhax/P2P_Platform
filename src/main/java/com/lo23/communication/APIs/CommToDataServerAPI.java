@@ -35,7 +35,7 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     public void setCommunicationManager(CommunicationManagerServer commManager)
     {
-        this.commManagerServer=commManager;
+        commManagerServer=commManager;
     }
 
 

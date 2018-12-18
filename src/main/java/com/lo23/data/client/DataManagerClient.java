@@ -8,7 +8,6 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
 import com.lo23.communication.APIs.CommToDataClientAPI;
 
@@ -20,7 +19,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Vector;
 import java.util.stream.Stream;
 
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
@@ -161,15 +159,15 @@ public class DataManagerClient
      * Méthode qui connecte l'utilisateur courant au serveur
      * @return Succès de la connexion
      */
-    public boolean serverLogin(String serverIp){
+    public boolean serverLogin(String serverIp) {
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
 
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
-        commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
+        commToDataClientAPI.requestUserConnexion(userToConnect,
                 userToConnect.getProposedFiles(),
                 serverIp);
 
-        return false;
+        return true;
     }
 
     /**
@@ -304,7 +302,7 @@ public class DataManagerClient
         ne pose pas de problème.
          */
         System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
-        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
+        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, this.sessionInfos.getCurrentUser());
         // Supression du fichier en local
         UserAccount currentUser = this.sessionInfos.getCurrentUser();
         currentUser.removeProposedFile(fileToMakeUnavailable);
@@ -338,9 +336,8 @@ public class DataManagerClient
      * @param comment commentaire
      * @param commentedFile fichier commenté
      */
-    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
+    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile)
     {
-
         // Récupération de la liste des fichiers partagés
         Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
         boolean found = false;

@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.layouts.models.CreateAccountModel;
 
 import javafx.fxml.FXML;

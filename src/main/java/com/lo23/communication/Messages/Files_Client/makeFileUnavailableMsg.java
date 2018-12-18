@@ -6,7 +6,6 @@ import com.lo23.common.user.User;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.FileMessage;
 import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
-import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 
 public class makeFileUnavailableMsg extends FileMessage {
 	private static final long serialVersionUID = 78L;

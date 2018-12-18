@@ -79,18 +79,17 @@ public interface DataClientToComm
      * Notifie les clients distants de la connexion d'un autre
      * utilisateur et donc de son ajout en tant que source
      * des fichiers qu'il propose
-     * @param newlyConnectedUser autre utilisateur connecté
-     * @param files fichiers dont cet utilisateur est la source
+     * @param liste map liant les utilisateurs aux fichiers qu'ils proposent
      */
     void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste);
 
     /**
-     * Fonction qui permet d'obtenir le filePart numéro "part" du fichier
+     * Demande le filePart numéro "part" du fichier
      * "file" pour l'envoyer à userAsking.
-     * @param userAsking
-     * @param userSource
-     * @param file
-     * @param part
+     * @param userAsking utilisateur qui demande le filePart
+     * @param userSource source du fichier
+     * @param file fichier dont on demande une partie
+     * @param part partie demande
      */
     void getFilePart(User userAsking, User userSource, FileHandler file, long part);
 
