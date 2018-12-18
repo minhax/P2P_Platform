@@ -126,10 +126,9 @@ public class DataManagerClient
         {
             if (userFile.isFile())
             {
-                try
+                try(FileInputStream fileIn = new FileInputStream(userFile.getPath());
+                    ObjectInputStream objectIn = new ObjectInputStream(fileIn))
                 {
-                    FileInputStream fileIn = new FileInputStream(userFile.getPath());
-                    ObjectInputStream objectIn = new ObjectInputStream(fileIn);
                     Object obj = objectIn.readObject();
                     System.out.println(userFile.getName());
                     System.out.println(obj.getClass());
@@ -143,8 +142,6 @@ public class DataManagerClient
                             retValue = true;
                         }
                     }
-                    fileIn.close();
-                    objectIn.close();
                 }
                 catch(IOException |ClassNotFoundException e)
                 {
