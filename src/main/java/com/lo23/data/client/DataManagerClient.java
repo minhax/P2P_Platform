@@ -187,17 +187,15 @@ public class DataManagerClient
     boolean saveUserInfo(UserAccount user)
     {
         boolean registerSuccess = true;
-        try
-        {
-            // Création du flux vers le nouveau fichier
-            FileOutputStream fileOut =
+        try(FileOutputStream fileOut =
                     new FileOutputStream(
                             FILEPATH_ACCOUNTS + user.getLogin() + "_" + user.getId() + ".ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut))
+        {
+            // Création du flux vers le nouveau fichier
+
             // Sérialisation de l'utilisateur dans son fichier
             out.writeObject(user);
-            out.close();
-            fileOut.close();
         }
         catch (IOException i)
         {
@@ -218,9 +216,9 @@ public class DataManagerClient
     private UserAccount openAccountFromFile (String path)
     {
         UserAccount account = null;
-        try
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream((path)))
+        )
         {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream((path)));
             account = (UserAccount) in.readObject();
             in.close();
         }
