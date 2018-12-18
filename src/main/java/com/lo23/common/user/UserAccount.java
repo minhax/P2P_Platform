@@ -3,8 +3,6 @@ package com.lo23.common.user;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 
-import java.io.Serializable;
-import java.util.List;
 import java.util.Vector;
 
 /**

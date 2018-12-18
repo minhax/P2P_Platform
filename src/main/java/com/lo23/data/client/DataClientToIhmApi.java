@@ -10,15 +10,11 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
-import com.lo23.data.Const;
 
 import java.io.File;
 
 import java.util.Iterator;
 
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Vector;
 
@@ -195,7 +191,7 @@ public class DataClientToIhmApi implements DataClientToIhm
             if (user.getFirstName().contains(searchTerm)
                     || user.getLastName().contains(searchTerm)
                     || user.getLogin().contains(searchTerm)){
-                returnedUsers.add((UserIdentity)user);
+                returnedUsers.add(user);
             }
         }
 

@@ -23,8 +23,8 @@ public class Client extends Application {
         dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
         commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());*/
         // TODO: partager l'API avec IHM sans Singleton
-        /**
-         * Ouverture d'un serveur socket sur le port 1029 pour le client, afin d'ecouter les messages entrants
+        /*
+          Ouverture d'un serveur socket sur le port 1029 pour le client, afin d'ecouter les messages entrants
          */
         ServerSock server = new ServerSock(Const.CLIENT_DEFAULT_PORT);
         server.start();

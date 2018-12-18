@@ -110,8 +110,6 @@ class DownloadManager
             data = Files.readAllBytes(filePart.toPath());
             // TODO send filePart to comm
             // this.getCommToDataClientAPI();
-        } catch(FileNotFoundException e){
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

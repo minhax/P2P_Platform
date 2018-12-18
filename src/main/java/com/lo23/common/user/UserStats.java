@@ -19,7 +19,6 @@ public class UserStats extends UserIdentity
 
     /**
      * Constructeur de UserStats
-     *
      * @param login     Login du User
      * @param firstName Prénom de l'utilisateur
      * @param lastName  Nom de famille de l'utilisateur
@@ -32,6 +31,9 @@ public class UserStats extends UserIdentity
         this.nbFilesDownloaded = 0;
     }
 
+    /**
+     * Constructeur par défaut de UserStats
+     */
     public UserStats ()
     {
         super();
@@ -50,7 +52,7 @@ public class UserStats extends UserIdentity
     }
 
     /**
-     * Méthode qui incrémente le nombre de fichiers téléversés
+     * Incrémente le nombre de fichiers téléversés
      */
     public void incrementNbFilesUploaded()
     {
@@ -58,7 +60,7 @@ public class UserStats extends UserIdentity
     }
 
     /**
-     * Méthode qui décrémente le nombre de fichiers téléversés
+     * Décrémente le nombre de fichiers téléversés
      */
     public void decrementNbFilesUploaded() throws IllegalStateException
     {
@@ -71,7 +73,7 @@ public class UserStats extends UserIdentity
 
 
     /**
-     * Méthode qui incrémente le nombre de fichiers téléchargés
+     * Incrémente le nombre de fichiers téléchargés
      */
     public void incrementNbFilesDownloaded()
     {

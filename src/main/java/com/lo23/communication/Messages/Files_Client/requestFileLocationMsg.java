@@ -5,7 +5,6 @@ import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.FileMessage;
-import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 
 
 public class requestFileLocationMsg extends FileMessage {

@@ -88,8 +88,7 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public List<UserIdentity> requestFileLocationServer(FileHandler file)
     {
-        List<UserIdentity> returnedUsers = this.manager.connections.getUsersThatProposeFile(file);
-        return returnedUsers;
+        return this.manager.connections.getUsersThatProposeFile(file);
     }
 
     @Override
@@ -109,7 +108,7 @@ public class DataServerToCommAPI implements DataServerToComm
     public void addFileRating(Rating rating, FileHandlerInfos fileToRate) throws DataException
     {
         this.manager.connections.addRatingToFile(rating, fileToRate);
-    };
+    }
 
     @Override
     public void addFileComment(Comment comment, FileHandlerInfos fileToComment) throws DataException

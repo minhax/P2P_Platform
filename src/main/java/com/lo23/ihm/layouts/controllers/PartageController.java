@@ -1,21 +1,15 @@
 package com.lo23.ihm.layouts.controllers;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.UserAccount;
-import com.lo23.data.client.DataClientToIhmApi;
-import com.lo23.data.client.DataManagerClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import java.lang.Object.*;
 //import org.controlsfx.control.Notifications;
 
 //import com.lo23.common.interfaces.data;
@@ -117,9 +111,6 @@ public class PartageController {
 
     @FXML
     public void OnEnregistrerButtonClicked (){
-
-
-
         if (selectedFile == null) {
 
             //Notifications.create().title("Input non valide").text("Vous n'avez pas selectionné un fichier.").showWarning();
@@ -132,9 +123,10 @@ public class PartageController {
             try {
                 api.requestShareNewFile(pathOnDisk, title, description);
             }
+            // TODO IHM : c'est dégueulasse
             catch(Exception e)
             {
-
+                e.printStackTrace();
             }
 
             System.out.println(pathOnDisk);

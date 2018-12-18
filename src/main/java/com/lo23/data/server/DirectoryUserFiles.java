@@ -136,8 +136,7 @@ public class DirectoryUserFiles
 
         if(this.userFiles.get(user)!=null) {
             // Suppression de tous les fichiers de l'utilisateur
-            Vector<FileHandlerInfos> tmp = new Vector<>();
-            tmp.addAll(this.getFilesProposedByUser(user));
+            Vector<FileHandlerInfos> tmp = new Vector<>(this.getFilesProposedByUser(user));
             FileHandlerInfos f;
 
             for (Iterator<FileHandlerInfos> i = tmp.iterator(); i.hasNext(); ) {

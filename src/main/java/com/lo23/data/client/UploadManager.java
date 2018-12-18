@@ -5,8 +5,6 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.data.Const;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

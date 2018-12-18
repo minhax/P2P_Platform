@@ -2,7 +2,6 @@ package com.lo23.data;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
-import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.data.server.ConnectionsManager;
@@ -131,8 +130,8 @@ public class ConnectionsManagerTest
         updatedUser1.setLastName("Master");
         this.connectionsManager.modifyConnectedUser(updatedUser1);
         assertTrue(this.connectionsManager.getConnectedUsers().get(0).getAge()==12 &&
-                this.connectionsManager.getConnectedUsers().get(0).getFirstName()=="Habitica" &&
-                this.connectionsManager.getConnectedUsers().get(0).getLastName()=="Master"&&
+                this.connectionsManager.getConnectedUsers().get(0).getFirstName().equals("Habitica") &&
+                this.connectionsManager.getConnectedUsers().get(0).getLastName().equals("Master") &&
                 this.connectionsManager.getConnectedUsers().get(0).getId()==user1.getId());
     }
 

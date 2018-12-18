@@ -4,9 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.data.client.DataClientToIhmApi;
-import com.lo23.data.client.DataManagerClient;
-import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.ConnectionModel;
 
 import javafx.event.ActionEvent;
@@ -20,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ConnectionController implements Initializable {

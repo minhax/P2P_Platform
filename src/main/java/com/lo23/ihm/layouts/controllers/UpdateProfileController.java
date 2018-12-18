@@ -4,9 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
-import com.lo23.data.client.DataManagerClient;
-import com.lo23.ihm.layouts.models.CreateAccountModel;
 import com.lo23.ihm.layouts.models.UpdateProfileModel;
 
 import javafx.fxml.FXML;
@@ -17,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 

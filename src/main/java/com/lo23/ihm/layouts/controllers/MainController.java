@@ -14,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import com.lo23.common.user.UserIdentity;
-import com.lo23.data.client.DataManagerClient;
 
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;

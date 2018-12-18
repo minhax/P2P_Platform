@@ -44,7 +44,6 @@ public interface DataServerToComm
      * Retire une source des sources d'un fichier
      * @param file fichier duquel retirer une source
      * @param sourceToRemove utilisateur à retirer des sources
-     * @return fichier dont on a retiré une source
      */
     void removeFileSource(FileHandler file, User sourceToRemove);
 

@@ -1,17 +1,13 @@
 package com.lo23.ihm.layouts.controllers;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import com.lo23.common.filehandler.FileHandler;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import com.lo23.common.Comment;
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.data.client.DataManagerClient;
 
 public class CommentController {
 

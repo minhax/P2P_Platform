@@ -7,7 +7,6 @@ import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.common.user.UserStats;
 
 import java.util.Iterator;
 import java.util.List;

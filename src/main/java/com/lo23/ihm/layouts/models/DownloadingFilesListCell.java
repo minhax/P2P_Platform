@@ -108,9 +108,6 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
     }
 
     public boolean checkEqualFile(FileHandler file) {
-        if(lastItem.getHash().equals(file.getHash())) {
-            return true;
-        }
-        return false;
+        return lastItem.getHash().equals(file.getHash());
     }
 }

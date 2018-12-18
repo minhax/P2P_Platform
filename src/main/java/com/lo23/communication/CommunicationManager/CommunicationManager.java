@@ -43,7 +43,7 @@ public abstract class CommunicationManager {
             while (addresses.hasMoreElements()) {
 
                 InetAddress addr = addresses.nextElement();
-                String ip = addr.getCanonicalHostName().toString();
+                String ip = addr.getCanonicalHostName();
                 String hostname = addr.getHostName();
 
                 // addr.getCanonicalHostName() -> windows / linux "hostname" + "ip" FQDN
@@ -57,8 +57,7 @@ public abstract class CommunicationManager {
                     String ip2 = addr.getHostAddress();
                     System.out.println("Ajout de l'adresse IP " + ip2);
                     return ip2;
-                } else
-                    continue;
+                }
             }
         }
         return null;
