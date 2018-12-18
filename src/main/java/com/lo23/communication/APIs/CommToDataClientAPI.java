@@ -9,6 +9,7 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
+import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Files_Client.*;
@@ -23,11 +24,14 @@ public class CommToDataClientAPI implements CommToDataClient
 {
 
     protected static CommunicationManagerClient commManagerClient ;
+    protected static CommunicationManagerServer commManagerServer;
 
     /* Constructeur */
     private CommToDataClientAPI()
     {
+
         commManagerClient=CommunicationManagerClient.getInstance();
+        commManagerServer=CommunicationManagerServer.getInstance();
     }
 
     /* Initialisation du singleton*/
@@ -223,10 +227,8 @@ public class CommToDataClientAPI implements CommToDataClient
     public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
-        /**
-         * Récupérer
-         */
-        //Client c = new Client(message, cmc.getAddressIpServer(), );
-        //c.start();
+        String ipUserSource=this.commManagerServer.findUserIp(userSource.getId());
+        Client c = new Client(message, ipUserSource, Const.CLIENT_DEFAULT_PORT);
+        c.start();
     }
 }

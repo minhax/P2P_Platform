@@ -12,10 +12,10 @@ import com.lo23.communication.Messages.FileMessage;
 public class sendFileMsg extends FileMessage {
 	private User userAsking;
 	private User userSource;
-	private int part;
+	private long part;
 	private byte[] content;
 
-	public sendFileMsg(User userAsking, User userSource, FileHandlerInfos file, int part, byte[] content){
+	public sendFileMsg(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content){
 		this.file = file;
 		this.userAsking=userAsking;
 		this.userSource=userSource;

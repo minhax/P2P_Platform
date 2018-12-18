@@ -13,13 +13,14 @@ import java.util.EmptyStackException;
 // import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class CommunicationManagerServer extends CommunicationManager {
 	
 	private DataServerToComm dataInterface;
 	private CommToDataServerAPI commInterface;
 	private HashMap<String, Integer>  clientIptoPort;
-	private HashMap<String, UID>  clientIPAndUid;
+	private HashMap<UUID, String> clientIP_UID;
 	
 	/** Constructeur privé
 	 * Récupère un objet interface de DataServer et CommServer
@@ -38,6 +39,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
 			clientIptoPort = new HashMap<>();
+			clientIP_UID=new HashMap<>();
 		}
 	
 	
@@ -61,6 +63,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	{
 		return this.ip;
 	}
+
 	/** Singleton **/
 
 	private static CommunicationManagerServer Instance = new CommunicationManagerServer();
@@ -98,12 +101,17 @@ public class CommunicationManagerServer extends CommunicationManager {
 	}
 	*/
 
-	public void addEntryMap(String clientAddr, int clientPort)
+	public void addEntryMap_IPPort(String clientAddr, int clientPort)
     {
-        this.clientIptoPort.put(clientAddr, clientPort);
+
+    	this.clientIptoPort.put(clientAddr, clientPort);
     }
 
-    public void removeUserFromMap(String userIpAddr) throws CommException
+    public void addEntryMap_IPUID(String clientIp, UUID clientUUID){
+		this.clientIP_UID.put(clientUUID, clientIp);
+	}
+
+    public void removeUserFromMap_IPPort(String userIpAddr) throws CommException
     {
         if (!(this.clientIptoPort.containsKey(userIpAddr)))
             throw new CommException("L'adresse IP n'est pas presente dans la table", userIpAddr);
@@ -111,11 +119,27 @@ public class CommunicationManagerServer extends CommunicationManager {
             this.clientIptoPort.remove(userIpAddr);
     }
 
+    public void removeUserFromMap_IPUID(String clientIp) throws CommException{
+		if (!(this.clientIptoPort.containsKey(clientIp)))
+			throw new CommException("L'adresse IP n'est pas presente dans la table", clientIp);
+		else
+			this.clientIptoPort.remove(clientIp);
+
+	}
+
+
+	/**
+	 * Permet de retrouver l'IP d'un utilisateur à partir de son identifiant
+	 * @param user
+	 */
+	public String findUserIp(UUID user){
+		return(this.clientIP_UID.get(user));
+	}
+
 	/**
 	 * Envoie un message à toutes les machines connectées
 	 *
-	 * @param Message m
-	 * Parse la table et recupere chaque cle (IPUser)
+	 * @param m Parse la table et recupere chaque cle (IPUser)
 	 * @return void
 	 **/
 	public void broadcast(Message m) throws EmptyStackException
