@@ -11,11 +11,8 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
+import com.lo23.communication.Messages.Files_Client.*;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
-import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
-import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
-import com.lo23.communication.Messages.Files_Client.addCommentMsg;
-import com.lo23.communication.Messages.Files_Client.rateFileMsg;
 import com.lo23.communication.network.Client.Client;
 import com.lo23.data.Const;
 
@@ -222,4 +219,14 @@ public class CommToDataClientAPI implements CommToDataClient
 
     }
 
+    @Override
+    public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part){
+        int portServ=0;
+        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
+        int peerPortServ=0;
+        int addrPeerServ=0;
+        Client c = new Client(message, portServ, cmc.getAddressIpServer(), peerPortServ, addrPeerServ);
+
+    }
 }
