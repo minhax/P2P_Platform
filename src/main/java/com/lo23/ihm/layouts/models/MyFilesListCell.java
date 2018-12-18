@@ -1,6 +1,7 @@
 package com.lo23.ihm.layouts.models;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.data.client.DataManagerClient;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,9 +27,11 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
     Button addComment = new Button("Commenter");
     Button del = new Button("Supprimer");
     FileHandler lastItem;
+    private DataClientToIhm api;
 
-    public MyFilesListCell() {
+    public MyFilesListCell(DataClientToIhm dataAPI) {
         super();
+        api=dataAPI;
         hbox.getChildren().addAll(label, addNote, addComment, del);
         addNote.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -88,8 +91,7 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Suppression de l'objet : " + lastItem);
-                DataManagerClient dm = DataManagerClient.getInstance();
-                dm.getDataClientToIhmApi().requestMakeFileUnavailable(lastItem);
+                api.requestMakeFileUnavailable(lastItem);
                 updateItem(lastItem,true);
             }
         });

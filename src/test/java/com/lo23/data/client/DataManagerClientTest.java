@@ -1,5 +1,6 @@
 package com.lo23.data.client;
 
+import com.lo23.common.exceptions.DataException;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -72,7 +73,7 @@ class DataManagerClientTest
     @BeforeEach
     void createDataManagerClient ()
     {
-        this.dm = DataManagerClient.getInstance();
+        //this.dm = DataManagerClient.getInstance();
     }
 
     /**

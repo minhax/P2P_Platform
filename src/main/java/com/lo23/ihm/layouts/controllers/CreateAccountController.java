@@ -17,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class CreateAccountController implements Initializable {
@@ -28,9 +28,19 @@ public class CreateAccountController implements Initializable {
     private PasswordField passwordField;
 
     @FXML
-    private Label emptyFieldLabel,ageErrorLabel;
+    private Label emptyFieldLabel, ageErrorLabel;
+
+    @FXML
+    private AnchorPane accountFormPane;
 
     private CreateAccountModel model;
+
+    private DataClientToIhm api;
+
+
+    public CreateAccountController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,21 +54,14 @@ public class CreateAccountController implements Initializable {
 
     @FXML
     public void OnCreateAccountClicked() {
-        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null)
-        {
+        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null) {
             emptyFieldLabel.setVisible(true);
-        }
-        else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty())
-        {
+        } else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty()) {
             emptyFieldLabel.setVisible(true);
-        }
-        else if(!ageTextField.getText().matches("\\d+"))
-        {
+        } else if (!ageTextField.getText().matches("\\d+")) {
             ageErrorLabel.setVisible(true);
-        }
-        else {
+        } else {
             // A decommenté et verifier les champs pendant l'integration
-            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
 
             try{
                 api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
@@ -71,18 +74,38 @@ public class CreateAccountController implements Initializable {
             System.out.println(loginTextField.getText() + passwordField.getText() + firstnameTextField.getText() + lastnameTextField.getText() + ageTextField.getText());
 
             try {
-                FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
-                Stage stage = new Stage();
+                Stage stage = (Stage) accountFormPane.getScene().getWindow();
+                stage.setTitle("Fenêtre principale");
+                stage.setScene(new Scene(root));*/
 
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setOpacity(1);
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                // TODO: déclarer le controller de IHM
+                MainController controller = new MainController(api); // EXEMPLE
+                fxmlLoader.setController(controller);
+                // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+                fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-                stage.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    public void OnBackToCoClicked() {
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = (Stage) accountFormPane.getScene().getWindow();
+            stage.setTitle("Fenêtre principale");
+            stage.setScene(new Scene(root));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

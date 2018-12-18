@@ -20,6 +20,7 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
     HBox hbox = new HBox();
     Label titre = new Label("_");
     Label taille = new Label("_");
+    Label pourcentage = new Label("0%");
     Button addNote = new Button("Noter");
     Button addComment = new Button("Commenter");
     FileHandler lastItem;
@@ -28,7 +29,7 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
 
     public DownloadingFilesListCell() {
         super();
-        hbox.getChildren().addAll(titre, taille, addNote, addComment);
+        hbox.getChildren().addAll(titre, taille, pourcentage, addNote, addComment);
         addNote.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -93,10 +94,23 @@ public class DownloadingFilesListCell extends ListCell<FileHandler> {
             setGraphic(null);
         } else {
             lastItem = item;
-            titre.setText(item!=null ? item.getTitle() : "<null>");
             taille.setText(item!=null ? "taille : " + item.getSize() : "taille : <null>");
-            //Mettre à jour la barre de progression
+            titre.setText(item!=null ? item.getTitle() : "<null>");
             setGraphic(hbox);
         }
+    }
+
+    public void updatePourcentage(FileHandler item, float pour) {
+        lastItem = item;
+        //Mettre à jour la barre de progression
+        pourcentage.setText(String.format("%s",pour) + "%");
+        setGraphic(hbox);
+    }
+
+    public boolean checkEqualFile(FileHandler file) {
+        if(lastItem.getHash().equals(file.getHash())) {
+            return true;
+        }
+        return false;
     }
 }

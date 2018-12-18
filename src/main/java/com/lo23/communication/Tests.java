@@ -92,7 +92,7 @@ public class Tests
 		}
 		else if(test == 2)
 		{
-			DataManagerClient dataManagerClient = DataManagerClient.getInstance();
+			/*DataManagerClient dataManagerClient = DataManagerClient.getInstance();
 			CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
 			
 			dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
@@ -102,9 +102,8 @@ public class Tests
 			
 			
             connectionMsg msgC = new connectionMsg(userstats, newList);
-			/** Creation d'un client pour envoyer le message
-			 *
-			 */
+			// Creation d'un client pour envoyer le message
+
 			Client c = new Client(msgC,"192.168.1.32", Const.SERVER_DEFAULT_PORT);
             c.start();
 
@@ -117,7 +116,7 @@ public class Tests
 			String ip = commManagerClient.findIPadress();
 	        logoutMsg msgL = new logoutMsg(userstats,ip );
 			Client l = new Client(msgL,"192.168.1.32", Const.SERVER_DEFAULT_PORT);
-			l.start();
+			l.start();*/
 		}
 		else{
 			System.out.println("wrong choice =.= ");

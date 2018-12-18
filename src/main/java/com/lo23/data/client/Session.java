@@ -67,6 +67,12 @@ class Session
         }
     }
 
+
+    public Vector<UserStats> getLoggedUsers(){
+        return this.otherLoggedUsers;
+    }
+
+
     /**
      * Permet de mettre à jour l'annuaire de correspondance entre les utilisateurs et les fichiers.
      * @param newDirectory Dictionnaire à remplacer
@@ -79,4 +85,5 @@ class Session
     {
         return directory;
     }
+
 }

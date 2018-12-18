@@ -50,22 +50,16 @@ public class DataManagerClient
      * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
-
     /**
      * Gestionnaire pour le téléchargement de fichiers
      */
     private DownloadManager downloadManager;
-    /**
-     * Référence du DataManagerClient pour le design pattern Singleton
-     */
-    static private DataManagerClient instance;
 
     /**
      * Constructeur de DataManagerClient
      */
-    private DataManagerClient()
+    public DataManagerClient()
     {
-        super();
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
         this.downloadManager = new DownloadManager();
@@ -75,31 +69,22 @@ public class DataManagerClient
         this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
     }
 
-    static public DataManagerClient getInstance(){
-        if(DataManagerClient.instance == null){
-            instance = new DataManagerClient();
-        }
-        return instance;
-    }
-
     UploadManager getUploadManager ()
     {
         return this.uploadManager;
     }
 
-    public DownloadManager getDownloadManager() {
+    DownloadManager getDownloadManager() {
         return downloadManager;
     }
-
-    public void setDownloadManager(DownloadManager downloadManager) {
-        this.downloadManager = downloadManager;
-    }
-
-
 
     Session getSessionInfos()
     {
         return sessionInfos;
+    }
+
+    public void setDownloadManager(DownloadManager downloadManager) {
+        this.downloadManager = downloadManager;
     }
 
     /**
@@ -111,11 +96,11 @@ public class DataManagerClient
         return this.dataClientToIhmApi;
     }
 
-    public DataClientToComm getDataClientToComm (){
+    public DataClientToComm getDataClientToCommApi(){
         return this.dataClientToCommApi;
     }
 
-    CommToDataClient getCommToDataClientApi ()
+    public CommToDataClient getCommToDataClientApi ()
     {
         return this.commToDataClientAPI;
     }
@@ -406,8 +391,11 @@ public class DataManagerClient
 
     public void downloadFile(FileHandler fileToDownload)
     {
-        // créer une fct DownloadManager::Download ?
+       downloadManager.download(fileToDownload);
+    }
 
+    public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        this.downloadManager.storeNewFilePart(fileHandler, blocNumber, data);
     }
 
     public void removeConnectedUser(User disconectedUser) {

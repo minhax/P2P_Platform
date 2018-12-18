@@ -19,6 +19,8 @@ public interface DataClientToComm
      */
     void receiveFileLocations(List<UserIdentity> sources);
 
+    void receiveFilePart(FileHandler fileHandler, long blocNumber, byte[] data);
+
     // TODO cette méthode est encore floue et à revoir, mais c'est pas urgent pour l'instant
     /**
      * Demande à Data le fichier à télécharger
