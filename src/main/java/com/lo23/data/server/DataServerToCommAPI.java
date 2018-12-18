@@ -1,5 +1,6 @@
 package com.lo23.data.server;
 
+import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
@@ -84,4 +85,10 @@ public class DataServerToCommAPI implements DataServerToComm
     {
         this.manager.connections.addRatingToFile(rating, fileToRate);
     };
+
+    @Override
+    public void addFileComment(Comment comment, FileHandlerInfos fileToComment) throws DataException
+    {
+        this.manager.connections.addCommentToFile(comment, fileToComment);
+    }
 }
