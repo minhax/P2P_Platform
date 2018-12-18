@@ -1,9 +1,10 @@
-package com.lo23.communication.Messages.Files_Client;
+package com.lo23.communication.Messages.Files_Server;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.User;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.FileMessage;
 
@@ -23,7 +24,7 @@ public class sendFileMsg extends FileMessage {
 	}
 
 	public void treatment(){
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
 		dataInterface.receiveFilePart(this.file, this.part, this.content);
 	}

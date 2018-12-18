@@ -6,8 +6,7 @@ import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-import com.lo23.communication.Messages.Files_Client.sendFileMsg;
-import com.lo23.communication.network.Client.Client;
+import com.lo23.communication.Messages.Files_Server.sendFileMsg;
 
 import java.util.List;
 
@@ -73,10 +72,8 @@ public class CommToDataServerAPI implements CommToDataServer {
         //Depuis la source jusqu'à l'utilisateur demandeur
         int portServ=0;
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
-        int peerPortServ=0;
-        int addrPeerServ=0;
-        Client c = new Client(message, portServ, cmc.getAddressIpServer(), peerPortServ, addrPeerServ);
+      //  sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
+        //Client c = new Client(message, portServ,);
     }
 
 

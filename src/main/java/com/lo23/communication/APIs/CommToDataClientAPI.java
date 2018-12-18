@@ -221,12 +221,12 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part){
-        int portServ=0;
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
-        int peerPortServ=0;
-        int addrPeerServ=0;
-        Client c = new Client(message, portServ, cmc.getAddressIpServer(), peerPortServ, addrPeerServ);
-
+        /**
+         * Récupérer
+         */
+        //Client c = new Client(message, cmc.getAddressIpServer(), );
+        //c.start();
     }
 }

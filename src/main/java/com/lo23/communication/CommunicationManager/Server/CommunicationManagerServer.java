@@ -8,6 +8,7 @@ import com.lo23.communication.Messages.Message;
 import com.lo23.communication.network.Client.Client;
 import com.lo23.data.Const;
 
+import java.rmi.server.UID;
 import java.util.EmptyStackException;
 // import java.util.LinkedHashMap;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	private DataServerToComm dataInterface;
 	private CommToDataServerAPI commInterface;
 	private HashMap<String, Integer>  clientIptoPort;
+	private HashMap<String, UID>  clientIPAndUid;
 	
 	/** Constructeur privé
 	 * Récupère un objet interface de DataServer et CommServer
