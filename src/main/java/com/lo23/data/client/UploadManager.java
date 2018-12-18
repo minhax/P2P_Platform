@@ -48,9 +48,8 @@ class UploadManager
      */
     void segmentFile (String path, FileHandler handler)
     {
-        try
+        try(FileInputStream toSplit = new FileInputStream(path))
         {
-            FileInputStream toSplit = new FileInputStream(path);
             byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
             int part = 0; // Numéro de la partie actuelle
             int bytesRead;
@@ -78,9 +77,8 @@ class UploadManager
      */
     private String hashFile (File fileToHash)
     {
-        try
+        try(FileInputStream inputStream = new FileInputStream(fileToHash))
         {
-            FileInputStream inputStream = new FileInputStream(fileToHash);
             MessageDigest digest = MessageDigest.getInstance("MD5"); // On prévient que l'on utilise l'algorithme MD5
 
             // On crée un tableau d'octets pour lire le fichier par blocs
