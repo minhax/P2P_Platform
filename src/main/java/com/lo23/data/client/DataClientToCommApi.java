@@ -100,7 +100,13 @@ public class DataClientToCommApi implements DataClientToComm
         for (UserIdentity user : liste.keySet()){
             System.out.println("Est connecté l'utilisateur : " + user.getLogin());
             this.host.getSessionInfos().mergeUserIntoLoggedUsers(user);
+
+            if (liste.get(user) == null)
+                liste.put(user, new Vector<>());
+
             Iterator it = liste.get(user).iterator();
+
+
             while(it.hasNext())
             {
                 FileHandlerInfos f = (FileHandlerInfos) it.next();
@@ -121,6 +127,7 @@ public class DataClientToCommApi implements DataClientToComm
                 proposedFiles = new Vector<>();
 
             Iterator it = proposedFiles.iterator();
+
             while(it.hasNext()){
                 FileHandlerInfos file = (FileHandlerInfos) it.next();
                 this.host.getSessionInfos().getDirectory().addProposedFile(user, file);
