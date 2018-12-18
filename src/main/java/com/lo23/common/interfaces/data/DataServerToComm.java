@@ -88,5 +88,5 @@ public interface DataServerToComm
      * Retourne le UserFiles du Directory du serveur
      * @return le UserFiles
      */
-    HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles();
+    HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(UserIdentity user);
 }

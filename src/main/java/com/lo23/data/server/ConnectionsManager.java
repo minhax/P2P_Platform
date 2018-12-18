@@ -63,7 +63,9 @@ public class ConnectionsManager
 
         // On connecte l'utilisateur
         this.connectedUsers.add(user);
-        this.directory.addUsertoUserFiles(user);
+
+        System.out.println("NB DE CONNECTES SUR LE SERVEUR " + this.connectedUsers.size());
+
         // fetchUsersProposedFiles(user) à implémenter
         Set<FileHandlerInfos> userFiles = getProposedFiles();
         if (userFiles!=null)
@@ -105,10 +107,7 @@ public class ConnectionsManager
             System.out.println("Nombre de connectés après déco : " + this.connectedUsers.size());
 
             // On retire les fichiers de l'utilisateur s'il en a
-            if(this.directory.getFilesProposedByUser(user)!=null)
-            {
-                this.directory.removeUser(user);
-            }
+            this.directory.removeUser(user);
         }
         catch (IllegalArgumentException iae)
         {
