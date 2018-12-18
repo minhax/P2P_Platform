@@ -24,7 +24,7 @@ import javafx.scene.control.Label;
 public class UpdateProfileController implements Initializable {
 
     @FXML
-    private TextField loginUpdateField, passwordUpdateField, familynameUpdateField, nameUpdateField, ageUpdateField, passwordConfirmationUpdateField;
+    private TextField passwordUpdateField, familynameUpdateField, nameUpdateField, ageUpdateField, passwordConfirmationUpdateField;
 
     @FXML
     private Button validateUpdateButton, previousButton;
@@ -52,7 +52,7 @@ public class UpdateProfileController implements Initializable {
 
     @FXML
     public void Validate() {
-    	if (loginUpdateField.getText() == null || passwordUpdateField.getText() == null || familynameUpdateField.getText() == null || nameUpdateField.getText() == null || ageUpdateField.getText() == null)
+    	if (passwordUpdateField.getText() == null || familynameUpdateField.getText() == null || nameUpdateField.getText() == null || ageUpdateField.getText() == null)
         {
             errorUpdateLabel.setVisible(true);
         }
@@ -61,9 +61,9 @@ public class UpdateProfileController implements Initializable {
     	}
     	else {
             // Integration data
-			api.requestSubmitUserChanges(loginUpdateField.getText(),passwordUpdateField.getText(),nameUpdateField.getText(),familynameUpdateField.getText(),Integer.parseInt(ageUpdateField.getText()));
+			api.requestSubmitUserChanges(null ,passwordUpdateField.getText(),nameUpdateField.getText(),familynameUpdateField.getText(),Integer.parseInt(ageUpdateField.getText()));
             //Erreur methode inexistante
-            System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
+            System.out.println(passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
 
             try {
                 /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
@@ -87,7 +87,6 @@ public class UpdateProfileController implements Initializable {
         this.familynameUpdateField.textProperty().bindBidirectional(this.model.lastnameUpdateProperty());
         this.passwordUpdateField.textProperty().bindBidirectional(this.model.passwordUpdateProperty());
         this.nameUpdateField.textProperty().bindBidirectional(this.model.nameUpdateProperty());
-        this.loginUpdateField.textProperty().bindBidirectional(this.model.loginUpdateProperty());
         this.ageUpdateField.textProperty().bindBidirectional(this.model.ageUpdateProperty());
     }
 
