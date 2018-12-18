@@ -55,14 +55,14 @@ class UploadManager
             int bytesRead;
             while ((bytesRead = toSplit.read(segment)) != -1) { // Tant qu'on  lit des octets dans le fichier source
                 // On crée le fichier .part
-                FileOutputStream filepart = new FileOutputStream("files/fileparts/" +
-                        handler.getHash() + ".part" + part);
-                // On écrit le contenu au format binaire
-                filepart.write(segment, 0, bytesRead);
-                filepart.close();
-                part++;
+                try(FileOutputStream filepart = new FileOutputStream("files/fileparts/" +
+                        handler.getHash() + ".part" + part)){
+                    // On écrit le contenu au format binaire
+                    filepart.write(segment, 0, bytesRead);
+                    filepart.close();
+                    part++;
+                }
             }
-            toSplit.close();
         }
         catch (IOException e)
         {
