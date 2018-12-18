@@ -210,7 +210,7 @@ public class DataClientToIhmApi implements DataClientToIhm
                 returnedFiles.add(fhi);
             }
         }
-        return null;
+        return returnedFiles;
     }
 
     @Override
