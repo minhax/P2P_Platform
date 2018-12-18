@@ -16,7 +16,7 @@ public class Server {
 
         // On instancie les Manager côté serveur
         DataManagerServer dataManagerServer = new DataManagerServer("LO23 Swag");
-        CommunicationManagerServer commManager = new CommunicationManagerServer();
+        CommunicationManagerServer commManager = CommunicationManagerServer.getInstance();
 
         // On partage les APIs entre les Manager
         dataManagerServer.setCommToDataServer(commManager.getCommInterface());

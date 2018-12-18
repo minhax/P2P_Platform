@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.UserAccount;
+import com.lo23.data.client.DataClientToIhmApi;
 import com.lo23.data.client.DataManagerClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -62,11 +63,16 @@ public class PartageController {
     @FXML
     private Button enregistrerButton;
 
+    private DataClientToIhm api;
+
     // Fichier selectionné dans la fonction OnAjouterFichierButtonClicked()
     //  et partagé avec Data dans la fonction OnEnregistrerButtonClicked().
     public File selectedFile;
 
 
+    public PartageController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
     @FXML
     void initialize() {
         assert ajouterFichierButton != null : "fx:id=\"ajouterFichierButton\" was not injected: check your FXML file 'fenetrePartageLayout.fxml'.";
@@ -91,7 +97,6 @@ public class PartageController {
         fileChooser.setTitle("Ajouter fichier");
         fileChooser.getExtensionFilters().addAll();
         selectedFile = fileChooser.showOpenDialog(stage);
-        DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
         UserAccount userAccount = api.requestAccountInfos();
         //sourceFichier.setText(userAccount.getLogin());
         nomFichier.setText(selectedFile.getName());
@@ -124,7 +129,6 @@ public class PartageController {
             String pathOnDisk = selectedFile.getPath();
             String title = nomFichier.getText();
             String description = informationsFichier.getText();
-            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
             try {
                 api.requestShareNewFile(pathOnDisk, title, description);
             }

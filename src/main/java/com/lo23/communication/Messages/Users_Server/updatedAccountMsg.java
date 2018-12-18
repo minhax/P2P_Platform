@@ -7,13 +7,9 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.Messages.UserMessage;
 
 public class updatedAccountMsg extends UserMessage{
-
-	private CommunicationManagerClient commManager;
-
-	public updatedAccountMsg(UserIdentity ui, CommunicationManagerClient cmc){
-
+	private static final long serialVersionUID = 43L;
+	public updatedAccountMsg(UserIdentity ui){
 		this.user = ui;
-		this.commManager=cmc;
 	}
 	public void treatment()
 	{
@@ -23,13 +19,9 @@ public class updatedAccountMsg extends UserMessage{
 		 * Appel la methode notifyOtherUserUpdatedAccountToAll
 		 */
 
-<<<<<<< HEAD
 		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterfaceClient = cmc.getDataInterface();
 
-=======
-		DataClientToComm dataInterfaceClient = this.commManager.getDataInterface();
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(user);
 	}
 

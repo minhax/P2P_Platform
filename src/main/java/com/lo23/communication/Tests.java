@@ -4,13 +4,8 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-<<<<<<< HEAD
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.network.Client.Client;
-=======
-import com.lo23.communication.network.ServerClass;
-import com.lo23.communication.network.Client;
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.network.Serveur.ServerSock;
 import com.lo23.data.Const;
@@ -44,11 +39,6 @@ public class Tests
 		ArrayList<FileHandlerInfos> newList = new ArrayList<>();
 		newList.add(fi);
 		String myIP = null;
-
-		//communicationManagers
-		CommunicationManagerClient cmc=new CommunicationManagerClient();
-		CommunicationManagerServer cms=new CommunicationManagerServer();
-
 		try {
 			myIP = Inet4Address.getLocalHost().getHostAddress();
 		}catch (UnknownHostException e)
@@ -102,7 +92,6 @@ public class Tests
 		}
 		else if(test == 2)
 		{
-<<<<<<< HEAD
 			/*DataManagerClient dataManagerClient = DataManagerClient.getInstance();
 			CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
 			
@@ -128,16 +117,6 @@ public class Tests
 	        logoutMsg msgL = new logoutMsg(userstats,ip );
 			Client l = new Client(msgL,"192.168.1.32", Const.SERVER_DEFAULT_PORT);
 			l.start();*/
-=======
-			Scanner sc = new Scanner(System.in);
-			System.out.println("enter the IP address : ");
-			String addr = sc.nextLine();
-			System.out.println("enter the port : ");
-			int port = sc.nextInt();
-
-            connectionMsg msgC = new connectionMsg(userstats, newList, cms, cmc);
-					Client c = new Client(msgC, port, addr, 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 		}
 		else{
 			System.out.println("wrong choice =.= ");

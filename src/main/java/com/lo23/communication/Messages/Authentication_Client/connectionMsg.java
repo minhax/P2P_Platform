@@ -2,13 +2,8 @@ package com.lo23.communication.Messages.Authentication_Client;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
-<<<<<<< HEAD
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
-=======
-import com.lo23.common.user.UserStats;
-import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 import com.lo23.communication.Messages.Authentication;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.common.interfaces.data.DataServerToComm;
@@ -20,16 +15,14 @@ import java.util.Vector;
 
 public class connectionMsg extends Authentication {
 	private String UserIPAdress;
+	private static final long serialVersionUID = 100521L;
 	private int UserPort; /** A initialiser !**/
 	private List<FileHandlerInfos> fileInfo;
-	private CommunicationManagerServer commManagerServer;
-	private CommunicationManagerClient commManagerClient;
 
-	public connectionMsg(UserStats us, List<FileHandlerInfos> files, CommunicationManagerServer cms, CommunicationManagerClient cmc){
+	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
+		
 		this.userStats = us;
 		this.fileInfo = files;
-		this.commManagerServer=cms;
-		this.commManagerClient=cmc;
 		try {
 			this.UserIPAdress = CommunicationManagerServer.findIPadress();
 		}catch(Exception e)
@@ -47,11 +40,12 @@ public class connectionMsg extends Authentication {
 		 * Appel la methode addNewConnectedUser pour lui transmettre son objet user Stats
 		 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 		 */
-
-		DataServerToComm dataInterface = this.commManagerServer.getDataInterface();
+		
+		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+		DataServerToComm dataInterface = cms.getDataInterface();
 		/** On récupère et stocke l'adresse IP du serveur
 		 */
-		String ServerIpAdress = this.commManagerServer.getIP();
+		String ServerIpAdress = cms.getIP();
 		
 		System.out.println("Mon ip = " + this.UserIPAdress);
 		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
@@ -59,7 +53,6 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-<<<<<<< HEAD
 		cms.addEntryMap(this.UserIPAdress, this.getPort());
 		
 		/**
@@ -74,28 +67,5 @@ public class connectionMsg extends Authentication {
 	}
 	
 	public boolean isToServ(){return true;}
-=======
-		this.commManagerServer.addEntryMap(this.UserIPAdress, this.getPort());
-		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
-		connectedUserMsg message = new connectedUserMsg(this.userStats, this.fileInfo, this.commManagerClient);
-		message.setPort(this.getPort());
-		this.commManagerServer.broadcast(message);
-	}
-	
-	public List<FileHandlerInfos> getFileInfo() {
-
-		return fileInfo;
-	}
-	
-	
-	public String getMyIp()
-	{
-		return UserIPAdress;
-	}
-
-	public boolean isToServ(){
-		return true;
-	}
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 }
 

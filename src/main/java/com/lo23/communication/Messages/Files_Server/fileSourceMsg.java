@@ -20,10 +20,10 @@ public class fileSourceMsg extends FileMessage{
 	
 	public void treatment()
 	{
-		//CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-		//DataClientToComm dataInterface = cms.getDataInterface();
-		//FileHandler fi=(FileHandler) file;
-		//dataInterface.notifyNewSourceToAll(fi, user);
+		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+		DataClientToComm dataInterface = cms.getDataInterface();
+		FileHandler fi=(FileHandler) file;
+		dataInterface.notifyNewSourceToAll(fi, user);
 		//dataInterface.notifyNewSharedFileToAll();
 	}
 

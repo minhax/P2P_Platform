@@ -16,6 +16,12 @@ public class Client extends Application {
     {
         /*System.out.println("*** LO23 SWAG CLIENT APPLICATION ***");
 
+        // On instancie les Manager côté serveur
+        DataManagerClient dataManagerClient = DataManagerClient.getInstance();
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+    
+        dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
+        commManagerClient.setDataInterface(dataManagerClient.getDataClientToComm());*/
         // TODO: partager l'API avec IHM sans Singleton
         /**
          * Ouverture d'un serveur socket sur le port 1029 pour le client, afin d'ecouter les messages entrants
@@ -29,20 +35,23 @@ public class Client extends Application {
     public void start(Stage primaryStage)
             throws Exception
     {
+        // TODO Auto-generated method stub
         // On instancie les Manager côté client
         DataManagerClient dataManagerClient = new DataManagerClient();
-        CommunicationManagerClient commManagerClient = new CommunicationManagerClient();
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
 
         // On échange les API
         dataManagerClient.setCommToDataClientAPI(commManagerClient.getCommInterface());
         commManagerClient.setDataInterface(dataManagerClient.getDataClientToCommApi());
+        // TODO: partager l'API avec IHM
 
         // Code de gestion du FXML
         FXMLLoader fxmlLoader = new FXMLLoader();
+        // TODO: déclarer le controller de IHM
         ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi()); // EXEMPLE
         fxmlLoader.setController(controller);
         // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
-        fxmlLoader.setLocation(getClass().getResource("connectionLayout.fxml"));
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
 
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("My Application");

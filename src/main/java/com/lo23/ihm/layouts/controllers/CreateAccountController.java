@@ -17,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class CreateAccountController implements Initializable {
@@ -28,11 +28,13 @@ public class CreateAccountController implements Initializable {
     private PasswordField passwordField;
 
     @FXML
-    private Label emptyFieldLabel,ageErrorLabel;
+    private Label emptyFieldLabel, ageErrorLabel;
+
+    @FXML
+    private AnchorPane accountFormPane;
 
     private CreateAccountModel model;
 
-<<<<<<< HEAD
     private DataClientToIhm api;
 
 
@@ -40,8 +42,6 @@ public class CreateAccountController implements Initializable {
         api=dataAPI;
     }
 
-=======
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new CreateAccountModel();
@@ -54,21 +54,14 @@ public class CreateAccountController implements Initializable {
 
     @FXML
     public void OnCreateAccountClicked() {
-        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null)
-        {
+        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null) {
             emptyFieldLabel.setVisible(true);
-        }
-        else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty())
-        {
+        } else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty()) {
             emptyFieldLabel.setVisible(true);
-        }
-        else if(!ageTextField.getText().matches("\\d+"))
-        {
+        } else if (!ageTextField.getText().matches("\\d+")) {
             ageErrorLabel.setVisible(true);
-        }
-        else {
+        } else {
             // A decommenté et verifier les champs pendant l'integration
-            DataClientToIhm api= DataManagerClient.getInstance().getDataClientToIhmApi();
 
             try{
                 api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
@@ -83,10 +76,7 @@ public class CreateAccountController implements Initializable {
             try {
                 /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
-                Stage stage = new Stage();
-
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setOpacity(1);
+                Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));*/
 
@@ -100,10 +90,22 @@ public class CreateAccountController implements Initializable {
                 Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-                stage.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    public void OnBackToCoClicked() {
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+            Parent root = fxmlloader.load();
+            Stage stage = (Stage) accountFormPane.getScene().getWindow();
+            stage.setTitle("Fenêtre principale");
+            stage.setScene(new Scene(root));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

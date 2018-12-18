@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.data.client.DataClientToIhmApi;
 import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.ConnectionModel;
@@ -48,6 +49,8 @@ public class ConnectionController implements Initializable {
     private ConnectionModel model;
     private boolean authorizeConnection;
 
+    private DataClientToIhm api;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new ConnectionModel();
@@ -57,18 +60,34 @@ public class ConnectionController implements Initializable {
 
     }
 
+    public ConnectionController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
+
     @FXML
     public void OnConnectClicked(ActionEvent event) {
         //A décommenter à l'integration
-        DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
 
         authorizeConnection = api.requestCheckCredentials(this.userNameTextField.getText(), this.passwordField.getText());
         if (authorizeConnection) {
             if (!(this.serverChoiceTextField.getText() == null || this.portTextField.getText() == null)) {
-                //TODO à decommenter pour le merge
+
                 api.requestConnectionToServer(this.serverChoiceTextField.getText());
+
             }
             try {
+                /*FXMLLoader fxmlLoader = new FXMLLoader();
+                MainController controller = new MainController(api); // EXEMPLE
+                IhmToDataClientAPI IhmAPI = new IhmToDataClientAPI(controller);
+                //api.setIhmAPI(IhmAPI);
+                // TODO : demander à implementer ce bout de code pour que Data puisse utiliser notre API de leur coté
+                fxmlLoader.setController(controller);
+                fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage stage = (Stage) connectionPane.getScene().getWindow();
+                stage.setTitle("Fenêtre principale");
+                stage.setScene(new Scene(root));*/
+
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
                 MainController controller = new MainController(api); // EXEMPLE
@@ -79,7 +98,9 @@ public class ConnectionController implements Initializable {
                 Stage stage = (Stage) connectionPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-           } catch (Exception e) {
+
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
@@ -91,7 +112,8 @@ public class ConnectionController implements Initializable {
     public void OnCreateAccountLoaderClicked(ActionEvent event) {
         try {
             /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("createAccountLayout.fxml"));*/
-            
+
+
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
             CreateAccountController controller = new CreateAccountController(api); // EXEMPLE
@@ -106,7 +128,7 @@ public class ConnectionController implements Initializable {
             stage.setScene(new Scene(root));
 
 
-       } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

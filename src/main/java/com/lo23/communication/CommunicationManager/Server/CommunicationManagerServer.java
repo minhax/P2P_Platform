@@ -2,17 +2,14 @@ package com.lo23.communication.CommunicationManager.Server;
 
 import com.lo23.common.exceptions.CommException;
 import com.lo23.common.interfaces.data.DataServerToComm;
-import com.lo23.communication.APIs.*;
-import com.lo23.communication.CommunicationManager.*;
+import com.lo23.communication.APIs.CommToDataServerAPI;
+import com.lo23.communication.CommunicationManager.CommunicationManager;
 import com.lo23.communication.Messages.Message;
-<<<<<<< HEAD
 import com.lo23.communication.network.Client.Client;
 import com.lo23.data.Const;
-=======
-import com.lo23.communication.network.*;
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 
 import java.util.EmptyStackException;
+// import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +17,7 @@ public class CommunicationManagerServer extends CommunicationManager {
 	
 	private DataServerToComm dataInterface;
 	private CommToDataServerAPI commInterface;
-	private HashMap<String, Integer> clientIptoPort;
+	private HashMap<String, Integer>  clientIptoPort;
 	
 	/** Constructeur privé
 	 * Récupère un objet interface de DataServer et CommServer
@@ -29,17 +26,16 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * ...
 	 * @return void
 	 **/
-	public CommunicationManagerServer()
+	private CommunicationManagerServer()
 		{
-			this.commInterface = new CommToDataServerAPI(this);
-			this.dataInterface = null;
+			this.commInterface = CommToDataServerAPI.getInstance();
 			
 			try {
-				this.clientIptoPort.put(this.findIPadress(), 1026);
+				this.ip = findIPadress();
 			} catch (Exception ex) {
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
-			this.clientIptoPort = new HashMap<>();
+			clientIptoPort = new HashMap<>();
 		}
 	
 	
@@ -62,6 +58,13 @@ public class CommunicationManagerServer extends CommunicationManager {
 	public String getIP()
 	{
 		return this.ip;
+	}
+	/** Singleton **/
+
+	private static CommunicationManagerServer Instance = new CommunicationManagerServer();
+	public static CommunicationManagerServer getInstance()
+	{
+		return Instance;
 	}
 
 

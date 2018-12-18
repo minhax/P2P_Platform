@@ -9,7 +9,6 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.CommunicationManager;
-import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
 import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
@@ -26,37 +25,34 @@ import java.util.List;
 public class CommToDataClientAPI implements CommToDataClient
 {
 
-    private CommunicationManagerClient commManagerClient ;
-    private CommunicationManagerServer commManagerServer ;
-
+    protected static CommunicationManagerClient commManagerClient ;
 
     /* Constructeur */
-    public CommToDataClientAPI(CommunicationManagerClient cmc, CommunicationManagerServer cms)
+    private CommToDataClientAPI()
     {
-
-        this.commManagerClient=cmc;
-        this.commManagerServer=cms;
+        commManagerClient=CommunicationManagerClient.getInstance();
     }
 
-
+    /* Initialisation du singleton*/
+    private static CommToDataClientAPI Instance;
 
     /* Accesseurs */
-
-    public CommunicationManagerClient getCommunicationManager()
+    public static CommToDataClientAPI getInstance()
     {
+        if (Instance == null)
+            Instance = new CommToDataClientAPI();
+        return Instance;
+    }
 
-        return this.commManagerClient;
+    public static CommunicationManagerClient getCommunicationManager()
+    {
+        return commManagerClient;
     }
 
 
-    public void setCommunicationManagerClient(CommunicationManagerClient commManager)
+    public void setCommunicationManager(CommunicationManagerClient commManager)
     {
-
         this.commManagerClient=commManager;
-    }
-
-    public void setCommunicationManagerServer(CommunicationManagerServer commManager){
-        this.commManagerServer=commManager;
     }
 
 
@@ -78,7 +74,6 @@ public class CommToDataClientAPI implements CommToDataClient
         /**
          * Récupération du Cmc et de l'adresseIP du server
          */
-<<<<<<< HEAD
         
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         
@@ -96,61 +91,36 @@ public class CommToDataClientAPI implements CommToDataClient
         
         Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-        //A modifier plus tard ==> cms.getPort()
-        int portServer = 1026;
-        String addrServer = this.commManagerClient.getAddressIpServer();
-        updateUserInfoMsg msg = new updateUserInfoMsg(user, this.commManagerServer, this.commManagerClient);
-        Client c = new Client(msg, portServer, addrServer, 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     }
 
         @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
-<<<<<<< HEAD
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
         
         Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-        String ip = this.commManagerClient.getAddressIpServer();
-        makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user, this.commManagerServer, this.commManagerClient);
-        Client client=new Client(message, 1026, ip, 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     }
 
     @Override
     public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
-<<<<<<< HEAD
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         
         addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
         
         Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-        String ip = this.commManagerClient.getAddressIpServer();
-        addCommentMsg msg = new addCommentMsg(commentedFile, comment, user, this.commManagerServer, this.commManagerClient);
-        Client c = new Client(msg, 1026, ip, 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     }
 
     @Override
     public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
-<<<<<<< HEAD
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         
         rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
         
         Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-        String ip = this.commManagerClient.getAddressIpServer();
-        rateFileMsg msg = new rateFileMsg(ratedFile, rating, user, this.commManagerServer, this.commManagerClient);
-        Client c = new Client(msg, 1026, ip, 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     }
 
     /**
@@ -163,23 +133,19 @@ public class CommToDataClientAPI implements CommToDataClient
      * @return void
      **/
     @Override
-    public void requestLogoutToServer(UserStats user, List<FileHandlerInfos> userFiles){
+    public void requestLogoutToServer(UserStats user){
+        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         String myIPAdress = null;
         
         try {
-            myIPAdress = this.commManagerClient.findIPadress();
+            myIPAdress = CommunicationManager.findIPadress();
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("[API] Erreur dans la recherche d'adresse IP");
         }
-<<<<<<< HEAD
         logoutMsg message=new logoutMsg(user, myIPAdress);
         Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-        logoutMsg message=new logoutMsg(user, myIPAdress, userFiles, this.commManagerServer, this.commManagerClient);
-        Client c = new Client(message, portServ, this.commManagerClient.getAddressIpServer(), 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
         System.out.println("[COM] Deconnexion reussie");
     }
 
@@ -191,7 +157,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-<<<<<<< HEAD
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         cmc.setAddressIpServer(serverIP);
         
@@ -200,13 +165,6 @@ public class CommToDataClientAPI implements CommToDataClient
         System.out.println(" Demande de connexion pour l'utilisateur :" + user.getId() + " " + user.getLogin());
         Client c = new Client(message, serverIP, Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-        this.commManagerClient.setAddressIpServer(serverIP);
-        int portServ = 1026;
-        connectionMsg message = new connectionMsg(user, fi, this.commManagerServer, this.commManagerClient);
-        System.out.println("Client cree");
-        Client c = new Client(message, portServ, serverIP, 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     }
 
     /*@Override
@@ -238,7 +196,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-<<<<<<< HEAD
     public void requestUploadFile(FileHandlerInfos file, UserIdentity user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
 
@@ -246,18 +203,10 @@ public class CommToDataClientAPI implements CommToDataClient
 
         Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){ //TODO Fix le parametre UserIdentity ou User?
-        //TODO: rajouter exception
-        String ip = this.commManagerClient.getAddressIpServer();
-        uploadFileMsg message=new uploadFileMsg(file, user, this.commManagerServer, this.commManagerClient);
-        Client client=new Client(message, 1026, ip, 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     }
-
+    
     @Override
     public void uploadFile(FileHandlerInfos fi, UserIdentity user){
-<<<<<<< HEAD
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         
         uploadFileMsg message = new uploadFileMsg(fi,user );
@@ -265,12 +214,6 @@ public class CommToDataClientAPI implements CommToDataClient
         System.out.println("Client cree");
         Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-=======
-        int portServ = 1026;
-        uploadFileMsg message = new uploadFileMsg(fi,user, this.commManagerServer, this.commManagerClient);
-        System.out.println("Client cree");
-        Client c = new Client(message, portServ, this.commManagerClient.getAddressIpServer(), 0, null);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
     }
 
     @Override

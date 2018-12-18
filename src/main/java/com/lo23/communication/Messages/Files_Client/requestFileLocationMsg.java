@@ -11,16 +11,15 @@ import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 public class requestFileLocationMsg extends FileMessage {
 	private static final long serialVersionUID = 60L;
 	protected UserIdentity user;
-	private CommunicationManagerServer commManager;
 	
-	public requestFileLocationMsg(FileHandlerInfos fi, UserIdentity u, CommunicationManagerServer cms){
+	public requestFileLocationMsg(FileHandlerInfos fi, UserIdentity u){
 		this.file = fi;
 		this.user = u;
-		this.commManager=cms;
 	}
 	
 	public void treatment(){
-		DataServerToComm dataInterface = this.commManager.getDataInterface();
+		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+		DataServerToComm dataInterface = cms.getDataInterface();
 
 		dataInterface.requestFileLocationServer(this.file);
 	}

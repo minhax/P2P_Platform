@@ -18,12 +18,28 @@ class DownloadManager
 {
     private Vector<FileHandler> inQueue;
     private Vector<FileHandler> inProgress;
-    private DataManagerClient managerClient;
+    private CommToDataClient commToDataClientAPI;
+    private DataManagerClient dataManagerClient;
 
-    DownloadManager (DataManagerClient host) {
-        this.inQueue = new Vector<>();
-        this.inProgress = new Vector<>();
-        this.managerClient = host;
+    public DataManagerClient getDataManagerClient() {
+        return dataManagerClient;
+    }
+
+    public void setDataManagerClient(DataManagerClient dataManagerClient) {
+        this.dataManagerClient = dataManagerClient;
+    }
+
+    public CommToDataClient getCommToDataClientAPI() {
+        return commToDataClientAPI;
+    }
+
+    public void setCommToDataClientAPI(CommToDataClient commToDataClientAPI) {
+        this.commToDataClientAPI = commToDataClientAPI;
+    }
+
+    DownloadManager(){
+        this.inQueue = new Vector<FileHandler>();
+        this.inProgress = new Vector<FileHandler>();
     }
 
     public Vector<FileHandler> getInQueue()
@@ -52,14 +68,10 @@ class DownloadManager
      */
     void download(FileHandler fileToDownload)
     {
-<<<<<<< HEAD
         long nbBlocks = fileToDownload.getNbBlocks();
-=======
-        long nbBlocks = (long) Math.ceil((float)fileToDownload.getSize() / (float)Const.FILEPART_SIZE);
->>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 
         Vector<UserIdentity> sources = this
-                .managerClient
+                .getDataManagerClient()
                 .getSessionInfos()
                 .getDirectory()
                 .getUsersThatProposeFile(fileToDownload);
@@ -98,7 +110,9 @@ class DownloadManager
             data = Files.readAllBytes(filePart.toPath());
             // TODO send filePart to comm
             // this.getCommToDataClientAPI();
-        } catch(IOException e){
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
