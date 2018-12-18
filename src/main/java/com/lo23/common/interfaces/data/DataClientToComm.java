@@ -13,11 +13,11 @@ import java.util.Vector;
 public interface DataClientToComm
 {
     /**
-     * Réponse du serveur à DataClient
-     * concernant les sources d'un fichier
-     * @param sources sources du fichier
+     * Réception d'un message du serveur contenant un utilisateur et le fichier qu'il propose
+     * @param fileSource utilisateur qui a proposé le fichier
+     * @param proposedFile fichier proposé par l'utilisateur
      */
-    void receiveFileLocations(List<UserIdentity> sources);
+    void receiveFileSource(UserIdentity fileSource, FileHandlerInfos proposedFile);
 
     void receiveFilePart(FileHandler fileHandler, long blocNumber, byte[] data);
 
