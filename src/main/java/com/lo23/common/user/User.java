@@ -65,4 +65,10 @@ public class User implements Serializable
     public String getLogin() {
         return login;
     }
+
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }
