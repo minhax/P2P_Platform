@@ -117,10 +117,9 @@ class DownloadManager
      * @param part l'index de la partie du fichier.
      */
     void getFilePart(User userAsking, User userSource, FileHandler file, long part){
-        try{
+        File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
+        try(FileInputStream fileIn = new FileInputStream(filePart)){
             byte[] data = new byte[Const.FILEPART_SIZE];
-            File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
-            FileInputStream fileIn = new FileInputStream(filePart);
             data = Files.readAllBytes(filePart.toPath());
             // TODO send filePart to comm
             // this.getCommToDataClientAPI();
@@ -183,10 +182,11 @@ class DownloadManager
      */
     void mergeFileparts (FileHandler fileToBuild)
     {
-        try {
+
+        String title = fileToBuild.getTitle().replaceAll("\\W+", "_");
+
+        try(FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + title + "." + fileToBuild.getType());) {
             byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
-            String title = fileToBuild.getTitle().replaceAll("\\W+", "_");
-            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + title + "." + fileToBuild.getType());
             int bytesRead;
             for (int i = 0; i < fileToBuild.getNbBlocks(); i++)
             {
@@ -195,9 +195,9 @@ class DownloadManager
                 fileBuilt.write(segment, 0, bytesRead);
                 filepart.close();
             }
-            fileBuilt.close();
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
+
     }
 }
