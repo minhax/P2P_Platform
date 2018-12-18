@@ -41,7 +41,7 @@ public class UpdateProfileController implements Initializable {
 
     /**
      * Instancie la classe UpdateProfileConroller
-     * @param dataAPI
+     * @param dataAPI instance de DataClientToIhm
      */
     public UpdateProfileController(DataClientToIhm dataAPI)
     {
@@ -50,8 +50,8 @@ public class UpdateProfileController implements Initializable {
 
     /**
      * Initialisation de la fenêtre de modification du profil
-     * @param location
-     * @param resources
+     * @param location URL
+     * @param resources ResourceBundle
      */
     @Override
     public void initialize(URL location, ResourceBundle resources)

@@ -39,7 +39,7 @@ public class CreateAccountController implements Initializable {
 
     /**
      * Instancie la classe CreateAccountController
-     * @param dataAPI
+     * @param dataAPI instance DataClientToIhm
      */
     public CreateAccountController(DataClientToIhm dataAPI)
     {
@@ -49,7 +49,7 @@ public class CreateAccountController implements Initializable {
     /**
      * Initialisation de la fenêtre de création de compte
      * @param location URL
-     * @param resources
+     * @param resources ResourceBundle
      */
     @Override
     public void initialize(URL location, ResourceBundle resources)

@@ -38,7 +38,7 @@ public class ratingController implements Initializable {
     /**
      * Initialisation de la fenêtre de notation d'un fichier
      * @param location URL
-     * @param resources
+     * @param resources ResourceBundle
      */
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -55,7 +55,7 @@ public class ratingController implements Initializable {
 
     /**
      * Définit le fichier à noter
-     * @param file
+     * @param file FileHandler
      */
     public void setFile(FileHandler file)
     {
@@ -64,9 +64,9 @@ public class ratingController implements Initializable {
 
     /**
      * Récupère le fichier à noter
-     * @return
+     * @return FileHandler
      */
-    public FileHandler getFile()
+    private FileHandler getFile()
     {
         return this.file;
     }

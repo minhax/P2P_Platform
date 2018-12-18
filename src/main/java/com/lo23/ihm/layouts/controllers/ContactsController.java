@@ -30,7 +30,7 @@ public class ContactsController {
     /**
      * Initialise les utilisateurs connectés
      * @param location URL
-     * @param resources
+     * @param resources ResourceBundle
      */
     public void initialize(URL location, ResourceBundle resources)
     {

@@ -146,7 +146,7 @@ public class MainController implements Initializable {
 
     /**
      * Instancie la classe MainController
-     * @param dataAPI
+     * @param dataAPI instance de DataClientToIhm
      */
     public MainController(DataClientToIhm dataAPI)
     {
@@ -156,7 +156,7 @@ public class MainController implements Initializable {
     /**
      * Initialisation de la fenêtre Main
      * @param location URL
-     * @param resources
+     * @param resources ResourceBundle
      */
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -531,7 +531,7 @@ public class MainController implements Initializable {
      * @param searchItem String saisie par l'utilisateur
      * @param searchMethod Méthode de recherche choisie (Nom, Auteur, Tag)
      */
-    public void researchFile(String searchItem, String searchMethod)
+    private void researchFile(String searchItem, String searchMethod)
     {
 
         researchResults = api.requestSearchFile(searchItem);

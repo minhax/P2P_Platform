@@ -72,7 +72,7 @@ public class PartageController {
 
     /**
      * Instancie la classe PartageController
-     * @param dataAPI
+     * @param dataAPI instance de DataClientToIhm
      */
     public PartageController(DataClientToIhm dataAPI)
     {
@@ -168,7 +168,7 @@ public class PartageController {
     /**
      * Retourne la taille du fichier sous forme de string et ses unités en SI ou Binaire
      * @param bytes taille du fichier
-     * @param si
+     * @param si booléen
      * @return String
      */
     // Prends la taille du fichier en bytes et donne un string avec la taille du fichier et ses unités en SI ou Binaire

@@ -20,14 +20,14 @@ public class CommentController {
 
     @FXML
     private Button validateCommentButton;
-    
+
     private Comment comment;
-    
+
     private FileHandler file;
 
     /**
      * Défini le fichier
-     * @param file
+     * @param file FileHandler
      */
     public void setFile(FileHandler file)
     {
@@ -47,7 +47,7 @@ public class CommentController {
 
     /**
      * Instancie la classe CommentController
-     * @param dataAPI
+     * @param dataAPI DataClientToIhm
      */
     public CommentController(DataClientToIhm dataAPI)
     {

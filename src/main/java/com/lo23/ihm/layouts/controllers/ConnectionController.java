@@ -54,7 +54,7 @@ public class ConnectionController implements Initializable {
     /**
      * Initialise la fenêtre de connexion
      * @param location URL
-     * @param resources
+     * @param resources ResourceBundle
      */
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -68,7 +68,7 @@ public class ConnectionController implements Initializable {
 
     /**
      * Instancie la classe ConnectionController
-     * @param dataAPI
+     * @param dataAPI DataClientToIhm
      */
     public ConnectionController(DataClientToIhm dataAPI)
     {
@@ -77,7 +77,7 @@ public class ConnectionController implements Initializable {
 
     /**
      * Connexion
-     * @param event
+     * @param event ActionEvent
      */
     @FXML
     public void OnConnectClicked(ActionEvent event)
@@ -130,7 +130,7 @@ public class ConnectionController implements Initializable {
 
     /**
      * Création de compte
-     * @param event
+     * @param event ActionEvent
      */
     @FXML
     public void OnCreateAccountLoaderClicked(ActionEvent event)

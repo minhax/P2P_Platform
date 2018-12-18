@@ -10,7 +10,7 @@ public class ContainerController implements Initializable{
 	/**
 	 * Initialisation de la fenêtre Container
 	 * @param location URL
-	 * @param resources
+	 * @param resources ResourceBundle
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
