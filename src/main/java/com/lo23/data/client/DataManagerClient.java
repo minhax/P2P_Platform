@@ -377,6 +377,7 @@ public class DataManagerClient
      * @param rating note
      * @param ratedFile fichier noté
      */
+    /*
     public void addRatingToFile(Rating rating, FileHandler ratedFile)
     {
         // Récupération de la liste des fichiers partagés
@@ -397,7 +398,7 @@ public class DataManagerClient
 
         // Communication des changements au serveur pour qu'il se mette à jour
         this.getCommToDataClientApi().sendRatedFile(rating, ratedFile, this.sessionInfos.getCurrentUser());
-    }
+    }*/
 
     public void downloadFile(FileHandler fileToDownload)
     {

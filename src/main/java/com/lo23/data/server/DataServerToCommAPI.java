@@ -41,13 +41,13 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewUserFiles(List<FileHandlerInfos> filesSharedByUser, UserStats user)
+    public void addNewUserFiles(List<FileHandler> filesSharedByUser, UserStats user)
     {
-        Iterator<FileHandlerInfos> iterator = filesSharedByUser.iterator();
+        Iterator<FileHandler> iterator = filesSharedByUser.iterator();
         FileHandlerInfos file;
         while(iterator.hasNext())
         {
-            this.manager.connections.addFileToDirectory(user, iterator.next());
+            this.manager.connections.addFileToDirectory(user, (FileHandlerInfos) iterator.next());
         }
     }
 

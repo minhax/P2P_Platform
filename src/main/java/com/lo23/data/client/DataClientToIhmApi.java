@@ -83,6 +83,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException
     {
+        /*
         if(rating == null)
         {
             throw new DataException("Rating object is null");
@@ -95,7 +96,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         {
             // Ajout de la note et notification au serveur
             this.host.addRatingToFile(rating, ratedFile);
-        }
+        }*/
     }
 
     @Override

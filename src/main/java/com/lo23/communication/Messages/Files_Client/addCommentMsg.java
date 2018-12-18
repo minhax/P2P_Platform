@@ -2,6 +2,7 @@ package com.lo23.communication.Messages.Files_Client;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.Comment;
+import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.*;
 import com.lo23.common.interfaces.data.*;
 import com.lo23.common.user.User;
@@ -28,7 +29,7 @@ public class addCommentMsg extends FileMessage {
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
 		
-		dataInterface.updateFileWithNewComment(this.file, this.comment, this.user);
+		dataInterface.updateFileWithNewComment((FileHandlerInfos) this.file, this.comment, this.user);
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		sendUpdatedFileMsg message = new sendUpdatedFileMsg(this.file, this.user);
 		message.setPort(this.getPort());

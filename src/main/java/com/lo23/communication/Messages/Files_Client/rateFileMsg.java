@@ -25,7 +25,7 @@ public class rateFileMsg extends FileMessage {
 		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
 		DataServerToComm dataInterface = cms.getDataInterface();
 		
-		dataInterface.updateFileWithNewRating(this.file, this.rate, this.user);
+		dataInterface.updateFileWithNewRating((FileHandlerInfos) this.file, this.rate, this.user);
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
 		sendUpdatedFileMsg message = new sendUpdatedFileMsg(this.file, this.user);
 		message.setPort(this.getPort());

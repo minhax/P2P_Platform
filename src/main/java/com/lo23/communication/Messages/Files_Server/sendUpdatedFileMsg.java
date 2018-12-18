@@ -26,7 +26,7 @@ public class sendUpdatedFileMsg extends FileMessage{
 
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         DataClientToComm dataInterfaceClient = cmc.getDataInterface();
-        dataInterfaceClient.notifyUpdatedSharedFileToAll(this.file,this.usr);
+        dataInterfaceClient.notifyUpdatedSharedFileToAll((FileHandlerInfos) this.file,this.usr);
 	
 	}
 
