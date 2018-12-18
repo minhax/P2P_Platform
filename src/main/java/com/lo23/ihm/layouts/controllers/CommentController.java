@@ -24,31 +24,51 @@ public class CommentController {
     private Comment comment;
     
     private FileHandler file;
-    
-    public void setFile(FileHandler file){
+
+    /**
+     * Défini le fichier
+     * @param file
+     */
+    public void setFile(FileHandler file)
+    {
         this.file = file;
     }
 
-    public FileHandler getFile(){
+    /**
+     * Retourne le fichier
+     * @return file
+     */
+    public FileHandler getFile()
+    {
         return this.file;
     }
 
     private DataClientToIhm api;
 
-
-    public CommentController(DataClientToIhm dataAPI){
+    /**
+     * Instancie la classe CommentController
+     * @param dataAPI
+     */
+    public CommentController(DataClientToIhm dataAPI)
+    {
         api=dataAPI;
     }
+
+    /**
+     * Envoie le commentaire à Data
+     */
     @FXML
-    void Validate() {
+    void Validate()
+    {
         this.comment = new Comment(commentArea.getText(), api.requestAccountInfos());
         // A décommenter pour data
         // api.requestCommentFile(this.comment, getFile());
     	System.out.println(comment);
     	// send to Data 
-    	try {
-    	Stage stage = (Stage) validateCommentButton.getScene().getWindow();
-        stage.close();
+    	try
+        {
+    	    Stage stage = (Stage) validateCommentButton.getScene().getWindow();
+            stage.close();
     	}
     	catch(Exception e)
         {

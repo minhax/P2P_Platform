@@ -37,13 +37,23 @@ public class CreateAccountController implements Initializable {
 
     private DataClientToIhm api;
 
-
-    public CreateAccountController(DataClientToIhm dataAPI){
+    /**
+     * Instancie la classe CreateAccountController
+     * @param dataAPI
+     */
+    public CreateAccountController(DataClientToIhm dataAPI)
+    {
         api=dataAPI;
     }
 
+    /**
+     * Initialisation de la fenêtre de création de compte
+     * @param location URL
+     * @param resources
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources)
+    {
         model = new CreateAccountModel();
         emptyFieldLabel.setVisible(false);
         ageErrorLabel.setVisible(false);
@@ -52,28 +62,42 @@ public class CreateAccountController implements Initializable {
 
     }
 
+    /**
+     * Création d'un compte
+     */
     @FXML
-    public void OnCreateAccountClicked() {
-        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null) {
+    public void OnCreateAccountClicked()
+    {
+        //vérifications des champs
+        if (loginTextField.getText() == null || passwordField.getText() == null || firstnameTextField.getText() == null || lastnameTextField.getText() == null || ageTextField.getText() == null)
+        {
             emptyFieldLabel.setVisible(true);
-        } else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty()) {
+        }
+        else if (loginTextField.getText() == null || passwordField.getText().isEmpty() || firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty() || ageTextField.getText().isEmpty())
+        {
             emptyFieldLabel.setVisible(true);
-        } else if (!ageTextField.getText().matches("\\d+")) {
+        }
+        else if (!ageTextField.getText().matches("\\d+"))
+        {
             ageErrorLabel.setVisible(true);
-        } else {
-            // A decommenté et verifier les champs pendant l'integration
-
-            try{
+        }
+        else {
+            // A decommenter et verifier les champs pendant l'integration
+            // création de compte
+            try
+            {
                 api.createAccount(loginTextField.getText(),passwordField.getText(),firstnameTextField.getText(),lastnameTextField.getText(),Integer.parseInt(ageTextField.getText()));
                 api.requestCheckCredentials(loginTextField.getText(),passwordField.getText());
             }
-            catch(DataException de){
+            catch(DataException de)
+            {
                 de.printStackTrace();
                 // TODO génrer l'exception qui signifie que la création de compte a échoué.
             }
             System.out.println(loginTextField.getText() + passwordField.getText() + firstnameTextField.getText() + lastnameTextField.getText() + ageTextField.getText());
 
-            try {
+            try
+            {
                 /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
                 Stage stage = (Stage) accountFormPane.getScene().getWindow();
@@ -90,27 +114,39 @@ public class CreateAccountController implements Initializable {
                 Stage stage = (Stage) accountFormPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Retour à la fenêtre de connexion via un bouton
+     */
     @FXML
-    public void OnBackToCoClicked() {
-        try {
+    public void OnBackToCoClicked()
+    {
+        try
+        {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
             Parent root = fxmlloader.load();
             Stage stage = (Stage) accountFormPane.getScene().getWindow();
             stage.setTitle("Fenêtre principale");
             stage.setScene(new Scene(root));
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-
-    private void binding() {
+    /**
+     * Binding des éléments du contrôleur aux éléments du modèle
+     */
+    private void binding()
+    {
         this.lastnameTextField.textProperty().bindBidirectional(this.model.lastNameProperty());
         this.passwordField.textProperty().bindBidirectional(this.model.passwordProperty());
         this.firstnameTextField.textProperty().bindBidirectional(this.model.firstNameProperty());

@@ -7,10 +7,15 @@ import javafx.fxml.Initializable;
 
 public class ContainerController implements Initializable{
 
+	/**
+	 * Initialisation de la fenêtre Container
+	 * @param location URL
+	 * @param resources
+	 */
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources)
+	{
 		// TODO Auto-generated method stub
-		
 	}
 
 }

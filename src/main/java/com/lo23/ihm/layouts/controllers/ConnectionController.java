@@ -51,8 +51,14 @@ public class ConnectionController implements Initializable {
 
     private DataClientToIhm api;
 
+    /**
+     * Initialise la fenêtre de connexion
+     * @param location URL
+     * @param resources
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources)
+    {
         model = new ConnectionModel();
         incorrectLabel.setVisible(false);
         binding();
@@ -60,22 +66,33 @@ public class ConnectionController implements Initializable {
 
     }
 
-    public ConnectionController(DataClientToIhm dataAPI){
+    /**
+     * Instancie la classe ConnectionController
+     * @param dataAPI
+     */
+    public ConnectionController(DataClientToIhm dataAPI)
+    {
         api=dataAPI;
     }
 
+    /**
+     * Connexion
+     * @param event
+     */
     @FXML
-    public void OnConnectClicked(ActionEvent event) {
+    public void OnConnectClicked(ActionEvent event)
+    {
         //A décommenter à l'integration
-
+        //vérification de l'authentification
         authorizeConnection = api.requestCheckCredentials(this.userNameTextField.getText(), this.passwordField.getText());
-        if (authorizeConnection) {
-            if (!(this.serverChoiceTextField.getText() == null || this.portTextField.getText() == null)) {
-
+        if (authorizeConnection)
+        {
+            if (!(this.serverChoiceTextField.getText() == null || this.portTextField.getText() == null))
+            {
                 api.requestConnectionToServer(this.serverChoiceTextField.getText());
-
             }
-            try {
+            try
+            {
                 /*FXMLLoader fxmlLoader = new FXMLLoader();
                 MainController controller = new MainController(api); // EXEMPLE
                 IhmToDataClientAPI IhmAPI = new IhmToDataClientAPI(controller);
@@ -100,17 +117,26 @@ public class ConnectionController implements Initializable {
                 stage.setScene(new Scene(root));
 
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
-        } else {
+        }
+        else {
             incorrectLabel.setVisible(true);
         }
     }
 
+    /**
+     * Création de compte
+     * @param event
+     */
     @FXML
-    public void OnCreateAccountLoaderClicked(ActionEvent event) {
-        try {
+    public void OnCreateAccountLoaderClicked(ActionEvent event)
+    {
+        try
+        {
             /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("createAccountLayout.fxml"));*/
 
 
@@ -128,11 +154,16 @@ public class ConnectionController implements Initializable {
             stage.setScene(new Scene(root));
 
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Binding des éléments du contrôleurs aux éléments du modèle
+     */
     private void binding() {
         this.userNameTextField.textProperty().bindBidirectional(this.model.userProperty());
         this.passwordField.textProperty().bindBidirectional(this.model.passwordProperty());

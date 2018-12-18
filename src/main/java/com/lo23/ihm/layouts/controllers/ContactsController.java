@@ -27,6 +27,11 @@ public class ContactsController {
     private ListProperty<String> userListProperty ;
 
 
+    /**
+     * Initialise les utilisateurs connectés
+     * @param location URL
+     * @param resources
+     */
     public void initialize(URL location, ResourceBundle resources)
     {
         //refreshConnectedUsers();
@@ -36,6 +41,9 @@ public class ContactsController {
 
     }
 
+    /**
+     * Actualisation des utilisateurs connectés via un bouton
+     */
     @FXML
     public void OnRefreshConnectedUsersClicked()
     {
@@ -51,6 +59,9 @@ public class ContactsController {
 
     }
 
+    /**
+     * Binding des éléments du contrôleur aux éléments du modèle
+     */
     private void binding()
     {
         this.contactsListView.itemsProperty().bind(userListProperty);
