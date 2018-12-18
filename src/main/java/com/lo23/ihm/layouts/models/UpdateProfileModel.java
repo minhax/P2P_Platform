@@ -3,27 +3,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class UpdateProfileModel {
-	private StringProperty loginUpdate, passwordUpdate, nameUpdate, lastnameUpdate,ageUpdate;
+	private StringProperty passwordUpdate, nameUpdate, lastnameUpdate,ageUpdate;
 	
 	public UpdateProfileModel()
     {
-        this.loginUpdate=new SimpleStringProperty();
         this.passwordUpdate=new SimpleStringProperty();
         this.nameUpdate=new SimpleStringProperty();
         this.lastnameUpdate=new SimpleStringProperty();
         this.ageUpdate=new SimpleStringProperty();
-    }
-	
-	public String getLoginUpdate() {
-        return loginUpdate.get();
-    }
-
-    public StringProperty loginUpdateProperty() {
-        return loginUpdate;
-    }
-
-    public void setLoginUpdate(String login) {
-        this.loginUpdate.set(login);
     }
 
     public String getPasswordUpdate() {
