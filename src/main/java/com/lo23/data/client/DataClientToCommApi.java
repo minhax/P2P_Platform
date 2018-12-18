@@ -1,7 +1,5 @@
 package com.lo23.data.client;
 
-import com.lo23.common.Comment;
-import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
@@ -32,9 +30,9 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void receiveFileLocations(List<UserIdentity> sources)
+    public void receiveFileSource(UserIdentity fileSource, FileHandlerInfos proposedFile)
     {
-
+        this.host.getSessionInfos().getDirectory().addProposedFile(fileSource, proposedFile);
     }
 
     @Override
