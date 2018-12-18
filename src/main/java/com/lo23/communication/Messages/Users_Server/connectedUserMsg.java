@@ -16,9 +16,11 @@ public class connectedUserMsg extends UserMessage{
 	
 	private static final long serialVersionUID = 46L;
 	private HashMap<UserIdentity, Vector<FileHandlerInfos>>  usersInfoAndFiles;
+	private Vector<UserIdentity> connectedUsers;
 	
-	public connectedUserMsg(HashMap<UserIdentity,Vector<FileHandlerInfos>> usersInfoAndFiles){
+	public connectedUserMsg(HashMap<UserIdentity,Vector<FileHandlerInfos>> usersInfoAndFiles, Vector<UserIdentity> connectedUsers){
 		this.usersInfoAndFiles = usersInfoAndFiles;
+		this.connectedUsers = connectedUsers;
 	}
 	/**
 	 * Traitement est applique du cote client
@@ -30,7 +32,7 @@ public class connectedUserMsg extends UserMessage{
 		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cmc.getDataInterface();
 		
-		dataInterface.notifyOtherUserConnectedToAll(this.usersInfoAndFiles);
+		dataInterface.notifyOtherUserConnectedToAll(this.usersInfoAndFiles, this.connectedUsers);
 	}
 
     public boolean isToServ(){return false;}

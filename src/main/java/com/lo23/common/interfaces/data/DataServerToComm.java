@@ -85,8 +85,11 @@ public interface DataServerToComm
     void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user);
 
     /**
-     * Retourne le UserFiles du Directory du serveur
+     * Retourne seulement les utilisateurs qui proposent des fichiers, et leur fichiers
      * @return le UserFiles
      */
     HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles();
+
+
+    Vector<UserIdentity> requestConnectedUsers();
 }

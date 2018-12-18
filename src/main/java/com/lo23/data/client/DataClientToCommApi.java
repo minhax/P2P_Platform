@@ -86,54 +86,56 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
+    public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste, Vector<UserIdentity> connectedUsers) {
 
-        Vector<UserStats> connectedUsers = this.host.getSessionInfos().getOtherLoggedUsers();
-        System.out.println("Liste de com.size = " + liste.size());
-        System.out.println("----- CONNEXION COTE CLIENT -------");
+        System.out.println("notify :: connectedUsers.size = " + connectedUsers.size());
 
-        if (liste == null || liste.isEmpty())
-            System.out.println("Liste vide renvoyée par Comm ");
-
-        // mergeUserIntoLoggedUsers s'occupe d'insérer chaque utilisateur
-        // connecté dans les infos de session s'ils n'y apparaissent pas déjà
-        for (UserIdentity user : liste.keySet()){
-            System.out.println("Est connecté l'utilisateur : " + user.getLogin());
-            this.host.getSessionInfos().mergeUserIntoLoggedUsers(user);
-
-            if (liste.get(user) == null)
-                liste.put(user, new Vector<>());
-
-            Iterator it = liste.get(user).iterator();
-
-
-            while(it.hasNext())
-            {
-                FileHandlerInfos f = (FileHandlerInfos) it.next();
-                System.out.println(user.getLogin() + " a le fichier " + f.getTitle());
-            }
-        }
-
-
-
-
-        System.out.println("Taille connectedUsers post-connexion = " + this.host.getSessionInfos().getOtherLoggedUsers().size());
-        // MAJ des fichiers proposés dans le DirectoryUserFiles côté Session sur le client
-        for(UserIdentity user : liste.keySet()){
-            Vector<FileHandlerInfos> proposedFiles = liste.get(user);
-
-            //Fix temporaire, normalement il faudrait que à partir du
-            if(proposedFiles==null)
-                proposedFiles = new Vector<>();
-
-            Iterator it = proposedFiles.iterator();
-
-            while(it.hasNext()){
-                FileHandlerInfos file = (FileHandlerInfos) it.next();
-                this.host.getSessionInfos().getDirectory().addProposedFile(user, file);
-            }
-        }
-        System.out.println("----- FIN CONNEXION COTE CLIENT -------");
+//
+//        System.out.println("Liste de com.size = " + liste.size());
+//        System.out.println("----- CONNEXION COTE CLIENT -------");
+//
+//        if (liste == null || liste.isEmpty())
+//            System.out.println("Liste vide renvoyée par Comm ");
+//
+//        // mergeUserIntoLoggedUsers s'occupe d'insérer chaque utilisateur
+//        // connecté dans les infos de session s'ils n'y apparaissent pas déjà
+//        for (UserIdentity user : liste.keySet()){
+//            System.out.println("Est connecté l'utilisateur : " + user.getLogin());
+//            this.host.getSessionInfos().mergeUserIntoLoggedUsers(user);
+//
+//            if (liste.get(user) == null)
+//                liste.put(user, new Vector<>());
+//
+//            Iterator it = liste.get(user).iterator();
+//
+//
+//            while(it.hasNext())
+//            {
+//                FileHandlerInfos f = (FileHandlerInfos) it.next();
+//                System.out.println(user.getLogin() + " a le fichier " + f.getTitle());
+//            }
+//        }
+//
+//
+//
+//
+//        System.out.println("Taille connectedUsers post-connexion = " + this.host.getSessionInfos().getOtherLoggedUsers().size());
+//        // MAJ des fichiers proposés dans le DirectoryUserFiles côté Session sur le client
+//        for(UserIdentity user : liste.keySet()){
+//            Vector<FileHandlerInfos> proposedFiles = liste.get(user);
+//
+//            //Fix temporaire, normalement il faudrait que à partir du
+//            if(proposedFiles==null)
+//                proposedFiles = new Vector<>();
+//
+//            Iterator it = proposedFiles.iterator();
+//
+//            while(it.hasNext()){
+//                FileHandlerInfos file = (FileHandlerInfos) it.next();
+//                this.host.getSessionInfos().getDirectory().addProposedFile(user, file);
+//            }
+//        }
+//        System.out.println("----- FIN CONNEXION COTE CLIENT -------");
     }
 
         //System.out.println("newlyConnectedUser = " + newlyConnectedUser.getId() + newlyConnectedUser.getFirstName());

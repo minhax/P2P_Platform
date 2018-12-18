@@ -101,4 +101,9 @@ public class DataServerToCommAPI implements DataServerToComm
         //TODO : merge newRating into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
     }
 
+    @Override
+    public Vector<UserIdentity> requestConnectedUsers() {
+        return this.manager.connections.getConnectedUsers();
+    }
+
 }
