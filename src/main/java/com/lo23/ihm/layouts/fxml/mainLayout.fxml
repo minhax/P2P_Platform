@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="mainHBox" fx:id="mainHBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.MainController">
+<HBox id="mainHBox" fx:id="mainHBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <AnchorPane id="leftPane" fx:id="leftPane" prefHeight="400.0" prefWidth="160.0" style="-fx-border-style: solid;">
          <children>
@@ -42,25 +42,25 @@
             </VBox>
             <TabPane id="mainTabPane" fx:id="mainTabPane" prefHeight="311.0" prefWidth="278.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab id="myFilesTab" fx:id="myFilesTab" closable="false" style="-fx-font-size: 8px;" text="Mes documents">
+                <Tab id="myFilesTab" fx:id="myFilesTab" closable="false" onSelectionChanged="#OnChangeToTabMyFiles" style="-fx-font-size: 8px;" text="Mes documents">
                      <content>
                         <AnchorPane id="myFilesPane" fx:id="myFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Button id="addDocumentButton" fx:id="addDocumentButton" layoutX="77.0" layoutY="245.0" mnemonicParsing="false" onAction="#OnAddDocumentButtonClicked" style="-fx-background-color: #C0C0C0; -fx-font-size: small;" text="Ajouter un document" />
-                              <ListView fx:id="listViewMyFiles" layoutY="9.0" prefHeight="230.0" prefWidth="278.0" />
+                              <ListView fx:id="listViewMyFiles" layoutY="7.0" prefHeight="232.0" prefWidth="278.0" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                <Tab id="availableFilesTab" fx:id="availableFilesTab" closable="false" style="-fx-font-size: 8px;" text="Fichiers disponibles">
+                <Tab id="availableFilesTab" fx:id="availableFilesTab" closable="false" onSelectionChanged="#OnChangeToTabAvailable" style="-fx-font-size: 8px;" text="Fichiers disponibles">
                      <content>
                         <AnchorPane id="availableFilesPane" fx:id="availableFilesPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listViewAvailableFiles" layoutX="-3.0" layoutY="11.0" prefHeight="272.0" prefWidth="278.0" />
+                              <ListView fx:id="listViewAvailableFiles" layoutX="-3.0" prefHeight="273.0" prefWidth="278.0" />
                            </children></AnchorPane>
                      </content>
                   </Tab>
-                  <Tab id="downloadsTab" fx:id="downloadsTab" closable="false" style="-fx-font-size: 8px;" text="Mes téléchargements">
+                  <Tab id="downloadsTab" fx:id="downloadsTab" closable="false" onSelectionChanged="#OnChangeToTabDownloading" style="-fx-font-size: 8px;" text="Mes téléchargements">
                      <content>
                         <AnchorPane id="downloadsPane" fx:id="downloadsPane" prefHeight="200.0" prefWidth="200.0">
                            <children>
@@ -72,7 +72,9 @@
             </TabPane>
             <AnchorPane id="mainBottomPane" fx:id="mainBottomPane" prefHeight="35.0" prefWidth="278.0">
                <children>
-                  <Button id="serverParametersButton" fx:id="serverParametersButton" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#OnServerParametersButtonClicked" style="-fx-font-size: 8px; -fx-background-color: #C0C0C0;" text="Configurer le serveur" />
+                  <TextField fx:id="changeServerIpAdressTextField" layoutX="14.0" layoutY="-3.0" promptText="IP du serveur" />
+                  <Button id="serverParametersButton" fx:id="serverParametersButton" layoutX="186.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#OnServerParametersButtonClicked" style="-fx-font-size: 8px; -fx-background-color: #C0C0C0;" text="Changer le serveur" />
+                  <Label fx:id="incorrectIP" disable="true" layoutX="22.0" layoutY="22.0" prefHeight="17.0" prefWidth="148.0" text="IP incorrecte" textFill="RED" />
                </children>
             </AnchorPane>
          </children>

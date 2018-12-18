@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lo23.ihm.layouts.controllers.CreateAccountController">
+<AnchorPane fx:id="accountFormPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Label fx:id="emptyFieldLabel" layoutX="169.0" layoutY="31.0" prefHeight="18.0" prefWidth="396.0" text="Tous les champs doivent obligatoirement être renseignés" textFill="RED" />
       <Label id="lastnameLabel" layoutX="169.0" layoutY="78.0" text="Nom" />
@@ -21,5 +21,6 @@
       <TextField id="ageTextField" fx:id="ageTextField" layoutX="283.0" layoutY="248.0" />
       <Label fx:id="ageErrorLabel" layoutX="274.0" layoutY="274.0" prefHeight="18.0" prefWidth="396.0" text="Doit obligatoirement etre un nombre" textFill="RED" />
       <Button id="subscriptionButton" layoutX="274.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnCreateAccountClicked" style="-fx-background-color: #00BFFF;" text="S'inscrire !" />
+      <Button layoutX="22.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#OnBackToCoClicked" style="-fx-background-color: #00BFFF;" text="retour" />
    </children>
 </AnchorPane>
