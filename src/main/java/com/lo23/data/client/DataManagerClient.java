@@ -8,9 +8,7 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
-import com.lo23.communication.APIs.CommToDataClientAPI;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -20,7 +18,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Vector;
 import java.util.stream.Stream;
 
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
@@ -62,11 +59,9 @@ public class DataManagerClient
     {
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
-        this.downloadManager = new DownloadManager();
+        this.downloadManager = new DownloadManager(this);
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
-        this.commToDataClientAPI = CommToDataClientAPI.getInstance();
-        this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
     }
 
     UploadManager getUploadManager ()
@@ -178,7 +173,8 @@ public class DataManagerClient
     public boolean logout()
     {
         // TODO catch erreur eventuelle.
-        this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
+        UserAccount currentUser = this.sessionInfos.getCurrentUser();
+        this.getCommToDataClientApi().requestLogoutToServer(currentUser, currentUser.getProposedFiles());
         this.saveUserInfo(this.getSessionInfos().getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
         return true; //TODO return to user logout successful ?

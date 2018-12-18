@@ -15,10 +15,21 @@ import java.util.Vector;
 public class connectedUserMsg extends UserMessage{
 	
 	private static final long serialVersionUID = 46L;
+<<<<<<< HEAD
 	private HashMap<UserIdentity, Vector<FileHandlerInfos>>  usersInfoAndFiles;
 	
 	public connectedUserMsg(HashMap<UserIdentity,Vector<FileHandlerInfos>> usersInfoAndFiles){
 		this.usersInfoAndFiles = usersInfoAndFiles;
+=======
+	protected List<FileHandlerInfos> fhInfo;
+	private UserStats us;
+	private CommunicationManagerClient commManager;
+	
+	public connectedUserMsg(UserStats ui, List<FileHandlerInfos> fi, CommunicationManagerClient cmc){
+		this.us = ui;
+		this.fhInfo = fi;
+		this.commManager=cmc;
+>>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 	}
 	/**
 	 * Traitement est applique du cote client
@@ -27,8 +38,12 @@ public class connectedUserMsg extends UserMessage{
 	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
 	public void treatment(){
+<<<<<<< HEAD
 		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cmc.getDataInterface();
+=======
+		DataClientToComm dataInterface = this.commManager.getDataInterface();
+>>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
 		
 		dataInterface.notifyOtherUserConnectedToAll(this.usersInfoAndFiles);
 	}

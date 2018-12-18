@@ -16,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -32,16 +31,8 @@ public class UpdateProfileController implements Initializable {
     @FXML
     private Label errorUpdateLabel;
     
-    @FXML
-    private AnchorPane updateUserPane;
-    
     private UpdateProfileModel model;
-
-    private DataClientToIhm api;
-
-    public UpdateProfileController(DataClientToIhm dataAPI){
-        api=dataAPI;
-    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new UpdateProfileModel();
@@ -61,6 +52,7 @@ public class UpdateProfileController implements Initializable {
     	}
     	else {
             // Integration data
+			DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
 			api.requestSubmitUserChanges(loginUpdateField.getText(),passwordUpdateField.getText(),nameUpdateField.getText(),familynameUpdateField.getText(),Integer.parseInt(ageUpdateField.getText()));
             //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
@@ -94,6 +86,7 @@ public class UpdateProfileController implements Initializable {
     @FXML
     void Previous() {
     	 try {
+<<<<<<< HEAD
              //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
              FXMLLoader fxmlLoader = new FXMLLoader();
              // TODO: déclarer le controller de IHM
@@ -105,8 +98,17 @@ public class UpdateProfileController implements Initializable {
 
              Parent root = fxmlLoader.load();
              Stage stage = (Stage) updateUserPane.getScene().getWindow();
+=======
+             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
+             Parent root = fxmlloader.load();
+             Stage stage = new Stage();
+
+             stage.initModality(Modality.APPLICATION_MODAL);
+             stage.setOpacity(1);
+>>>>>>> b3c8c952d5edd679f04bf216db7d24dd97e40c7c
              stage.setTitle("Fenêtre principale");
              stage.setScene(new Scene(root));
+             stage.showAndWait();
          } catch (Exception e) {
              e.printStackTrace();
          }

@@ -65,8 +65,9 @@ public interface CommToDataClient
     /**
      * Transmet la demande de déconnexion de l'utilisateur (recevoir la demande)
      * @param user utilisateur qui se déconnecte
+     * @param userFiles Liste des fichiers que l'utilisateur met à disposition du réseau
      */
-    void requestLogoutToServer(UserStats user);
+    void requestLogoutToServer(UserStats user, List<FileHandlerInfos> userFiles);
     /*
     /**
      * Transmet la demande de déconnexion de l'utilisateur (envoyer la demande)

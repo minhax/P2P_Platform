@@ -10,33 +10,15 @@ import java.util.List;
 public class CommToDataServerAPI implements CommToDataServer {
 
 
-    protected static CommunicationManagerServer commManagerServer ;
+    private CommunicationManagerServer commManagerServer;
 
     /* Constructeur */
-    private CommToDataServerAPI()
+    public CommToDataServerAPI(CommunicationManagerServer cms)
     {
-        commManagerServer= CommunicationManagerServer.getInstance();
+
+        this.commManagerServer= cms;
     }
 
-    /* Initialisation du singleton*/
-    private static CommToDataServerAPI Instance=new CommToDataServerAPI();
-
-    /* Accesseurs */
-    public static CommToDataServerAPI getInstance()
-    {
-        return Instance;
-    }
-
-    public static CommunicationManagerServer getCommunicationManager()
-    {
-        return commManagerServer;
-    }
-
-
-    public void setCommunicationManager(CommunicationManagerServer commManager)
-    {
-        this.commManagerServer=commManager;
-    }
 
 
     /*========= Implémentation des méthodes ============= */

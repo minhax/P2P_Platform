@@ -9,9 +9,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import com.lo23.common.Comment;
-import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.data.client.DataManagerClient;
 
 public class CommentController {
 
@@ -21,7 +18,7 @@ public class CommentController {
     @FXML
     private Button validateCommentButton;
     
-    private Comment comment;
+    private String comment;
     
     private FileHandler file;
     
@@ -32,18 +29,11 @@ public class CommentController {
     public FileHandler getFile(){
         return this.file;
     }
-
-    private DataClientToIhm api;
-
-
-    public CommentController(DataClientToIhm dataAPI){
-        api=dataAPI;
-    }
+    
+    
     @FXML
     void Validate() {
-        this.comment = new Comment(commentArea.getText(), api.requestAccountInfos());
-        // A décommenter pour data
-        // api.requestCommentFile(this.comment, getFile());
+    	comment = commentArea.getText();
     	System.out.println(comment);
     	// send to Data 
     	try {
