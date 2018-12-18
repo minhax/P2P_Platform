@@ -98,9 +98,17 @@ public class CreateAccountController implements Initializable {
 
     @FXML
     public void OnBackToCoClicked() {
-        try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
-            Parent root = fxmlloader.load();
+    	try {
+            //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            // TODO: déclarer le controller de IHM
+            ConnectionController connectionController = new ConnectionController(api); // EXEMPLE
+            fxmlLoader.setController(connectionController);
+            // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+
+
+            Parent root = fxmlLoader.load();
             Stage stage = (Stage) accountFormPane.getScene().getWindow();
             stage.setTitle("Fenêtre principale");
             stage.setScene(new Scene(root));
