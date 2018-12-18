@@ -35,30 +35,47 @@ public class ratingController implements Initializable {
 
     private FileHandler file;
 
+    /**
+     * Initialisation de la fenêtre de notation d'un fichier
+     * @param location URL
+     * @param resources
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        rating.ratingProperty().addListener(new ChangeListener<Number>() {
-
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        rating.ratingProperty().addListener(new ChangeListener<Number>()
+        {
             @Override
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-
+            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1)
+            {
                 ratingLabel.setText("Rating : "+ t1.toString());
             }
         });
-
     }
 
-    public void setFile(FileHandler file){
+    /**
+     * Définit le fichier à noter
+     * @param file
+     */
+    public void setFile(FileHandler file)
+    {
         this.file = file;
     }
 
-    public FileHandler getFile(){
+    /**
+     * Récupère le fichier à noter
+     * @return
+     */
+    public FileHandler getFile()
+    {
         return this.file;
     }
 
-    public void onOkButtonClicked (){
-
+    /**
+     * Envoie la note à Data via un bouton
+     */
+    public void onOkButtonClicked ()
+    {
         // Enlever pour envoyer a data
         // requestRateFile(rating.getRating(), getFile());
 
@@ -69,8 +86,11 @@ public class ratingController implements Initializable {
 
     }
 
-    public void onCancelButtonClicked (){
-
+    /**
+     * Fermeture de la fenêtre sans noter le fichier
+     */
+    public void onCancelButtonClicked ()
+    {
         // Ferme la fenêtre, ne fait rien avec les données saisies
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();

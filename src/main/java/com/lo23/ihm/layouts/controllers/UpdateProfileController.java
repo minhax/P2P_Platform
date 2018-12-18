@@ -39,24 +39,41 @@ public class UpdateProfileController implements Initializable {
 
     private DataClientToIhm api;
 
-    public UpdateProfileController(DataClientToIhm dataAPI){
+    /**
+     * Instancie la classe UpdateProfileConroller
+     * @param dataAPI
+     */
+    public UpdateProfileController(DataClientToIhm dataAPI)
+    {
         api=dataAPI;
     }
+
+    /**
+     * Initialisation de la fenêtre de modification du profil
+     * @param location
+     * @param resources
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources)
+    {
         model = new UpdateProfileModel();
         errorUpdateLabel.setVisible(false);
         binding();
 
     }
 
+    /**
+     * Validation des modifications du profil
+     */
     @FXML
-    public void Validate() {
+    public void Validate()
+    {
     	if (loginUpdateField.getText() == null || passwordUpdateField.getText() == null || familynameUpdateField.getText() == null || nameUpdateField.getText() == null || ageUpdateField.getText() == null)
         {
             errorUpdateLabel.setVisible(true);
         }
-    	else if (!passwordUpdateField.getText().equals(passwordConfirmationUpdateField.getText()) ) {
+    	else if (!passwordUpdateField.getText().equals(passwordConfirmationUpdateField.getText()) )
+    	{
     		errorUpdateLabel.setVisible(true);
     	}
     	else {
@@ -65,7 +82,8 @@ public class UpdateProfileController implements Initializable {
             //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
 
-            try {
+            try
+            {
                 /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlloader.load();
                 Stage stage = new Stage();
@@ -77,13 +95,19 @@ public class UpdateProfileController implements Initializable {
                 stage.showAndWait();*/
                 Stage stage = (Stage) errorUpdateLabel.getScene().getWindow();
                 stage.close();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
     }
-    
-    private void binding() {
+
+    /**
+     * Binding des éléments du contrôleur aux éléments du modèle
+     */
+    private void binding()
+    {
         this.familynameUpdateField.textProperty().bindBidirectional(this.model.lastnameUpdateProperty());
         this.passwordUpdateField.textProperty().bindBidirectional(this.model.passwordUpdateProperty());
         this.nameUpdateField.textProperty().bindBidirectional(this.model.nameUpdateProperty());
@@ -91,9 +115,14 @@ public class UpdateProfileController implements Initializable {
         this.ageUpdateField.textProperty().bindBidirectional(this.model.ageUpdateProperty());
     }
 
+    /**
+     * Retour à la page Main sans modifier le profil
+     */
     @FXML
-    void Previous() {
-    	 try {
+    void Previous()
+    {
+    	 try
+         {
              //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
              FXMLLoader fxmlLoader = new FXMLLoader();
              // TODO: déclarer le controller de IHM
@@ -107,7 +136,9 @@ public class UpdateProfileController implements Initializable {
              Stage stage = (Stage) updateUserPane.getScene().getWindow();
              stage.setTitle("Fenêtre principale");
              stage.setScene(new Scene(root));
-         } catch (Exception e) {
+         }
+         catch (Exception e)
+         {
              e.printStackTrace();
          }
     }

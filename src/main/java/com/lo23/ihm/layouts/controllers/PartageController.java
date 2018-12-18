@@ -70,11 +70,21 @@ public class PartageController {
     public File selectedFile;
 
 
-    public PartageController(DataClientToIhm dataAPI){
+    /**
+     * Instancie la classe PartageController
+     * @param dataAPI
+     */
+    public PartageController(DataClientToIhm dataAPI)
+    {
         api=dataAPI;
     }
+
+    /**
+     * Initialisation
+     */
     @FXML
-    void initialize() {
+    void initialize()
+    {
         assert ajouterFichierButton != null : "fx:id=\"ajouterFichierButton\" was not injected: check your FXML file 'fenetrePartageLayout.fxml'.";
         assert annulerButton != null : "fx:id=\"annulerButton\" was not injected: check your FXML file 'fenetrePartageLayout.fxml'.";
         assert categorieFichier != null : "fx:id=\"categorieFichier\" was not injected: check your FXML file 'fenetrePartageLayout.fxml'.";
@@ -88,8 +98,12 @@ public class PartageController {
 
     }
 
+    /**
+     * Partage d'un fichier via un bouton
+     */
     @FXML
-    public void OnAjouterFichierButtonClicked (){
+    public void OnAjouterFichierButtonClicked ()
+    {
 
         // Utilise le FileChooser pour trouver le fichier que l'utilisateur veut uploader
         Stage stage = (Stage) ajouterFichierButton.getScene().getWindow();
@@ -101,20 +115,22 @@ public class PartageController {
         //sourceFichier.setText(userAccount.getLogin());
         nomFichier.setText(selectedFile.getName());
         tailleFichier.setText(humanReadableByteCount(selectedFile.length(),true));
-
-
-
     }
 
+    /**
+     * Ferme la fenêtre d'ajout sans ajouter de fichier
+     */
     @FXML
-    public void OnAnnulerButtonClicked (){
-
+    public void OnAnnulerButtonClicked ()
+    {
         // Ferme la fenêtre, ne fait rien avec les données saisies
         Stage stage = (Stage) annulerButton.getScene().getWindow();
         stage.close();
-
     }
 
+    /**
+     *
+     */
     @FXML
     public void OnEnregistrerButtonClicked (){
 
@@ -149,8 +165,15 @@ public class PartageController {
 
     }
 
+    /**
+     * Retourne la taille du fichier sous forme de string et ses unités en SI ou Binaire
+     * @param bytes taille du fichier
+     * @param si
+     * @return String
+     */
     // Prends la taille du fichier en bytes et donne un string avec la taille du fichier et ses unités en SI ou Binaire
-    public static String humanReadableByteCount(long bytes, boolean si) {
+    public static String humanReadableByteCount(long bytes, boolean si)
+    {
 
         int unit = si ? 1000 : 1024;
         if (bytes < unit) return bytes + " B";
