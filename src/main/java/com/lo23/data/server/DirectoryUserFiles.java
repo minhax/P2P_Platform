@@ -50,12 +50,13 @@ public class DirectoryUserFiles
                 throw new IllegalStateException("This user already propose this file !");
             }
         } catch (NullPointerException npe){
-
+            npe.printStackTrace();
         }
 
         // On vérifie si l'utilisateur propose déjà des fichiers, si ce n'est pas le cas on l'ajoute à la map
         if (this.userFiles.get(user) == null)
         {
+            System.out.println("L'utilisateur n'avait pas de fichier");
             Vector<FileHandlerInfos> v = new Vector<>();
             v.add(file);
             this.userFiles.put(user, v);
@@ -126,6 +127,8 @@ public class DirectoryUserFiles
     {
         Utils.throwExceptionIfNull("User should not be null", user);
         //Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
+
+        System.out.println("userFIles size = " + userFiles.size());
 
         if(this.userFiles.get(user)!=null) {
             // Suppression de tous les fichiers de l'utilisateur
