@@ -43,14 +43,14 @@ public class DirectoryUserFiles
         // On vérifie que les paramètres passés sont valides, sinon on lève une exception.
         Utils.throwExceptionIfNull("User should not be null", user);
         Utils.throwExceptionIfNull("File should not be null", file);
-
+        System.out.println("le user " + user.getLogin() + " a un fichier du nom : " + file.getTitle());
         // On lève une exception si l'utilisateur propose déjà ce fichier
         try {
             if (this.userFiles.get(user).contains(file) && this.filesUser.get(file).contains(user) ){
                 throw new IllegalStateException("This user already propose this file !");
             }
         } catch (NullPointerException npe){
-            npe.printStackTrace();
+            //npe.printStackTrace();
         }
 
         // On vérifie si l'utilisateur propose déjà des fichiers, si ce n'est pas le cas on l'ajoute à la map
@@ -64,9 +64,9 @@ public class DirectoryUserFiles
         // Sinon on ajoute simplement le fichier
         else
         {
+            System.out.println("L'utilisateur possedait des fichiers");
             this.userFiles.get(user).add(file);
         }
-
 
         // On vérifie si le fichier est déjà proposé, si ce n'est pas le cas on l'ajoute à la map
         if (this.filesUser.get(file) == null)
@@ -128,7 +128,7 @@ public class DirectoryUserFiles
         Utils.throwExceptionIfNull("User should not be null", user);
         //Utils.throwExceptionIfNull("This user does not propose files...", this.userFiles.get(user));
 
-        System.out.println("userFIles size = " + userFiles.size());
+        System.out.println("userFiles size = " + userFiles.keySet().size());
 
         if(this.userFiles.get(user)!=null) {
             // Suppression de tous les fichiers de l'utilisateur
@@ -237,5 +237,9 @@ public class DirectoryUserFiles
     public void setUserFiles(HashMap<UserIdentity, Vector<FileHandlerInfos>> uf)
     {
         this.userFiles = uf;
+    }
+    public void addUsertoUserFiles(UserIdentity user)
+    {
+        this.userFiles.put(user, new Vector<>());
     }
 }

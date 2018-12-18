@@ -61,6 +61,11 @@ public class ConnectionsManager
 
         // On récupère les fichiers proposés par l'user qui se connecte pour mettre à jour le directory
 
+        // On connecte l'utilisateur
+        this.connectedUsers.add(user);
+
+        System.out.println("NB DE CONNECTES SUR LE SERVEUR " + this.connectedUsers.size());
+
         // fetchUsersProposedFiles(user) à implémenter
         Set<FileHandlerInfos> userFiles = getProposedFiles();
         if (userFiles!=null)
@@ -71,8 +76,6 @@ public class ConnectionsManager
                 this.directory.addProposedFile(user, f);
             }
         }
-        // On connecte l'utilisateur
-        this.connectedUsers.add(user);
     }
 
     /**
@@ -99,12 +102,12 @@ public class ConnectionsManager
         try
         {
             // On deconnecte l'utilsateur
+            System.out.println("Nombre de connectés avant déco : " + this.connectedUsers.size());
             this.connectedUsers.remove(user);
+            System.out.println("Nombre de connectés après déco : " + this.connectedUsers.size());
+
             // On retire les fichiers de l'utilisateur s'il en a
-            if(this.directory.getFilesProposedByUser(user)!=null)
-            {
-                this.directory.removeUser(user);
-            }
+            this.directory.removeUser(user);
         }
         catch (IllegalArgumentException iae)
         {

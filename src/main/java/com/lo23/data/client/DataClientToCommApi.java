@@ -78,30 +78,34 @@ public class DataClientToCommApi implements DataClientToComm
         System.out.println("----- DECONNEXION COTE CLIENT -------");
         System.out.println("Nb de connectés avant la déconnexion : " + this.host.getSessionInfos().getOtherLoggedUsers().size());
         this.host.removeConnectedUser(newlyDisconnectedUser);
+        this.host.getSessionInfos().getOtherLoggedUsers().remove(newlyDisconnectedUser);
         System.out.println("S'est déconnecté l'utilisateur : " + newlyDisconnectedUser.getLogin());
         System.out.println("Nb de connectés après la déconnexion : " + this.host.getSessionInfos().getOtherLoggedUsers().size());
+        System.out.println("Nb de fichier proposés après la déconnexion côté client : " + this.host.getSessionInfos().getDirectory().getProposedFiles().size());
+        System.out.println("----- FIN DECONNEXION COTE CLIENT -------");
     }
 
     @Override
     public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste) {
 
         Vector<UserStats> connectedUsers = this.host.getSessionInfos().getOtherLoggedUsers();
-        System.out.println("Taille connectedUsers pré-connexion = " + connectedUsers.size());
-
         System.out.println("Liste de com.size = " + liste.size());
-
-        connectedUsers.forEach(e -> System.out.println(e.getFirstName() + e.getLastName() + e.getId()));
-
         System.out.println("----- CONNEXION COTE CLIENT -------");
 
         if (liste == null || liste.isEmpty())
-            System.out.println("Liste vide ");
+            System.out.println("Liste vide renvoyée par Comm ");
 
         // mergeUserIntoLoggedUsers s'occupe d'insérer chaque utilisateur
         // connecté dans les infos de session s'ils n'y apparaissent pas déjà
         for (UserIdentity user : liste.keySet()){
             System.out.println("Est connecté l'utilisateur : " + user.getLogin());
             this.host.getSessionInfos().mergeUserIntoLoggedUsers(user);
+            Iterator it = liste.get(user).iterator();
+            while(it.hasNext())
+            {
+                FileHandlerInfos f = (FileHandlerInfos) it.next();
+                System.out.println(user.getLogin() + " a le fichier " + f.getTitle());
+            }
         }
 
 
