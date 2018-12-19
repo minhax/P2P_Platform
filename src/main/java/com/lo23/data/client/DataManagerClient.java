@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -411,8 +412,9 @@ public class DataManagerClient
 
     }
 
-    public void updateConnectedUsers()
+    public void updateConnectedUsers(List<UserIdentity> users)
     {
+        this.getIhmToDataClient().UpdateConnectedUsers(users);
     }
 
 }

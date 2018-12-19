@@ -166,15 +166,15 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public List<FileHandler> requestFilesSharedByMe()
+    public List<FileHandlerInfos> requestFilesSharedByMe()
     {
-        return null;
+        return this.host.getSessionInfos().getCurrentUser().getProposedFiles();
     }
 
     @Override
     public List<FileHandlerInfos> requestFilesSharedByOthers()
     {
-        return this.host.getSessionInfos().getCurrentUser().getProposedFiles();
+        return null;
     }
 
     @Override
@@ -229,7 +229,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public List<UserIdentity> requestConnectedUsers()
     {
-        return null;
+        return this.host.getSessionInfos().getLoggedUsers();
     }
 
     @Override

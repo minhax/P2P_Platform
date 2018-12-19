@@ -85,6 +85,7 @@ public class CreateAccountController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
                 MainController controller = new MainController(api,ihmAPI); // EXEMPLE
+                ihmAPI.setControllerAPI(controller);
                 fxmlLoader.setController(controller);
                 // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
                 fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));

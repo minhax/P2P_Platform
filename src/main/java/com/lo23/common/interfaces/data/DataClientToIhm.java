@@ -117,7 +117,7 @@ public interface DataClientToIhm
      * par l'utilisateur
      * @return fichiers qu'on a mis à disposition
      */
-    List<FileHandler> requestFilesSharedByMe();
+    List<FileHandlerInfos> requestFilesSharedByMe();
 
     /**
      * Retourne la liste de tous les fichiers disponibles
