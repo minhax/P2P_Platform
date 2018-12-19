@@ -146,7 +146,7 @@ public class MainController implements Initializable {
     private List<FileHandlerInfos> researchResults = new ArrayList<FileHandlerInfos>();
 
 
-    public MainController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI) {
+    public MainController(DataClientToIhm dataAPI) {
         api=dataAPI;
     }
     @Override
@@ -299,7 +299,7 @@ public class MainController implements Initializable {
             api.requestLogout();
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            ConnectionController controller = new ConnectionController(api,ihmapi); // EXEMPLE
+            ConnectionController controller = new ConnectionController(api,this); // EXEMPLE
             fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
@@ -345,7 +345,7 @@ public class MainController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            UpdateProfileController controller = new UpdateProfileController(api,ihmapi); // EXEMPLE
+            UpdateProfileController controller = new UpdateProfileController(api,this); // EXEMPLE
             fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));

@@ -7,6 +7,7 @@ import com.lo23.data.Const;
 import com.lo23.data.client.DataManagerClient;
 import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.controllers.ConnectionController;
+import com.lo23.ihm.layouts.controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,7 +52,9 @@ public class Client extends Application {
         // Code de gestion du FXML
         FXMLLoader fxmlLoader = new FXMLLoader();
         // TODO: déclarer le controller de IHM
-        ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi(), ihmAPI); // EXEMPLE
+        MainController controllerMain=new MainController(dataManagerClient.getDataClientToIhmApi());
+        ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi(),controllerMain); // EXEMPLE
+        ihmAPI.setControllerAPI(controllerMain);
         fxmlLoader.setController(controller);
         // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));

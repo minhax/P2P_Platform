@@ -35,11 +35,11 @@ public class UpdateProfileController implements Initializable {
     private UpdateProfileModel model;
 
     private DataClientToIhm api;
-    private IhmToDataClientAPI ihmAPI;
+    private MainController controllerMain;
 
-    public UpdateProfileController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI){
+    public UpdateProfileController(DataClientToIhm dataAPI, MainController controllerMain){
         api=dataAPI;
-        this.ihmAPI=ihmAPI;
+        this.controllerMain=controllerMain;
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,8 +96,8 @@ public class UpdateProfileController implements Initializable {
              //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
              FXMLLoader fxmlLoader = new FXMLLoader();
              // TODO: déclarer le controller de IHM
-             MainController controller = new MainController(api,ihmAPI); // EXEMPLE
-             fxmlLoader.setController(controller);
+             //MainController controller = new MainController(api); // EXEMPLE
+             fxmlLoader.setController(controllerMain);
              // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
              fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
 
