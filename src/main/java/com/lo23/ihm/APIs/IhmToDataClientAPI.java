@@ -50,10 +50,10 @@ public class IhmToDataClientAPI implements IhmToDataClient {
     }
 
 	@Override
-	public void UpdateConnectedUsers(UserIdentity user)
+	public void UpdateConnectedUsers(List<UserIdentity> user)
     {
-		
-		controller.getConnectedUsers().add(user);
+		controller.getConnectedUsers().clear();
+		controller.getConnectedUsers().addAll(user);
 		
 	}
 
