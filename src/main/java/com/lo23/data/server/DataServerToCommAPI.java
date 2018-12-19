@@ -46,10 +46,6 @@ public class DataServerToCommAPI implements DataServerToComm
         {
             this.manager.connections.addFileToDirectory(user, iterator.next());
         }
-
-        System.out.println("CONNECTED USERS SIZE = " + this.manager.connections.getConnectedUsers().size());
-        System.out.println("FILE USERS SIZE = " + this.manager.getDirectory().getFilesUser().size());
-        System.out.println("Users File SIZE = " + this.manager.getDirectory().getUserFiles().size());
     }
 
     @Override

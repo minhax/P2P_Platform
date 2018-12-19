@@ -79,10 +79,7 @@ public interface DataClientToComm
      * Notifie les clients distants de la connexion d'un autre
      * utilisateur et donc de son ajout en tant que source
      * des fichiers qu'il propose
-<<<<<<< HEAD
-=======
      * @param liste map liant les utilisateurs aux fichiers qu'ils proposent
->>>>>>> 601f71e6300edf50c9ff69187d890b08e4f7f47f
      */
     void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste, Vector<UserIdentity> connectedUsers);
 

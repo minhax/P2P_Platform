@@ -50,18 +50,12 @@ public class DirectoryUserFiles
         // update userFiles
         Vector<FileHandlerInfos> existentFiles = this.userFiles.getOrDefault(user, new Vector<>());
 
-        System.out.println("existent Files = " + existentFiles.size());
-
         if (!existentFiles.contains(file))
             existentFiles.add(file);
         else
             System.out.println("File existait déjà!");
 
-        System.out.println("Adding files size = " + existentFiles.size());
         this.userFiles.put(user, existentFiles);
-
-        System.out.println("ICIII this.userFiles.size = " + this.userFiles.size());
-        System.out.println("userFiles = " + userFiles);
 
         // update filesUser
         Vector<UserIdentity> existentSources = this.filesUser.getOrDefault(file, new Vector<>());
@@ -118,10 +112,6 @@ public class DirectoryUserFiles
     {
         Utils.throwExceptionIfNull("User should not be null", userToRemove);
 
-        // JAVA 8 ne supporte pas d'utiliser des variables non finales dans le corps des fonctions, donc je passe par un array
-        // Dégueu mais ça marche
-        FileHandlerInfos[] sourceConcerned = new FileHandlerInfos[1];
-
         // Maj de userFiles
         this.userFiles.remove(userToRemove);
 
@@ -131,8 +121,6 @@ public class DirectoryUserFiles
 
         // enlève les fichiers qui n'ont plus aucune source
         this.filesUser.entrySet().removeIf(entry -> entry.getValue().isEmpty());
-
-        System.out.println("MAP SIZE ===== " + this.filesUser.size() + "OULOULOU");
     }
 
 

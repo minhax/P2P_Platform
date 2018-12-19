@@ -66,8 +66,6 @@ public class ConnectionsManager
         // On connecte l'utilisateur
         this.connectedUsers.add(user);
 
-        System.out.println("NB DE CONNECTES SUR LE SERVEUR " + this.connectedUsers.size());
-
         // fetchUsersProposedFiles(user) à implémenter
         Set<FileHandlerInfos> userFiles = getProposedFiles();
         if (userFiles!=null)
@@ -79,6 +77,10 @@ public class ConnectionsManager
                 this.directory.addProposedFile(user, f);
             }
         }
+
+        System.out.println("CONNECTED USERS SIZE = " + this.getConnectedUsers().size());
+        System.out.println("FILE USERS SIZE = " + this.getDirectory().getFilesUser().size());
+        System.out.println("USERS FILE SIZE = " + this.getDirectory().getUserFiles().size());
     }
 
     /**
