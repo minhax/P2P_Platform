@@ -20,6 +20,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -82,6 +83,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException
     {
+        /*
         if(rating == null)
         {
             throw new DataException("Rating object is null");
@@ -94,7 +96,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         {
             // Ajout de la note et notification au serveur
             this.host.addRatingToFile(rating, ratedFile);
-        }
+        }*/
     }
 
     @Override
@@ -238,8 +240,9 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public void requestFileDownload(FileHandler fileToDownload)
     {
-        if (fileToDownload != null)
+        if (fileToDownload != null) {
             this.host.downloadFile(fileToDownload);
+        }
         else
             throw new NullPointerException("Error in DataClientToIHM::requestFileDownload : the fileToDownload can't be null");
     }

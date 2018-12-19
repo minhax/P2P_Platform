@@ -5,9 +5,9 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
-import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-import com.lo23.common.interfaces.data.DataServerToComm;
-import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
+import com.lo23.communication.CommunicationManager.Server.*;
+import com.lo23.common.interfaces.data.*;
+import com.lo23.communication.Messages.Users_Server.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +17,9 @@ public class connectionMsg extends Authentication {
 	private String UserIPAdress;
 	private static final long serialVersionUID = 100521L;
 	private int UserPort; /** A initialiser !**/
-	private List<FileHandlerInfos> fileInfo;
+	private List<FileHandler> fileInfo;
 
-	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
+	public connectionMsg(UserStats us, List<FileHandler> files ){
 		
 		this.userStats = us;
 		this.fileInfo = files;
@@ -53,13 +53,14 @@ public class connectionMsg extends Authentication {
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
-		cms.addEntryMap(this.UserIPAdress, this.getPort());
+		cms.addEntryMap_IPPort(this.UserIPAdress, this.getPort());
+		cms.addEntryMap_IPUID(this.UserIPAdress, this.userStats.getId());
 		
 		/**
 		 * Recuperation de la liste des utilisateurs connectés
 		 */
-		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles();
-		
+		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles(this.userStats);
+		System.out.println("nb de fichier de la personne connectée : " + listeUsersandFiles.values());
 		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles);
 		message.setPort(this.getPort());
 		

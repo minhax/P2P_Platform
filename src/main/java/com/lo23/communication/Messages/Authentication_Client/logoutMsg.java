@@ -32,7 +32,8 @@ public class logoutMsg extends Authentication {
 		String ServerIpAdress = cms.getIP();
 
 		try {
-			cms.removeUserFromMap(this.UserIPAdress);
+			cms.removeUserFromMap_IPPort(this.UserIPAdress);
+			cms.removeUserFromMap_IPUID(this.UserIPAdress);
 		}catch(CommException e){
 			System.out.println("Message: \t");
 			System.out.println(e.getMessage());

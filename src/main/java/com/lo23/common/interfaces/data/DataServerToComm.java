@@ -24,7 +24,7 @@ public interface DataServerToComm
      * utilisateurs connectés
      * @param newlyConnectedUser utilisateur à ajouter
      */
-    HashMap<UserIdentity, Vector<FileHandlerInfos>> addNewConnectedUser(UserStats newlyConnectedUser);
+    void addNewConnectedUser(UserStats newlyConnectedUser);
 
     /**
      * Ajoute les fichiers proposés par un utilisateur
@@ -32,7 +32,7 @@ public interface DataServerToComm
      * @param filesSharedByUser fichiers à ajouter
      * @param user Utilisateur proposant le fichier
      */
-    void addNewUserFiles(List<FileHandlerInfos> filesSharedByUser, UserStats user);
+    void addNewUserFiles(List<FileHandler> filesSharedByUser, UserStats user);
 
     /**
      * Déconnecte un utilisateur
@@ -93,5 +93,5 @@ public interface DataServerToComm
      * Retourne le UserFiles du Directory du serveur
      * @return le UserFiles
      */
-    HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles();
+    HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(UserIdentity user);
 }

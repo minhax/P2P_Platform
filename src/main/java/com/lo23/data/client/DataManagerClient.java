@@ -2,13 +2,13 @@ package com.lo23.data.client;
 
 import com.lo23.common.Comment;
 import com.lo23.common.exceptions.DataException;
-import com.lo23.common.Rating;
+import com.lo23.common.*;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataClient;
-import com.lo23.common.interfaces.data.DataClientToComm;
-import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
+import com.lo23.common.interfaces.data.*;
+import com.lo23.common.interfaces.ihm.*;
+import com.lo23.common.Rating.*;
 import com.lo23.common.user.*;
 import com.lo23.communication.APIs.CommToDataClientAPI;
 
@@ -164,6 +164,15 @@ public class DataManagerClient
     public boolean serverLogin(String serverIp){
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
 
+        if(serverIp.equals("")){
+            String lastIp = userToConnect.getLastConnectionServerIP();
+            if(lastIp.equals("")){
+                return false;
+            }else{
+                serverIp = lastIp;
+            }
+        }
+
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
         commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
                 userToConnect.getProposedFiles(),
@@ -181,6 +190,7 @@ public class DataManagerClient
         this.getCommToDataClientApi().requestLogoutToServer(this.sessionInfos.getCurrentUser());
         this.saveUserInfo(this.getSessionInfos().getCurrentUser());
         this.sessionInfos.setCurrentUser(null);
+        this.getSessionInfos().getDirectory().removeUser(this.sessionInfos.getCurrentUser());
         return true; //TODO return to user logout successful ?
     }
 
@@ -367,7 +377,8 @@ public class DataManagerClient
      * @param rating note
      * @param ratedFile fichier noté
      */
-    public void addRatingToFile(Rating rating, FileHandlerInfos ratedFile)
+    /*
+    public void addRatingToFile(Rating rating, FileHandler ratedFile)
     {
         // Récupération de la liste des fichiers partagés
         Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
@@ -376,7 +387,7 @@ public class DataManagerClient
         // Itération sur les fichiers partagés
         while(i.hasNext() && !found)
         {
-            FileHandlerInfos nextFile = i.next();
+            FileHandler nextFile = i.next();
             if(nextFile.getHash().equals(ratedFile.getHash()))
             {
                 // Ajout de la note au fichier
@@ -387,7 +398,7 @@ public class DataManagerClient
 
         // Communication des changements au serveur pour qu'il se mette à jour
         this.getCommToDataClientApi().sendRatedFile(rating, ratedFile, this.sessionInfos.getCurrentUser());
-    }
+    }*/
 
     public void downloadFile(FileHandler fileToDownload)
     {

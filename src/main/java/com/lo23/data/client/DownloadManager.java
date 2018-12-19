@@ -108,8 +108,8 @@ class DownloadManager
             File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
             FileInputStream fileIn = new FileInputStream(filePart);
             data = Files.readAllBytes(filePart.toPath());
-            // TODO send filePart to comm
-            // this.getCommToDataClientAPI();
+            // TODO Décommenter apres modifs Camille
+            // this.getCommToDataClientAPI().sendFilePart(userAsking, userSource, file, part, data);
         } catch(FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e) {

@@ -4,20 +4,20 @@ import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.filehandler.*;
 import com.lo23.common.interfaces.comm.CommToDataClient;
+import com.lo23.common.interfaces.data.*;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
-import com.lo23.communication.CommunicationManager.CommunicationManager;
+import com.lo23.communication.CommunicationManager.Client.*;
+import com.lo23.communication.CommunicationManager.*;
+import com.lo23.communication.CommunicationManager.Server.*;
 import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
-import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
-import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
-import com.lo23.communication.Messages.Files_Client.makeFileUnavailableMsg;
-import com.lo23.communication.Messages.Files_Client.uploadFileMsg;
-import com.lo23.communication.Messages.Files_Client.addCommentMsg;
-import com.lo23.communication.Messages.Files_Client.rateFileMsg;
+import com.lo23.communication.Messages.Authentication_Client.*;
+import com.lo23.communication.Messages.Files_Client.*;
+import com.lo23.communication.Messages.Files_Server.*;
+import com.lo23.communication.Messages.Users_Client.*;
 import com.lo23.communication.network.Client.Client;
-import com.lo23.data.Const;
+import com.lo23.data.*;
 
 
 import java.util.List;
@@ -26,11 +26,14 @@ public class CommToDataClientAPI implements CommToDataClient
 {
 
     protected static CommunicationManagerClient commManagerClient ;
+    protected static CommunicationManagerServer commManagerServer;
 
     /* Constructeur */
     private CommToDataClientAPI()
     {
+
         commManagerClient=CommunicationManagerClient.getInstance();
+        commManagerServer=CommunicationManagerServer.getInstance();
     }
 
     /* Initialisation du singleton*/
@@ -94,7 +97,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
         @Override
-    public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
+    public void makeFilesUnavailableToServer(FileHandler file, User user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
@@ -104,7 +107,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
+    public void sendCommentedFile(Comment comment, FileHandler commentedFile, User user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         
         addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
@@ -114,10 +117,10 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     @Override
-    public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
+    public void sendRatedFile(Rating rating, FileHandler ratedFile, User user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         
-        rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
+        rateFileMsg msg = new rateFileMsg(rating, ratedFile, user);
         
         Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
@@ -156,7 +159,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }*/
 
     @Override
-    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
+    public void requestUserConnexion(UserStats user, List<FileHandler> fi, String serverIP){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         cmc.setAddressIpServer(serverIP);
         
@@ -166,13 +169,6 @@ public class CommToDataClientAPI implements CommToDataClient
         Client c = new Client(message, serverIP, Const.SERVER_DEFAULT_PORT);
         c.start();
     }
-
-    /*@Override
-    public void connect(UserStats user, long IP){
-        // A priori même rôle que requestUserConnexion (à changer plus tard si besoin)
-
-    }*/
-
 
     @Override
     public void requestAddSource(FileHandler file, UserIdentity user){
@@ -196,7 +192,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){
+    public void requestUploadFile(FileHandler file, UserIdentity user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
 
         uploadFileMsg message=new uploadFileMsg(file, user);
@@ -206,7 +202,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }
     
     @Override
-    public void uploadFile(FileHandlerInfos fi, UserIdentity user){
+    public void uploadFile(FileHandler fi, UserIdentity user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         
         uploadFileMsg message = new uploadFileMsg(fi,user );
@@ -220,6 +216,41 @@ public class CommToDataClientAPI implements CommToDataClient
     public void requestFileLoc(FileHandler file, UserIdentity user){
 
 
+    }
+
+    @Override
+    public void getFilePart(User userAsking, User userSource, FileHandler file, long part){
+        //CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        try {
+            CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+            getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
+            String ipUserSource = cms.findUserIp(userSource.getId());
+            Client c = new Client(message, ipUserSource, Const.CLIENT_DEFAULT_PORT);
+            c.start();
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // Pour les tests
+            CommunicationManagerClient cmc = CommunicationManagerClient.getInstance(); // Client ask again
+            DataClientToComm dataInterface = cmc.getDataInterface();
+            dataInterface.notifyAskForFilePartAgain(userSource, file, part);
+        }
+    }
+
+
+    @Override
+    public void sendFilePart(User userAsking, User userSource, FileHandler file, long part, byte[] content){
+        //Depuis la source jusqu'à l'utilisateur demandeur
+        try {
+            sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
+            String ipUserAsking = this.commManagerServer.findUserIp(userSource.getId());
+            Client client = new Client(message, ipUserAsking, Const.CLIENT_DEFAULT_PORT);
+            client.start();
+        }
+        catch (Exception e){
+            e.printStackTrace(); // Pour les test
+            System.out.println("Client deconnecte, arret du telechargement");
+
+        }
     }
 
 }

@@ -26,6 +26,7 @@ public interface CommToDataServer {
      * @param user utilisateur qui partage le fichier
      */
     public void sendNewFileSource(FileHandlerInfos file, UserIdentity user);
+
 }
 
 
