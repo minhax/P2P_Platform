@@ -36,12 +36,12 @@ public class CreateAccountController implements Initializable {
     private CreateAccountModel model;
 
     private DataClientToIhm api;
-    private IhmToDataClientAPI ihmAPI;
+    private MainController controllerMain;
 
 
-    public CreateAccountController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI){
+    public CreateAccountController(DataClientToIhm dataAPI, MainController controllerMain){
         api=dataAPI;
-        this.ihmAPI=ihmAPI;
+        this.controllerMain=controllerMain;
     }
 
     @Override
@@ -84,9 +84,8 @@ public class CreateAccountController implements Initializable {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
-                MainController controller = new MainController(api,ihmAPI); // EXEMPLE
-                ihmAPI.setControllerAPI(controller);
-                fxmlLoader.setController(controller);
+                //MainController controller = new MainController(api); // EXEMPLE
+                fxmlLoader.setController(controllerMain);
                 // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
                 fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlLoader.load();
@@ -105,7 +104,7 @@ public class CreateAccountController implements Initializable {
             //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            ConnectionController connectionController = new ConnectionController(api,ihmAPI); // EXEMPLE
+            ConnectionController connectionController = new ConnectionController(api,controllerMain); // EXEMPLE
             fxmlLoader.setController(connectionController);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));

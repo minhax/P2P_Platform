@@ -50,6 +50,7 @@ public class ConnectionController implements Initializable {
     private DataClientToIhm api;
 
     private IhmToDataClientAPI ihmAPI;
+    private MainController controllerMain;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,9 +61,9 @@ public class ConnectionController implements Initializable {
 
     }
 
-    public ConnectionController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI){
+    public ConnectionController(DataClientToIhm dataAPI, MainController controllerMain){
         api=dataAPI;
-        this.ihmAPI=ihmAPI;
+        this.controllerMain=controllerMain;
     }
 
     @FXML
@@ -91,9 +92,9 @@ public class ConnectionController implements Initializable {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
-                MainController controller = new MainController(api,ihmAPI); // EXEMPLE
-                ihmAPI.setControllerAPI(controller);
-                fxmlLoader.setController(controller);
+                //MainController controller = new MainController(api); // EXEMPLE
+                ihmAPI.setControllerAPI(controllerMain);
+                fxmlLoader.setController(controllerMain);
                 // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
                 fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlLoader.load();
@@ -118,7 +119,7 @@ public class ConnectionController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            CreateAccountController controller = new CreateAccountController(api,ihmAPI); // EXEMPLE
+            CreateAccountController controller = new CreateAccountController(api,controllerMain); // EXEMPLE
             fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("createAccountLayout.fxml"));
