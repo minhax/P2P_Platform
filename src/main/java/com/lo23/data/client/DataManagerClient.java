@@ -60,14 +60,14 @@ public class DataManagerClient
     /**
      * Constructeur de DataManagerClient
      */
-    public DataManagerClient()
+    public DataManagerClient(IhmToDataClient ihmToDataClient)
     {
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
         this.downloadManager = new DownloadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
-        this.ihmToDataClient = new IhmToDataClientAPI();
+        this.ihmToDataClient = ihmToDataClient;
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
         this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
     }

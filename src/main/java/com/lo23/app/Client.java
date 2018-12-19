@@ -39,8 +39,8 @@ public class Client extends Application {
     {
         // TODO Auto-generated method stub
         // On instancie les Manager côté client
-        IhmToDataClientAPI mainController=new IhmToDataClientAPI();
-        DataManagerClient dataManagerClient = new DataManagerClient();
+        IhmToDataClientAPI ihmAPI =new IhmToDataClientAPI();
+        DataManagerClient dataManagerClient = new DataManagerClient(ihmAPI);
         CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
 
         // On échange les API
@@ -51,7 +51,7 @@ public class Client extends Application {
         // Code de gestion du FXML
         FXMLLoader fxmlLoader = new FXMLLoader();
         // TODO: déclarer le controller de IHM
-        ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi(), mainController); // EXEMPLE
+        ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi(), ihmAPI); // EXEMPLE
         fxmlLoader.setController(controller);
         // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
