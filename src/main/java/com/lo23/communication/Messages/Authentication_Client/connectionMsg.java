@@ -65,9 +65,6 @@ public class connectionMsg extends Authentication {
 
 		System.out.println("nb de fichier de la personne connectée : " + listeUsersandFiles.values());
 
-		System.out.println("connectionMsg");
-
-
 		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles, connectedUsers);
 		message.setPort(this.getPort());
 		

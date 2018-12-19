@@ -32,6 +32,7 @@ public class DataServerToCommAPI implements DataServerToComm
 
     @Override
     public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(){
+
         return this.manager.getDirectory().getUserFiles();
     }
 
@@ -54,10 +55,6 @@ public class DataServerToCommAPI implements DataServerToComm
     public UserStats removeDisconnectedUser(UserStats user)
     {
         this.manager.connections.disconnectUser(user);
-
-        System.out.println("CONNECTED USERS SIZE = " + this.manager.connections.getConnectedUsers().size());
-        System.out.println("FILE USERS SIZE = " + this.manager.getDirectory().getFilesUser().size());
-
         return user;
     }
 

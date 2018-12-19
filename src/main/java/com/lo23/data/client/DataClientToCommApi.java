@@ -94,6 +94,7 @@ public class DataClientToCommApi implements DataClientToComm
 
         //set les users connectés + la hashmap correspondant aux utilisateurs connectés avec leurs fichiers
         this.host.getSessionInfos().setOtherLoggedUsers(connectedUsers);
+
         this.host.getSessionInfos().getDirectory().setUserFiles(liste);
         this.host.updateConnectedUsers();
 

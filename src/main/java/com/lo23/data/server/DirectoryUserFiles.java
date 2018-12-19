@@ -49,12 +49,21 @@ public class DirectoryUserFiles
 
         // update userFiles
         Vector<FileHandlerInfos> existentFiles = this.userFiles.getOrDefault(user, new Vector<>());
-        existentFiles.add(file);
+
+        System.out.println("existent Files = " + existentFiles.size());
+
+        if (!existentFiles.contains(file))
+            existentFiles.add(file);
+        else
+            System.out.println("File existait déjà!");
         this.userFiles.put(user, existentFiles);
 
         // update filesUser
         Vector<UserIdentity> existentSources = this.filesUser.getOrDefault(file, new Vector<>());
-        existentSources.add(user);
+        if (!existentSources.contains(user))
+            existentSources.add(user);
+        else
+            System.out.println("User source existait déjà!");
         this.filesUser.put(file, existentSources);
 
     }
@@ -110,24 +119,6 @@ public class DirectoryUserFiles
 
         // Maj de userFiles
         this.userFiles.remove(userToRemove);
-//
-//        // Maj de filesUser, un peu plus complexe :
-//
-//        // On itère pour trouver pour quels fichiers l'user est source
-//        // TODO : remplacer sourceConcerned par un vector pour gérer le cas ou l'user est source de plusieurs fichiers
-//        this.filesUser.forEach((file,sources) -> {
-//            sources.forEach(userIdentity -> {
-//                if (userIdentity.equals(userToRemove)) {
-//                    sourceConcerned[0] = file;
-//                }
-//            });
-//        });
-//
-        /*
-        if(this.userFiles.get(user)!=null) {
-            // Suppression de tous les fichiers de l'utilisateur
-            Vector<FileHandlerInfos> tmp = new Vector<>(this.getFilesProposedByUser(user));
-            FileHandlerInfos f;*/
 
         this.filesUser.forEach((file, sources) -> {
             sources.removeIf(userIdentity -> userIdentity.equals(userToRemove));
@@ -137,30 +128,6 @@ public class DirectoryUserFiles
         this.filesUser.entrySet().removeIf(entry -> entry.getValue().isEmpty());
 
         System.out.println("MAP SIZE ===== " + this.filesUser.size() + "OULOULOU");
-
-//
-//        boolean[] removeEntry = new boolean[1];
-//        removeEntry[0] = false;
-//
-//
-//        // On remove la source dans le vecteur de fichier correspondant
-//        this.filesUser.forEach((file,sources) -> {
-//            if (file.equals(sourceConcerned[0])) {
-//                System.out.println("FILE REMOVED SUCCESSFULLY");
-//                sources.remove(userToRemove);
-//            }
-//            //Si c'était la dernière source, ce booléen passe à true pour pouvoir enlever l'entrée dans la map
-//            if (sources.size()==0)
-//                removeEntry[0] = true;
-//        });
-//
-//        if (removeEntry[0]) {
-//            //C'était la dernière source, on enlève l'entrée de la map
-//            this.filesUser.remove(sourceConcerned[0]);
-//        }
-//
-
-
     }
 
 
@@ -202,6 +169,7 @@ public class DirectoryUserFiles
 
     public void updateSourcesAfterUserModification(UserIdentity oldUserIdentity, UserIdentity newUserIdentity)
     {
+        System.out.println("pass, ne devrait pas");
         // MAJ de l'UserIdentity en tant que source dans userFiles
         this.userFiles.put(newUserIdentity, this.userFiles.remove(oldUserIdentity));
         // MAJ de l'UserIdentity en tant que source dans filesUser
@@ -380,6 +348,7 @@ public class DirectoryUserFiles
      */
     public void setUserFiles(HashMap<UserIdentity, Vector<FileHandlerInfos>> uf)
     {
+        System.out.println("Setting user files, size = " + uf.size());
         this.userFiles = uf;
     }
     public void addUsertoUserFiles(UserIdentity user)
