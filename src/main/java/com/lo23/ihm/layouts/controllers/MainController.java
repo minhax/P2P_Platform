@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
 import com.lo23.ihm.layouts.models.DownloadingFilesListCell;
 import com.lo23.ihm.layouts.models.MyFilesListCell;
@@ -137,6 +138,7 @@ public class MainController implements Initializable {
     private Timer refreshTimer;
     private int period = 10000;
     private DataClientToIhm api;
+    private IhmToDataClientAPI ihmapi;
 
 
     //gestion recherche de fichier
@@ -144,7 +146,7 @@ public class MainController implements Initializable {
     private List<FileHandlerInfos> researchResults = new ArrayList<FileHandlerInfos>();
 
 
-    public MainController(DataClientToIhm dataAPI) {
+    public MainController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI) {
         api=dataAPI;
     }
     @Override
@@ -294,9 +296,10 @@ public class MainController implements Initializable {
     public void OnDisconnectButtonClicked() {
         try {
             //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("connectionLayout.fxml"));
+            api.requestLogout();
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            ConnectionController controller = new ConnectionController(api); // EXEMPLE
+            ConnectionController controller = new ConnectionController(api,ihmapi); // EXEMPLE
             fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
@@ -342,7 +345,7 @@ public class MainController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            UpdateProfileController controller = new UpdateProfileController(api); // EXEMPLE
+            UpdateProfileController controller = new UpdateProfileController(api,ihmapi); // EXEMPLE
             fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("updateProfileLayout.fxml"));

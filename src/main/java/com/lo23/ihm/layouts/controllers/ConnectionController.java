@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.common.interfaces.ihm.IhmToDataClient;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.ConnectionModel;
 
 import javafx.event.ActionEvent;
@@ -47,6 +49,8 @@ public class ConnectionController implements Initializable {
 
     private DataClientToIhm api;
 
+    private IhmToDataClientAPI ihmAPI;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new ConnectionModel();
@@ -56,8 +60,9 @@ public class ConnectionController implements Initializable {
 
     }
 
-    public ConnectionController(DataClientToIhm dataAPI){
+    public ConnectionController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI){
         api=dataAPI;
+        this.ihmAPI=ihmAPI;
     }
 
     @FXML
@@ -86,7 +91,8 @@ public class ConnectionController implements Initializable {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
-                MainController controller = new MainController(api); // EXEMPLE
+                MainController controller = new MainController(api,ihmAPI); // EXEMPLE
+                ihmAPI.setControllerAPI(controller);
                 fxmlLoader.setController(controller);
                 // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
                 fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
@@ -112,7 +118,7 @@ public class ConnectionController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            CreateAccountController controller = new CreateAccountController(api); // EXEMPLE
+            CreateAccountController controller = new CreateAccountController(api,ihmAPI); // EXEMPLE
             fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("createAccountLayout.fxml"));

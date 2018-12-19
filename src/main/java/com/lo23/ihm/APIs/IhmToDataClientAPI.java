@@ -13,9 +13,17 @@ import java.util.List;
 public class IhmToDataClientAPI implements IhmToDataClient {
 
     private MainController controller;
+
+    public IhmToDataClientAPI(){
+
+    }
     
     public IhmToDataClientAPI(MainController controller) {
         this.controller = controller;
+    }
+
+     public void  setControllerAPI(MainController controller){
+        this.controller=controller;
     }
 
     @Override

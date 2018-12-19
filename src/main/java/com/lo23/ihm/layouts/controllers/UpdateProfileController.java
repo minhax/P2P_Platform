@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.UpdateProfileModel;
 
 import javafx.fxml.FXML;
@@ -34,9 +35,11 @@ public class UpdateProfileController implements Initializable {
     private UpdateProfileModel model;
 
     private DataClientToIhm api;
+    private IhmToDataClientAPI ihmAPI;
 
-    public UpdateProfileController(DataClientToIhm dataAPI){
+    public UpdateProfileController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI){
         api=dataAPI;
+        this.ihmAPI=ihmAPI;
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,7 +96,7 @@ public class UpdateProfileController implements Initializable {
              //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
              FXMLLoader fxmlLoader = new FXMLLoader();
              // TODO: déclarer le controller de IHM
-             MainController controller = new MainController(api); // EXEMPLE
+             MainController controller = new MainController(api,ihmAPI); // EXEMPLE
              fxmlLoader.setController(controller);
              // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
              fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));

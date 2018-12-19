@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.interfaces.data.DataClientToIhm;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.CreateAccountModel;
 
 import javafx.fxml.FXML;
@@ -35,10 +36,12 @@ public class CreateAccountController implements Initializable {
     private CreateAccountModel model;
 
     private DataClientToIhm api;
+    private IhmToDataClientAPI ihmAPI;
 
 
-    public CreateAccountController(DataClientToIhm dataAPI){
+    public CreateAccountController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI){
         api=dataAPI;
+        this.ihmAPI=ihmAPI;
     }
 
     @Override
@@ -81,7 +84,7 @@ public class CreateAccountController implements Initializable {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
-                MainController controller = new MainController(api); // EXEMPLE
+                MainController controller = new MainController(api,ihmAPI); // EXEMPLE
                 fxmlLoader.setController(controller);
                 // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
                 fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
@@ -101,7 +104,7 @@ public class CreateAccountController implements Initializable {
             //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            ConnectionController connectionController = new ConnectionController(api); // EXEMPLE
+            ConnectionController connectionController = new ConnectionController(api,ihmAPI); // EXEMPLE
             fxmlLoader.setController(connectionController);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));

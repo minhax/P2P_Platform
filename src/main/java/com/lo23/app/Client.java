@@ -1,9 +1,11 @@
 package com.lo23.app;
 
+import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.network.Serveur.ServerSock;
 import com.lo23.data.Const;
 import com.lo23.data.client.DataManagerClient;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.controllers.ConnectionController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +39,7 @@ public class Client extends Application {
     {
         // TODO Auto-generated method stub
         // On instancie les Manager côté client
+        IhmToDataClientAPI mainController=new IhmToDataClientAPI();
         DataManagerClient dataManagerClient = new DataManagerClient();
         CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
 
@@ -48,7 +51,7 @@ public class Client extends Application {
         // Code de gestion du FXML
         FXMLLoader fxmlLoader = new FXMLLoader();
         // TODO: déclarer le controller de IHM
-        ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi()); // EXEMPLE
+        ConnectionController controller = new ConnectionController(dataManagerClient.getDataClientToIhmApi(), mainController); // EXEMPLE
         fxmlLoader.setController(controller);
         // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("connectionLayout.fxml"));
