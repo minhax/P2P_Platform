@@ -78,9 +78,6 @@ public class ConnectionsManager
             }
         }
 
-        System.out.println("CONNECTED USERS SIZE = " + this.getConnectedUsers().size());
-        System.out.println("FILE USERS SIZE = " + this.getDirectory().getFilesUser().size());
-        System.out.println("USERS FILE SIZE = " + this.getDirectory().getUserFiles().size());
     }
 
     /**
