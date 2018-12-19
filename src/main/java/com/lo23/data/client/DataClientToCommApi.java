@@ -82,6 +82,7 @@ public class DataClientToCommApi implements DataClientToComm
     {
         this.host.removeConnectedUser(newlyDisconnectedUser);
         this.host.getSessionInfos().getOtherLoggedUsers().remove(newlyDisconnectedUser);
+        this.host.getIhmToDataClient().UpdateConnectedUsers(this.host.getSessionInfos().getLoggedUsers());
 
     }
 
