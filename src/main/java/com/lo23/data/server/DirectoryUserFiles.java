@@ -56,7 +56,12 @@ public class DirectoryUserFiles
             existentFiles.add(file);
         else
             System.out.println("File existait déjà!");
+
+        System.out.println("Adding files size = " + existentFiles.size());
         this.userFiles.put(user, existentFiles);
+
+        System.out.println("ICIII this.userFiles.size = " + this.userFiles.size());
+        System.out.println("userFiles = " + userFiles);
 
         // update filesUser
         Vector<UserIdentity> existentSources = this.filesUser.getOrDefault(file, new Vector<>());

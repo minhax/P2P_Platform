@@ -72,6 +72,11 @@ public class FileHandler implements Serializable
         }
     }
 
+    @Override
+    public int hashCode() {
+        return this.getHash().hashCode();
+    }
+
     /**
      *
      * @return Hash du fichier

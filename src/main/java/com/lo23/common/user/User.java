@@ -39,18 +39,6 @@ public class User implements Serializable
         this.id = UUID.randomUUID();
     }
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (!(o instanceof User))
-        {
-            return false;
-        } else
-        {
-            User u = (User) o;
-            return u.getId().equals(this.getId());
-        }
-    }
 
     public User ()
     {
@@ -67,8 +55,20 @@ public class User implements Serializable
     }
 
     @Override
-    public int hashCode()
+    public boolean equals(Object o)
     {
-        return super.hashCode();
+        if (!(o instanceof User))
+        {
+            return false;
+        } else
+        {
+            User u = (User) o;
+            return u.getId().equals(this.getId());
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return login.hashCode();
     }
 }
