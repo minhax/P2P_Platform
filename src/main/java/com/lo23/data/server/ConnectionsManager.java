@@ -67,13 +67,13 @@ public class ConnectionsManager
         this.connectedUsers.add(user);
 
         // fetchUsersProposedFiles(user) à implémenter
-        Set<FileHandlerInfos> userFiles = getProposedFiles();
+        Set<FileHandler> userFiles = getProposedFiles();
         if (userFiles!=null)
         {
-            for (Iterator<FileHandlerInfos> i = userFiles.iterator(); i.hasNext();)
+            for (Iterator<FileHandler> i = userFiles.iterator(); i.hasNext();)
             {
                 System.out.println("ADD FILE TO DIRECTORY");
-                FileHandlerInfos f = i.next();
+                FileHandler f = i.next();
                 this.directory.addProposedFile(user, f);
             }
         }
@@ -127,11 +127,11 @@ public class ConnectionsManager
      * Permet d'obtenir les fichiers proposés
      * @return Un ensemble contenant les fichiers proposés.
      */
-    public Set<FileHandlerInfos> getProposedFiles(){
+    public Set<FileHandler> getProposedFiles(){
         return this.directory.getProposedFiles();
     }
 
-    public void addFileToDirectory(UserIdentity user, FileHandlerInfos file)
+    public void addFileToDirectory(UserIdentity user, FileHandler file)
     {
         this.directory.addProposedFile(user, file);
     }
@@ -184,19 +184,6 @@ public class ConnectionsManager
         {
             throw new IllegalStateException("User to modify is not connected/Does not exist !");
         }
-    }
-
-    public void addRatingToFile(Rating rating, FileHandlerInfos fileToRate) throws DataException
-    {
-        fileToRate.addRating(rating);
-        this.directory.updateFilesAfterModification(fileToRate);
-        // TO DO : Propagation des infos
-    }
-
-    public void addCommentToFile(Comment comment, FileHandlerInfos fileToComment) throws DataException {
-        fileToComment.addComment(comment);
-        this.directory.updateFilesAfterModification(fileToComment);
-        // TO DO : Propagation des infos
     }
 
     public List<UserIdentity> getUsersThatProposeFile(FileHandler file){

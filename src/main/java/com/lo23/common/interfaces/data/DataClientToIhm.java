@@ -53,24 +53,10 @@ public interface DataClientToIhm
     void requestShareNewFile(String pathOnDisk, String title, String description) throws DataException;
 
     /**
-     * Envoie à Data la note attribuée à un fichier
-     * @param rating note
-     * @param ratedFile fichier noté
-     */
-    void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException;
-
-    /**
-     * Envoie à Data le commentaire attribué à un fichier
-     * @param comment commentaire
-     * @param commentedFile fichier commenté
-     */
-    void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException;
-
-    /**
      * Envoie à Data un fichier qui a subi des modifications
      * @param modifiedFile fichier modifié
      */
-    void requestUpdateFileInfo(FileHandlerInfos modifiedFile);
+    void requestUpdateFileInfo(FileHandler modifiedFile);
 
     /**
      * Demande à Data le profil de l'utilisateur connecté
@@ -117,14 +103,14 @@ public interface DataClientToIhm
      * par l'utilisateur
      * @return fichiers qu'on a mis à disposition
      */
-    List<FileHandlerInfos> requestFilesSharedByMe();
+    List<FileHandler> requestFilesSharedByMe();
 
     /**
      * Retourne la liste de tous les fichiers disponibles
      * au partage
      * @return fichiers disponibles
      */
-    List<FileHandlerInfos> requestFilesSharedByOthers();
+    List<FileHandler> requestFilesSharedByOthers();
 
     /**
      * Retourne les profils utilisateur tiers correspondant
@@ -140,7 +126,7 @@ public interface DataClientToIhm
      * @param searchTerm saisie de l'utilisateur
      * @return fichiers correspondant à la saisie
      */
-    List<FileHandlerInfos> requestSearchFile(String searchTerm);
+    List<FileHandler> requestSearchFile(String searchTerm);
 
     /**
      * Envoie à Data le chemin vers un fichier

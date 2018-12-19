@@ -1,7 +1,7 @@
 package com.lo23.data.client;
 
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
@@ -42,19 +42,19 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public FileHandlerInfos requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload)
+    public FileHandler requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload)
     {
         return null;
     }
 
     @Override
-    public void mergeFileParts(FileHandlerInfos file)
+    public void mergeFileParts(FileHandler file)
     {
 
     }
 
     @Override
-    public void notifyNewSharedFileToAll(FileHandlerInfos newSharedFile, UserIdentity source)
+    public void notifyNewSharedFileToAll(FileHandler newSharedFile, UserIdentity source)
     {
         this.host.getSessionInfos().getDirectory().addProposedFile(source, newSharedFile);
     }
@@ -66,7 +66,7 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user)
+    public void notifyUpdatedSharedFileToAll(FileHandler modifiedFile, User user)
     {
         //TODO modifier dans le directory le fichier concerné
     }
@@ -88,7 +88,7 @@ public class DataClientToCommApi implements DataClientToComm
     }
 
     @Override
-    public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste, Vector<UserIdentity> connectedUsers) {
+    public void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandler>> liste, Vector<UserIdentity> connectedUsers) {
         this.host.getSessionInfos().setOtherLoggedUsers(connectedUsers);
         this.host.getSessionInfos().getDirectory().setUserFiles(liste);
         this.host.updateConnectedUsers();

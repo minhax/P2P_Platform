@@ -4,7 +4,7 @@ import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
@@ -61,7 +61,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     public void requestShareNewFile(String pathOnDisk, String title, String description)
             throws DataException
     {
-        FileHandlerInfos filehandler = host.getUploadManager().prepareToShare(pathOnDisk, title, description);
+        FileHandler filehandler = host.getUploadManager().prepareToShare(pathOnDisk, title, description);
         if (filehandler == null)
             throw new DataException("Error while sharing file");
 
@@ -76,36 +76,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException
-    {
-        if(rating == null)
-        {
-            throw new DataException("Rating object is null");
-        }
-        else if(ratedFile == null)
-        {
-            throw new DataException("File to rate is null");
-        }
-        else
-        {
-            // Ajout de la note et notification au serveur
-            this.host.addRatingToFile(rating, ratedFile);
-        }
-    }
-
-    @Override
-    public void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
-    {
-        if (commentedFile == null)
-            throw new DataException("File to comment is null");
-        if (comment == null)
-            throw new DataException("Added comment object is null");
-
-        this.host.addCommentToFile(comment, commentedFile);
-    }
-
-    @Override
-    public void requestUpdateFileInfo(FileHandlerInfos modifiedFile)
+    public void requestUpdateFileInfo(FileHandler modifiedFile)
     {
         this.host.updateFileInfo(modifiedFile);
     }
@@ -166,13 +137,13 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public List<FileHandlerInfos> requestFilesSharedByMe()
+    public List<FileHandler> requestFilesSharedByMe()
     {
         return this.host.getSessionInfos().getCurrentUser().getProposedFiles();
     }
 
     @Override
-    public List<FileHandlerInfos> requestFilesSharedByOthers()
+    public List<FileHandler> requestFilesSharedByOthers()
     {
         return null;
     }
@@ -200,14 +171,14 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public List<FileHandlerInfos> requestSearchFile(String searchTerm)
+    public List<FileHandler> requestSearchFile(String searchTerm)
     {
-        Vector<FileHandlerInfos> returnedFiles = new Vector<>();
+        Vector<FileHandler> returnedFiles = new Vector<>();
         // On parcourt tous les fichiers disponibles 
-        for (FileHandlerInfos fhi :
+        for (FileHandler fhi :
                 this.host.getSessionInfos().getDirectory().getProposedFiles())
         {
-            if (fhi.getTitle().contains(searchTerm) || fhi.getDesc().contains(searchTerm) ){
+            if (fhi.getTitle().contains(searchTerm)){
                 returnedFiles.add(fhi);
             }
         }

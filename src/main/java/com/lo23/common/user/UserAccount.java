@@ -23,7 +23,7 @@ public class UserAccount extends UserStats
     /**
      * Liste des fichiers proposés par l'utilisateur
      */
-    private Vector<FileHandlerInfos> proposedFiles;
+    private Vector<FileHandler> proposedFiles;
 
     /**
      * Adresse IP du serveur utilisé lors de la dernière connection
@@ -71,7 +71,7 @@ public class UserAccount extends UserStats
      * Permet d'ajouter un fichier proposé
      * @param file Fichier à ajouter
      */
-    public void addProposedFile(FileHandlerInfos file)
+    public void addProposedFile(FileHandler file)
     {
         this.proposedFiles.add(file);
         super.incrementNbFilesUploaded();
@@ -91,7 +91,7 @@ public class UserAccount extends UserStats
      * Retourne la liste des fichiers proposés par l'utilisateur
      * @return Liste des fichiers proposés
      */
-    public List<FileHandlerInfos> getProposedFiles()
+    public List<FileHandler> getProposedFiles()
     {
         return this.proposedFiles;
     }

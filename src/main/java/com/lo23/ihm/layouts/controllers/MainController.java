@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.AvailableFilesListCell;
@@ -143,7 +142,7 @@ public class MainController implements Initializable {
 
     //gestion recherche de fichier
     private ObservableList<String> choices = FXCollections.observableArrayList();
-    private List<FileHandlerInfos> researchResults = new ArrayList<FileHandlerInfos>();
+    private List<FileHandler> researchResults = new ArrayList<FileHandler>();
 
 
     public MainController(DataClientToIhm dataAPI) {
@@ -393,7 +392,7 @@ public class MainController implements Initializable {
 
 
     private ObservableList<FileHandler> getMyFiles() {
-        List<FileHandlerInfos> fhsharedbyme = api.requestFilesSharedByMe();
+        List<FileHandler> fhsharedbyme = api.requestFilesSharedByMe();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
         if(fhsharedbyme != null && !fhsharedbyme.isEmpty()) {
@@ -403,7 +402,7 @@ public class MainController implements Initializable {
     }
 
     private ObservableList<FileHandler> getFilesSharedByOthers() {
-        List<FileHandlerInfos> fhsharedbyothers = api.requestFilesSharedByOthers();
+        List<FileHandler> fhsharedbyothers = api.requestFilesSharedByOthers();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
         if(fhsharedbyothers != null && !fhsharedbyothers.isEmpty()) {
@@ -432,7 +431,7 @@ public class MainController implements Initializable {
 
         researchResults = api.requestSearchFile(searchItem);
 
-        ObservableList<FileHandlerInfos> donnees = FXCollections.observableArrayList(researchResults);
+        ObservableList<FileHandler> donnees = FXCollections.observableArrayList(researchResults);
 
         listViewAvailableFiles.setItems(donnees);
     }

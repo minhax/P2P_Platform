@@ -1,7 +1,7 @@
 package com.lo23.data.client;
 
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.data.Const;
 
 import java.io.*;
@@ -20,7 +20,7 @@ class UploadManager
      * @param desc Description du fichier
      * @return Handler avec les métadonnées du fichier
      */
-    FileHandlerInfos prepareToShare (String path, String title, String desc) {
+    FileHandler prepareToShare (String path, String title, String desc) {
         File fileToShare = new File(path);
         // On récupère le hash du contenu du fichier
         String hash = hashFile(fileToShare);
@@ -35,7 +35,7 @@ class UploadManager
             extension = fileToShare.getName().substring(i+1);
         }
         // On instancie le handler associé
-        FileHandlerInfos handler = new FileHandlerInfos(hash, title, fileToShare.length(), extension, sizeOfFile, desc);
+        FileHandler handler = new FileHandler(hash, title, fileToShare.length(), extension, sizeOfFile);
         // On découpe le fichier en plusieurs parties pour le téléchargement
         segmentFile(path, handler);
         return handler;

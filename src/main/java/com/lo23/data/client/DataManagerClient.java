@@ -4,7 +4,7 @@ import com.lo23.common.Comment;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.Rating;
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.comm.CommToDataClient;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.interfaces.data.DataClientToIhm;
@@ -301,7 +301,7 @@ public class DataManagerClient
      * un message au serveur pour partager l'information.
      * @param fileToMakeUnavailable fichier à rendre indisponible
      */
-    public void makeLocalFileUnavailable(FileHandlerInfos fileToMakeUnavailable){
+    public void makeLocalFileUnavailable(FileHandler fileToMakeUnavailable){
         /*
         Ici on ne supprime pas les parties de fichier sur le disque parce que
         dans l'éventualité ou on rendrait le fichier dispo de nouveau, on
@@ -338,61 +338,6 @@ public class DataManagerClient
         }
     }
 
-    /**
-     * Ajoute en local un commentaire à un fichier
-     * @param comment commentaire
-     * @param commentedFile fichier commenté
-     */
-    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile)
-    {
-        // Récupération de la liste des fichiers partagés
-        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
-        boolean found = false;
-
-        // Itération sur les fichiers partagés
-        Iterator<FileHandlerInfos> it = keySet.iterator();
-        while (it.hasNext() && !found)
-        {
-            FileHandlerInfos nextFile = it.next();
-            if(nextFile.getHash().equals(commentedFile.getHash()))
-            {
-                // Ajout commentaire au fichier
-                nextFile.addComment(comment);
-                found=true;
-            }
-        }
-
-        // Communication des changements au serveur
-        this.getCommToDataClientApi().sendCommentedFile(comment, commentedFile, this.sessionInfos.getCurrentUser());
-    }
-
-    /**
-     * Ajoute en local une note à un fichier
-     * @param rating note
-     * @param ratedFile fichier noté
-     */
-    public void addRatingToFile(Rating rating, FileHandlerInfos ratedFile)
-    {
-        // Récupération de la liste des fichiers partagés
-        Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
-        boolean found = false;
-        Iterator<FileHandlerInfos> i = keySet.iterator();
-        // Itération sur les fichiers partagés
-        while(i.hasNext() && !found)
-        {
-            FileHandlerInfos nextFile = i.next();
-            if(nextFile.getHash().equals(ratedFile.getHash()))
-            {
-                // Ajout de la note au fichier
-                nextFile.addRating(rating);
-                found = true;
-            }
-        }
-
-        // Communication des changements au serveur pour qu'il se mette à jour
-        this.getCommToDataClientApi().sendRatedFile(rating, ratedFile, this.sessionInfos.getCurrentUser());
-    }
-
     public void downloadFile(FileHandler fileToDownload)
     {
        downloadManager.download(fileToDownload);
@@ -406,7 +351,7 @@ public class DataManagerClient
         this.sessionInfos.getDirectory().removeUser(disconectedUser);
     }
 
-    public void updateFileInfo(FileHandlerInfos updatedFile) {
+    public void updateFileInfo(FileHandler updatedFile) {
         this.sessionInfos.getDirectory().updateFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
        // this.getCommToDataClientApi().sendUpdatedFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
 

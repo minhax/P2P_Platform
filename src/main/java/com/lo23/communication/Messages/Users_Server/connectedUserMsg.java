@@ -1,5 +1,6 @@
 package com.lo23.communication.Messages.Users_Server;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.UserIdentity;
@@ -12,10 +13,10 @@ import java.util.Vector;
 public class connectedUserMsg extends UserMessage{
 	
 	private static final long serialVersionUID = 46L;
-	private HashMap<UserIdentity, Vector<FileHandlerInfos>>  usersInfoAndFiles;
+	private HashMap<UserIdentity, Vector<FileHandler>>  usersInfoAndFiles;
 	private Vector<UserIdentity> connectedUsers;
 	
-	public connectedUserMsg(HashMap<UserIdentity,Vector<FileHandlerInfos>> usersInfoAndFiles, Vector<UserIdentity> connectedUsers){
+	public connectedUserMsg(HashMap<UserIdentity, Vector<FileHandler>> usersInfoAndFiles, Vector<UserIdentity> connectedUsers){
 		this.usersInfoAndFiles = usersInfoAndFiles;
 		this.connectedUsers = connectedUsers;
 	}

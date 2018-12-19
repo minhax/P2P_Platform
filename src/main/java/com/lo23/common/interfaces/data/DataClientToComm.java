@@ -29,20 +29,20 @@ public interface DataClientToComm
      * @param fileToDownload fichier demandé
      * @return fichier à télécharger
      */
-    FileHandlerInfos requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload);
+    FileHandler requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload);
 
     /**
      * Demande à Data de recomposer le fichier à partir des fileparts
      * @param file infos du fichier à recomposer
      */
-    void mergeFileParts(FileHandlerInfos file);
+    void mergeFileParts(FileHandler file);
 
     /**
      * Notifie DataClient d'un nouveau fichier
      * proposé au partage
      * @param newSharedFile fichier proposé
      */
-    void notifyNewSharedFileToAll(FileHandlerInfos newSharedFile, UserIdentity source);
+    void notifyNewSharedFileToAll(FileHandler newSharedFile, UserIdentity source);
 
     /**
      * Notifie DataClient d'une nouvelle source pour
@@ -58,7 +58,7 @@ public interface DataClientToComm
      * @param modifiedFile fichier modifié
      * @param user Utilisateur ayant modifé son fichier
      */
-    void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user);
+    void notifyUpdatedSharedFileToAll(FileHandler modifiedFile, User user);
 
     /**
      * Notifie les clients distants du profil
@@ -81,7 +81,7 @@ public interface DataClientToComm
      * des fichiers qu'il propose
      * @param liste map liant les utilisateurs aux fichiers qu'ils proposent
      */
-    void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste, Vector<UserIdentity> connectedUsers);
+    void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandler>> liste, Vector<UserIdentity> connectedUsers);
 
     /**
      * Demande le filePart numéro "part" du fichier

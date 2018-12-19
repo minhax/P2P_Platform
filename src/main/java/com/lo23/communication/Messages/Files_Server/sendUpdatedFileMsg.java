@@ -1,6 +1,6 @@
 package com.lo23.communication.Messages.Files_Server;
 
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.User;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
@@ -9,7 +9,7 @@ import com.lo23.communication.Messages.FileMessage;
 public class sendUpdatedFileMsg extends FileMessage{
 	private User usr;
 	private static final long serialVersionUID = 51L;
-	public sendUpdatedFileMsg(FileHandlerInfos fi, User user){
+	public sendUpdatedFileMsg(FileHandler fi, User user){
 		this.file = fi;
 		this.usr = user;
 	}

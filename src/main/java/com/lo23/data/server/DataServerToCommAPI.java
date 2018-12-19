@@ -4,7 +4,7 @@ import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
@@ -31,16 +31,16 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(){
+    public HashMap<UserIdentity, Vector<FileHandler>> requestUserFiles(){
 
         return this.manager.getDirectory().getUserFiles();
     }
 
     @Override
-    public void addNewUserFiles(List<FileHandlerInfos> filesSharedByUser, UserStats user)
+    public void addNewUserFiles(List<FileHandler> filesSharedByUser, UserStats user)
     {
-        Iterator<FileHandlerInfos> iterator = filesSharedByUser.iterator();
-        FileHandlerInfos file;
+        Iterator<FileHandler> iterator = filesSharedByUser.iterator();
+        FileHandler file;
 
         while(iterator.hasNext())
         {
@@ -72,7 +72,7 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
+    public void addNewFileToServer(FileHandler file, UserIdentity user)
     {
         this.manager.connections.addFileToDirectory(user, file);
     }
@@ -84,31 +84,7 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user)
-    {
-      //  this.manager.connections.
-        //TODO : merge newComment into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
-    }
-
-    @Override
-    public void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user)
-    {
-        //TODO : merge newRating into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
-    }
-
-    @Override
     public Vector<UserIdentity> requestConnectedUsers() {
         return this.manager.connections.getConnectedUsers();
-    }
-
-    public void addFileRating(Rating rating, FileHandlerInfos fileToRate) throws DataException
-    {
-        this.manager.connections.addRatingToFile(rating, fileToRate);
-    }
-
-    @Override
-    public void addFileComment(Comment comment, FileHandlerInfos fileToComment) throws DataException
-    {
-        this.manager.connections.addCommentToFile(comment, fileToComment);
     }
 }

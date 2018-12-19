@@ -31,7 +31,7 @@ public interface CommToDataClient
      * @param file fichier que l'on rend indisponible
      * @param user utilisateur qui le rend indisponible
      */
-    void makeFilesUnavailableToServer(FileHandlerInfos file, User user);
+    void makeFilesUnavailableToServer(FileHandler file, User user);
 
     /**
      * Transmet l'information comme quoi un fichier est rendu insponible par un utilisateur
@@ -79,8 +79,9 @@ public interface CommToDataClient
     /**
      * Transmet la demande de connexion d'un utiisateur au serveur
      * @param user utilisateur qui veut se connecter
+     * @param fi
      */
-    void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP);
+    void requestUserConnexion(UserStats user, List<FileHandler> fi, String serverIP);
 
     /*
     /**
@@ -105,7 +106,7 @@ public interface CommToDataClient
      * @param file fichier qui va être partagé
      * @param user utilisateur qui propose le fichier
      */
-    void requestUploadFile(FileHandlerInfos file, UserIdentity user);
+    void requestUploadFile(FileHandler file, UserIdentity user);
 
 
     /**

@@ -94,7 +94,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
         @Override
-    public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
+    public void makeFilesUnavailableToServer(FileHandler file, User user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
         
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
@@ -156,7 +156,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }*/
 
     @Override
-    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP) {
+    public void requestUserConnexion(UserStats user, List<FileHandler> fi, String serverIP) {
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         cmc.setAddressIpServer(serverIP);
         
@@ -189,7 +189,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
 
     @Override
-    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){
+    public void requestUploadFile(FileHandler file, UserIdentity user){
         CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
 
         uploadFileMsg message=new uploadFileMsg(file, user);
