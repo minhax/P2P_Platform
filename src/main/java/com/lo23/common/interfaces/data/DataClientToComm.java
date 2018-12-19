@@ -19,6 +19,8 @@ public interface DataClientToComm
      */
     void receiveFileLocations(List<UserIdentity> sources);
 
+    void receiveFilePart(FileHandler fileHandler, long blocNumber, byte[] data);
+
     // TODO cette méthode est encore floue et à revoir, mais c'est pas urgent pour l'instant
     /**
      * Demande à Data le fichier à télécharger
@@ -77,16 +79,20 @@ public interface DataClientToComm
      * Notifie les clients distants de la connexion d'un autre
      * utilisateur et donc de son ajout en tant que source
      * des fichiers qu'il propose
+<<<<<<< HEAD
+=======
+     * @param liste map liant les utilisateurs aux fichiers qu'ils proposent
+>>>>>>> 601f71e6300edf50c9ff69187d890b08e4f7f47f
      */
     void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste, Vector<UserIdentity> connectedUsers);
 
     /**
-     * Fonction qui permet d'obtenir le filePart numéro "part" du fichier
+     * Demande le filePart numéro "part" du fichier
      * "file" pour l'envoyer à userAsking.
-     * @param userAsking
-     * @param userSource
-     * @param file
-     * @param part
+     * @param userAsking utilisateur qui demande le filePart
+     * @param userSource source du fichier
+     * @param file fichier dont on demande une partie
+     * @param part partie demande
      */
     void getFilePart(User userAsking, User userSource, FileHandler file, long part);
 

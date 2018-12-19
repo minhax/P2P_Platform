@@ -5,8 +5,6 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.data.Const;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -23,25 +21,24 @@ class UploadManager
      * @return Handler avec les métadonnées du fichier
      */
     FileHandlerInfos prepareToShare (String path, String title, String desc) {
-        try
-        {
-            File fileToShare = new File(path);
-            // On récupère le hash du contenu du fichier
-            String hash = hashFile(fileToShare);
-            // On calcule le nombre de blocks du fichier selon sa taille
-            // Nombre de blocks = taille / taille d'un block
-            int sizeOfFile = (int) ((fileToShare.length() / Const.FILEPART_SIZE) +
-                    (fileToShare.length() % Const.FILEPART_SIZE));
-            // On instancie le handler associé
-            FileHandlerInfos handler = new FileHandlerInfos(hash, title, fileToShare.length(),
-                    Files.probeContentType(Paths.get(fileToShare.getPath())), sizeOfFile, desc);
-            // On découpe le fichier en plusieurs parties pour le téléchargement
-            segmentFile(path, handler);
-            return handler;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        File fileToShare = new File(path);
+        // On récupère le hash du contenu du fichier
+        String hash = hashFile(fileToShare);
+        // On calcule le nombre de blocks du fichier selon sa taille
+        // Nombre de blocks = taille / taille d'un block
+        int sizeOfFile = (int) ((fileToShare.length() / Const.FILEPART_SIZE) +
+                ((fileToShare.length() % Const.FILEPART_SIZE) >0 ? 1 : 0));
+        // On récupère l'extension du fichier
+        String extension = "";
+        int i = fileToShare.getName().lastIndexOf('.');
+        if (i > 0) {
+            extension = fileToShare.getName().substring(i+1);
         }
+        // On instancie le handler associé
+        FileHandlerInfos handler = new FileHandlerInfos(hash, title, fileToShare.length(), extension, sizeOfFile, desc);
+        // On découpe le fichier en plusieurs parties pour le téléchargement
+        segmentFile(path, handler);
+        return handler;
     }
 
     /**
@@ -49,23 +46,23 @@ class UploadManager
      * @param path Chemin du fichier sur le disque
      * @param handler Handler de métadonnées du fichier
      */
-    private void segmentFile (String path, FileHandler handler)
+    void segmentFile (String path, FileHandler handler)
     {
-        try
+        try(FileInputStream toSplit = new FileInputStream(path))
         {
-            FileInputStream toSplit = new FileInputStream(path);
             byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
             int part = 0; // Numéro de la partie actuelle
-            while (toSplit.read(segment) != -1) { // Tant qu'on  lit des octets dans le fichier source
+            int bytesRead;
+            while ((bytesRead = toSplit.read(segment)) != -1) { // Tant qu'on  lit des octets dans le fichier source
                 // On crée le fichier .part
-                FileOutputStream filepart = new FileOutputStream("files/fileparts/" +
-                        handler.getHash() + ".part" + part);
-                // On écrit le contenu au format binaire
-                filepart.write(segment);
-                filepart.close();
-                part++;
+                try(FileOutputStream filepart = new FileOutputStream("files/fileparts/" +
+                        handler.getHash() + ".part" + part)){
+                    // On écrit le contenu au format binaire
+                    filepart.write(segment, 0, bytesRead);
+                    filepart.close();
+                    part++;
+                }
             }
-            toSplit.close();
         }
         catch (IOException e)
         {
@@ -80,9 +77,8 @@ class UploadManager
      */
     private String hashFile (File fileToHash)
     {
-        try
+        try(FileInputStream inputStream = new FileInputStream(fileToHash))
         {
-            FileInputStream inputStream = new FileInputStream(fileToHash);
             MessageDigest digest = MessageDigest.getInstance("MD5"); // On prévient que l'on utilise l'algorithme MD5
 
             // On crée un tableau d'octets pour lire le fichier par blocs

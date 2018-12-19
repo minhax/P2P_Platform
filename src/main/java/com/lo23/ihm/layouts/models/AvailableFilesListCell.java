@@ -12,8 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,13 +19,14 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
     HBox hbox = new HBox();
     Label titre = new Label("_");
     Label taille = new Label("_");
+    Button download = new Button("Télécharger");
     Button addNote = new Button("Noter");
     Button addComment = new Button("Commenter");
     FileHandler lastItem;
 
     public AvailableFilesListCell() {
         super();
-        hbox.getChildren().addAll(titre, taille, addNote, addComment);
+        hbox.getChildren().addAll(titre, taille, download, addNote, addComment);
         addNote.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -80,6 +79,13 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        download.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Clic on Download");
             }
         });
     }

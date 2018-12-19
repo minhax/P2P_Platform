@@ -1,6 +1,5 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
-import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;

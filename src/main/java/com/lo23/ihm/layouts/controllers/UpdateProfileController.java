@@ -4,9 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
-import com.lo23.data.client.DataManagerClient;
-import com.lo23.ihm.layouts.models.CreateAccountModel;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.UpdateProfileModel;
 
 import javafx.fxml.FXML;
@@ -16,7 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
@@ -31,8 +29,18 @@ public class UpdateProfileController implements Initializable {
     @FXML
     private Label errorUpdateLabel;
     
-    private UpdateProfileModel model;
+    @FXML
+    private AnchorPane updateUserPane;
     
+    private UpdateProfileModel model;
+
+    private DataClientToIhm api;
+    private IhmToDataClientAPI ihmAPI;
+
+    public UpdateProfileController(DataClientToIhm dataAPI, IhmToDataClientAPI ihmAPI){
+        api=dataAPI;
+        this.ihmAPI=ihmAPI;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = new UpdateProfileModel();
@@ -52,7 +60,6 @@ public class UpdateProfileController implements Initializable {
     	}
     	else {
             // Integration data
-			DataClientToIhm api = DataManagerClient.getInstance().getDataClientToIhmApi();
 			api.requestSubmitUserChanges(loginUpdateField.getText(),passwordUpdateField.getText(),nameUpdateField.getText(),familynameUpdateField.getText(),Integer.parseInt(ageUpdateField.getText()));
             //Erreur methode inexistante
             System.out.println(loginUpdateField.getText() + passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
@@ -86,15 +93,19 @@ public class UpdateProfileController implements Initializable {
     @FXML
     void Previous() {
     	 try {
-             FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("com/lo23/common/layouts/mainLayout.fxml"));
-             Parent root = fxmlloader.load();
-             Stage stage = new Stage();
+             //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+             FXMLLoader fxmlLoader = new FXMLLoader();
+             // TODO: déclarer le controller de IHM
+             MainController controller = new MainController(api,ihmAPI); // EXEMPLE
+             fxmlLoader.setController(controller);
+             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+             fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
 
-             stage.initModality(Modality.APPLICATION_MODAL);
-             stage.setOpacity(1);
+
+             Parent root = fxmlLoader.load();
+             Stage stage = (Stage) updateUserPane.getScene().getWindow();
              stage.setTitle("Fenêtre principale");
              stage.setScene(new Scene(root));
-             stage.showAndWait();
          } catch (Exception e) {
              e.printStackTrace();
          }

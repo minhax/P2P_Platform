@@ -11,6 +11,7 @@ import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.common.user.*;
 import com.lo23.communication.APIs.CommToDataClientAPI;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -20,7 +21,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Vector;
 import java.util.stream.Stream;
 
 import static com.lo23.data.Const.FILEPATH_ACCOUNTS;
@@ -42,6 +42,7 @@ public class DataManagerClient
      * API de Comm pour DataClient
      */
     private CommToDataClient commToDataClientAPI;
+    private IhmToDataClient ihmToDataClient;
     /**
      * Session courante
      */
@@ -50,36 +51,24 @@ public class DataManagerClient
      * Gestionnaire du téléversement de fichiers
      */
     private UploadManager uploadManager;
-
     /**
      * Gestionnaire pour le téléchargement de fichiers
      */
     private DownloadManager downloadManager;
-    /**
-     * Référence du DataManagerClient pour le design pattern Singleton
-     */
-    static private DataManagerClient instance;
 
     /**
      * Constructeur de DataManagerClient
      */
-    private DataManagerClient()
+    public DataManagerClient()
     {
-        super();
         this.sessionInfos = new Session();
         this.uploadManager = new UploadManager();
         this.downloadManager = new DownloadManager();
         this.dataClientToCommApi = new DataClientToCommApi(this);
         this.dataClientToIhmApi = new DataClientToIhmApi(this);
+        this.ihmToDataClient = new IhmToDataClientAPI();
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
         this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
-    }
-
-    static public DataManagerClient getInstance(){
-        if(DataManagerClient.instance == null){
-            instance = new DataManagerClient();
-        }
-        return instance;
     }
 
     UploadManager getUploadManager ()
@@ -87,19 +76,17 @@ public class DataManagerClient
         return this.uploadManager;
     }
 
-    public DownloadManager getDownloadManager() {
+    DownloadManager getDownloadManager() {
         return downloadManager;
     }
-
-    public void setDownloadManager(DownloadManager downloadManager) {
-        this.downloadManager = downloadManager;
-    }
-
-
 
     Session getSessionInfos()
     {
         return sessionInfos;
+    }
+
+    public void setDownloadManager(DownloadManager downloadManager) {
+        this.downloadManager = downloadManager;
     }
 
     /**
@@ -111,13 +98,17 @@ public class DataManagerClient
         return this.dataClientToIhmApi;
     }
 
-    public DataClientToComm getDataClientToComm (){
+    public DataClientToComm getDataClientToCommApi(){
         return this.dataClientToCommApi;
     }
 
-    CommToDataClient getCommToDataClientApi ()
+    public CommToDataClient getCommToDataClientApi ()
     {
         return this.commToDataClientAPI;
+    }
+    public IhmToDataClient getIhmToDataClient()
+    {
+        return this.ihmToDataClient;
     }
 
     public void setCommToDataClientAPI (CommToDataClient fromCommApi)
@@ -143,10 +134,9 @@ public class DataManagerClient
         {
             if (userFile.isFile())
             {
-                try
+                try(FileInputStream fileIn = new FileInputStream(userFile.getPath());
+                    ObjectInputStream objectIn = new ObjectInputStream(fileIn))
                 {
-                    FileInputStream fileIn = new FileInputStream(userFile.getPath());
-                    ObjectInputStream objectIn = new ObjectInputStream(fileIn);
                     Object obj = objectIn.readObject();
                     System.out.println(userFile.getName());
                     System.out.println(obj.getClass());
@@ -160,8 +150,6 @@ public class DataManagerClient
                             retValue = true;
                         }
                     }
-                    fileIn.close();
-                    objectIn.close();
                 }
                 catch(IOException |ClassNotFoundException e)
                 {
@@ -176,17 +164,17 @@ public class DataManagerClient
      * Méthode qui connecte l'utilisateur courant au serveur
      * @return Succès de la connexion
      */
-    public boolean serverLogin(String serverIp){
+    public boolean serverLogin(String serverIp) {
         UserAccount userToConnect = this.sessionInfos.getCurrentUser();
 
         System.out.println("SIZEQSQQSZZEE " + this.sessionInfos.getCurrentUser().getProposedFiles().size());
 
         // FIXME Est-ce que le cast en UserStats empeche l'envoi du mdp ?
-        commToDataClientAPI.requestUserConnexion((UserStats)userToConnect,
+        commToDataClientAPI.requestUserConnexion(userToConnect,
                 userToConnect.getProposedFiles(),
                 serverIp);
 
-        return false;
+        return true;
     }
 
     /**
@@ -210,17 +198,15 @@ public class DataManagerClient
     boolean saveUserInfo(UserAccount user)
     {
         boolean registerSuccess = true;
-        try
-        {
-            // Création du flux vers le nouveau fichier
-            FileOutputStream fileOut =
+        try(FileOutputStream fileOut =
                     new FileOutputStream(
                             FILEPATH_ACCOUNTS + user.getLogin() + "_" + user.getId() + ".ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut))
+        {
+            // Création du flux vers le nouveau fichier
+
             // Sérialisation de l'utilisateur dans son fichier
             out.writeObject(user);
-            out.close();
-            fileOut.close();
         }
         catch (IOException i)
         {
@@ -241,9 +227,9 @@ public class DataManagerClient
     private UserAccount openAccountFromFile (String path)
     {
         UserAccount account = null;
-        try
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream((path)))
+        )
         {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream((path)));
             account = (UserAccount) in.readObject();
             in.close();
         }
@@ -322,7 +308,7 @@ public class DataManagerClient
         ne pose pas de problème.
          */
         System.out.println("[DATA] Suppression du fichier :" + fileToMakeUnavailable.getHash() + "côté client");
-        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, (User) this.sessionInfos.getCurrentUser());
+        this.commToDataClientAPI.makeFilesUnavailableToServer(fileToMakeUnavailable, this.sessionInfos.getCurrentUser());
         // Supression du fichier en local
         UserAccount currentUser = this.sessionInfos.getCurrentUser();
         currentUser.removeProposedFile(fileToMakeUnavailable);
@@ -356,9 +342,8 @@ public class DataManagerClient
      * @param comment commentaire
      * @param commentedFile fichier commenté
      */
-    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
+    public void addCommentToFile(Comment comment, FileHandlerInfos commentedFile)
     {
-
         // Récupération de la liste des fichiers partagés
         Set<FileHandlerInfos> keySet = this.getSessionInfos().getDirectory().getProposedFiles();
         boolean found = false;
@@ -409,8 +394,11 @@ public class DataManagerClient
 
     public void downloadFile(FileHandler fileToDownload)
     {
-        // créer une fct DownloadManager::Download ?
+       downloadManager.download(fileToDownload);
+    }
 
+    public void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        this.downloadManager.storeNewFilePart(fileHandler, blocNumber, data);
     }
 
     public void removeConnectedUser(User disconectedUser) {
@@ -421,6 +409,10 @@ public class DataManagerClient
         this.sessionInfos.getDirectory().updateFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
        // this.getCommToDataClientApi().sendUpdatedFileInfo(updatedFile, this.sessionInfos.getCurrentUser());
 
+    }
+
+    public void updateConnectedUsers()
+    {
     }
 
 }

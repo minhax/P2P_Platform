@@ -10,23 +10,29 @@ import com.lo23.common.user.UserStats;
 import java.util.*;
 
 /**
- * Objet qui implémente l'API de Data pour Comm.
+ * API de Data pour Comm.
  */
 public class DataClientToCommApi implements DataClientToComm
 {
     /**
-     * DataManagerClient parent, sur lequel appeler les fonctions privées de Data.
+     * DataManagerClient parent, sur lequel appeler
+     * les fonctions privées de Data
      */
     private DataManagerClient host;
 
     /**
-     * Constructeur de l'objet.
-     * Est en accès package-private pour empêcher l'instanciation hors du groupe Data.
+     * Constructeur de l'API
+     * (en accès package-private pour empêcher l'instanciation hors du groupe Data)
      * @param host DataManagerClient parent de cette API
      */
     DataClientToCommApi (DataManagerClient host)
     {
         this.host = host;
+    }
+
+    @Override
+    public void receiveFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+        this.host.storeNewFilePart(fileHandler, blocNumber, data);
     }
 
     @Override
@@ -186,7 +192,7 @@ public class DataClientToCommApi implements DataClientToComm
         }
         sources.remove(indexToRemove);
 
-        int chosenSourceIndex = (int) Math.random() * indexToRemove;
+        int chosenSourceIndex = (int) (Math.random() * indexToRemove);
         // TODO demander le FilePart à comm'.
     }
 }

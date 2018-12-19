@@ -1,15 +1,12 @@
 package com.lo23.communication.Messages.Users_Server;
 
-import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.common.user.UserStats;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.Messages.UserMessage;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Vector;
 
 public class connectedUserMsg extends UserMessage{

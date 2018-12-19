@@ -4,7 +4,6 @@ package com.lo23.communication.Messages.Files_Server;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.data.DataClientToComm;
-import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.Messages.FileMessage;
@@ -22,7 +21,7 @@ public class fileSourceMsg extends FileMessage{
 	{
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		DataClientToComm dataInterface = cms.getDataInterface();
-		FileHandler fi=(FileHandler) file;
+		FileHandler fi= file;
 		dataInterface.notifyNewSourceToAll(fi, user);
 		//dataInterface.notifyNewSharedFileToAll();
 	}

@@ -1,7 +1,5 @@
 package com.lo23.common.user;
 
-import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -122,6 +120,7 @@ public class UserTests
     /**
      * Teste que les id générés sont différents
      */
+
     @Test
     void ShouldNotBeTheSameId()
     {
@@ -155,8 +154,8 @@ public class UserTests
         this.user.addProposedFile(fh);
         this.user.removeProposedFile(fh);
         assertFalse(this.user.getProposedFiles().contains(fh));
-    }
-    */
+    }*/
+
     /**
      * Teste la mise à jour de l'IP du dernier serveur
      */

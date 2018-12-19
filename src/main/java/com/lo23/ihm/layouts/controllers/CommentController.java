@@ -1,14 +1,13 @@
 package com.lo23.ihm.layouts.controllers;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import com.lo23.common.filehandler.FileHandler;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import com.lo23.common.Comment;
+import com.lo23.common.interfaces.data.DataClientToIhm;
 
 public class CommentController {
 
@@ -18,7 +17,7 @@ public class CommentController {
     @FXML
     private Button validateCommentButton;
     
-    private String comment;
+    private Comment comment;
     
     private FileHandler file;
     
@@ -29,11 +28,18 @@ public class CommentController {
     public FileHandler getFile(){
         return this.file;
     }
-    
-    
+
+    private DataClientToIhm api;
+
+
+    public CommentController(DataClientToIhm dataAPI){
+        api=dataAPI;
+    }
     @FXML
     void Validate() {
-    	comment = commentArea.getText();
+        this.comment = new Comment(commentArea.getText(), api.requestAccountInfos());
+        // A décommenter pour data
+        // api.requestCommentFile(this.comment, getFile());
     	System.out.println(comment);
     	// send to Data 
     	try {

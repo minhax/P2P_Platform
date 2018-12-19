@@ -28,7 +28,7 @@ public interface DataClientToIhm
     void createAccount (String login, String password, String firstname, String lastname, int age) throws DataException;
 
     /**
-     * Demande à Data la source d'un fichier
+     * Demande à Data de télécharger un fichier
      * @param fileToDownload fichier à télécharger
      */
     void requestFileDownload(FileHandler fileToDownload);
@@ -117,14 +117,14 @@ public interface DataClientToIhm
      * par l'utilisateur
      * @return fichiers qu'on a mis à disposition
      */
-    List<FileHandlerInfos> requestFilesSharedByMe();
+    List<FileHandler> requestFilesSharedByMe();
 
     /**
      * Retourne la liste de tous les fichiers disponibles
      * au partage
      * @return fichiers disponibles
      */
-    List<FileHandler> requestFilesSharedByOthers();
+    List<FileHandlerInfos> requestFilesSharedByOthers();
 
     /**
      * Retourne les profils utilisateur tiers correspondant
@@ -174,5 +174,4 @@ public interface DataClientToIhm
      * @return Vector des téléchargements en cours.
      */
     Vector<FileHandler> requestInProgressFiles();
-
 }
