@@ -24,7 +24,7 @@ public interface IhmToDataClient {
      * Ajoute une source à la liste des utilisateurs mettant à disposition un ficher
      * @param user : utilisateur mettant à disposition un fichier
      */
-	void UpdateConnectedUsers(UserIdentity user);
+    void UpdateConnectedUsers(List<UserIdentity> user);
 
     /**
      * Affiche l'utilisateur mettant à disposition le fichier

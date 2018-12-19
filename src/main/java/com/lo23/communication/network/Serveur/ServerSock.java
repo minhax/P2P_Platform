@@ -47,7 +47,6 @@ public class ServerSock extends  Thread{
     @Override
     public void run() {
 	    //isListening = true;
-     
 	    try {
 		    this.serverSocket = new ServerSocket(this.firstPort);
 		    while (true) {

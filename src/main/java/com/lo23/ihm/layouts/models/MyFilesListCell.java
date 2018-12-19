@@ -2,7 +2,6 @@ package com.lo23.ihm.layouts.models;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.data.client.DataManagerClient;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.lo23.ihm.layouts.controllers.ratingController;

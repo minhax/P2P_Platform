@@ -7,7 +7,6 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.data.Const;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,9 +15,21 @@ import java.util.Vector;
 
 class DownloadManager
 {
+    /**
+     * File des fichiers en attente
+     */
     private Vector<FileHandler> inQueue;
+    /**
+     * Liste des fichiers in progress
+     */
     private Vector<FileHandler> inProgress;
+    /**
+     * API de Comm pour DataClient
+     */
     private CommToDataClient commToDataClientAPI;
+    /**
+     * Manager de DataClient
+     */
     private DataManagerClient dataManagerClient;
 
     public DataManagerClient getDataManagerClient() {
@@ -37,6 +48,9 @@ class DownloadManager
         this.commToDataClientAPI = commToDataClientAPI;
     }
 
+    /**
+     * Constructeur de DownloadManager
+     */
     DownloadManager(){
         this.inQueue = new Vector<FileHandler>();
         this.inProgress = new Vector<FileHandler>();
@@ -103,21 +117,18 @@ class DownloadManager
      * @param part l'index de la partie du fichier.
      */
     void getFilePart(User userAsking, User userSource, FileHandler file, long part){
-        try{
+        File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
+        try(FileInputStream fileIn = new FileInputStream(filePart)){
             byte[] data = new byte[Const.FILEPART_SIZE];
-            File filePart = new File("files/fileparts" + file.getHash() + "part" + part);
-            FileInputStream fileIn = new FileInputStream(filePart);
             data = Files.readAllBytes(filePart.toPath());
-            // TODO Décommenter apres modifs Camille
-            // this.getCommToDataClientAPI().sendFilePart(userAsking, userSource, file, part, data);
-        } catch(FileNotFoundException e){
-            e.printStackTrace();
+            // TODO send filePart to comm
+            // this.getCommToDataClientAPI();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-   /**
+    /**
      * Méthode de reprise sur erreur dans le cas ou comm ne peut pas nous fournir
      * le filePart dans le temps imparti
      * @param userAsking l'utilisateur qui demande le filePart
@@ -125,7 +136,7 @@ class DownloadManager
      * @param fileToDownload le fichier à télécharger
      * @param part la partie du fichier à télécharger
      */
-   void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
+    void requestRetryGetFilePart(User userAsking, User userSource, FileHandler fileToDownload, long part) {
         Vector<UserIdentity> sources = this
                 .getDataManagerClient()
                 .getSessionInfos()
@@ -134,9 +145,15 @@ class DownloadManager
 
         sources.remove(userSource);
         // TODO send  query to comm again
-   }
+    }
 
-   void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
+    /**
+     * Enregistre une nouvelle partie d'un fichier
+     * @param fileHandler descripteur du fichier
+     * @param blocNumber numéro du bloc
+     * @param data données contenues dans le bloc
+     */
+    void storeNewFilePart(FileHandler fileHandler, long blocNumber, byte[] data) {
         // TODO : store the fileParts, and check if it's completed or not
         long nbBlocks = fileHandler.getNbBlocks();
         // Check how many parts exists
@@ -144,38 +161,44 @@ class DownloadManager
         File[] files = dir.listFiles((d, name) -> name.startsWith(fileHandler.getHash()));
         long existingPartsNumber = files.length;
 
-       try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
-           fos.write(data);
-       } catch (IOException e) {
-           System.out.println("Error when storing file part in disk");
-           e.printStackTrace();
-       }
+        try (FileOutputStream fos = new FileOutputStream("/files/fileparts/" + fileHandler.getHash() + "." + blocNumber)) {
+            fos.write(data);
+        } catch (IOException e) {
+            System.out.println("Error when storing file part in disk");
+            e.printStackTrace();
+        }
 
-       // All parts collected
-       if (existingPartsNumber == nbBlocks) {
-           this.mergeFileparts(fileHandler);
-       } else if (existingPartsNumber > nbBlocks) {
-           throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
-       }
+        // All parts collected
+        if (existingPartsNumber == nbBlocks) {
+            this.mergeFileparts(fileHandler);
+        } else if (existingPartsNumber > nbBlocks) {
+            throw new RuntimeException("Error in DownloadManager : received too many parts for file : " + fileHandler.getTitle());
+        }
     }
 
+    /**
+     * Fusionne les parties d'un fichier
+     * @param fileToBuild descripteur du fichier à reconstituer
+     */
     void mergeFileparts (FileHandler fileToBuild)
     {
-        try {
+
+        String title = fileToBuild.getTitle().replaceAll("\\W+", "_");
+
+        try(FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + title + "." + fileToBuild.getType());) {
             byte[] segment = new byte[Const.FILEPART_SIZE]; // Tableau d'octets de la taille d'un filepart
-            String title = fileToBuild.getTitle().replaceAll("\\W+", "_");
-            FileOutputStream fileBuilt = new FileOutputStream("files/downloads/" + title + "." + fileToBuild.getType());
             int bytesRead;
             for (int i = 0; i < fileToBuild.getNbBlocks(); i++)
             {
-                FileInputStream filepart = new FileInputStream("files/fileparts/" + fileToBuild.getHash() + ".part" + i);
-                bytesRead = filepart.read(segment);
-                fileBuilt.write(segment, 0, bytesRead);
-                filepart.close();
+                try(FileInputStream filepart = new FileInputStream("files/fileparts/" + fileToBuild.getHash() + ".part" + i)){
+                    bytesRead = filepart.read(segment);
+                    fileBuilt.write(segment, 0, bytesRead);
+                }
+
             }
-            fileBuilt.close();
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
+
     }
 }

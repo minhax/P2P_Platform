@@ -1,10 +1,8 @@
 package com.lo23.data;
 
-import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.data.server.DirectoryUserFiles;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -100,8 +98,8 @@ public class DirectoryUserFilesTests
         this.directory.updateSourcesAfterUserModification(user2, modifiedUser2);
         // Note : DirectoryUserFiles::getUsersThatProposeFile() prend un argument de type User :
         // seuls le login et l'ID rentrent en jeu (que l'utilisateur ne peut en aucun cas changer)
-        assertTrue(this.directory.getUsersThatProposeFile(this.file1).get(0).getLogin()=="login1" &&
-                this.directory.getUsersThatProposeFile(this.file1).get(1).getLogin()=="login2" &&
+        assertTrue(this.directory.getUsersThatProposeFile(this.file1).get(0).getLogin().equals("login1") &&
+                this.directory.getUsersThatProposeFile(this.file1).get(1).getLogin().equals("login2") &&
                 this.directory.getUsersThatProposeFile(this.file1).size()==2 &&
                 this.directory.getFilesProposedByUser(modifiedUser2).size()==1);
     }

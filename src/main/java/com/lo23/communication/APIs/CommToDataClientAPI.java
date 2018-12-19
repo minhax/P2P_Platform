@@ -55,7 +55,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
     public void setCommunicationManager(CommunicationManagerClient commManager)
     {
-        this.commManagerClient=commManager;
+        commManagerClient=commManager;
     }
 
 
@@ -159,7 +159,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }*/
 
     @Override
-    public void requestUserConnexion(UserStats user, List<FileHandler> fi, String serverIP){
+    public void requestUserConnexion(UserStats user, List<FileHandler> fi, String serverIP) {
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
         cmc.setAddressIpServer(serverIP);
         

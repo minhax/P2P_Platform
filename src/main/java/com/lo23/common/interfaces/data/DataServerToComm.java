@@ -1,9 +1,7 @@
 package com.lo23.common.interfaces.data;
 
 
-import com.lo23.common.Rating;
 import com.lo23.common.Comment;
-import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
@@ -44,7 +42,6 @@ public interface DataServerToComm
      * Retire une source des sources d'un fichier
      * @param file fichier duquel retirer une source
      * @param sourceToRemove utilisateur à retirer des sources
-     * @return fichier dont on a retiré une source
      */
     void removeFileSource(FileHandler file, User sourceToRemove);
 
@@ -59,7 +56,7 @@ public interface DataServerToComm
      * @param file fichier à ajouter
      * @param user utilisateur qui partage le fichier
      */
-    void addNewFileToServer(FileHandlerInfos file, UserIdentity user);
+    void addNewFileToServer(FileHandler file, UserIdentity user);
 
     /**
      * Retourne la liste des utilisateurs sources
@@ -70,28 +67,11 @@ public interface DataServerToComm
     List<UserIdentity> requestFileLocationServer(FileHandler file);
 
     /**
-     * Met à jour les informations d'un fichier
-     * @param file fichier à mettre à jour
-     * @param newComment le nouveau commentaire
-     * @param user l'utilisateur responsable des changements
-     */
-    void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user);
-
-    void addFileRating(Rating rating, FileHandlerInfos fileToRate) throws DataException;
-
-    void addFileComment(Comment comment, FileHandlerInfos fileToRate) throws DataException;
-
-    /**
-     * Met à jour les informations d'un fichier
-     * @param file fichier à mettre à jour
-     * @param newRating le nouveau rating
-     * @param user l'utilisateur responsable des changements
-     */
-    void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user);
-
-    /**
-     * Retourne le UserFiles du Directory du serveur
+     * Retourne seulement les utilisateurs qui proposent des fichiers, et leur fichiers
      * @return le UserFiles
      */
-    HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(UserIdentity user);
+    HashMap<UserIdentity, Vector<FileHandler>> requestUserFiles();
+
+
+    Vector<UserIdentity> requestConnectedUsers();
 }

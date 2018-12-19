@@ -2,12 +2,10 @@ package com.lo23.communication.Messages.Files_Server;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
-import com.lo23.common.interfaces.data.*;
 import com.lo23.common.user.User;
-import com.lo23.common.user.UserIdentity;
-import com.lo23.communication.CommunicationManager.Client.*;
 import com.lo23.communication.Messages.FileMessage;
-import com.lo23.communication.Messages.Users_Server.*;
+import com.lo23.common.interfaces.data.DataClientToComm;
+import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 
 public class sendUpdatedFileMsg extends FileMessage{
 	private User usr;

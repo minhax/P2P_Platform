@@ -2,14 +2,8 @@ package com.lo23.communication;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserStats;
-import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
-import com.lo23.communication.Messages.Authentication_Client.logoutMsg;
-import com.lo23.communication.network.Client.Client;
-import com.lo23.communication.Messages.Authentication_Client.connectionMsg;
 import com.lo23.communication.network.Serveur.ServerSock;
-import com.lo23.data.Const;
-import com.lo23.data.client.DataManagerClient;
 import com.lo23.data.server.DataManagerServer;
 
 import java.io.BufferedReader;
@@ -17,17 +11,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.net.*;
-import java.util.Scanner;
-
-import static java.lang.Thread.sleep;
 
 public class Tests
 {
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
 	{
 
-		/** Tests de l'appel de le methode connect depuis un objet independant
-		 *
+		/**
+		 * Tests de l'appel de le methode connect depuis un objet independant
 		 */
 
 		System.out.println("Debut du test");

@@ -1,11 +1,11 @@
 package com.lo23.communication.Messages.Files_Client;
 
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.interfaces.data.*;
+import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.User;
 import com.lo23.communication.CommunicationManager.Server.*;
 import com.lo23.communication.Messages.FileMessage;
-import com.lo23.communication.Messages.Files_Server.*;
+import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 
 public class makeFileUnavailableMsg extends FileMessage {
 	private static final long serialVersionUID = 78L;

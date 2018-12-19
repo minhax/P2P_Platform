@@ -17,7 +17,7 @@ public interface DataClientToComm
      * @param fileSource utilisateur qui a proposé le fichier
      * @param proposedFile fichier proposé par l'utilisateur
      */
-    void receiveFileSource(UserIdentity fileSource, FileHandlerInfos proposedFile);
+    void receiveFileSource(UserIdentity fileSource, FileHandler proposedFile);
 
     void receiveFilePart(FileHandler fileHandler, long blocNumber, byte[] data);
 
@@ -29,20 +29,20 @@ public interface DataClientToComm
      * @param fileToDownload fichier demandé
      * @return fichier à télécharger
      */
-    FileHandlerInfos requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload);
+    FileHandler requestFileToDownload(UserIdentity userWhoRequestedFile, FileHandler fileToDownload);
 
     /**
      * Demande à Data de recomposer le fichier à partir des fileparts
      * @param file infos du fichier à recomposer
      */
-    void mergeFileParts(FileHandlerInfos file);
+    void mergeFileParts(FileHandler file);
 
     /**
      * Notifie DataClient d'un nouveau fichier
      * proposé au partage
      * @param newSharedFile fichier proposé
      */
-    void notifyNewSharedFileToAll(FileHandlerInfos newSharedFile, UserIdentity source);
+    void notifyNewSharedFileToAll(FileHandler newSharedFile, UserIdentity source);
 
     /**
      * Notifie DataClient d'une nouvelle source pour
@@ -58,7 +58,7 @@ public interface DataClientToComm
      * @param modifiedFile fichier modifié
      * @param user Utilisateur ayant modifé son fichier
      */
-    void notifyUpdatedSharedFileToAll(FileHandlerInfos modifiedFile, User user);
+    void notifyUpdatedSharedFileToAll(FileHandler modifiedFile, User user);
 
     /**
      * Notifie les clients distants du profil
@@ -79,18 +79,17 @@ public interface DataClientToComm
      * Notifie les clients distants de la connexion d'un autre
      * utilisateur et donc de son ajout en tant que source
      * des fichiers qu'il propose
-     * @param newlyConnectedUser autre utilisateur connecté
-     * @param files fichiers dont cet utilisateur est la source
+     * @param liste map liant les utilisateurs aux fichiers qu'ils proposent
      */
-    void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandlerInfos>> liste);
+    void notifyOtherUserConnectedToAll(HashMap<UserIdentity, Vector<FileHandler>> liste, Vector<UserIdentity> connectedUsers);
 
     /**
-     * Fonction qui permet d'obtenir le filePart numéro "part" du fichier
+     * Demande le filePart numéro "part" du fichier
      * "file" pour l'envoyer à userAsking.
-     * @param userAsking
-     * @param userSource
-     * @param file
-     * @param part
+     * @param userAsking utilisateur qui demande le filePart
+     * @param userSource source du fichier
+     * @param file fichier dont on demande une partie
+     * @param part partie demande
      */
     void getFilePart(User userAsking, User userSource, FileHandler file, long part);
 
