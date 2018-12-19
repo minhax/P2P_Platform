@@ -412,9 +412,9 @@ public class DataManagerClient
 
     }
 
-    public void updateConnectedUsers(List<UserIdentity> users)
+    public void updateConnectedUsers()
     {
-        this.getIhmToDataClient().UpdateConnectedUsers(users);
+        this.getIhmToDataClient().UpdateConnectedUsers(this.getSessionInfos().getLoggedUsers());
     }
 
 }

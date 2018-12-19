@@ -82,7 +82,8 @@ public class DataClientToCommApi implements DataClientToComm
     {
         this.host.removeConnectedUser(newlyDisconnectedUser);
         this.host.getSessionInfos().getOtherLoggedUsers().remove(newlyDisconnectedUser);
-        this.host.getIhmToDataClient().UpdateConnectedUsers(this.host.getSessionInfos().getLoggedUsers());
+        this.host.getSessionInfos().getLoggedUsers().remove(newlyDisconnectedUser);
+        this.host.updateConnectedUsers();
 
     }
 
@@ -94,7 +95,7 @@ public class DataClientToCommApi implements DataClientToComm
         //set les users connectés + la hashmap correspondant aux utilisateurs connectés avec leurs fichiers
         this.host.getSessionInfos().setOtherLoggedUsers(connectedUsers);
         this.host.getSessionInfos().getDirectory().setUserFiles(liste);
-        //this.host.getIhmToDataClient().UpdateConnectedUsers(connectedUsers);
+        this.host.updateConnectedUsers();
 
         System.out.println("POST MERGE");
 
