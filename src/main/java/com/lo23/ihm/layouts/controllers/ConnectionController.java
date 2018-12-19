@@ -48,8 +48,7 @@ public class ConnectionController implements Initializable {
     private boolean authorizeConnection;
 
     private DataClientToIhm api;
-
-    private IhmToDataClientAPI ihmAPI;
+    
     private MainController controllerMain;
 
     @Override
@@ -93,7 +92,7 @@ public class ConnectionController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
                 //MainController controller = new MainController(api); // EXEMPLE
-                ihmAPI.setControllerAPI(controllerMain);
+                //ihmAPI.setControllerAPI(controllerMain);
                 fxmlLoader.setController(controllerMain);
                 // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
                 fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
@@ -120,7 +119,7 @@ public class ConnectionController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
             CreateAccountController controller = new CreateAccountController(api,controllerMain); // EXEMPLE
-            fxmlLoader.setController(controller);
+            //fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("createAccountLayout.fxml"));
 
