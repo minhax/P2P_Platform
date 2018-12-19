@@ -159,6 +159,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         return this.host.login(login, password);
     }
 
+    
     public boolean requestConnectionToServer(String serverIp)
     {
         return this.host.serverLogin(serverIp);
