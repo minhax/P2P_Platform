@@ -317,7 +317,6 @@ public class MainController implements Initializable {
     }
 
     private void refreshContactsWindow() {
-        connectedUsers = api.requestConnectedUsers();
         if(connectedUsers!=null) {
 
             Iterator it = connectedUsers.listIterator();

@@ -119,7 +119,7 @@ public class ConnectionController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
             CreateAccountController controller = new CreateAccountController(api,controllerMain); // EXEMPLE
-            //fxmlLoader.setController(controller);
+            fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("createAccountLayout.fxml"));
 
