@@ -106,13 +106,13 @@ class DataManagerClientTest
     @AfterAll
     static void restoreFilesDirectory ()
     {
+        File accountsDirectory = new File("./files/accounts");
+        File filepartsDirectory = new File("./files/fileparts");
+        File accBackupDirectory = new File("./files/backup/accounts");
+        File filepBackupDirectory = new File("./files/backup/fileparts");
         // TODO: gérer les NullExceptionPointer qui peuvent apparaître
-        try {
-            File accountsDirectory = new File("./files/accounts");
-            File filepartsDirectory = new File("./files/fileparts");
-            File accBackupDirectory = new File("./files/backup/accounts");
-            File filepBackupDirectory = new File("./files/backup/fileparts");
-
+        try
+        {
             for(File account : accountsDirectory.listFiles())
             {
                 account.delete();

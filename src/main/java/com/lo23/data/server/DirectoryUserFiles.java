@@ -344,8 +344,4 @@ public class DirectoryUserFiles
         System.out.println("Setting user files, size = " + uf.size());
         this.userFiles = uf;
     }
-    public void addUsertoUserFiles(UserIdentity user)
-    {
-        this.userFiles.put(user, new Vector<>());
-    }
 }

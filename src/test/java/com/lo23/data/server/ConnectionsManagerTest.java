@@ -1,13 +1,15 @@
-package com.lo23.data;
+package com.lo23.data.server;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.data.server.ConnectionsManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -143,5 +145,43 @@ public class ConnectionsManagerTest
         {
             this.connectionsManager.modifyConnectedUser(nonConnectedUser);
         });
+    }
+
+    @Test
+    void shoulReturnDirectory(){
+        DirectoryUserFiles d = this.connectionsManager.getDirectory();
+        assertEquals(d, this.connectionsManager.getDirectory());
+    }
+
+    @Test
+    void shouldNotDisconnectNotConnectedUser(){
+        UserIdentity u = new UserIdentity("login", "First", "Last", 66);
+        assertThrows(IllegalStateException.class, () ->
+                this.connectionsManager.disconnectUser(u));
+    }
+    @Test
+    void shouldNotDisconnectNullUser(){
+        assertThrows(IllegalArgumentException.class, () ->
+                this.connectionsManager.disconnectUser(null));
+    }
+
+    @Test
+    void shouldReturnUserFiles(){
+        this.connectionsManager.addFileToDirectory(user1, file1);
+        this.connectionsManager.addFileToDirectory(user1, file2);
+        assertTrue(this.connectionsManager.getUserFiles(user1).contains(file1) && this.connectionsManager.getUserFiles(user1).contains(file2));
+    }
+
+    @Test
+    void shouldReturnUsersThatProposeFile(){
+        this.connectionsManager.addFileToDirectory(user1, file1);
+        this.connectionsManager.addFileToDirectory(user2, file1);
+        assertTrue(this.connectionsManager.getUsersThatProposeFile(file1).contains(user1) && this.connectionsManager.getUsersThatProposeFile(file1).contains(user2));
+    }
+
+    @Test
+    void shouldNotConnectNullUser(){
+        assertThrows(IllegalArgumentException.class, () ->
+                this.connectionsManager.connectUser(null));
     }
 }

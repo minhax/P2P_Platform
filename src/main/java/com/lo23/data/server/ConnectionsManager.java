@@ -100,18 +100,10 @@ public class ConnectionsManager
             throw new IllegalStateException("User is not connected !");
         }
 
-
-        try
-        {
-            // On deconnecte l'utilsateur
-            this.connectedUsers.remove(user);
-            // On retire les fichiers de l'utilisateur s'il en a
-            this.directory.removeUser(user);
-        }
-        catch (IllegalArgumentException iae)
-        {
-            iae.printStackTrace();
-        }
+        // On deconnecte l'utilsateur
+        this.connectedUsers.remove(user);
+        // On retire les fichiers de l'utilisateur s'il en a
+        this.directory.removeUser(user);
     }
 
 

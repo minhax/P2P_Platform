@@ -1,4 +1,4 @@
-package com.lo23.data;
+package com.lo23.data.server;
 
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
@@ -6,6 +6,8 @@ import com.lo23.data.server.DirectoryUserFiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DirectoryUserFilesTests
@@ -103,4 +105,17 @@ public class DirectoryUserFilesTests
                 this.directory.getUsersThatProposeFile(this.file1).size()==2 &&
                 this.directory.getFilesProposedByUser(modifiedUser2).size()==1);
     }
+
+    @Test
+    void shouldReturnUserID(){
+        assertEquals(user1, this.directory.getUser(user1.getId()));
+    }
+
+    @Test
+    void shouldReturnNullUser(){
+        this.directory.removeUser(user2);
+        assertEquals(null, this.directory.getUser(user2.getId()));
+    }
+
+
 }
