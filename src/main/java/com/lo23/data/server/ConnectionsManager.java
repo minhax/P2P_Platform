@@ -67,7 +67,7 @@ public class ConnectionsManager
         this.connectedUsers.add(user);
 
         // fetchUsersProposedFiles(user) à implémenter
-        Set<FileHandler> userFiles = getProposedFiles();
+        /*Set<FileHandler> userFiles = getProposedFiles();
         if (userFiles!=null)
         {
             for (Iterator<FileHandler> i = userFiles.iterator(); i.hasNext();)
@@ -76,7 +76,7 @@ public class ConnectionsManager
                 FileHandler f = i.next();
                 this.directory.addProposedFile(user, f);
             }
-        }
+        }*/
 
     }
 
