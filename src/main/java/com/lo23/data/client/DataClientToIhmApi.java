@@ -73,7 +73,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         currUser.addProposedFile(filehandler);
         System.out.println("Hash :" + filehandler.getHash());
         // TODO: prévenir le serveur qu'un fichier est proposé
-        host.getCommToDataClientApi().requestUploadFile(filehandler, currUser);
+        host.getCommToDataClientApi().uploadFile(filehandler, currUser);
     }
 
     @Override
@@ -205,6 +205,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     public List<FileHandler> requestSearchFile(String searchTerm)
     {
         Vector<FileHandler> returnedFiles = new Vector<>();
+        System.out.println(this.host.getSessionInfos().getDirectory().getProposedFiles());
         // On parcourt tous les fichiers disponibles 
         for (FileHandler fhi :
                 this.host.getSessionInfos().getDirectory().getProposedFiles())

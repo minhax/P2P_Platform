@@ -190,17 +190,6 @@ public class CommToDataClientAPI implements CommToDataClient
         //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
     }*/
 
-
-    @Override
-    public void requestUploadFile(FileHandler file, UserIdentity user){
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-
-        uploadFileMsg message=new uploadFileMsg(file, user);
-
-        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
-        c.start();
-    }
-    
     @Override
     public void uploadFile(FileHandler fi, UserIdentity user){
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
@@ -214,8 +203,6 @@ public class CommToDataClientAPI implements CommToDataClient
 
     @Override
     public void requestFileLoc(FileHandler file, UserIdentity user){
-
-
     }
 
     @Override

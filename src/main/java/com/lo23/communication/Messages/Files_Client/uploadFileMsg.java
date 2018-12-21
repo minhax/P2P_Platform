@@ -25,7 +25,7 @@ public class uploadFileMsg extends FileMessage {
 		 */
 		System.out.println("[COM]Stockage du fichier" + this.file.getHash());
 		/** Envoi des données à data **/
-		dataInterface.addNewFileToServer((FileHandlerInfos) this.file, this.user);
+		dataInterface.addNewFileToServer(this.file, this.user);
 		/** Création du message pour le broadcast des informations**/
 		newFileInfoMsg message = new newFileInfoMsg(this.file,this.user);
 		cms.broadcast(message);
