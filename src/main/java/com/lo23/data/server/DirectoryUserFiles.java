@@ -46,7 +46,7 @@ public class DirectoryUserFiles
      */
     public void addProposedFile(UserIdentity user, FileHandler file) throws IllegalStateException, IllegalArgumentException
     {
-
+        System.out.println(file + "Affichages des fichiers proposes"); // TEST
         // update userFiles
         Vector<FileHandler> existentFiles = this.userFiles.getOrDefault(user, new Vector<>());
 

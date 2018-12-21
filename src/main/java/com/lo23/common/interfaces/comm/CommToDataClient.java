@@ -101,13 +101,6 @@ public interface CommToDataClient
     void requestAddSource(FileHandler file, UserIdentity user);
 
 
-    /**
-     * Transmet la demande de partage de fichier (nouveau partage) de l'application client à CommServeur
-     * @param file fichier qui va être partagé
-     * @param user utilisateur qui propose le fichier
-     */
-    void requestUploadFile(FileHandler file, UserIdentity user);
-
 
     /**
      * Envoie les infos sur la nouvelle source d'un fichier à tous les clients du réseau

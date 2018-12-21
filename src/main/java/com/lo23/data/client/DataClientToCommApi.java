@@ -56,6 +56,7 @@ public class DataClientToCommApi implements DataClientToComm
     @Override
     public void notifyNewSharedFileToAll(FileHandler newSharedFile, UserIdentity source)
     {
+        System.out.println("SALUT ON PASSE BIEN ICI ? ");
         this.host.getSessionInfos().getDirectory().addProposedFile(source, newSharedFile);
     }
 
