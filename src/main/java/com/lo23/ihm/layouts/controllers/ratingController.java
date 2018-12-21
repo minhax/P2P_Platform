@@ -1,17 +1,17 @@
 package com.lo23.ihm.layouts.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import com.lo23.common.filehandler.FileHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Button;
-import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.filehandler.FileHandler;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ratingController implements Initializable {
 
@@ -62,7 +62,7 @@ public class ratingController implements Initializable {
         // Enlever pour envoyer a data
         // requestRateFile(rating.getRating(), getFile());
 
-        System.out.println("The File "+getFile()+"has a rating of "+rating.getRating());
+        System.out.println("The File "+getFile()+" has a rating of "+rating.getRating());
 
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
@@ -74,7 +74,6 @@ public class ratingController implements Initializable {
         // Ferme la fenêtre, ne fait rien avec les données saisies
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
-
     }
 
 }

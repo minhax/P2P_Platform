@@ -4,7 +4,7 @@ import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
@@ -28,38 +28,29 @@ public class DataServerToCommAPI implements DataServerToComm
     public void addNewConnectedUser(UserStats user)
     {
         this.manager.connections.connectUser(user);
-        System.out.println("CONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
-        System.out.println("NB DE CONNECTES DESORMAIS : " +  this.manager.connections.getConnectedUsers().size());
-        System.out.println("DANS LE DIRECTORY : " + this.manager.connections.getDirectory().getUserFiles().keySet().size());
     }
 
     @Override
-    public HashMap<UserIdentity, Vector<FileHandlerInfos>> requestUserFiles(UserIdentity user){
-        HashMap<UserIdentity, Vector<FileHandlerInfos>> infos = new HashMap<>();
-        infos.put(user, this.manager.getDirectory().getFilesProposedByUser(user));
-        return infos;
+    public HashMap<UserIdentity, Vector<FileHandler>> requestUserFiles(){
+
+        return this.manager.getDirectory().getUserFiles();
     }
 
     @Override
     public void addNewUserFiles(List<FileHandler> filesSharedByUser, UserStats user)
     {
         Iterator<FileHandler> iterator = filesSharedByUser.iterator();
-        FileHandlerInfos file;
+        FileHandler file;
         while(iterator.hasNext())
         {
-            this.manager.connections.addFileToDirectory(user, (FileHandlerInfos) iterator.next());
+            this.manager.connections.addFileToDirectory(user, (FileHandler) iterator.next());
         }
     }
 
     @Override
     public UserStats removeDisconnectedUser(UserStats user)
     {
-        System.out.println("Nb de connectés avant la déconnexion : " + this.manager.connections.getConnectedUsers().size());
-        System.out.println("DECONNEXION COTE SERVEUR DE L'UTILISATEUR : " +  user.getLogin());
-        // this.manager.commToDataApi.removeDisconnectedUser(user, this.manager.connections.getUserFiles(user));
         this.manager.connections.disconnectUser(user);
-        System.out.println("Nb de connectés après la déconnexion : " + this.manager.connections.getConnectedUsers().size());
-        System.out.println("Nb de connectés après la déconnexion sur diretory: " + this.manager.connections.getConnectedUsers().size());
         return user;
     }
 
@@ -80,7 +71,7 @@ public class DataServerToCommAPI implements DataServerToComm
     }
 
     @Override
-    public void addNewFileToServer(FileHandlerInfos file, UserIdentity user)
+    public void addNewFileToServer(FileHandler file, UserIdentity user)
     {
         this.manager.connections.addFileToDirectory(user, file);
     }
@@ -88,32 +79,11 @@ public class DataServerToCommAPI implements DataServerToComm
     @Override
     public List<UserIdentity> requestFileLocationServer(FileHandler file)
     {
-        List<UserIdentity> returnedUsers = this.manager.connections.getUsersThatProposeFile(file);
-        return returnedUsers;
+        return this.manager.connections.getUsersThatProposeFile(file);
     }
 
     @Override
-    public void updateFileWithNewComment(FileHandlerInfos file, Comment newComment, User user)
-    {
-      //  this.manager.connections.
-        //TODO : merge newComment into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
-    }
-
-    @Override
-    public void updateFileWithNewRating(FileHandlerInfos file, Rating newRating, User user)
-    {
-        //TODO : merge newRating into the FileHandlerInfos, and when updating the dictionary, merge the previous and new FileHandlerInfos
-    }
-
-    @Override
-    public void addFileRating(Rating rating, FileHandlerInfos fileToRate) throws DataException
-    {
-        this.manager.connections.addRatingToFile(rating, fileToRate);
-    };
-
-    @Override
-    public void addFileComment(Comment comment, FileHandlerInfos fileToComment) throws DataException
-    {
-        this.manager.connections.addCommentToFile(comment, fileToComment);
+    public Vector<UserIdentity> requestConnectedUsers() {
+        return this.manager.connections.getConnectedUsers();
     }
 }

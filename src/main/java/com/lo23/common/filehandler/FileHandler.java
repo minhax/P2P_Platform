@@ -59,6 +59,24 @@ public class FileHandler implements Serializable
         this.nbBlocks = nbBlocks;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof FileHandler))
+        {
+            return false;
+        } else
+        {
+            FileHandler u = (FileHandler) o;
+            return u.getHash().equals(this.getHash());
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getHash().hashCode();
+    }
+
     /**
      *
      * @return Hash du fichier

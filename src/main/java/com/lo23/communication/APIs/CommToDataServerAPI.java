@@ -1,5 +1,6 @@
 package com.lo23.communication.APIs;
 
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.interfaces.comm.CommToDataServer;
 import com.lo23.common.user.User;
@@ -40,7 +41,7 @@ public class CommToDataServerAPI implements CommToDataServer {
 
     public void setCommunicationManager(CommunicationManagerServer commManager)
     {
-        this.commManagerServer=commManager;
+        commManagerServer=commManager;
     }
 
 
@@ -65,7 +66,7 @@ public class CommToDataServerAPI implements CommToDataServer {
     }
 
     @Override
-    public void sendNewFileSource(FileHandlerInfos file, UserIdentity user){
+    public void sendNewFileSource(FileHandler file, UserIdentity user){
 
     }
 

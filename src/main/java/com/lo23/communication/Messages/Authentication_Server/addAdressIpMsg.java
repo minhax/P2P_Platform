@@ -3,8 +3,6 @@ package com.lo23.communication.Messages.Authentication_Server;
 import com.lo23.communication.CommunicationManager.Client.CommunicationManagerClient;
 import com.lo23.communication.Messages.Authentication;
 
-import java.io.Serializable;
-
 /** Message cree dans le server pour transferer son adresse IP jusqu'aux clients
  * /
  */

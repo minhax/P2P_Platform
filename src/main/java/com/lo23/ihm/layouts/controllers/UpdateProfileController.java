@@ -4,9 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.common.interfaces.ihm.IhmToDataClient;
-import com.lo23.data.client.DataManagerClient;
-import com.lo23.ihm.layouts.models.CreateAccountModel;
+import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.UpdateProfileModel;
 
 import javafx.fxml.FXML;
@@ -17,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
@@ -38,9 +35,11 @@ public class UpdateProfileController implements Initializable {
     private UpdateProfileModel model;
 
     private DataClientToIhm api;
+    private MainController controllerMain;
 
-    public UpdateProfileController(DataClientToIhm dataAPI){
+    public UpdateProfileController(DataClientToIhm dataAPI, MainController controllerMain){
         api=dataAPI;
+        this.controllerMain=controllerMain;
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,8 +95,8 @@ public class UpdateProfileController implements Initializable {
              //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
              FXMLLoader fxmlLoader = new FXMLLoader();
              // TODO: déclarer le controller de IHM
-             MainController controller = new MainController(api); // EXEMPLE
-             fxmlLoader.setController(controller);
+             //MainController controller = new MainController(api); // EXEMPLE
+             fxmlLoader.setController(controllerMain);
              // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
              fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
 

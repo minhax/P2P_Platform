@@ -7,13 +7,14 @@ import java.io.Serializable;
 import java.net.Socket;
 
 /**
- * Client for socket communication
- * Careful, the Central Server can act as a Client if he's sending messages to Peers
+ * Client pour la communication socket
+ * Attention, le serveur central peut devenir un client
+ * s'il envoie des messages aux pairs
  */
 public class Client extends Thread implements Serializable{
     
     /**
-     * Message que l'on diffuse sur le reseau
+     * Message que l'on diffuse sur le réseau
      */
     private Message msg;
     /**
@@ -47,8 +48,8 @@ public class Client extends Thread implements Serializable{
         this.destinationAdress = destinationAdress;
         this.destinationPort = destinationPort;
         this.jobDone = false;
-        /**
-         * Lancement de la routine d'envoi du message
+        /*
+          Lancement de la routine d'envoi du message
          */
     }
     
@@ -70,8 +71,8 @@ public class Client extends Thread implements Serializable{
      */
     public void start(Message msg ,String destinationAdress, int destinationPort)
     {
-        /**
-         * Tant que le message n'est pas envoye, on reessaye l'ouverture de sockets
+        /*
+          Tant que le message n'est pas envoye, on reessaye l'ouverture de sockets
          */
         while (!this.jobDone) {
             try {
@@ -79,9 +80,9 @@ public class Client extends Thread implements Serializable{
                 this.socket = new Socket(this.destinationAdress, this.destinationPort);
                 this.jobDone = true;
                 try {
-                    /**
-                     * SendMessageSocket implemente Thread
-                     * quitte la boucle des que le message est envoye
+                    /*
+                      SendMessageSocket implemente Thread
+                      quitte la boucle des que le message est envoye
                      */
 
                     SendMessage sendMessageSocket = new SendMessage(socket, destinationAdress, destinationPort, msg);
@@ -94,13 +95,15 @@ public class Client extends Thread implements Serializable{
             } catch (IOException e) {
                 System.out.println("Port " + destinationPort + " non disponible");
                 e.printStackTrace();
-            } finally {
-                /**
-                 * Execute meme si une erreur survient
-                 * incremente le port de destination pour pouvoir retenter une connexion socket
+            }
+            // TODO ?
+            //finally {
+                /*
+                  Execute meme si une erreur survient
+                  incremente le port de destination pour pouvoir retenter une connexion socket
                  */
                 //this.destinationPort++;
-            }
+            //}
         }
     }
 }

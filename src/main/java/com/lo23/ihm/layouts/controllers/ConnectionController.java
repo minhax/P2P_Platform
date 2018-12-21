@@ -4,8 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.lo23.common.interfaces.data.DataClientToIhm;
-import com.lo23.data.client.DataClientToIhmApi;
-import com.lo23.data.client.DataManagerClient;
+import com.lo23.common.interfaces.ihm.IhmToDataClient;
 import com.lo23.ihm.APIs.IhmToDataClientAPI;
 import com.lo23.ihm.layouts.models.ConnectionModel;
 
@@ -20,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ConnectionController implements Initializable {
@@ -50,6 +48,8 @@ public class ConnectionController implements Initializable {
     private boolean authorizeConnection;
 
     private DataClientToIhm api;
+    
+    private MainController controllerMain;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,8 +60,9 @@ public class ConnectionController implements Initializable {
 
     }
 
-    public ConnectionController(DataClientToIhm dataAPI){
+    public ConnectionController(DataClientToIhm dataAPI, MainController controllerMain){
         api=dataAPI;
+        this.controllerMain=controllerMain;
     }
 
     @FXML
@@ -90,8 +91,9 @@ public class ConnectionController implements Initializable {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // TODO: déclarer le controller de IHM
-                MainController controller = new MainController(api); // EXEMPLE
-                fxmlLoader.setController(controller);
+                //MainController controller = new MainController(api); // EXEMPLE
+                //ihmAPI.setControllerAPI(controllerMain);
+                fxmlLoader.setController(controllerMain);
                 // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
                 fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
                 Parent root = fxmlLoader.load();
@@ -116,7 +118,7 @@ public class ConnectionController implements Initializable {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             // TODO: déclarer le controller de IHM
-            CreateAccountController controller = new CreateAccountController(api); // EXEMPLE
+            CreateAccountController controller = new CreateAccountController(api,controllerMain); // EXEMPLE
             fxmlLoader.setController(controller);
             // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("createAccountLayout.fxml"));

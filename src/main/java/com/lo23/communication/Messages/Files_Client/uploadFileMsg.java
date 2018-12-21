@@ -2,7 +2,7 @@ package com.lo23.communication.Messages.Files_Client;
 
 import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
-import com.lo23.common.interfaces.data.*;
+import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.CommunicationManager.Server.*;
 import com.lo23.communication.Messages.FileMessage;

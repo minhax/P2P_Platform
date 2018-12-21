@@ -4,21 +4,17 @@ import com.lo23.common.Comment;
 import com.lo23.common.Rating;
 import com.lo23.common.exceptions.DataException;
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
+import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserAccount;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
-import com.lo23.data.Const;
 
 import java.io.File;
 
 import java.util.Iterator;
 
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -66,7 +62,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     public void requestShareNewFile(String pathOnDisk, String title, String description)
             throws DataException
     {
-        FileHandlerInfos filehandler = host.getUploadManager().prepareToShare(pathOnDisk, title, description);
+        FileHandler filehandler = host.getUploadManager().prepareToShare(pathOnDisk, title, description);
         if (filehandler == null)
             throw new DataException("Error while sharing file");
 
@@ -81,7 +77,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestRateFile(Rating rating, FileHandlerInfos ratedFile) throws DataException
+    public void requestRateFile(Rating rating, FileHandler ratedFile) throws DataException
     {
         /*
         if(rating == null)
@@ -100,7 +96,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestCommentFile(Comment comment, FileHandlerInfos commentedFile) throws DataException
+    public void requestCommentFile(Comment comment, FileHandler commentedFile) throws DataException
     {
         if (commentedFile == null)
             throw new DataException("File to comment is null");
@@ -111,7 +107,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public void requestUpdateFileInfo(FileHandlerInfos modifiedFile)
+    public void requestUpdateFileInfo(FileHandler modifiedFile)
     {
         this.host.updateFileInfo(modifiedFile);
     }
@@ -165,6 +161,7 @@ public class DataClientToIhmApi implements DataClientToIhm
         return this.host.login(login, password);
     }
 
+    
     public boolean requestConnectionToServer(String serverIp)
     {
         return this.host.serverLogin(serverIp);
@@ -173,7 +170,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public List<FileHandler> requestFilesSharedByMe()
     {
-        return null;
+        return this.host.getSessionInfos().getCurrentUser().getProposedFiles();
     }
 
     @Override
@@ -185,7 +182,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public List<UserIdentity> requestSearchUser(String searchTerm)
     {
-        Vector<UserStats> loggedUser = this.host.getSessionInfos().getLoggedUsers();
+        Vector<UserIdentity> loggedUser = this.host.getSessionInfos().getLoggedUsers();
 
         Iterator i = loggedUser.iterator();
         Vector<UserIdentity> returnedUsers = new Vector<>();
@@ -197,7 +194,7 @@ public class DataClientToIhmApi implements DataClientToIhm
             if (user.getFirstName().contains(searchTerm)
                     || user.getLastName().contains(searchTerm)
                     || user.getLogin().contains(searchTerm)){
-                returnedUsers.add((UserIdentity)user);
+                returnedUsers.add(user);
             }
         }
 
@@ -205,18 +202,18 @@ public class DataClientToIhmApi implements DataClientToIhm
     }
 
     @Override
-    public List<FileHandlerInfos> requestSearchFile(String searchTerm)
+    public List<FileHandler> requestSearchFile(String searchTerm)
     {
-        Vector<FileHandlerInfos> returnedFiles = new Vector<>();
+        Vector<FileHandler> returnedFiles = new Vector<>();
         // On parcourt tous les fichiers disponibles 
-        for (FileHandlerInfos fhi :
+        for (FileHandler fhi :
                 this.host.getSessionInfos().getDirectory().getProposedFiles())
         {
-            if (fhi.getTitle().contains(searchTerm) || fhi.getDesc().contains(searchTerm) ){
+            if (fhi.getTitle().contains(searchTerm)){
                 returnedFiles.add(fhi);
             }
         }
-        return null;
+        return returnedFiles;
     }
 
     @Override
@@ -234,7 +231,7 @@ public class DataClientToIhmApi implements DataClientToIhm
     @Override
     public List<UserIdentity> requestConnectedUsers()
     {
-        return null;
+        return this.host.getSessionInfos().getLoggedUsers();
     }
 
     @Override

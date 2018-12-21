@@ -7,7 +7,6 @@ import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.User;
 import com.lo23.common.user.UserIdentity;
-import com.lo23.common.user.UserStats;
 
 import java.util.Iterator;
 import java.util.List;
@@ -67,18 +66,18 @@ public class ConnectionsManager
         // On connecte l'utilisateur
         this.connectedUsers.add(user);
 
-        System.out.println("NB DE CONNECTES SUR LE SERVEUR " + this.connectedUsers.size());
-
         // fetchUsersProposedFiles(user) à implémenter
-        Set<FileHandlerInfos> userFiles = getProposedFiles();
+        Set<FileHandler> userFiles = getProposedFiles();
         if (userFiles!=null)
         {
-            for (Iterator<FileHandlerInfos> i = userFiles.iterator(); i.hasNext();)
+            for (Iterator<FileHandler> i = userFiles.iterator(); i.hasNext();)
             {
-                FileHandlerInfos f = i.next();
+                System.out.println("ADD FILE TO DIRECTORY");
+                FileHandler f = i.next();
                 this.directory.addProposedFile(user, f);
             }
         }
+
     }
 
     /**
@@ -87,7 +86,7 @@ public class ConnectionsManager
      * @throws IllegalArgumentException Exception levée si le paramètre passé est mauvais
      * @throws IllegalStateException Exception levée si l'utilisateur n'est pas connecté
      */
-    public void disconnectUser(User user) throws IllegalArgumentException, IllegalStateException
+    public void disconnectUser(UserIdentity user) throws IllegalArgumentException, IllegalStateException
     {
         // Si le paramètre passé est null
         if (user == null)
@@ -105,10 +104,7 @@ public class ConnectionsManager
         try
         {
             // On deconnecte l'utilsateur
-            System.out.println("Nombre de connectés avant déco : " + this.connectedUsers.size());
             this.connectedUsers.remove(user);
-            System.out.println("Nombre de connectés après déco : " + this.connectedUsers.size());
-
             // On retire les fichiers de l'utilisateur s'il en a
             this.directory.removeUser(user);
         }
@@ -131,11 +127,11 @@ public class ConnectionsManager
      * Permet d'obtenir les fichiers proposés
      * @return Un ensemble contenant les fichiers proposés.
      */
-    public Set<FileHandlerInfos> getProposedFiles(){
+    public Set<FileHandler> getProposedFiles(){
         return this.directory.getProposedFiles();
     }
 
-    public void addFileToDirectory(UserIdentity user, FileHandlerInfos file)
+    public void addFileToDirectory(UserIdentity user, FileHandler file)
     {
         this.directory.addProposedFile(user, file);
     }
@@ -188,19 +184,6 @@ public class ConnectionsManager
         {
             throw new IllegalStateException("User to modify is not connected/Does not exist !");
         }
-    }
-
-    public void addRatingToFile(Rating rating, FileHandlerInfos fileToRate) throws DataException
-    {
-        fileToRate.addRating(rating);
-        this.directory.updateFilesAfterModification(fileToRate);
-        // TO DO : Propagation des infos
-    }
-
-    public void addCommentToFile(Comment comment, FileHandlerInfos fileToComment) throws DataException {
-        fileToComment.addComment(comment);
-        this.directory.updateFilesAfterModification(fileToComment);
-        // TO DO : Propagation des infos
     }
 
     public List<UserIdentity> getUsersThatProposeFile(FileHandler file){

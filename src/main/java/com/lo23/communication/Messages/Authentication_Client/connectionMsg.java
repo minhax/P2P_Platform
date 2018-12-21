@@ -1,7 +1,6 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
 import com.lo23.common.filehandler.FileHandler;
-import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
 import com.lo23.communication.Messages.Authentication;
@@ -51,6 +50,7 @@ public class connectionMsg extends Authentication {
 		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
 		
 		dataInterface.addNewConnectedUser(this.userStats);
+		//Décommenter la ligne suivante peut-être ? est-ce à com de faire ça ou est-ce inclut dans le addNewConnectedUser
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
 
 		cms.addEntryMap_IPPort(this.UserIPAdress, this.getPort());
@@ -59,9 +59,17 @@ public class connectionMsg extends Authentication {
 		/**
 		 * Recuperation de la liste des utilisateurs connectés
 		 */
-		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles(this.userStats);
+		HashMap<UserIdentity, Vector<FileHandler>> listeUsersandFiles = dataInterface.requestUserFiles();
+		//listeUsersandFiles : liste des utilisateurs qui proposent des fichiers, et leur fichiers
+
+		Vector<UserIdentity> connectedUsers = dataInterface.requestConnectedUsers();
+
+
+
 		System.out.println("nb de fichier de la personne connectée : " + listeUsersandFiles.values());
-		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles);
+		System.out.println("UserFiles.size = " + dataInterface.requestUserFiles().values().size());
+
+		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles, connectedUsers);
 		message.setPort(this.getPort());
 		
 		cms.broadcast(message);

@@ -41,9 +41,11 @@ public class ContactsController {
     {
         try
         {
+            // TODO Si ce try catch ne sert à rien, le retirer
             //refreshConnectedUsers();
             //userListProperty.set(FXCollections.observableArrayList(userList));
         }
+        // TODO les catch d'exceptions comme ça c'est dégueulasse
         catch(Exception e)
         {
             e.printStackTrace();
