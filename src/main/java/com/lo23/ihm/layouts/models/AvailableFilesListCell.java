@@ -1,6 +1,7 @@
 package com.lo23.ihm.layouts.models;
 
 import com.lo23.common.filehandler.FileHandler;
+import com.lo23.common.interfaces.data.DataClientToIhm;
 import com.lo23.ihm.layouts.controllers.CommentController;
 import com.lo23.ihm.layouts.controllers.ratingController;
 import javafx.event.ActionEvent;
@@ -23,6 +24,13 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
     Button addNote = new Button("Noter");
     Button addComment = new Button("Commenter");
     FileHandler lastItem;
+    DataClientToIhm api;
+
+
+    public AvailableFilesListCell(DataClientToIhm dataAPI){
+        api=dataAPI;
+
+    }
 
     public AvailableFilesListCell() {
         super();
@@ -86,6 +94,7 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Clic on Download");
+                api.requestFileDownload(lastItem);
             }
         });
     }

@@ -190,7 +190,7 @@ public class MainController implements Initializable {
         listViewAvailableFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
             @Override
             public ListCell<FileHandler> call(ListView<FileHandler> listView) {
-                return new AvailableFilesListCell();
+                return new AvailableFilesListCell(api);
             }
         });
         listViewMyFiles.setCellFactory(new Callback<ListView<FileHandler>, ListCell<FileHandler>>() {
