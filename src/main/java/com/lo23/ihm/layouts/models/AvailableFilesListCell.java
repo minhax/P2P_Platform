@@ -25,15 +25,11 @@ public class AvailableFilesListCell extends ListCell<FileHandler>  {
     Button addComment = new Button("Commenter");
     FileHandler lastItem;
     DataClientToIhm api;
+    
 
-
-    public AvailableFilesListCell(DataClientToIhm dataAPI){
-        api=dataAPI;
-
-    }
-
-    public AvailableFilesListCell() {
+    public AvailableFilesListCell(DataClientToIhm dataAPI) {
         super();
+        api=dataAPI;
         hbox.getChildren().addAll(titre, taille, download, addNote, addComment);
         addNote.setOnAction(new EventHandler<ActionEvent>() {
             @Override
