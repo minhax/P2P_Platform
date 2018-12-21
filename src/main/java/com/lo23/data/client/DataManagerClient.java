@@ -70,6 +70,7 @@ public class DataManagerClient
         this.ihmToDataClient = ihmToDataClient;
         this.commToDataClientAPI = CommToDataClientAPI.getInstance();
         this.downloadManager.setCommToDataClientAPI(this.commToDataClientAPI);
+        this.downloadManager.setDataManagerClient(this);
     }
 
     UploadManager getUploadManager ()
