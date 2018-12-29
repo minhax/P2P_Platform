@@ -8,28 +8,66 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.communication.Messages.FileMessage;
 import com.lo23.communication.Messages.Files_Server.newFileInfoMsg;
 
-
-public class uploadFileMsg extends FileMessage {
+/**
+ * Message pour telecharger un fichier
+ */
+public class uploadFileMsg extends FileMessage
+{
+	/**
+	 * serialVersionUID : l'identifiant unique de la classe
+	 */
 	private static final long serialVersionUID = 55L;
+	/**
+	 * user : l'identite de l'utilisateur
+	 */
 	protected UserIdentity user;
-	
-	public uploadFileMsg(FileHandlerInfos fi, UserIdentity u){
+
+	/**
+	 * Constructeur
+	 * @param fi : le fichier a telecharger
+	 * @param u : l'utilisateur qui veut telecharger le fichier
+	 */
+	public uploadFileMsg(FileHandlerInfos fi, UserIdentity u)
+	{
 		this.file = fi;
 		this.user = u;
 	}
-	
-	public void treatment(){
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
-		/** On récupère et stocke l'adresse IP du serveur
+
+	/**
+	 * cree le message pour telecharger un fichier
+	 */
+	public void treatment()
+	{
+		/**
+		 * Récupération de communication manager coté Serveur
+		 */
+		CommunicationManagerServer commManagerServer = CommunicationManagerServer.getInstance();
+		/**
+		 * Récupération de l'interface de data
+		 */
+		DataServerToComm dataInterface = commManagerServer.getDataInterface();
+		/**
+		 * Récupèra et stocke l'adresse IP du serveur
 		 */
 		System.out.println("[COM]Stockage du fichier" + this.file.getHash());
 		/** Envoi des données à data **/
+		/**
+		 * Appel de la methode de data addNewFileToServer qui permet d'ajouter les donnees au serveur
+		 */
 		dataInterface.addNewFileToServer(this.file, this.user);
 		/** Création du message pour le broadcast des informations**/
+		/**
+		 * Création de message d'avoir les nouvelles informations de fichier
+		 */
 		newFileInfoMsg message = new newFileInfoMsg(this.file,this.user);
-		cms.broadcast(message);
+		/**
+		 * Faire le broadcast de message
+		 */
+		commManagerServer.broadcast(message);
 	}
 
-	public boolean isToServ(){return true;}
+	public boolean isToServ()
+	{
+		return true;
+	}
 }

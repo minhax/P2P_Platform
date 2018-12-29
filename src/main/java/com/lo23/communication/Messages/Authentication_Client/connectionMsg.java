@@ -1,6 +1,5 @@
 package com.lo23.communication.Messages.Authentication_Client;
 
-import com.lo23.common.filehandler.FileHandler;
 import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.common.user.UserStats;
@@ -13,60 +12,101 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-public class connectionMsg extends Authentication {
-	private String UserIPAdress;
+/**
+ * Message pour la connexion
+ */
+public class connectionMsg extends Authentication
+{
+	/**
+	 * userIPAdress : l'adresse IP de l'utilisateur
+	 */
+	private String userIPAdress;
+	/**
+	 * serialVersionUID : l'identifiant unique de la classe
+	 */
 	private static final long serialVersionUID = 100521L;
-	private int UserPort; /** A initialiser !**/
+	/**
+	 * userPort : le port de l'utilisateur
+	 */
+	private int userPort; /** A initialiser !**/
+	/**
+	 * fileInfo : la liste de FileHandlerInfos
+	 */
 	private List<FileHandlerInfos> fileInfo;
 
-	public connectionMsg(UserStats us, List<FileHandlerInfos> files ){
-		
+	/**
+	 * Constructeur
+	 * @param us : l'utilisateur
+	 * @param files : la liste des fichiers disponibles
+	 */
+	public connectionMsg(UserStats us, List<FileHandlerInfos> files )
+	{
 		this.userStats = us;
 		this.fileInfo = files;
-		try {
-			this.UserIPAdress = CommunicationManagerServer.findIPadress();
-		}catch(Exception e)
+		try
+		{
+			this.userIPAdress = CommunicationManagerServer.findIPadress();
+		}
+		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 		System.out.println("Creation du message");
 	}
-	
-	public void treatment(){
-		
+
+	/**
+	 * crée le message de connexion
+	 */
+	public void treatment()
+	{
 		/**
-		 * Recupere le communication manager cote serveur.
-		 * Recupere son interface de dataServeur
-		 * Appel la methode addNewConnectedUser pour lui transmettre son objet user Stats
-		 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
+		 * Récuperation de communication manager coté serveur
 		 */
-		
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
-		/** On récupère et stocke l'adresse IP du serveur
+		CommunicationManagerServer commManagerServer = CommunicationManagerServer.getInstance();
+		/**
+		 *  Récupération de l'interface de dataServer
 		 */
-		String ServerIpAdress = cms.getIP();
+		DataServerToComm dataInterface = commManagerServer.getDataInterface();
+		/**
+		 * Récuperation et stockage de l'adresse IP du serveur
+		 */
+		String ServerIpAdress = commManagerServer.getIP();
 		
-		System.out.println("Mon ip = " + this.UserIPAdress);
+		System.out.println("Mon ip = " + this.userIPAdress);
 		System.out.println("Addresse ip  du serveur = " + ServerIpAdress);
-		
+		/**
+		 * Appel la méthode addNewConnectedUser pour lui transmettre son objet user Stats
+		 * Appel la méthode addNewUserFiles pour lui transmettre ses filesInfos
+		 */
 		dataInterface.addNewConnectedUser(this.userStats);
 		dataInterface.addNewUserFiles(this.fileInfo, this.userStats);
-
-		cms.addEntryMap_IPPort(this.UserIPAdress, this.getPort());
-		cms.addEntryMap_IPUID(this.UserIPAdress, this.userStats.getId());
-		
 		/**
-		 * Recuperation de la liste des utilisateurs connectés
+		 * Ajout de la paire IPPort-IPAdress
+		 */
+		commManagerServer.addEntryMap_IPPort(this.userIPAdress, this.getPort());
+		/**
+		 * Ajout de la paire IPUID-IPAdress
+		 */
+		commManagerServer.addEntryMap_IPUID(this.userIPAdress, this.userStats.getId());
+		/**
+		 * Récupération de la liste des fichiers des utilisateurs connectés
 		 */
 		HashMap<UserIdentity, Vector<FileHandlerInfos>> listeUsersandFiles = dataInterface.requestUserFiles(this.userStats);
 		System.out.println("nb de fichier de la personne connectée : " + listeUsersandFiles.values());
+		/**
+		 * Création de message de connexion d'un utilisateur
+		 */
 		connectedUserMsg message = new connectedUserMsg(listeUsersandFiles);
 		message.setPort(this.getPort());
-		
-		cms.broadcast(message);
+		/**
+		 * Faire le broadcast du message de connexion vers tous les utilisateurs
+		 */
+		commManagerServer.broadcast(message);
 	}
 	
-	public boolean isToServ(){return true;}
+	public boolean isToServ()
+	{
+		return true;
+	}
 }
 

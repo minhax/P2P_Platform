@@ -4,19 +4,26 @@ import com.lo23.common.filehandler.FileHandlerInfos;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.Messages.FileMessage;
 
+public class addNewFileMsg extends FileMessage
+{
 
-public class addNewFileMsg extends FileMessage {
 	private static final long serialVersionUID = 84L;
+
 	protected UserIdentity user;
-	
-	public addNewFileMsg(FileHandlerInfos fi, UserIdentity u){
+
+	public addNewFileMsg(FileHandlerInfos fi, UserIdentity u)
+	{
 		this.file = fi;
 		this.user = u;
 	}
 	
-	public void treatment(){
+	public void treatment()
+	{
 	
 	}
 
-	public boolean isToServ(){return true;}
+	public boolean isToServ()
+	{
+		return true;
+	}
 }

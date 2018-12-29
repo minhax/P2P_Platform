@@ -8,28 +8,62 @@ import com.lo23.communication.Messages.FileMessage;
 import com.lo23.communication.Messages.Files_Server.sendUpdatedFileMsg;
 import com.lo23.communication.Messages.Users_Server.connectedUserMsg;
 
-public class makeFileUnavailableMsg extends FileMessage {
+/**
+ * Message pour rendre le fichier indisponible
+ */
+public class makeFileUnavailableMsg extends FileMessage
+{
+	/**
+	 * serialVersionUID : l'identifiant unique de la classe
+	 */
 	private static final long serialVersionUID = 78L;
+	/**
+	 * user : l'identite de l'utilisateur
+	 */
 	User user;
-	
-	public makeFileUnavailableMsg(FileHandlerInfos fi, User us){
+
+	/**
+	 * Constructeur
+	 * @param fi : le fichier a rendre indisponible
+	 * @param us : l'utilisateur
+	 */
+	public makeFileUnavailableMsg(FileHandlerInfos fi, User us)
+	{
 		this.file = fi;
 		this.user=us;
 	}
-	
-	public void treatment(){
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
-		/** On récupère et stocke l'adresse IP du serveur
+
+	/**
+	 * cree le message pour rendre le fichier indisponible
+	 */
+	public void treatment()
+	{
+		/**
+		 * Récuperation de communication manager coté serveur
+		 */
+		CommunicationManagerServer commManagerServer = CommunicationManagerServer.getInstance();
+		/**
+		 * Récupération de l'interface de dataServer
+		 */
+		DataServerToComm dataInterface = commManagerServer.getDataInterface();
+		/**
+		 * Appel de la methode de data removeFileSource qui permet de supprimer la source de fichier
 		 */
 		dataInterface.removeFileSource(this.file, this.user);
 
-		/**Broadcast du message pour le fichier indisponible vers tout les utilisateurs connectés**/
+		/**
+		 * Création de message d'envoyer les mises a jour de fichier
+		 */
 		sendUpdatedFileMsg message= new sendUpdatedFileMsg(this.file, this.user);
 		message.setPort(this.getPort());
-		cms.broadcast(message);
-
+		/**
+		 * Faire le broadcast du message d'insponibilite d'un fichier vers tous les utilisateurs
+		 */
+		commManagerServer.broadcast(message);
 	}
 
-	public boolean isToServ(){return true;}
+	public boolean isToServ()
+	{
+		return true;
+	}
 }

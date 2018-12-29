@@ -7,7 +7,8 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class AcceptConnexion extends Thread {
+public class AcceptConnexion extends Thread
+{
 	
 	/**
 	 * Socket serveur, attends les requetes dans le reseau
@@ -19,17 +20,25 @@ public class AcceptConnexion extends Thread {
 	private Socket socket = null;
 	
 	private ServerSock server = null;
-	
+
+	/**
+	 * Constructeur
+	 * @param server
+	 * @param ss
+	 */
 	public AcceptConnexion(ServerSock server, ServerSocket ss) {
 		this.socketserver = ss;
 		this.server = server;
 	}
 	
 	@Override
-	public void run() {
+	public void run()
+	{
 		
-		try {
-			while (true) {
+		try
+		{
+			while (true)
+			{
 				System.out.println("En attente de connexion d'un client");
 				socket = socketserver.accept();
 				System.out.println("Socket ouverte sur le port: " + socket.getLocalPort());
@@ -37,24 +46,32 @@ public class AcceptConnexion extends Thread {
 				//read.start();
 				
 				ObjectInputStream os = new ObjectInputStream(socket.getInputStream());
-				try {
+				try
+				{
 					System.out.println("Lecture du message");
 					Object msg = os.readObject();
 					Message msgCast = (Message) msg;
 					System.out.println("Traitement du message");
-					try {
+					try
+					{
 						msgCast.treatment();
 						System.out.println("Fin du traitement");
-					} catch (Exception e) {
+					}
+					catch (Exception e)
+					{
 						e.printStackTrace();
 					}
 					os.close();
 					this.socket.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}

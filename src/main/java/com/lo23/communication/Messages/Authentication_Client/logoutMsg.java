@@ -7,47 +7,87 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.common.interfaces.data.DataServerToComm;
 import com.lo23.communication.Messages.Users_Server.removeDisconnectedUserMsg;
 
-public class logoutMsg extends Authentication {
-	
+/**
+ * Message de déconnexion
+ */
+public class logoutMsg extends Authentication
+{
+	/**
+	 * l'identifiant unique de la classe
+	 */
 	private static final long serialVersionUID = 10002L;
+	/**
+	 * UserIPAdress : l'adresse IP de l'utilisateur
+	 */
 	protected String UserIPAdress;
-	
-	public logoutMsg(UserStats us, String ipAdress){
-		this.userStats= us;
+
+	/**
+	 * Constructeur
+	 * @param userStats : l'utilisateur
+	 * @param ipAdress : l'adresse IP
+	 */
+	public logoutMsg(UserStats userStats, String ipAdress)
+	{
+		this.userStats= userStats;
 		this.UserIPAdress =ipAdress;
 	}
+
 	/**
-	 * Recupere le cms
-	 * Recupere son objet dataServeur
-	 * Utilise la methode removeDisconnectedUser pour transmettre la demande de deconnexion
-	 * Supprime la paire IPUser - IPServer dans la table
-	 * @param UserStats utilisateur statistiques
+	 * crée le message de déconnexion
 	 */
-	public void treatment(){
-
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
-		/** On récupère et stocke l'adresse IP du serveur
+	public void treatment()
+	{
+		/**
+		 * Récupération de communication manager coté serveur
 		 */
-		String ServerIpAdress = cms.getIP();
+		CommunicationManagerServer commManagerServer = CommunicationManagerServer.getInstance();
+		/**
+		 * Récupération de l'interface de dataServer
+		 */
+		DataServerToComm dataInterface = commManagerServer.getDataInterface();
+		/**
+		 * Récupèration et stockage de  l'adresse IP du serveur
+		 */
+		String ServerIpAdress = commManagerServer.getIP();
 
-		try {
-			cms.removeUserFromMap_IPPort(this.UserIPAdress);
-			cms.removeUserFromMap_IPUID(this.UserIPAdress);
-		}catch(CommException e){
+		try
+		{
+			/**
+			 * Suppression de la paire IPPort-IPAdress
+			 */
+			commManagerServer.removeUserFromMap_IPPort(this.UserIPAdress);
+			/**
+			 * Suppression de la paire IPUID-IPAdress
+			 */
+			commManagerServer.removeUserFromMap_IPUID(this.UserIPAdress);
+		}
+		catch(CommException e)
+		{
 			System.out.println("Message: \t");
 			System.out.println(e.getMessage());
 			System.out.println("\t printStackTrace: \t");
 			e.printStackTrace();
 		}
-
+		/**
+		 * Transmettre la demande de déconnexion à Data
+		 */
 		dataInterface.removeDisconnectedUser(this.userStats);
 
 		/**Faire le broadcast du message de connection vers tout les utilisateurs connectés**/
+
+		/**
+		 * Création du message de suppression d'un utilisateur déconnecté
+		 */
 		removeDisconnectedUserMsg message = new removeDisconnectedUserMsg(this.userStats);
 		message.setPort(this.getPort());
-		cms.broadcast(message);
+		/**
+		 * Faire le broadcast du message de déconnexion vers tous les utilisateurs
+		 */
+		commManagerServer.broadcast(message);
 	}
 
-	public boolean isToServ(){return true;}
+	public boolean isToServ()
+	{
+		return true;
+	}
 }

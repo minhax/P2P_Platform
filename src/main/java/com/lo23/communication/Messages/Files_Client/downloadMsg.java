@@ -5,18 +5,24 @@ import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.Messages.FileMessage;
 
 
-public class downloadMsg extends FileMessage {
+public class downloadMsg extends FileMessage
+{
 	private static final long serialVersionUID = 83L;
 	protected UserIdentity user;
 	
-	public downloadMsg(FileHandlerInfos fi, UserIdentity u){
+	public downloadMsg(FileHandlerInfos fi, UserIdentity u)
+	{
 		this.file = fi;
 		this.user = u;
 	}
 	
-	public void treatment(){
+	public void treatment()
+	{
 	
 	}
 
-	public boolean isToServ(){return true;}
+	public boolean isToServ()
+	{
+		return true;
+	}
 }

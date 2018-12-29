@@ -10,13 +10,7 @@ import java.util.List;
 
 public interface CommToDataClient
 {
-    /**
-     * Envoie les modifications faites sur les
-     * métadonnées d'un fichier
-     * @param file fichier mis à jour
-     */
 
-    void sendFileChanges(FileHandler file);
 
     /**
      * Envoie les modifications relatives à un utilisateur (communication avec le serveur)
@@ -24,7 +18,6 @@ public interface CommToDataClient
      */
     void sendUserChangesToServer(UserIdentity user);
 
-    void sendFileChanges(Rating rate, FileHandler file);
 
     /**
      * Rend indisponible un fichier (communication avec le serveur)
@@ -33,12 +26,6 @@ public interface CommToDataClient
      */
     void makeFilesUnavailableToServer(FileHandlerInfos file, User user);
 
-    /**
-     * Transmet l'information comme quoi un fichier est rendu insponible par un utilisateur
-     * @param user utilisateur qui le rend indisponible
-     * @param file fichier que l'on rend indisponible
-     */
-    void sendFileChanges(User user, FileHandler file);
 
     /**
      * Transmet l'ajout d'un nouveau commentaire sur un fichier
@@ -82,23 +69,6 @@ public interface CommToDataClient
      */
     void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP);
 
-    /*
-    /**
-     * Envoie la demande de connexion
-     * @param user utilisateur qui se connecte
-     * @param IP IP de la machine de l'utilisateur
-     */
-
-    //public void connect(UserStats user, long IP);
-
-
-    /**
-     * Transmet la demande de partage de fichier (déjà partagé) de l'application client à CommServeur
-     * @param file fichier qui va être partagé
-     * @param user utilisateur qui propose le fichier
-     */
-    void requestAddSource(FileHandler file, UserIdentity user);
-
 
     /**
      * Transmet la demande de partage de fichier (nouveau partage) de l'application client à CommServeur
@@ -122,10 +92,24 @@ public interface CommToDataClient
      * @param user utilisateur qui effectue la demande
      */
     void requestFileLoc(FileHandler file, UserIdentity user);
-    
+
+    /**
+     *
+     * @param userAsking
+     * @param userSource
+     * @param file
+     * @param part
+     */
     void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part);
 
-
-    public void  sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content);
+    /**
+     *
+     * @param userAsking
+     * @param userSource
+     * @param file
+     * @param part
+     * @param content
+     */
+    void  sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content);
 }
 

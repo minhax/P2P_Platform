@@ -15,11 +15,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * CommunicationManagerServer qui herite de CommunicationManager
+ */
 public class CommunicationManagerServer extends CommunicationManager {
-	
+
+	/**
+	 * dataInterface : une instance de la classe DataServerToComm
+	 */
 	private DataServerToComm dataInterface;
+	/**
+	 * commInterface : une instance de l'API CommToDataServerAPI
+	 */
 	private CommToDataServerAPI commInterface;
+	/**
+	 * clientIP_UID: implementation de la table de hashage
+	 * hashmap stocke les adresses IP de tous les utilisateurs
+	 */
 	private HashMap<String, Integer>  clientIptoPort;
+	/**
+	 * clientIP_UID: implementation de la table de hashage
+	 * UUID : objet qui permet d'attribuer id unique a chaque utilisateur
+	 */
 	private HashMap<UUID, String> clientIP_UID;
 	
 	/** Constructeur privé
@@ -31,48 +48,82 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 **/
 	private CommunicationManagerServer()
 		{
+
+			/**
+			 * Initialisation des variables privees du communicationManagerClient
+			 */
 			this.commInterface = CommToDataServerAPI.getInstance();
-			
-			try {
+			try
+			{
 				this.ip = findIPadress();
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
+				/**
+				 * Affichage d'un message d'erreur
+				 */
 				System.out.print("Erreur dans la recuperation de l'adresse IP");
 			}
+
 			clientIptoPort = new HashMap<>();
 			clientIP_UID=new HashMap<>();
 		}
 	
 	
 	/** Getteur et Setteur **/
+	/**
+	 * l'accesseur (getter) de dataInterface
+	 * @return objet de type DataServerToComm
+	 */
 	public DataServerToComm getDataInterface()
 	{
 		return dataInterface;
 	}
+	/**
+	 * l'accesseur (getter) de commInterface
+	 * @return objet de type CommToDataServerAPI
+	 */
 	public CommToDataServerAPI getCommInterface()
 	{
 		return commInterface;
 	}
-	public void setDataInterface(DataServerToComm ds) {
+
+	/**
+	 * l'accesseur (setter) de dataInterface
+	 */
+	public void setDataInterface(DataServerToComm ds)
+	{
 		this.dataInterface = ds;
 	}
+
+	/**
+	 * l'accesseur (setter) de commInterface
+	 */
 	public void setCommInterface (CommToDataServerAPI cs)
 	{
 		this.commInterface = cs;
 	}
+	/**
+	 * l'accesseur (getter) de l'adresse IP
+	 * @return String
+	 */
 	public String getIP()
 	{
 		return this.ip;
 	}
 
-	/** Singleton **/
-
+	/**
+	 * Initialisation du singleton
+	 */
 	private static CommunicationManagerServer Instance = new CommunicationManagerServer();
+	/**
+	 * récupère le CommunicationManagerServer
+	 * @return objet de type CommunicationManagerClient
+	 */
 	public static CommunicationManagerServer getInstance()
 	{
 		return Instance;
 	}
-
-
 	/*
 
 
@@ -101,16 +152,34 @@ public class CommunicationManagerServer extends CommunicationManager {
 	}
 	*/
 
+	/**
+	 * Ajouter l'adresse de client ainsi que le port au hashMap
+	 * @param clientAddr l'adresse de client
+	 * @param clientPort le port de client
+	 * @return void
+	 */
 	public void addEntryMap_IPPort(String clientAddr, int clientPort)
     {
-
     	this.clientIptoPort.put(clientAddr, clientPort);
     }
 
-    public void addEntryMap_IPUID(String clientIp, UUID clientUUID){
+	/**
+	 * Ajouter l'adresse de client ainsi que le UUID de client
+	 * @param clientIp l'adresse de client
+	 * @param clientUUID le UUID de client
+	 * @return void
+	 */
+	public void addEntryMap_IPUID(String clientIp, UUID clientUUID)
+	{
 		this.clientIP_UID.put(clientUUID, clientIp);
 	}
 
+	/**
+	 * Supprime l'utilisateur en fonction de la clé qu'est userIpAddr
+	 * @param userIpAddr : la clé
+	 * @throws CommException
+	 * @return void
+	 */
     public void removeUserFromMap_IPPort(String userIpAddr) throws CommException
     {
         if (!(this.clientIptoPort.containsKey(userIpAddr)))
@@ -119,7 +188,14 @@ public class CommunicationManagerServer extends CommunicationManager {
             this.clientIptoPort.remove(userIpAddr);
     }
 
-    public void removeUserFromMap_IPUID(String clientIp) throws CommException{
+	/**
+	 * Supprime l'utilisateur en fonction de la clé qu'est clientIp
+	 * @param clientIp : la clé
+	 * @throws CommException
+	 * @return void
+	 */
+    public void removeUserFromMap_IPUID(String clientIp) throws CommException
+	{
 		if (!(this.clientIptoPort.containsKey(clientIp)))
 			throw new CommException("L'adresse IP n'est pas presente dans la table", clientIp);
 		else
@@ -130,29 +206,32 @@ public class CommunicationManagerServer extends CommunicationManager {
 
 	/**
 	 * Permet de retrouver l'IP d'un utilisateur à partir de son identifiant
-	 * @param user
+	 * @param user : l'utilisateur
+	 * @return l'adresse IP
 	 */
-	public String findUserIp(UUID user){
+	public String findUserIp(UUID user)
+	{
 		return(this.clientIP_UID.get(user));
 	}
 
 	/**
 	 * Envoie un message à toutes les machines connectées
-	 *
-	 * @param m Parse la table et recupere chaque cle (IPUser)
+	 * @param m : Parse la table et recupere chaque cle (IPUser)
+	 * @throws EmptyStackException
 	 * @return void
-	 **/
+	 */
 	public void broadcast(Message m) throws EmptyStackException
 	{
 		for(Map.Entry<String, Integer> entry : this.clientIptoPort.entrySet())
 		{
 			String addrClient = entry.getKey();
-			//int portClient = this.clientIptoPort.get(addrClient);
 			int portClient = Const.CLIENT_DEFAULT_PORT;
-			try{
+			try
+			{
 				Client c = new Client(m, addrClient, portClient);
 				c.start();
-			}catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				e.printStackTrace();
 				System.out.println("Erreur dans la creation du client");

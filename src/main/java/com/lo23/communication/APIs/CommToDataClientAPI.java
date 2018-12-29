@@ -19,27 +19,41 @@ import com.lo23.communication.Messages.Users_Client.updateUserInfoMsg;
 import com.lo23.communication.network.Client.Client;
 import com.lo23.data.Const;
 
-
 import java.util.List;
 
+/**
+ * API de Comm à Data Client
+ */
 public class CommToDataClientAPI implements CommToDataClient
 {
-
+    /**
+     * commManagerClient: une instance de la classe CommunicationManagerClient
+     */
     protected static CommunicationManagerClient commManagerClient ;
+
+    /**
+     * commManagerServer: une instance de la classe CommunicationManagerServer
+     */
     protected static CommunicationManagerServer commManagerServer;
 
-    /* Constructeur */
+    /**
+     * Constructeur de l'API
+     */
     private CommToDataClientAPI()
     {
-
         commManagerClient=CommunicationManagerClient.getInstance();
         commManagerServer=CommunicationManagerServer.getInstance();
     }
 
-    /* Initialisation du singleton*/
+    /**
+     * Initialisation du singleton
+     */
     private static CommToDataClientAPI Instance;
 
-    /* Accesseurs */
+    /**
+     * l'accesseur (getter) de Instance
+     * @return objet de type CommToDataClientAPI
+     */
     public static CommToDataClientAPI getInstance()
     {
         if (Instance == null)
@@ -47,208 +61,370 @@ public class CommToDataClientAPI implements CommToDataClient
         return Instance;
     }
 
+    /**
+     * l'accesseur (getter) de CommunicationManager
+     * @return objet de type CommunicationManager
+     */
     public static CommunicationManagerClient getCommunicationManager()
     {
         return commManagerClient;
     }
 
-
+    /**
+     * l'accesseur (setter) de CommunicationManager
+     */
     public void setCommunicationManager(CommunicationManagerClient commManager)
     {
         this.commManagerClient=commManager;
     }
 
+    /*================ Implémentation des méthodes =============== */
 
-    /*========= Implémentation des méthodes ============= */
 
+    /**
+     * Envoie les modifications relatives à un utilisateur (communication avec le serveur)
+     * @param user utilisateur concerné
+     * @return void
+     */
     @Override
-    public void sendFileChanges(FileHandler file){
-
-    }
-
-    @Override
-    public void sendFileChanges(Rating rate, FileHandler file){
-
-    }
-
-    @Override
-    public void sendUserChangesToServer(UserIdentity user) {
-        
+    public void sendUserChangesToServer(UserIdentity user)
+    {
         /**
-         * Récupération du Cmc et de l'adresseIP du server
+         * Récupération du Communication Manager cote Client et de l'adresseIP du server
          */
-        
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
         
         /**
          * Création du message
          */
-        
-        updateUserInfoMsg msg = new updateUserInfoMsg(user);
+        updateUserInfoMsg message = new updateUserInfoMsg(user);
         
         /**
-         * @param msg : message a envoyer
-         * @param ipServer : Adresse IP du serveur
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message à envoyer
+         * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
          * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
          */
-        
-        Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        Client c = new Client(message, commManagerClient.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
     }
 
-        @Override
-    public void makeFilesUnavailableToServer(FileHandlerInfos file, User user){
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-        
+    /**
+     * Rend indisponible un fichier (communication avec le serveur)
+     * @param file fichier que l'on rend indisponible
+     * @param user utilisateur qui le rend indisponible
+     * @return void
+     */
+    @Override
+    public void makeFilesUnavailableToServer(FileHandlerInfos file, User user)
+    {
+
+        /**
+         * Récupération du Communication Manager cote Client et de l'adresseIP du server
+         */
+        CommunicationManagerClient commManagerClient= CommunicationManagerClient.getInstance();
+        /**
+         * Création du message
+         */
         makeFileUnavailableMsg message=new makeFileUnavailableMsg(file, user);
-        
-        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        /**
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message à envoyer
+         * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
+        Client c = new Client(message, commManagerClient.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
     }
 
+    /**
+     * Transmet l'ajout d'un nouveau commentaire sur un fichier
+     * @param comment Commentaire
+     * @param commentedFile Fichier commenté
+     * @param user
+     * @return void
+     */
     @Override
-    public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        
-        addCommentMsg msg = new addCommentMsg(commentedFile, comment, user);
-        
-        Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+    public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user)
+    {
+        /**
+         * Récupération du Communication Manager cote Client et de l'adresseIP du server
+         */
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+        /**
+         * Création du message
+         */
+        addCommentMsg message = new addCommentMsg(commentedFile, comment, user);
+        /**
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message à envoyer
+         * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
+        Client c = new Client(message, commManagerClient.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
     }
 
+    /**
+     * Envoie une nouvelle note attribuée à un fichier
+     * @param rating note à ajouter au fichier
+     * @param ratedFile fichier noté
+     * @param user Utilisateur qui a noté le fichier
+     * @return void
+     */
     @Override
-    public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        
-        rateFileMsg msg = new rateFileMsg( rating, ratedFile, user);
-        
-        Client c = new Client(msg, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+    public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user)
+    {
+        /**
+         * Récupération du Communication Manager cote Client et de l'adresseIP du server
+         */
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+        /**
+         * Création du message
+         */
+        rateFileMsg message = new rateFileMsg( rating, ratedFile, user);
+        /**
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message à envoyer
+         * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
+        Client c = new Client(message, commManagerClient.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
     }
 
     /**
      * Demande de déconnexion de l'utilisateur sur le serveur
-     *
-     * @param UserStats user
-     * Récupère instance cms
-     * Récupère l'adresse IP de la machine, et le serveur sur lequel il est via getAdressIPServer()
-     * Crée logout Msg + Client
+     * @param  user utilisateur qui se déconnecte
      * @return void
      **/
     @Override
-    public void requestLogoutToServer(UserStats user){
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
+    public void requestLogoutToServer(UserStats user)
+    {
+        /**
+         * Récupération du Communication Manager cote Client et de l'adresseIP du server
+         */
+        CommunicationManagerClient commManagerClient= CommunicationManagerClient.getInstance();
         String myIPAdress = null;
-        
-        try {
+        try
+        {
             myIPAdress = CommunicationManager.findIPadress();
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             System.out.println("[API] Erreur dans la recherche d'adresse IP");
         }
+        /**
+         * Création du message
+         */
         logoutMsg message=new logoutMsg(user, myIPAdress);
-        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        /**
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message à envoyer
+         * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
+        Client c = new Client(message, commManagerClient.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
-        System.out.println("[COM] Deconnexion reussie");
+        System.out.println("[COM] Déconnexion réussie");
     }
 
-    /*@Override
-    public void requestLogout(UserIdentity user){
-        // A priori même rôle que requestLogoutToServer (à changer plus tard si besoin)
-
-    }*/
-
+    /**
+     * Transmet la demande de connexion d'un utilisateur au serveur
+     * @param user utilisateur qui veut se connecter
+     * @param fi la liste des infos sur les fichiers
+     * @param serverIP l'adresse IP de serveur
+     * @return void
+     */
     @Override
-    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        cmc.setAddressIpServer(serverIP);
-        
+    public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP)
+    {
+        /**
+         * Récupération du Communication Manager cote Client
+         */
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+        /**
+         * Changer l'adresse IP de commManagerClient par l'adresse donnée en paramètre (serverIP)
+         */
+        commManagerClient.setAddressIpServer(serverIP);
+        /**
+         * Création du message
+         */
         connectionMsg message = new connectionMsg(user, fi);
-    
+        /**
+         * Affichage d'un message contenant l'Id de l'utilisateur ainsi que son login
+         */
         System.out.println(" Demande de connexion pour l'utilisateur :" + user.getId() + " " + user.getLogin());
+        /**
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message à envoyer
+         * @param serverIP : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
         Client c = new Client(message, serverIP, Const.SERVER_DEFAULT_PORT);
         c.start();
     }
 
+
+    /**
+     * Transmet la demande de partage de fichier (nouveau partage) de l'application client à CommServeur
+     * @param file fichier qui va être partagé
+     * @param user utilisateur qui propose le fichier
+     * @return void
+     */
     @Override
-    public void requestAddSource(FileHandler file, UserIdentity user){
-    
-    }
-    
-    @Override
-    public void sendFileChanges(User user, FileHandler file){
-
-    }
-
-    //A priori pas utile puisque l'ajout d'un fichier (méthode requestUploadFile) ajoute la source automatiquement
-    /*@Override
-    public void requestAddSource(FileHandlerInfos file, UserIdentity user){
-        CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
-        Server server=new Server();
-        addSourceMsg message=new addSourceMsg(file, user);
-        server.sendMessage(message);
-        //l'info arrive de l'appli client et doit ensuite être envoyée à CommServer
-    }*/
-
-
-    @Override
-    public void requestUploadFile(FileHandlerInfos file, UserIdentity user){
-        CommunicationManagerClient cmc= CommunicationManagerClient.getInstance();
-
+    public void requestUploadFile(FileHandlerInfos file, UserIdentity user)
+    {
+        /**
+         * Récupération du Communication Manager cote Client et de l'adresseIP du server
+         */
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+        /**
+         * Création du message
+         */
         uploadFileMsg message=new uploadFileMsg(file, user);
-
-        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        /**
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message a envoyer
+         * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
+        Client c = new Client(message, commManagerClient.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
     }
-    
+
+    /**
+     * Envoie les infos sur la nouvelle source d'un fichier à tous les clients du réseau
+     * @param fi fichier partagé
+     * @param user utilisateur qui devient source pour ce fichier
+     * @return void
+     */
     @Override
-    public void uploadFile(FileHandlerInfos fi, UserIdentity user){
-        CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        
+    public void uploadFile(FileHandlerInfos fi, UserIdentity user)
+    {
+        /**
+         * Récupération du Communication Manager cote Client et de l'adresseIP du server
+         */
+        CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+        /**
+         * Creation d'un message
+         */
         uploadFileMsg message = new uploadFileMsg(fi,user );
-        
-        System.out.println("Client cree");
-        Client c = new Client(message, cmc.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
+        System.out.println("Client crée");
+        /**
+         * Création d'un client qui permet d'envoyer le message au serveur
+         * @param message : message à envoyer
+         * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+         * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+         */
+        Client c = new Client(message, commManagerClient.getAddressIpServer(), Const.SERVER_DEFAULT_PORT);
         c.start();
     }
 
     @Override
-    public void requestFileLoc(FileHandler file, UserIdentity user){
-
+    public void requestFileLoc(FileHandler file, UserIdentity user)
+    {
 
     }
 
+    /**
+     *
+     * @param userAsking : l'utilisateur qui possede le fichier voulu
+     * @param userSource : l'utilisateur source qui veut une partie de fichier a telecharger
+     * @param file : le fichier a telecherger
+     * @param part : la partie de ficher dont on a besion
+     * @return void
+     */
     @Override
-    public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part){
-        //CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        try {
-            CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
+    public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part)
+    {
+        try
+        {
+            /**
+             * Récupération du Communication Manager cote Client et de l'adresseIP du server
+             */
+            CommunicationManagerServer commManagerServer = CommunicationManagerServer.getInstance();
+            /**
+             * Création du message
+             */
             getFileMsg message = new getFileMsg(userAsking, userSource, file, part);
-            String ipUserSource = cms.findUserIp(userSource.getId());
+            /**
+             * Récupération de l'adresseIP de l'utilisateur Source(userSource)
+             */
+            String ipUserSource = commManagerServer.findUserIp(userSource.getId());
+            /**
+             * Création d'un client qui permet d'envoyer le message au serveur
+             * @param message : message à envoyer
+             * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+             * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+             */
             Client c = new Client(message, ipUserSource, Const.CLIENT_DEFAULT_PORT);
             c.start();
         }
-        catch (Exception e) {
+        /**
+         * Manipulation de reprise sur Erreur
+         */
+        catch (Exception e)
+        {
             e.printStackTrace(); // Pour les tests
-            CommunicationManagerClient cmc = CommunicationManagerClient.getInstance(); // Client ask again
-            DataClientToComm dataInterface = cmc.getDataInterface();
+            /**
+             * Récupération du Communication Manager cote Client une autre fois
+             */
+            CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
+            /**
+             * Récupération de l'interface de dataClient
+             */
+            DataClientToComm dataInterface = commManagerClient.getDataInterface();
+            /**
+             * Appel de la methode notifyAskForFilePartAgain pour manipuler l'erreur
+             */
             dataInterface.notifyAskForFilePartAgain(userSource, file, part);
         }
     }
 
-
+    /**
+     *
+     * @param userAsking : l'utilisateur qui veut une partie de fichier a telecharger
+     * @param userSource : l'utilisateur qui possede le fichier voulu
+     * @param file : le fichier a telecharger
+     * @param part : la partie voulue de fichier
+     * @param content : le contenu voulu de fichier
+     * @return void
+     */
     @Override
-    public void sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content){
+    public void sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content)
+    {
         //Depuis la source jusqu'à l'utilisateur demandeur
-        try {
+        try
+        {
+            /**
+             * Creation du message
+             */
             sendFileMsg message = new sendFileMsg(userAsking, userSource, file, part, content);
+            /**
+             * Récupération de l'adresseIP de l'utilisateur Source(userSource)
+             */
             String ipUserAsking = this.commManagerServer.findUserIp(userSource.getId());
+            /**
+             * Création d'un client qui permet d'envoyer le message au serveur
+             * @param message : message à envoyer
+             * @param commManagerClient.getAddressIpServer()=ipServer : Adresse IP du serveur
+             * @param Const.SERVER_DEFAULT_PORT : Port constant du serveur (1028)
+             */
             Client client = new Client(message, ipUserAsking, Const.CLIENT_DEFAULT_PORT);
             client.start();
         }
-        catch (Exception e){
+        /**
+         * Manipulation de reprise sur Erreur
+         */
+        catch (Exception e)
+        {
             e.printStackTrace(); // Pour les test
-            System.out.println("Client deconnecte, arret du telechargement");
+            /**
+             * Affichage d'un message indiquant que le client est déconnecté et il y a un arrêt de téléchargement
+             */
+            System.out.println("Client déconnecté, arrêt du téléchargement");
 
         }
     }

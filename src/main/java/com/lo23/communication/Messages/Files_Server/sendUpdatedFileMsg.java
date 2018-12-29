@@ -10,26 +10,52 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.communication.Messages.FileMessage;
 import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
-public class sendUpdatedFileMsg extends FileMessage{
+/**
+ * Message pour envoyer les mises a jour d'un fichier
+ */
+public class sendUpdatedFileMsg extends FileMessage
+{
+	/**
+	 * user : l'utilisateur
+	 */
 	private User usr;
+	/**
+	 * serialVersionUID : l'identifiant unique de la classe
+	 */
 	private static final long serialVersionUID = 51L;
-	public sendUpdatedFileMsg(FileHandlerInfos fi, User user){
+
+	/**
+	 * Constructeur
+	 * @param fi : le fichier qui subit les mises a jour
+	 * @param user : l'utilisateur qui fait les mises a jour
+	 */
+	public sendUpdatedFileMsg(FileHandlerInfos fi, User user)
+	{
 		this.file = fi;
 		this.usr = user;
 	}
-	
-	public void treatment(){
-        /**
-         * Recupere le communication manager cote client
-         * Recupere son interface de dataClient
-         * Appel la methode notifyOtherUserUpdatedAccountToAll
-         */
 
+	/**
+	 * cree le message d'envoyer les mises a jour d'un fichier
+	 */
+	public void treatment()
+	{
+		/**
+		 * Recuperation le communication manager cote client
+		 */
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
-        DataClientToComm dataInterfaceClient = cmc.getDataInterface();
+		/**
+		 * Recuperation de l'interface de dataClient
+		 */
+		DataClientToComm dataInterfaceClient = cmc.getDataInterface();
+		/**
+		 * Appel de la methode de data notifier à tout utilisateur les mises à jour
+		 */
         dataInterfaceClient.notifyUpdatedSharedFileToAll(this.file,this.usr);
-	
 	}
 
-    public boolean isToServ(){return false;}
+    public boolean isToServ()
+	{
+		return false;
+	}
 }

@@ -10,11 +10,26 @@ import com.lo23.communication.Messages.UserMessage;
 
 import java.util.List;
 
-public class removeDisconnectedUserMsg extends UserMessage{
+/**
+ * Message pour supprimer l'utilisateur deconnecte
+ */
+public class removeDisconnectedUserMsg extends UserMessage
+{
+	/**
+	 * serialVersionUID : l'identifiant unique de la classe
+	 */
 	private static final long serialVersionUID = 44L;
+	/**
+	 * usr : l'identite de l'utilisateur
+	 */
 	private UserStats usr;
-	
-	public removeDisconnectedUserMsg(UserStats ui){
+
+	/**
+	 * Constructeur
+	 * @param ui : l'utilisateur deconnecte
+	 */
+	public removeDisconnectedUserMsg(UserStats ui)
+	{
 		this.usr = ui;
 	}
 	/**
@@ -23,12 +38,27 @@ public class removeDisconnectedUserMsg extends UserMessage{
 	 * Appel la methode addNewConnectedUser pour lui transmettre son objet user Stats
 	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
-	public void treatment(){
+	/**
+	 * cree le message pour supprimer l'utilisateur deconnecte
+	 */
+	public void treatment()
+	{
+		/**
+		 * Recuperation de Communication Manager cote client
+		 */
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
+		/**
+		 * Récupération de l'interface de dataClient
+		 */
 		DataClientToComm dataInterface = cms.getDataInterface();
-		
+		/**
+		 * Appel de la methode de data notifyOtherUserDisconnectedToAll qui permet de notifier l'utilisateur déconnecté à tous
+		 */
 		dataInterface.notifyOtherUserDisconnectedToAll(this.usr);
 	}
 
-    public boolean isToServ(){return false;}
+    public boolean isToServ()
+	{
+		return false;
+	}
 }

@@ -7,12 +7,28 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.communication.Messages.UserMessage;
 import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
-public class updateUserInfoMsg extends UserMessage{
+/**
+ * Message pour mettre a jour les informations d'un utilisateur
+ */
+public class updateUserInfoMsg extends UserMessage
+{
+	/**
+	 * serialVersionUID : l'identifiant unique de la classe
+	 */
 	private static final long serialVersionUID = 50L;
+
+	/**
+	 * Constructeur
+	 * @param ui : l'utilisateur qui subit les mises a jour de ses informations
+	 */
 	public updateUserInfoMsg(UserIdentity ui)
     {
 		this.user = ui;
 	}
+
+	/**
+	 * cree le message pour mettre a jour les informations d'un utilisateur
+	 */
 	public void treatment()
     {
         /**
@@ -20,17 +36,34 @@ public class updateUserInfoMsg extends UserMessage{
          * Recupere son interface de dataServer
          * Appel la methode updateUserChanges
          */
-		CommunicationManagerServer cms = CommunicationManagerServer.getInstance();
-		DataServerToComm dataInterface = cms.getDataInterface();
+		/**
+		 * Récuperation de communication manager coté serveur
+		 */
+		CommunicationManagerServer commManagerServer = CommunicationManagerServer.getInstance();
+		/**
+		 * Récupération de l'interface de data
+		 */
+		DataServerToComm dataInterface = commManagerServer.getDataInterface();
 		/** On récupère et stocke l'adresse IP du serveur
 		 */
+		/**
+		 * Appel de la methode de data updateUserChanges qui permet de mettre à jour les modifications de l'utilisateur
+		 */
 		dataInterface.updateUserChanges(user);
-
 	    /** Création du message pour le broadcast des informations**/
-	    updatedAccountMsg message = new updatedAccountMsg(this.user);
+		/**
+		 * Création de message de mettre a jour le compte de l'utilisateur
+		 */
+		updatedAccountMsg message = new updatedAccountMsg(this.user);
 		message.setPort(this.getPort());
-	    cms.broadcast(message);
+		/**
+		 * Faire le broadcast du message de connexion vers tous les utilisateurs
+		 */
+	    commManagerServer.broadcast(message);
 	}
 
-    public boolean isToServ(){return true;}
+    public boolean isToServ()
+	{
+		return true;
+	}
 }

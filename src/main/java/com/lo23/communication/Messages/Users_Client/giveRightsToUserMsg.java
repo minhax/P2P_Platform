@@ -3,17 +3,23 @@ package com.lo23.communication.Messages.Users_Client;
 import com.lo23.common.user.UserIdentity;
 import com.lo23.communication.Messages.UserMessage;
 
-public class giveRightsToUserMsg extends UserMessage{
+public class giveRightsToUserMsg extends UserMessage
+{
 	private static final long serialVersionUID = 48L;
 	protected String rights;
 	
-	public giveRightsToUserMsg(UserIdentity ui, String r){
+	public giveRightsToUserMsg(UserIdentity ui, String r)
+	{
 		this.user = ui;
 		this.rights = r;
 	}
-	public void treatment(){
+	public void treatment()
+	{
 	
 	}
 
-	public boolean isToServ(){return true;}
+	public boolean isToServ()
+	{
+		return true;
+	}
 }

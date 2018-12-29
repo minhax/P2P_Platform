@@ -10,27 +10,28 @@ import java.net.Socket;
  * Client for socket communication
  * Careful, the Central Server can act as a Client if he's sending messages to Peers
  */
-public class Client extends Thread implements Serializable{
+public class Client extends Thread implements Serializable
+{
     
     /**
-     * Message que l'on diffuse sur le reseau
+     * msg : Message que l'on diffuse sur le reseau
      */
     private Message msg;
     /**
-     * Port destination
+     * destinationPort : Port destination
      */
     private int destinationPort; // Le port destination
     /**
-     * Adresse IP de destination
+     * destinationAdress : Adresse IP de destination
      */
     private String destinationAdress; // L'adresse du client
     /**
-     * Boolean pour indiquer la fin de la transmission du message
+     * jobDone : Boolean pour indiquer la fin de la transmission du message
      */
     private boolean jobDone;
     
     /**
-     * Socket de communication avec le serveur
+     * socket : Socket de communication avec le serveur
      */
     private Socket socket;
     
@@ -53,10 +54,13 @@ public class Client extends Thread implements Serializable{
     }
     
     @Override
-    public void run(){
-        try {
+    public void run()
+    {
+        try
+        {
             this.start(this.msg, this.destinationAdress, this.destinationPort);
-        }catch(Exception e)
+        }
+        catch(Exception e)
         {
             e.printStackTrace();
             System.out.println("msg = " + msg + "Destination = " + destinationAdress + "port = " + destinationPort);
@@ -73,12 +77,15 @@ public class Client extends Thread implements Serializable{
         /**
          * Tant que le message n'est pas envoye, on reessaye l'ouverture de sockets
          */
-        while (!this.jobDone) {
-            try {
+        while (!this.jobDone)
+        {
+            try
+            {
                 System.out.println("[Client] Creation de la socket vers " + destinationAdress + "port " + destinationPort);
                 this.socket = new Socket(this.destinationAdress, this.destinationPort);
                 this.jobDone = true;
-                try {
+                try
+                {
                     /**
                      * SendMessageSocket implemente Thread
                      * quitte la boucle des que le message est envoye
@@ -88,13 +95,19 @@ public class Client extends Thread implements Serializable{
                     sendMessageSocket.start();
                     
                     
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 System.out.println("Port " + destinationPort + " non disponible");
                 e.printStackTrace();
-            } finally {
+            }
+            finally
+            {
                 /**
                  * Execute meme si une erreur survient
                  * incremente le port de destination pour pouvoir retenter une connexion socket

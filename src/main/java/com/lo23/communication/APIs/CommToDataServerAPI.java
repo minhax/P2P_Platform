@@ -12,7 +12,8 @@ import com.lo23.data.Const;
 
 import java.util.List;
 
-public class CommToDataServerAPI implements CommToDataServer {
+public class CommToDataServerAPI implements CommToDataServer
+{
 
 
     protected static CommunicationManagerServer commManagerServer ;
@@ -36,8 +37,6 @@ public class CommToDataServerAPI implements CommToDataServer {
     {
         return commManagerServer;
     }
-
-
     public void setCommunicationManager(CommunicationManagerServer commManager)
     {
         this.commManagerServer=commManager;
@@ -47,7 +46,8 @@ public class CommToDataServerAPI implements CommToDataServer {
     /*========= Implémentation des méthodes ============= */
     
     @Override
-    public void sendFileLoc(List<UserIdentity> sourceUsers){
+    public void sendFileLoc(List<UserIdentity> sourceUsers)
+    {
 
     }
 
@@ -65,7 +65,8 @@ public class CommToDataServerAPI implements CommToDataServer {
     }
 
     @Override
-    public void sendNewFileSource(FileHandlerInfos file, UserIdentity user){
+    public void sendNewFileSource(FileHandlerInfos file, UserIdentity user)
+    {
 
     }
 
