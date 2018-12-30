@@ -29,6 +29,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -114,7 +115,7 @@ public class MainController implements Initializable {
     private ListView listViewAvailableFiles;
 
     @FXML
-    private ListView listViewMyFiles;
+    private ListView<FileHandler> listViewMyFiles;
 
     @FXML
     private ListView listViewDownloading;
@@ -124,6 +125,19 @@ public class MainController implements Initializable {
 
     @FXML
     private Label incorrectIP;
+
+    @FXML
+    private AnchorPane currentFileDetailsPane;
+
+    @FXML
+    private Label currentFileName;
+
+    @FXML
+    private Label currentFiledescription;
+
+    @FXML
+    private Label currentFileSize;
+
 
     //gestion fenêtre contacts en ligne
     private List<UserIdentity> connectedUsers = new ArrayList<UserIdentity>();
@@ -140,6 +154,7 @@ public class MainController implements Initializable {
     private DataClientToIhm api;
     private IhmToDataClientAPI ihmapi;
 
+    private FileHandler currentDetailsFile;
 
     //gestion recherche de fichier
     private ObservableList<String> choices = FXCollections.observableArrayList();
@@ -147,21 +162,17 @@ public class MainController implements Initializable {
 
 
     public MainController(DataClientToIhm dataAPI) {
-        api=dataAPI;
+        api = dataAPI;
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         incorrectIP.setVisible(false);
+        currentFileDetailsPane.setVisible(false);
 
         // TODO :  Gérer les fichiers ici
         ObservableList<FileHandler> data = getMyFiles();
         listViewMyFiles.setItems(data);
-
-        ObservableList<FileHandler> dataTest = FXCollections.observableArrayList();
-        dataTest.addAll(new FileHandler("hash1", "document 1", 15152, "document", 16),
-                new FileHandler("hash2", "document 2", 1554, "document2", 32),
-                new FileHandler("hash3", "document 3", 15152, "document3", 64));
-
 
         researchTextField.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -196,9 +207,6 @@ public class MainController implements Initializable {
                 return new DownloadingFilesListCell();
             }
         });
-
-
-
 
 
         //pour test
@@ -255,8 +263,8 @@ public class MainController implements Initializable {
     public void OnServerParametersButtonClicked() {
         String new_ip = changeServerIpAdressTextField.getText();
         Pattern pat = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
-        if(pat.matcher(new_ip).matches())
-            if(api.requestConnectionToServer(new_ip)) {
+        if (pat.matcher(new_ip).matches())
+            if (api.requestConnectionToServer(new_ip)) {
                 //TODO : ne pas fermer, mais plutôt réactualiser toute la page ? À réétudier quand l'application restera sur la même fenêtre
 
                 ((Stage) this.mainHBox.getScene().getWindow()).close();
@@ -276,7 +284,7 @@ public class MainController implements Initializable {
             } else {
                 incorrectIP.setVisible(true);
             }
-         else {
+        else {
             incorrectIP.setVisible(true);
         }
     }
@@ -303,13 +311,23 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    public void OnMyFilesItemClicked() {
+        FileHandler file = listViewMyFiles.getSelectionModel().getSelectedItem();
+
+        if (listViewMyFiles.getSelectionModel().getSelectedItem() != null) {
+            currentFileDetailsPane.setVisible(true);
+            currentFileName.textProperty().setValue(file.getTitle());
+            currentFileSize.textProperty().setValue(Long.toString(file.getSize()));
+        }
+    }
+
     private void binding() {
         this.contactsListView.itemsProperty().bind(userListProperty);
     }
 
     private void refreshContactsWindow() {
         if(connectedUsers!=null) {
-
             Iterator it = connectedUsers.listIterator();
             UserIdentity currentUser = new UserIdentity();
             userList.clear();
@@ -350,7 +368,7 @@ public class MainController implements Initializable {
 
 
     @FXML
-    public void OnAddDocumentButtonClicked(){
+    public void OnAddDocumentButtonClicked() {
         // Ouvre le fenêtre d'ajout d'un fichier
 
         try {
@@ -385,7 +403,7 @@ public class MainController implements Initializable {
         List<FileHandler> fhsharedbyme = api.requestFilesSharedByMe();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
-        if(fhsharedbyme != null && !fhsharedbyme.isEmpty()) {
+        if (fhsharedbyme != null && !fhsharedbyme.isEmpty()) {
             data.addAll(fhsharedbyme);
         }
         return data;
@@ -395,7 +413,7 @@ public class MainController implements Initializable {
         List<FileHandler> fhsharedbyothers = api.requestFilesSharedByOthers();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
-        if(fhsharedbyothers != null && !fhsharedbyothers.isEmpty()) {
+        if (fhsharedbyothers != null && !fhsharedbyothers.isEmpty()) {
             data.addAll(fhsharedbyothers);
         }
         return data;
@@ -405,12 +423,12 @@ public class MainController implements Initializable {
         List<FileHandler> in_queue = api.requestInQueueFiles();
 
         ObservableList<FileHandler> data = FXCollections.observableArrayList();
-        if(in_queue != null && !in_queue.isEmpty()) {
+        if (in_queue != null && !in_queue.isEmpty()) {
             data.addAll(in_queue);
         }
 
         List<FileHandler> downloading = api.requestInProgressFiles();
-        if(downloading != null && !downloading.isEmpty()) {
+        if (downloading != null && !downloading.isEmpty()) {
             data.addAll(downloading);
         }
         return data;
@@ -429,7 +447,6 @@ public class MainController implements Initializable {
 
     public void researchFile(String searchItem)
     {
-
         researchResults = api.requestSearchFile(searchItem);
 
         ObservableList<FileHandler> donnees = FXCollections.observableArrayList(researchResults);
@@ -437,12 +454,13 @@ public class MainController implements Initializable {
         listViewAvailableFiles.setItems(donnees);
     }
 
-    
-    public List<UserIdentity> getConnectedUsers()
-    {
-    	return this.connectedUsers;
+
+    public List<UserIdentity> getConnectedUsers() {
+        return this.connectedUsers;
     }
 
-    public ObservableList<DownloadingFilesListCell> getCurrentlyShowingDownloadingFiles() { return listViewDownloading.getItems();}
+    public ObservableList<DownloadingFilesListCell> getCurrentlyShowingDownloadingFiles() {
+        return listViewDownloading.getItems();
+    }
 
 }
