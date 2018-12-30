@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -53,7 +54,7 @@ public class MainController implements Initializable {
     private TextField researchTextField;
 
     @FXML
-    private ComboBox<String> chooseResearchBox;
+    private Button researchButton;
 
     @FXML
     private TabPane mainTabPane;
@@ -152,9 +153,6 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         incorrectIP.setVisible(false);
 
-        choices.addAll("Nom", "Auteur", "Tags");
-        chooseResearchBox.setItems(choices);
-
         // TODO :  Gérer les fichiers ici
         ObservableList<FileHandler> data = getMyFiles();
         listViewMyFiles.setItems(data);
@@ -169,20 +167,13 @@ public class MainController implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 // la recherche se fait en appuyant sur la touche entrée
-                //if(event.getCode().equals(KeyCode.ENTER)) {
+                if(event.getCode().equals(KeyCode.ENTER)) {
                     researchResults.clear();
                     String searchItem = researchTextField.getText();
                     // choix de recherche pas dans la méthode de Data??
-                    String searchMethod = chooseResearchBox.getValue();
 
-                    researchFile(searchItem,searchMethod);
+                    researchFile(searchItem);
                     mainTabPane.getSelectionModel().select(availableFilesTab);
-               // }
-
-                // pour revenir à la liste de tous les fichiers disponibles (hors recherche) : touche backspace
-                //else if(event.getCode().equals(KeyCode.BACK_SPACE)) {
-                if(researchTextField.getText().isEmpty() || researchTextField.getText()==null){
-                    listViewAvailableFiles.setItems(dataTest);
                 }
             }
         });
@@ -424,8 +415,19 @@ public class MainController implements Initializable {
         }
         return data;
     }
+    
+    @FXML
+    void OnReasearchButtonClicked() {
+    	
+            researchResults.clear();
+            String searchItem = researchTextField.getText();
 
-    public void researchFile(String searchItem, String searchMethod)
+
+            researchFile(searchItem);
+            mainTabPane.getSelectionModel().select(availableFilesTab);
+    }
+
+    public void researchFile(String searchItem)
     {
 
         researchResults = api.requestSearchFile(searchItem);
