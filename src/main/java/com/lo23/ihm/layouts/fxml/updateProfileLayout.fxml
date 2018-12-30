@@ -4,18 +4,24 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="updateUserPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
-      <Text layoutX="160.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editer son profil :" wrappingWidth="126.5966796875" />
-      <TextField fx:id="passwordUpdateField" layoutX="160.0" layoutY="96.0" prefHeight="38.0" prefWidth="290.0" promptText="Mot de passe ..." />
-      <TextField fx:id="passwordConfirmationUpdateField" layoutX="160.0" layoutY="147.0" prefHeight="38.0" prefWidth="290.0" promptText="Confirmation Mot de Passe..." />
-      <TextField fx:id="familynameUpdateField" layoutX="160.0" layoutY="200.0" prefHeight="38.0" prefWidth="290.0" promptText="Nom ..." />
-      <TextField fx:id="nameUpdateField" layoutX="160.0" layoutY="249.0" prefHeight="38.0" prefWidth="290.0" promptText="Prénom ..." />
-      <TextField fx:id="ageUpdateField" layoutX="160.0" layoutY="301.0" prefHeight="38.0" prefWidth="290.0" promptText="Âge..." />
-      <Button fx:id="validateUpdateButton" layoutX="160.0" layoutY="464.0" mnemonicParsing="false" onAction="#Validate" prefHeight="27.0" prefWidth="290.0" text="Valider" />
-      <Button fx:id="previousButton" layoutX="33.0" layoutY="32.0" mnemonicParsing="false" onAction="#Previous" text="&lt;- Précédent" />
-      <Label fx:id="errorUpdateLabel" layoutX="192.0" layoutY="497.0" prefHeight="17.0" prefWidth="226.0" text="Tous les champs sont obligatoires" textFill="RED" />
+      <Text layoutX="205.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editer son profil :" wrappingWidth="126.5966796875" />
+      <TextField fx:id="passwordUpdateField" layoutX="205.0" layoutY="59.0" prefHeight="38.0" prefWidth="290.0" promptText="Mot de passe ..." style="-fx-prompt-text-fill: #FFFFFF; -fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc;" />
+      <TextField fx:id="passwordConfirmationUpdateField" layoutX="205.0" layoutY="110.0" prefHeight="38.0" prefWidth="290.0" promptText="Confirmation Mot de Passe..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
+      <TextField fx:id="familynameUpdateField" layoutX="205.0" layoutY="164.0" prefHeight="38.0" prefWidth="290.0" promptText="Nom ..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
+      <TextField fx:id="nameUpdateField" layoutX="205.0" layoutY="220.0" prefHeight="38.0" prefWidth="290.0" promptText="Prénom ..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
+      <TextField fx:id="ageUpdateField" layoutX="205.0" layoutY="276.0" prefHeight="38.0" prefWidth="290.0" promptText="Âge..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
+      <Button fx:id="validateUpdateButton" layoutX="205.0" layoutY="341.0" mnemonicParsing="false" onAction="#Validate" prefHeight="27.0" prefWidth="290.0" style="-fx-background-color: #79ebff#79ebff;" text="Valider" />
+      <Button fx:id="previousButton" layoutX="33.0" layoutY="32.0" mnemonicParsing="false" onAction="#Previous" style="-fx-background-color: #ffffff;" text="&lt;- Précédent" />
+      <Label fx:id="errorUpdateLabel" layoutX="237.0" layoutY="384.0" prefHeight="17.0" prefWidth="226.0" text="Tous les champs sont obligatoires" textFill="#d30d0d" />
+      <Line endX="179.0" layoutX="316.0" layoutY="97.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="316.0" layoutY="148.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="316.0" layoutY="202.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="316.0" layoutY="258.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="316.0" layoutY="314.0" startX="-111.0" stroke="WHITE" />
    </children>
 </AnchorPane>

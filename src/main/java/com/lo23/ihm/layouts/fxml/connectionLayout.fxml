@@ -5,15 +5,43 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="connectionPane" fx:id="connectionPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
-      <Label fx:id="incorrectLabel" layoutX="177.0" layoutY="25.0" prefHeight="18.0" prefWidth="322.0" text="Nom d'utilisateur/mot de passe incorrect" textFill="#f50202" />
-      <TextField id="userNameTextField" fx:id="userNameTextField" layoutX="150.0" layoutY="53.0" prefHeight="34.0" prefWidth="340.0" promptText="Nom d'utilisateur ..." AnchorPane.bottomAnchor="316.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="50.0" />
-      <PasswordField id="passwordField" fx:id="passwordField" layoutX="150.0" layoutY="99.0" prefHeight="34.0" prefWidth="340.0" promptText="Mot de passe …" />
-      <TextField id="serverChoiceTextField" fx:id="serverChoiceTextField" layoutX="150.0" layoutY="151.0" prefHeight="25.0" prefWidth="223.0" promptText="Choix de server ..." />
-      <TextField id="portTextField" fx:id="portTextField" layoutX="386.0" layoutY="151.0" prefHeight="25.0" prefWidth="103.0" promptText="Port ..." />
-      <Button id="connectButton" fx:id="connectButton" layoutX="242.0" layoutY="254.0" mnemonicParsing="false" onAction="#OnConnectClicked" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #00BFFF; -fx-border-radius: 1;" text="Se connecter" />
-      <Button id="createAccountButton" fx:id="creatAccountButton" layoutX="242.0" layoutY="307.0" mnemonicParsing="false" onAction="#OnCreateAccountLoaderClicked" onMouseClicked="#OnCreateAccountLoaderClicked" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #C0C0C0;" text="Créer un compte" />
+      <AnchorPane prefHeight="458.0" prefWidth="350.0" style="-fx-background-color: #6287cc;">
+         <children>
+            <Label layoutX="49.0" layoutY="120.0" prefHeight="55.0" prefWidth="253.0" text="Inscrivez-vous" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="48.0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="119.0" layoutY="202.0" prefHeight="27.0" prefWidth="113.0" text="C'est gratuit!" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="118.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button id="createAccountButton" fx:id="creatAccountButton" layoutX="79.0" layoutY="337.0" mnemonicParsing="false" onAction="#OnCreateAccountLoaderClicked" onMouseClicked="#OnCreateAccountLoaderClicked" prefHeight="34.0" prefWidth="193.0" style="-fx-background-color: #79ebff;" text="Créer un compte" textAlignment="CENTER" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="78.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="351.0" layoutY="-4.0" prefHeight="462.0" prefWidth="350.0" style="-fx-background-color: #79a8ff;">
+         <children>
+            <AnchorPane layoutX="31.0" layoutY="115.0" prefHeight="261.0" prefWidth="275.0">
+               <children>
+                  <Label fx:id="incorrectLabel" layoutX="27.0" prefHeight="18.0" prefWidth="262.0" text="Nom d'utilisateur/mot de passe incorrect" textFill="#c30a0a" />
+                  <TextField id="userNameTextField" fx:id="userNameTextField" layoutX="0.5" layoutY="24.0" prefHeight="34.0" prefWidth="288.0" promptText="Nom d'utilisateur" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+                  <Line endX="187.0" layoutX="101.0" layoutY="58.0" startX="-100.0" stroke="WHITE" />
+                  <PasswordField id="passwordField" fx:id="passwordField" layoutX="0.5" layoutY="88.0" prefHeight="34.0" prefWidth="288.0" promptText="Mot de passe" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+                  <Line endX="187.0" layoutX="101.0" layoutY="122.0" startX="-100.0" stroke="WHITE" />
+                  <TextField id="serverChoiceTextField" fx:id="serverChoiceTextField" layoutX="0.5" layoutY="152.0" prefHeight="34.0" prefWidth="170.0" promptText="Choix de server" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+                  <TextField id="portTextField" fx:id="portTextField" layoutX="185.5" layoutY="152.0" prefHeight="34.0" prefWidth="103.0" promptText="Port" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+                  <Line endX="71.0" layoutX="101.0" layoutY="186.0" startX="-100.0" stroke="WHITE" />
+                  <Button id="connectButton" fx:id="connectButton" layoutX="48.0" layoutY="225.0" mnemonicParsing="false" onAction="#OnConnectClicked" prefHeight="34.0" prefWidth="193.0" style="-fx-background-color: #ffffff; -fx-border-radius: 1;" text="Se connecter" />
+                  <Line endX="59.0" layoutX="221.0" layoutY="186.0" startX="-28.0" stroke="WHITE" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

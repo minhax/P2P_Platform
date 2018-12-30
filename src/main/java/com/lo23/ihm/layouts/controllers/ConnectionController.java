@@ -56,7 +56,6 @@ public class ConnectionController implements Initializable {
         model = new ConnectionModel();
         incorrectLabel.setVisible(false);
         binding();
-        // TODO Auto-generated method stub
 
     }
 
@@ -100,8 +99,6 @@ public class ConnectionController implements Initializable {
                 Stage stage = (Stage) connectionPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
