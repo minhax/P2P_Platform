@@ -208,11 +208,6 @@ public class MainController implements Initializable {
             }
         });
 
-
-        //pour test
-        user = new UserIdentity("login", "Prénom", "Nom", 21);
-        connectedUsers.add(user);
-
         refreshTimer = new Timer();
 
         refreshTimer.scheduleAtFixedRate(new TimerTask() {
