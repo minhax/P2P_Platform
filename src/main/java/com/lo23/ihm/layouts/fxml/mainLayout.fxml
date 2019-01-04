@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -12,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="mainHBox" fx:id="mainHBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="mainHBox" fx:id="mainHBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane id="leftPane" fx:id="leftPane" prefHeight="400.0" prefWidth="160.0" style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc;">
          <children>
@@ -88,11 +92,12 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <AnchorPane id="mainBottomPane" fx:id="mainBottomPane" prefHeight="35.0" prefWidth="278.0">
+            <AnchorPane id="mainBottomPane" fx:id="mainBottomPane" prefHeight="87.0" prefWidth="348.0">
                <children>
-                  <TextField fx:id="changeServerIpAdressTextField" layoutX="14.0" layoutY="-3.0" prefHeight="27.0" prefWidth="217.0" promptText="IP du serveur" />
-                  <Button id="serverParametersButton" fx:id="serverParametersButton" layoutX="247.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#OnServerParametersButtonClicked" style="-fx-font-size: 8px; -fx-background-color: #C0C0C0;" text="Changer le serveur" />
-                  <Label fx:id="incorrectIP" disable="true" layoutX="23.0" layoutY="24.0" prefHeight="17.0" prefWidth="148.0" style="-fx-font-size: 10;" text="IP incorrecte" textFill="RED" />
+                  <TextField fx:id="changeServerIpAdressTextField" layoutX="14.0" layoutY="5.0" prefHeight="27.0" prefWidth="217.0" promptText="IP du serveur" />
+                  <Button id="serverParametersButton" fx:id="serverParametersButton" layoutX="247.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#OnServerParametersButtonClicked" style="-fx-font-size: 8px; -fx-background-color: #C0C0C0;" text="Changer le serveur" />
+                  <Label fx:id="incorrectIP" disable="true" layoutX="110.0" layoutY="44.0" prefHeight="17.0" prefWidth="148.0" style="-fx-font-size: 10;" text="IP incorrecte" textFill="RED" />
+                  <TextField fx:id="changeServerPortTextField1" layoutX="14.0" layoutY="37.0" prefHeight="31.0" prefWidth="71.0" promptText="Port" />
                </children>
             </AnchorPane>
          </children>

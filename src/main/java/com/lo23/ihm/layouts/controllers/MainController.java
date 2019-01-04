@@ -124,6 +124,10 @@ public class MainController implements Initializable {
     private TextField changeServerIpAdressTextField;
 
     @FXML
+    private TextField changeServerPortTextField1;
+
+
+    @FXML
     private Label incorrectIP;
 
     @FXML
@@ -257,6 +261,7 @@ public class MainController implements Initializable {
     @FXML
     public void OnServerParametersButtonClicked() {
         String new_ip = changeServerIpAdressTextField.getText();
+        String new_port = changeServerPortTextField1.getText();
         Pattern pat = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
         if (pat.matcher(new_ip).matches())
             if (api.requestConnectionToServer(new_ip)) {
