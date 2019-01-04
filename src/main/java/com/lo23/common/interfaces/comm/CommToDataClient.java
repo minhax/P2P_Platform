@@ -94,21 +94,21 @@ public interface CommToDataClient
     void requestFileLoc(FileHandler file, UserIdentity user);
 
     /**
-     *
-     * @param userAsking
-     * @param userSource
-     * @param file
-     * @param part
+     * demande une partie de fichier de l'utilisateur
+     * @param userAsking : l'utilisateur qui possede le fichier voulu
+     * @param userSource : l'utilisateur source qui veut une partie de fichier a telecharger
+     * @param file : le fichier a telecherger
+     * @param part : la partie de ficher dont on a besion
      */
     void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part);
 
     /**
-     *
-     * @param userAsking
-     * @param userSource
-     * @param file
-     * @param part
-     * @param content
+     * envoie la partie dont l'utilisateur a besoin
+     * @param userAsking : l'utilisateur qui veut une partie de fichier a telecharger
+     * @param userSource : l'utilisateur qui possede le fichier voulu
+     * @param file : le fichier a telecharger
+     * @param part : la partie voulue de fichier
+     * @param content : le contenu voulu de fichier
      */
     void  sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content);
 }

@@ -329,7 +329,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     /**
-     *
+     * demande une partie de fichier de l'utilisateur
      * @param userAsking : l'utilisateur qui possede le fichier voulu
      * @param userSource : l'utilisateur source qui veut une partie de fichier a telecharger
      * @param file : le fichier a telecherger
@@ -384,7 +384,7 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     /**
-     *
+     * envoie la partie dont l'utilisateur a besoin
      * @param userAsking : l'utilisateur qui veut une partie de fichier a telecharger
      * @param userSource : l'utilisateur qui possede le fichier voulu
      * @param file : le fichier a telecharger
