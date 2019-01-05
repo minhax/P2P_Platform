@@ -20,8 +20,6 @@ import com.lo23.ihm.layouts.controllers.CommentController;
 public class MyFilesListCell extends ListCell<FileHandler>  {
     HBox hbox = new HBox();
     Label label = new Label("_");
-    Button addNote = new Button("Noter");
-    Button addComment = new Button("Commenter");
     Button del = new Button("Supprimer");
     FileHandler lastItem;
     private DataClientToIhm api;
@@ -29,60 +27,7 @@ public class MyFilesListCell extends ListCell<FileHandler>  {
     public MyFilesListCell(DataClientToIhm dataAPI) {
         super();
         api=dataAPI;
-        hbox.getChildren().addAll(label, addNote, addComment, del);
-        addNote.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                try {
-
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getClassLoader().getResource("ratingLayout.fxml"));
-                    Parent root = loader.load();
-
-                    ratingController controller = loader.getController();
-                    controller.setFile(lastItem);
-
-                    Stage stage = new Stage();
-
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setOpacity(1);
-                    stage.setTitle("Notation d'un fichier");
-                    stage.setScene(new Scene(root));
-                    stage.showAndWait();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        addComment.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	try {
-
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getClassLoader().getResource("commentLayout.fxml"));
-                    Parent root = loader.load();
-
-                    CommentController controller = loader.getController();
-                    controller.setFile(lastItem);
-
-                    Stage stage = new Stage();
-
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setOpacity(1);
-                    stage.setTitle("Commentaire d'un fichier");
-                    stage.setScene(new Scene(root));
-                    stage.showAndWait();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        hbox.getChildren().addAll(label, del);
 
         del.setOnAction(new EventHandler<ActionEvent>() {
             @Override

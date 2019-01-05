@@ -9,24 +9,24 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="368.0" prefWidth="350.0" style="-fx-background-color: dcdcdc;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="146.0" layoutY="26.0" text="Ajout d'un Fichier" textFill="WHITE" />
-      <Line endX="100.0" layoutX="254.0" layoutY="81.0" startX="-100.0" stroke="WHITE" />
-      <Label layoutX="39.0" layoutY="98.0" text="Taille" textFill="WHITE" />
-      <TextField fx:id="tailleFichier" disable="true" editable="false" layoutX="154.0" layoutY="93.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
-      <Line endX="100.0" layoutX="254.0" layoutY="121.0" startX="-100.0" stroke="WHITE" />
-      <Label layoutX="39.0" layoutY="138.0" text="Catégorie" textFill="WHITE" />
-      <TextField fx:id="categorieFichier" layoutX="154.0" layoutY="133.0" prefHeight="11.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
-      <Line endX="100.0" layoutX="252.0" layoutY="158.0" startX="-100.0" stroke="WHITE" />
-      <Label layoutX="39.0" layoutY="58.0" text="Nom du Fichier" textFill="WHITE" />
-      <TextField fx:id="nomFichier" layoutX="154.0" layoutY="54.0" prefHeight="11.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
-      <Label layoutX="41.0" layoutY="183.0" text="Tags" textFill="WHITE" />
-      <TextField fx:id="tagsFichier" layoutX="154.0" layoutY="179.0" prefHeight="11.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
-      <Line endX="100.0" layoutX="254.0" layoutY="204.0" startX="-100.0" stroke="WHITE" />
-      <Label layoutX="46.0" layoutY="225.0" text="Informations" textFill="WHITE" />
-      <TextArea fx:id="informationsFichier" layoutX="152.0" layoutY="225.0" prefHeight="86.0" prefWidth="201.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" stylesheets="@../resources/style.css" />
-      <Button fx:id="ajouterFichierButton" layoutX="26.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnAjouterFichierButtonClicked" prefHeight="34.0" prefWidth="131.0" style="-fx-background-color: #dc92ff;" text="Ajouter le fichier" />
-      <Button fx:id="annulerButton" layoutX="190.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnAnnulerButtonClicked" prefHeight="34.0" prefWidth="66.0" style="-fx-background-color: #79ebff;" text="Annuler" />
-      <Button fx:id="enregistrerButton" layoutX="272.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnEnregistrerButtonClicked" prefHeight="34.0" prefWidth="93.0" style="-fx-background-color: #8d79ff;" text="Enregistrer" />
-      <Line endX="100.0" layoutX="254.0" layoutY="312.0" startX="-100.0" stroke="WHITE" />
+      <Label layoutX="146.0" layoutY="26.0" text="Ajout d'un Fichier" textFill="#1e1010" />
+      <Line endX="100.0" layoutX="201.0" layoutY="79.0" startX="-100.0" stroke="WHITE" />
+      <Label layoutX="12.0" layoutY="98.0" text="Taille" />
+      <TextField fx:id="tailleFichier" disable="true" editable="false" layoutX="101.0" layoutY="93.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+      <Line endX="100.0" layoutX="201.0" layoutY="120.0" startX="-100.0" stroke="WHITE" />
+      <Label layoutX="12.0" layoutY="137.0" text="Catégorie" textFill="#110b0b" />
+      <TextField fx:id="categorieFichier" layoutX="101.0" layoutY="133.0" prefHeight="11.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+      <Line endX="100.0" layoutX="201.0" layoutY="158.0" startX="-100.0" stroke="WHITE" />
+      <Label layoutX="12.0" layoutY="58.0" text="Nom du Fichier" textFill="#110909" />
+      <TextField fx:id="nomFichier" disable="true" editable="false" layoutX="101.0" layoutY="54.0" prefHeight="11.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+      <Label layoutX="14.0" layoutY="183.0" text="Tags" textFill="#070505" />
+      <TextField fx:id="tagsFichier" layoutX="101.0" layoutY="179.0" prefHeight="11.0" prefWidth="200.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" />
+      <Line endX="100.0" layoutX="201.0" layoutY="204.0" startX="-100.0" stroke="WHITE" />
+      <Label layoutX="12.0" layoutY="225.0" text="Informations" textFill="#1b1111" />
+      <TextArea fx:id="informationsFichier" layoutX="101.0" layoutY="225.0" prefHeight="86.0" prefWidth="201.0" style="-fx-background-color: #79a8ff; -fx-prompt-text-fill: #ffffff;" stylesheets="@../resources/style.css" />
+      <Button fx:id="ajouterFichierButton" layoutX="308.0" layoutY="53.0" mnemonicParsing="false" onAction="#OnAjouterFichierButtonClicked" prefHeight="27.0" prefWidth="43.0" style="-fx-background-color: #dc92ff;" text="..." />
+      <Button fx:id="annulerButton" layoutX="101.0" layoutY="344.0" mnemonicParsing="false" onAction="#OnAnnulerButtonClicked" prefHeight="34.0" prefWidth="66.0" style="-fx-background-color: #79ebff;" text="Annuler" />
+      <Button fx:id="enregistrerButton" layoutX="209.0" layoutY="344.0" mnemonicParsing="false" onAction="#OnEnregistrerButtonClicked" prefHeight="34.0" prefWidth="93.0" style="-fx-background-color: #8d79ff;" text="Enregistrer" />
+      <Line endX="100.0" layoutX="201.0" layoutY="311.0" startX="-100.0" stroke="WHITE" />
    </children>
 </AnchorPane>
