@@ -7,15 +7,18 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Classe qui accepte la connexion
+ */
 public class AcceptConnexion extends Thread
 {
 	
 	/**
-	 * Socket serveur, attends les requetes dans le reseau
+	 * socketSocket : assiste aux requetes dans le réseau
 	 */
 	private ServerSocket socketserver = null;
 	/**
-	 * Socket de communication
+	 * socket : Socket de communication
 	 */
 	private Socket socket = null;
 	
@@ -23,8 +26,8 @@ public class AcceptConnexion extends Thread
 
 	/**
 	 * Constructeur
-	 * @param server
-	 * @param ss
+	 * @param server : serveur qui cree un serveur Socket
+	 * @param ss : socket serveur qui assiste aux requettes dans le reseau
 	 */
 	public AcceptConnexion(ServerSock server, ServerSocket ss) {
 		this.socketserver = ss;
@@ -32,6 +35,9 @@ public class AcceptConnexion extends Thread
 	}
 	
 	@Override
+	/**
+	 * accepte la connexion, lit et traite le message
+	 */
 	public void run()
 	{
 		

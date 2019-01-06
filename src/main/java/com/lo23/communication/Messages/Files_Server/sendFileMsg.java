@@ -8,28 +8,35 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.CommunicationManager.Server.CommunicationManagerServer;
 import com.lo23.communication.Messages.FileMessage;
 
-
+/**
+ * Message pour envoyer la partie dont l'utilisateur q besoin
+ */
 public class sendFileMsg extends FileMessage
 {
 	/**
-	 * userAsking : l'utilisateur
+	 * userAsking : l'utilisateur qui veut une partie de fichier à télécharger
 	 */
 	private User userAsking;
 	/**
-	 * userSource : l'utilisateur
+	 * userSource : l'utilisateur qui possède le fichier voulu
 	 */
 	private User userSource;
 	/**
-	 * part :
+	 * part : la partie voulue de fichier
 	 */
 	private long part;
 	/**
-	 * content : le contenu de fichier
+	 * content : le contenu voulu de fichier
 	 */
 	private byte[] content;
 
 	/**
-	 * Constructeur
+	 * envoie la partie dont l'utilisateur a besoin
+	 * @param userAsking : l'utilisateur qui veut une partie de fichier à télécharger
+	 * @param userSource : l'utilisateur qui possède le fichier voulu
+	 * @param file : le fichier à télécharger
+	 * @param part : la partie voulue de fichier
+	 * @param content : le contenu voulu de fichier
 	 */
 	public sendFileMsg(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content)
 	{
@@ -41,7 +48,7 @@ public class sendFileMsg extends FileMessage
 	}
 
 	/**
-	 *
+	 * crée le message pour envoyer la partie dont l'utilisateur a besoin
 	 */
 	public void treatment()
 	{
@@ -54,7 +61,7 @@ public class sendFileMsg extends FileMessage
 		 */
 		DataClientToComm dataInterface = commManagerClient.getDataInterface();
 		/**
-		 *
+		 * Appel de la méthode de data receiveFilePart
 		 */
 		dataInterface.receiveFilePart(this.file, this.part, this.content);
 	}

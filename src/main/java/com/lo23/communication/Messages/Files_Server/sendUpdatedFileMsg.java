@@ -26,8 +26,8 @@ public class sendUpdatedFileMsg extends FileMessage
 
 	/**
 	 * Constructeur
-	 * @param fi : le fichier qui subit les mises a jour
-	 * @param user : l'utilisateur qui fait les mises a jour
+	 * @param fi : le fichier qui subit les mises à jour
+	 * @param user : l'utilisateur qui fait les mises à jour
 	 */
 	public sendUpdatedFileMsg(FileHandlerInfos fi, User user)
 	{
@@ -36,20 +36,20 @@ public class sendUpdatedFileMsg extends FileMessage
 	}
 
 	/**
-	 * cree le message d'envoyer les mises a jour d'un fichier
+	 * crée le message d'envoyer les mises a jour d'un fichier
 	 */
 	public void treatment()
 	{
 		/**
-		 * Recuperation le communication manager cote client
+		 * Récuperation le communication manager coté client
 		 */
         CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
 		/**
-		 * Recuperation de l'interface de dataClient
+		 * Récuperation de l'interface de dataClient
 		 */
 		DataClientToComm dataInterfaceClient = cmc.getDataInterface();
 		/**
-		 * Appel de la methode de data notifier à tout utilisateur les mises à jour
+		 * Appel de la méthode de data notifier à tout utilisateur les mises à jour
 		 */
         dataInterfaceClient.notifyUpdatedSharedFileToAll(this.file,this.usr);
 	}

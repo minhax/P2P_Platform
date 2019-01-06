@@ -32,7 +32,7 @@ public class requestFileLocationMsg extends FileMessage
 	}
 
 	/**
-	 * cree le message de demander l'emplacement de fichier
+	 * crée le message de demander l'emplacement de fichier
 	 */
 	public void treatment()
 	{
@@ -45,7 +45,7 @@ public class requestFileLocationMsg extends FileMessage
 		 */
 		DataServerToComm dataInterface = commManagerServer.getDataInterface();
 		/**
-		 * Appel de la methode de data requestFileLocationServer qui permet de demander au serveur l'emplacement de fichier
+		 * Appel de la méthode de data requestFileLocationServer qui permet de demander au serveur l'emplacement de fichier
 		 */
 		dataInterface.requestFileLocationServer(this.file);
 	}

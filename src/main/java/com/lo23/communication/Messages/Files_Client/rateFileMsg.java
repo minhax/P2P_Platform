@@ -40,7 +40,7 @@ public class rateFileMsg extends FileMessage
 	}
 
 	/**
-	 * transmet le message d'une note ajoutee jusqu'aux clients
+	 * Transmet le message d'une note ajoutee jusqu'aux clients
 	 */
 	public void treatment()
 	{

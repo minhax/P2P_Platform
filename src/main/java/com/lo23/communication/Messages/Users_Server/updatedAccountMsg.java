@@ -7,7 +7,7 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.Messages.UserMessage;
 
 /**
- * Message pour mettre a jour le compte d'un utilisateur
+ * Message pour mettre à jour le compte d'un utilisateur
  */
 public class updatedAccountMsg extends UserMessage
 {
@@ -18,7 +18,7 @@ public class updatedAccountMsg extends UserMessage
 
 	/**
 	 * Constructeur
-	 * @param ui : l'utilisateur qui va mettre a jour son compte
+	 * @param ui : l'utilisateur qui va mettre à jour son compte
 	 */
 	public updatedAccountMsg(UserIdentity ui)
 	{
@@ -26,13 +26,13 @@ public class updatedAccountMsg extends UserMessage
 	}
 
 	/**
-	 * cree le message pour mettre a jour le compte d'un utilisateur
+	 * crée le message pour mettre à jour le compte d'un utilisateur
 	 */
 	public void treatment()
 	{
 
 		/**
-		 * Recuperation de Communication Manager cote client
+		 * Récuperation de Communication Manager coté client
 		 */
 		CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
 		/**
@@ -40,7 +40,7 @@ public class updatedAccountMsg extends UserMessage
 		 */
 		DataClientToComm dataInterfaceClient = commManagerClient.getDataInterface();
 		/**
-		 * Appel de la methode de data notifyOtherUserUpdatedAccountToAll qui permet de notifier les mises à jour de compte à tous
+		 * Appel de la méthode de data notifyOtherUserUpdatedAccountToAll qui permet de notifier les mises à jour de compte à tous
 		 */
 		dataInterfaceClient.notifyOtherUserUpdatedAccountToAll(user);
 	}

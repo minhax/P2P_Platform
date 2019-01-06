@@ -72,6 +72,7 @@ public class CommToDataClientAPI implements CommToDataClient
 
     /**
      * l'accesseur (setter) de CommunicationManager
+     * @param commManager objet de type CommunicationManagerClient
      */
     public void setCommunicationManager(CommunicationManagerClient commManager)
     {
@@ -84,7 +85,6 @@ public class CommToDataClientAPI implements CommToDataClient
     /**
      * Envoie les modifications relatives à un utilisateur (communication avec le serveur)
      * @param user utilisateur concerné
-     * @return void
      */
     @Override
     public void sendUserChangesToServer(UserIdentity user)
@@ -113,7 +113,6 @@ public class CommToDataClientAPI implements CommToDataClient
      * Rend indisponible un fichier (communication avec le serveur)
      * @param file fichier que l'on rend indisponible
      * @param user utilisateur qui le rend indisponible
-     * @return void
      */
     @Override
     public void makeFilesUnavailableToServer(FileHandlerInfos file, User user)
@@ -141,8 +140,7 @@ public class CommToDataClientAPI implements CommToDataClient
      * Transmet l'ajout d'un nouveau commentaire sur un fichier
      * @param comment Commentaire
      * @param commentedFile Fichier commenté
-     * @param user
-     * @return void
+     * @param user : l'utilisateur qui ajoute les commentaires
      */
     @Override
     public void sendCommentedFile(Comment comment, FileHandlerInfos commentedFile, User user)
@@ -170,7 +168,6 @@ public class CommToDataClientAPI implements CommToDataClient
      * @param rating note à ajouter au fichier
      * @param ratedFile fichier noté
      * @param user Utilisateur qui a noté le fichier
-     * @return void
      */
     @Override
     public void sendRatedFile(Rating rating, FileHandlerInfos ratedFile, User user)
@@ -196,7 +193,6 @@ public class CommToDataClientAPI implements CommToDataClient
     /**
      * Demande de déconnexion de l'utilisateur sur le serveur
      * @param  user utilisateur qui se déconnecte
-     * @return void
      **/
     @Override
     public void requestLogoutToServer(UserStats user)
@@ -235,7 +231,6 @@ public class CommToDataClientAPI implements CommToDataClient
      * @param user utilisateur qui veut se connecter
      * @param fi la liste des infos sur les fichiers
      * @param serverIP l'adresse IP de serveur
-     * @return void
      */
     @Override
     public void requestUserConnexion(UserStats user, List<FileHandlerInfos> fi, String serverIP)
@@ -271,7 +266,6 @@ public class CommToDataClientAPI implements CommToDataClient
      * Transmet la demande de partage de fichier (nouveau partage) de l'application client à CommServeur
      * @param file fichier qui va être partagé
      * @param user utilisateur qui propose le fichier
-     * @return void
      */
     @Override
     public void requestUploadFile(FileHandlerInfos file, UserIdentity user)
@@ -298,7 +292,6 @@ public class CommToDataClientAPI implements CommToDataClient
      * Envoie les infos sur la nouvelle source d'un fichier à tous les clients du réseau
      * @param fi fichier partagé
      * @param user utilisateur qui devient source pour ce fichier
-     * @return void
      */
     @Override
     public void uploadFile(FileHandlerInfos fi, UserIdentity user)
@@ -329,12 +322,11 @@ public class CommToDataClientAPI implements CommToDataClient
     }
 
     /**
-     * demande une partie de fichier de l'utilisateur
+     * Demande une partie de fichier de l'utilisateur
      * @param userAsking : l'utilisateur qui possede le fichier voulu
      * @param userSource : l'utilisateur source qui veut une partie de fichier a telecharger
      * @param file : le fichier a telecherger
      * @param part : la partie de ficher dont on a besion
-     * @return void
      */
     @Override
     public void  getFilePart(User userAsking, User userSource, FileHandlerInfos file, long part)
@@ -382,7 +374,6 @@ public class CommToDataClientAPI implements CommToDataClient
             dataInterface.notifyAskForFilePartAgain(userSource, file, part);
         }
     }
-
     /**
      * envoie la partie dont l'utilisateur a besoin
      * @param userAsking : l'utilisateur qui veut une partie de fichier a telecharger
@@ -390,7 +381,6 @@ public class CommToDataClientAPI implements CommToDataClient
      * @param file : le fichier a telecharger
      * @param part : la partie voulue de fichier
      * @param content : le contenu voulu de fichier
-     * @return void
      */
     @Override
     public void sendFilePart(User userAsking, User userSource, FileHandlerInfos file, long part, byte[] content)

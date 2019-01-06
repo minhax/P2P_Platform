@@ -28,7 +28,6 @@ public abstract class CommunicationManager
     /**
      * Retourne et affiche l'adresse IP sur le serveur UTC de la machine appelante
      * @return IPadress : l'adresse IP de la machine appelante
-     * @throws Exception
      **/
     public static String findIPadress() throws Exception
     {

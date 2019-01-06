@@ -22,7 +22,7 @@ public class delAdressIpMsg extends Authentication
 	}
 
 	/**
-	 * transmet le message de l'adresse IP ajoutee jusqu'aux clients
+	 * Transmet le message de l'adresse IP ajoutee jusqu'aux clients
 	 */
 	public void treatment()
 	{
@@ -31,7 +31,7 @@ public class delAdressIpMsg extends Authentication
          */
 		CommunicationManagerClient commManagerClient = CommunicationManagerClient.getInstance();
         /**
-         * supprimer l'adresse IP de serveur = setIP(null)
+         * Suppression de l'adresse IP de serveur = setIP(null)
          */
 		commManagerClient.setAddressIpServer(null);
 	}

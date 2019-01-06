@@ -11,7 +11,7 @@ import com.lo23.communication.Messages.UserMessage;
 import java.util.List;
 
 /**
- * Message pour supprimer l'utilisateur deconnecte
+ * Message pour supprimer l'utilisateur déconnecté
  */
 public class removeDisconnectedUserMsg extends UserMessage
 {
@@ -20,31 +20,31 @@ public class removeDisconnectedUserMsg extends UserMessage
 	 */
 	private static final long serialVersionUID = 44L;
 	/**
-	 * usr : l'identite de l'utilisateur
+	 * usr : l'identité de l'utilisateur
 	 */
 	private UserStats usr;
 
 	/**
 	 * Constructeur
-	 * @param ui : l'utilisateur deconnecte
+	 * @param ui : l'utilisateur déconnecté
 	 */
 	public removeDisconnectedUserMsg(UserStats ui)
 	{
 		this.usr = ui;
 	}
 	/**
-	 * Traitement est applique du cote client
-	 * Recupere le communicationManagerClient
-	 * Appel la methode addNewConnectedUser pour lui transmettre son objet user Stats
-	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
+	 * Traitement est applique du coté client
+	 * Récupère le communicationManagerClient
+	 * Appel la méthode addNewConnectedUser pour lui transmettre son objet user Stats
+	 * Appel la méthode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
 	/**
-	 * cree le message pour supprimer l'utilisateur deconnecte
+	 * crée le message pour supprimer l'utilisateur déconnecté
 	 */
 	public void treatment()
 	{
 		/**
-		 * Recuperation de Communication Manager cote client
+		 * Récuperation de Communication Manager coté client
 		 */
 		CommunicationManagerClient cms = CommunicationManagerClient.getInstance();
 		/**
@@ -52,7 +52,7 @@ public class removeDisconnectedUserMsg extends UserMessage
 		 */
 		DataClientToComm dataInterface = cms.getDataInterface();
 		/**
-		 * Appel de la methode de data notifyOtherUserDisconnectedToAll qui permet de notifier l'utilisateur déconnecté à tous
+		 * Appel de la méthode de data notifyOtherUserDisconnectedToAll qui permet de notifier l'utilisateur déconnecté à tous
 		 */
 		dataInterface.notifyOtherUserDisconnectedToAll(this.usr);
 	}

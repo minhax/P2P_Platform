@@ -54,7 +54,7 @@ public class CommunicationManagerClient extends CommunicationManager
 	private static CommunicationManagerClient Instance = new CommunicationManagerClient();
 
 	/**
-	 * récupère le CommunicationManagerClient
+	 * Récupère le CommunicationManagerClient
 	 * @return objet de type CommunicationManagerClient
 	 */
 	public static CommunicationManagerClient getInstance()
@@ -91,25 +91,30 @@ public class CommunicationManagerClient extends CommunicationManager
 		return commInterface;
 	}
 
-	/**
-	 * l'accesseur (setter) de addressIpServer
-	 */
+    /**
+     * l'accesseur (setter) de addressIpServer
+     * @param s : String
+     */
 	public void setAddressIpServer(String s)
 	{
 		this.addressIpServer = s;
 	}
 
-	/**
-	 * l'accesseur (setter) de dataInterface
-	 */
+
+    /**
+     * l'accesseur (setter) de dataInterface
+     * @param di : objet de type CommToDataClient
+     */
 	public void setDataInterface(DataClientToComm di)
 	{
 		this.dataInterface = di;
 	}
 
-	/**
-	 * l'accesseur (setter) de commInterface
-	 */
+
+    /**
+     * l'accesseur (setter) de commInterface
+     * @param ci : objet de type CommToDataClientAPI
+     */
 	public void setCommInterface (CommToDataClientAPI ci)
 	{
 		this.commInterface = ci;

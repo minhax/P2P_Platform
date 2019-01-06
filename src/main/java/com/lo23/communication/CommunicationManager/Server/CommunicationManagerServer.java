@@ -32,19 +32,17 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * clientIP_UID: implementation de la table de hashage
 	 * hashmap stocke les adresses IP de tous les utilisateurs
 	 */
-	private HashMap<String, Integer>  clientIptoPort;
+	private HashMap < String, Integer >  clientIptoPort;
 	/**
 	 * clientIP_UID: implementation de la table de hashage
 	 * UUID : objet qui permet d'attribuer id unique a chaque utilisateur
 	 */
-	private HashMap<UUID, String> clientIP_UID;
+	private HashMap < UUID, String > clientIP_UID;
 	
 	/** Constructeur privé
 	 * Récupère un objet interface de DataServer et CommServer
 	 * Récupère l'adresse IP de la machine sur le réseau UTC
 	 * Instancie la LinkedHashMap
-	 * ...
-	 * @return void
 	 **/
 	private CommunicationManagerServer()
 		{
@@ -156,7 +154,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * Ajouter l'adresse de client ainsi que le port au hashMap
 	 * @param clientAddr l'adresse de client
 	 * @param clientPort le port de client
-	 * @return void
 	 */
 	public void addEntryMap_IPPort(String clientAddr, int clientPort)
     {
@@ -167,7 +164,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	 * Ajouter l'adresse de client ainsi que le UUID de client
 	 * @param clientIp l'adresse de client
 	 * @param clientUUID le UUID de client
-	 * @return void
 	 */
 	public void addEntryMap_IPUID(String clientIp, UUID clientUUID)
 	{
@@ -177,8 +173,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	/**
 	 * Supprime l'utilisateur en fonction de la clé qu'est userIpAddr
 	 * @param userIpAddr : la clé
-	 * @throws CommException
-	 * @return void
 	 */
     public void removeUserFromMap_IPPort(String userIpAddr) throws CommException
     {
@@ -191,8 +185,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	/**
 	 * Supprime l'utilisateur en fonction de la clé qu'est clientIp
 	 * @param clientIp : la clé
-	 * @throws CommException
-	 * @return void
 	 */
     public void removeUserFromMap_IPUID(String clientIp) throws CommException
 	{
@@ -217,8 +209,6 @@ public class CommunicationManagerServer extends CommunicationManager {
 	/**
 	 * Envoie un message à toutes les machines connectées
 	 * @param m : Parse la table et recupere chaque cle (IPUser)
-	 * @throws EmptyStackException
-	 * @return void
 	 */
 	public void broadcast(Message m) throws EmptyStackException
 	{

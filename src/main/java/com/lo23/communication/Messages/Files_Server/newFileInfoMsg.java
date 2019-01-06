@@ -7,12 +7,12 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.Messages.FileMessage;
 
 /**
- * Message pour avoir les nouvelles informations de fichier
+ * Message pour avoir les  informations de nouveau fichier
  */
 public class newFileInfoMsg extends FileMessage
 {
 	/**
-	 * user : l'identite d'un utilisateur
+	 * user : l'identité d'un utilisateur
 	 */
 	protected UserIdentity user;
 	/**
@@ -22,8 +22,8 @@ public class newFileInfoMsg extends FileMessage
 
 	/**
 	 * Constructeur
-	 * @param fi : le fichier ...
-	 * @param u : l'utilisateur ...
+	 * @param fi : le nouveau fichier
+	 * @param u : l'utilisateur possédant le fichier
 	 */
 	public newFileInfoMsg(FileHandlerInfos fi, UserIdentity u)
 	{
@@ -32,7 +32,7 @@ public class newFileInfoMsg extends FileMessage
 	}
 
 	/**
-	 * cree le message pour avoir les nouvelles informations de fichier
+	 * crée le message pour avoir les informations de nouveau fichier
 	 */
 	public void treatment()
 	{
@@ -45,7 +45,7 @@ public class newFileInfoMsg extends FileMessage
 		 */
 		DataClientToComm dataInterface = commManagerClient.getDataInterface();
 		/**
-		 * Appel de la methode de data notifyNewSharedFileToAll qui permet de notifier le nouveau fichier partagé à tous les utilisateurs
+		 * Appel de la méthode de data notifyNewSharedFileToAll qui permet de notifier le nouveau fichier partagé à tous les utilisateurs
 		 */
 		dataInterface.notifyNewSharedFileToAll(this.file, this.user);
 	}

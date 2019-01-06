@@ -5,6 +5,9 @@ import com.lo23.communication.Messages.Message;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * Classe qui lit le message
+ */
 public class ReadMessage extends Thread implements Serializable
 {
 	/**
@@ -19,8 +22,8 @@ public class ReadMessage extends Thread implements Serializable
 	
 	/**
 	 * Constructeur
-	 * Recupere l'input stream de la socket s
-	 * @param s
+	 * Récupère l'input stream de la socket s
+	 * @param s : objet de type socket
 	 */
 	public ReadMessage(Socket s)
 	{
@@ -37,7 +40,7 @@ public class ReadMessage extends Thread implements Serializable
 	}
 	
 	/**
-	 * Lis dans l'input stream, recupere le message et fais le traitement
+	 * Lit dans l'input stream, récupère le message et fait le traitement
 	 * Ferme l'input et la socket
 	 */
 	@Override

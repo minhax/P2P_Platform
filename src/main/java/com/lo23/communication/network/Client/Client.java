@@ -7,14 +7,14 @@ import java.io.Serializable;
 import java.net.Socket;
 
 /**
- * Client for socket communication
- * Careful, the Central Server can act as a Client if he's sending messages to Peers
+ * Client pour les sockets de communications
+ * Le serveur central peut agir en tant que client s'il envoie des messages à ses pairs
  */
 public class Client extends Thread implements Serializable
 {
     
     /**
-     * msg : Message que l'on diffuse sur le reseau
+     * msg : Message que l'on diffuse sur le réseau
      */
     private Message msg;
     /**
@@ -37,9 +37,9 @@ public class Client extends Thread implements Serializable
     
     /**
      * Constructeur
-     * @param msg
-     * @param destinationAdress
-     * @param destinationPort
+     * @param msg : message à transmettre
+     * @param destinationAdress : l'adresse de destination
+     * @param destinationPort : le port de la destination
      */
     public Client(Message msg,
                   String destinationAdress, int destinationPort)
@@ -54,6 +54,9 @@ public class Client extends Thread implements Serializable
     }
     
     @Override
+    /**
+     * déclenche l'envoie de message en appelant la méthode start
+     */
     public void run()
     {
         try
@@ -67,15 +70,15 @@ public class Client extends Thread implements Serializable
         }
     }
     /**
-     * Creation de la socket, connexion et envoi du message. Si le port n'est pas disponible, incremente le port et reessaye
-     * @param msg
-     * @param destinationAdress
-     * @param destinationPort
+     * Cree la socket, connexion et envoi du message. Si le port n'est pas disponible, incremente le port et réessaye
+     * @param msg : le message à transmettre
+     * @param destinationAdress : l'adresse de destination
+     * @param destinationPort : le port de destination
      */
     public void start(Message msg ,String destinationAdress, int destinationPort)
     {
         /**
-         * Tant que le message n'est pas envoye, on reessaye l'ouverture de sockets
+         * Tant que le message n'est pas envoyé, on réessaye l'ouverture de sockets
          */
         while (!this.jobDone)
         {
@@ -88,7 +91,7 @@ public class Client extends Thread implements Serializable
                 {
                     /**
                      * SendMessageSocket implemente Thread
-                     * quitte la boucle des que le message est envoye
+                     * quitte la boucle dès que le message est envoyé
                      */
 
                     SendMessage sendMessageSocket = new SendMessage(socket, destinationAdress, destinationPort, msg);

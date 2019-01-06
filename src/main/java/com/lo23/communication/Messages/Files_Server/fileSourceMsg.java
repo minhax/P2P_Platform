@@ -10,7 +10,7 @@ import com.lo23.communication.CommunicationManager.Client.CommunicationManagerCl
 import com.lo23.communication.Messages.FileMessage;
 
 /**
- * Message pour recuperer la source de fichier
+ * Message pour récupérer la source de fichier
  */
 public class fileSourceMsg extends FileMessage
 {
@@ -19,7 +19,7 @@ public class fileSourceMsg extends FileMessage
 	 */
 	private static final long serialVersionUID = 53L;
 	/**
-	 * user : l'identite de l'utilisateur
+	 * user : l'identité de l'utilisateur
 	 */
 	protected UserIdentity user;
 	//TODO: est-ce qu'un user ne suffirait pas ? -> dans ce cas, il faut aussi modifier la méthode dans l'API de data et dans CommToDataServer
@@ -34,7 +34,7 @@ public class fileSourceMsg extends FileMessage
 	}
 
 	/**
-	 * crée le message de recuperer la source de fichier
+	 * crée le message de récupérer la source de fichier
 	 */
 	public void treatment()
 	{
@@ -51,7 +51,7 @@ public class fileSourceMsg extends FileMessage
 		 */
 		FileHandler fi=(FileHandler) file;
 		/**
-		 * Appel de la methode de data notifyNewSourceToAll qui permet de notifier la nouvelle source à tous les utilisateurs
+		 * Appel de la méthode de data notifyNewSourceToAll qui permet de notifier la nouvelle source à tous les utilisateurs
 		 */
 		dataInterface.notifyNewSourceToAll(fi, user);
 		//dataInterface.notifyNewSharedFileToAll();

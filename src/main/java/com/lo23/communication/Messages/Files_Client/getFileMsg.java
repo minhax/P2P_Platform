@@ -10,7 +10,7 @@ import com.lo23.communication.CommunicationManager.Server.CommunicationManagerSe
 import com.lo23.communication.Messages.FileMessage;
 
 /**
- * ....
+ * Message pour demander une partie de fichier de l'utilisateur
  */
 public class getFileMsg extends FileMessage
 {
@@ -19,11 +19,11 @@ public class getFileMsg extends FileMessage
 	 */
 	private static final long serialVersionUID = 82L;
 	/**
-	 * userAsking : l'utilisateur ...
+	 * userAsking :  l'utilisateur qui possede le fichier voulu
 	 */
 	protected User userAsking;
 	/**
-	 * userSource : l'utilisateur ...
+	 * userSource : l'utilisateur source qui veut une partie de fichier a telecharger
 	 */
 	protected User userSource;
 	/**
@@ -33,10 +33,10 @@ public class getFileMsg extends FileMessage
 
 	/**
 	 * Constructeur
-	 * @param userAsking : ...
-	 * @param userSource : ....
-	 * @param file : ....
-	 * @param part : ....
+	 * @param userAsking : l'utilisateur qui possede le fichier voulu
+	 * @param userSource : l'utilisateur source qui veut une partie de fichier a telecharger
+	 * @param file : le fichier a telecherger
+	 * @param part : la partie de ficher dont on a besion
 	 */
 	public getFileMsg(User userAsking, User userSource, FileHandlerInfos file, long part)
 	{
@@ -47,7 +47,7 @@ public class getFileMsg extends FileMessage
 	}
 
 	/**
-	 * ..
+	 * crée le message pour demander une partie de fichier de l'utilisateur
 	 */
 	public void treatment()
 	{

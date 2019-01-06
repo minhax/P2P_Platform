@@ -9,7 +9,7 @@ import com.lo23.communication.Messages.FileMessage;
 import com.lo23.communication.Messages.Files_Server.newFileInfoMsg;
 
 /**
- * Message pour telecharger un fichier
+ * Message pour télécharger un fichier
  */
 public class uploadFileMsg extends FileMessage
 {
@@ -18,14 +18,14 @@ public class uploadFileMsg extends FileMessage
 	 */
 	private static final long serialVersionUID = 55L;
 	/**
-	 * user : l'identite de l'utilisateur
+	 * user : l'identité de l'utilisateur
 	 */
 	protected UserIdentity user;
 
 	/**
 	 * Constructeur
-	 * @param fi : le fichier a telecharger
-	 * @param u : l'utilisateur qui veut telecharger le fichier
+	 * @param fi : le fichier à télécharger
+	 * @param u : l'utilisateur qui veut télécharger le fichier
 	 */
 	public uploadFileMsg(FileHandlerInfos fi, UserIdentity u)
 	{
@@ -34,7 +34,7 @@ public class uploadFileMsg extends FileMessage
 	}
 
 	/**
-	 * cree le message pour telecharger un fichier
+	 * crée le message pour telecharger un fichier
 	 */
 	public void treatment()
 	{

@@ -10,18 +10,17 @@ import java.net.Socket;
 
 /**
  * Class serveur
- * Cree un Serveur Socket sur le port 8000 + nombre d'utilisateurs connectes.
- * Lance un thread pour recuperer les messages entrants.
+ * Crée un Serveur Socket sur le port 8000 + nombre d'utilisateurs connectés.
+ * Lance un thread pour récupérer les messages entrants.
  */
 public class ServerSock extends  Thread
 {
-	
 	/**
-	 * userConnected : Nombre d'utilisateurs connectes
+	 * userConnected : Nombre d'utilisateurs connectés
 	 */
 	public static int usersConnected = 0;
 	/**
-	 * firstPort : Port de depart du serveur
+	 * firstPort : Port de départ du serveur
 	 */
 	private int firstPort;
     
@@ -47,7 +46,7 @@ public class ServerSock extends  Thread
 
     /**
      * Constructeur
-     * @param port
+     * @param port : le port a utiliser
      */
 	public ServerSock(int port)
 	{
@@ -55,7 +54,7 @@ public class ServerSock extends  Thread
 	}
     
     /**
-     * Ouverture d'un serveurSocket sur le port par default + le nombre d'utilisateurs connectes.
+     * Ouvre un serveurSocket sur le port par défault + le nombre d'utilisateurs connectés.
      */
     @Override
     public void run()

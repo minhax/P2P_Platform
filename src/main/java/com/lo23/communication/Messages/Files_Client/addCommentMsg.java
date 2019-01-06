@@ -51,7 +51,7 @@ public class addCommentMsg extends FileMessage
 	}
 
 	/**
-	 * transmet le message d'un commentaire ajoute jusqu'aux clients
+	 * Transmet le message d'un commentaire ajoute jusqu'aux clients
 	 */
 	public void treatment()
 	{

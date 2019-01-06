@@ -8,7 +8,7 @@ import com.lo23.communication.Messages.UserMessage;
 import com.lo23.communication.Messages.Users_Server.updatedAccountMsg;
 
 /**
- * Message pour mettre a jour les informations d'un utilisateur
+ * Message pour mettre à jour les informations d'un utilisateur
  */
 public class updateUserInfoMsg extends UserMessage
 {
@@ -19,7 +19,7 @@ public class updateUserInfoMsg extends UserMessage
 
 	/**
 	 * Constructeur
-	 * @param ui : l'utilisateur qui subit les mises a jour de ses informations
+	 * @param ui : l'utilisateur qui subit les mises à jour de ses informations
 	 */
 	public updateUserInfoMsg(UserIdentity ui)
     {
@@ -27,14 +27,14 @@ public class updateUserInfoMsg extends UserMessage
 	}
 
 	/**
-	 * cree le message pour mettre a jour les informations d'un utilisateur
+	 * crée le message pour mettre à jour les informations d'un utilisateur
 	 */
 	public void treatment()
     {
         /**
-         * Recupere le communication manager cote serveur
-         * Recupere son interface de dataServer
-         * Appel la methode updateUserChanges
+         * Récupère le communication manager coté serveur
+         * Récupère son interface de dataServer
+         * Appel la méthode updateUserChanges
          */
 		/**
 		 * Récuperation de communication manager coté serveur

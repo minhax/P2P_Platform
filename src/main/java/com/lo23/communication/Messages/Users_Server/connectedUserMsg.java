@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * Message pour recuperer l'utilisateur connecte
+ * Message pour récupérer l'utilisateur connecte
  */
 public class connectedUserMsg extends UserMessage
 {
 	/**
-	 * serialVersionUID : l'identifiant de la classe
+	 * serialVersionUID : l'identifiant unique de la classe
 	 */
 	private static final long serialVersionUID = 46L;
 	/**
@@ -35,18 +35,18 @@ public class connectedUserMsg extends UserMessage
 		this.usersInfoAndFiles = usersInfoAndFiles;
 	}
 	/**
-	 * Traitement est applique du cote client
-	 * Recupere le communicationManagerClient
-	 * Appel la methode addNewConnectedUser pour lui transmettre son objet user Stats
-	 * Appel la methode addNewUserFiles pour lui transmettre ses filesInfos
+	 * Traitement est applique du coté client
+	 * Récupère le communicationManagerClient
+	 * Appel la méthode addNewConnectedUser pour lui transmettre son objet user Stats
+	 * Appel la méthode addNewUserFiles pour lui transmettre ses filesInfos
 	 */
 	/**
-	 * cree le message pour recuperer l'utilisateur connecte
+	 * crée le message pour récupérer l'utilisateur connecté
 	 */
 	public void treatment()
 	{
 		/**
-		 * Recuperation de Communication Manager cote client
+		 * Récupération de Communication Manager coté client
 		 */
 		CommunicationManagerClient cmc = CommunicationManagerClient.getInstance();
 		/**
@@ -54,7 +54,7 @@ public class connectedUserMsg extends UserMessage
 		 */
 		DataClientToComm dataInterface = cmc.getDataInterface();
 		/**
-		 * Appel de la methode de data notifyOtherUserConnectedToAll qui permet de notifier l'utilisateur connecté à tous
+		 * Appel de la méthode de data notifyOtherUserConnectedToAll qui permet de notifier l'utilisateur connecté à tous
 		 */
 		dataInterface.notifyOtherUserConnectedToAll(this.usersInfoAndFiles);
 	}

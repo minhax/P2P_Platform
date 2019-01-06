@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * Classe pour envoyer le message
+ */
 public class SendMessage extends Thread
 {
-	
 	/**
 	 * socket : Socket pour envoyer le message
 	 */
@@ -37,10 +39,9 @@ public class SendMessage extends Thread
 	
 	/**
 	 * Constructeur de la classe
-	 *
-	 * @param address   Socket pour l'envoi du message
-	 * @param port      Port à utiliser
-	 * @param msg       Message à transmettre
+	 * @param address  : Socket pour l'envoi du message
+	 * @param port     : Port à utiliser
+	 * @param msg      : Message à transmettre
 	 */
 	public SendMessage(Socket s, String address, Integer port, Message msg)
 	{
@@ -51,7 +52,7 @@ public class SendMessage extends Thread
 	}
 	
 	/**
-	 * Ecriture et envoi du message
+	 * écrit et envoi du message
 	 */
 	@Override
 	public void run()
@@ -59,7 +60,7 @@ public class SendMessage extends Thread
 		try
 		{
 			/**
-			 * Recuperation de l'output stream
+			 * Récupération de l'output stream
 			 * Envoi du message
 			 */
 			try
