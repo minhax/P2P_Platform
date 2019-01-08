@@ -113,6 +113,9 @@ public class CreateAccountController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) accountFormPane.getScene().getWindow();
             stage.setTitle("Fenêtre principale");
+            stage.setWidth(700);
+            stage.setHeight(470);
+            stage.setResizable(false);
             stage.setScene(new Scene(root));
         } catch (Exception e) {
             e.printStackTrace();

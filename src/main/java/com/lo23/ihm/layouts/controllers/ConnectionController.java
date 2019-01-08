@@ -124,6 +124,9 @@ public class ConnectionController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) connectionPane.getScene().getWindow();
             stage.setTitle("Creation de compte");
+            stage.setWidth(700);
+            stage.setHeight(470);
+            stage.setResizable(false);
             stage.setScene(new Scene(root));
 
 

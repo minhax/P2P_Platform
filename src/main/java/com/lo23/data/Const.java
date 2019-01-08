@@ -14,7 +14,7 @@ public class Const
     /**
      * Taille d'une partie de fichier en octets.
      */
-    public static final int FILEPART_SIZE = 4;
+    public static final int FILEPART_SIZE = 1024;
     /**
      * Port serveur par défaut
      */

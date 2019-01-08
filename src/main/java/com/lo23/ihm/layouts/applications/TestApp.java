@@ -8,25 +8,26 @@ import javafx.stage.Stage;
 
 public class TestApp extends Application {
 
-	@Override
-	public void start(Stage primaryStage)
-	{
-		// TODO Auto-generated method stub
-		try {
-			Parent root = FXMLLoader.load((getClass().getClassLoader().getResource("connectionLayout.fxml")));
-			
-			primaryStage.setTitle("My Application");
-			primaryStage.setScene(new Scene(root));
-			primaryStage.show();
-			primaryStage.setResizable(false);
-		} 
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void main(String[] args) {
-		launch(args);
-	}
+    @Override
+    public void start(Stage primaryStage) {
+        // TODO Auto-generated method stub
+        try {
+            Parent root = FXMLLoader.load((getClass().getClassLoader().getResource("connectionLayout.fxml")));
+
+            primaryStage.setTitle("My Application");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setWidth(700);
+            primaryStage.setHeight(470);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+            primaryStage.setResizable(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
 }
