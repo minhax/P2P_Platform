@@ -65,17 +65,19 @@ public class UpdateProfileController implements Initializable {
             System.out.println(passwordUpdateField.getText() + nameUpdateField.getText() + familynameUpdateField.getText() + ageUpdateField.getText());
 
             try {
-                /*FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
-                Parent root = fxmlloader.load();
-                Stage stage = new Stage();
+                //FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                // TODO: déclarer le controller de IHM
+                //MainController controller = new MainController(api); // EXEMPLE
+                fxmlLoader.setController(controllerMain);
+                // controller.setDataClientToIhmApi(dataManagerClient.getDataClientToIhm());
+                fxmlLoader.setLocation(getClass().getClassLoader().getResource("mainLayout.fxml"));
 
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setOpacity(1);
+
+                Parent root = fxmlLoader.load();
+                Stage stage = (Stage) updateUserPane.getScene().getWindow();
                 stage.setTitle("Fenêtre principale");
                 stage.setScene(new Scene(root));
-                stage.showAndWait();*/
-                Stage stage = (Stage) errorUpdateLabel.getScene().getWindow();
-                stage.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

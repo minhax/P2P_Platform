@@ -267,7 +267,7 @@ public class MainController implements Initializable {
             if (api.requestConnectionToServer(new_ip)) {
                 //TODO : ne pas fermer, mais plutôt réactualiser toute la page ? À réétudier quand l'application restera sur la même fenêtre
 
-                ((Stage) this.mainHBox.getScene().getWindow()).close();
+                /*((Stage) this.mainHBox.getScene().getWindow()).close();
                 try {
                     FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                     Parent root = fxmlloader.load();
@@ -282,7 +282,7 @@ public class MainController implements Initializable {
                     stage.showAndWait();
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
             } else {
                 incorrectIP.setVisible(true);
             }
