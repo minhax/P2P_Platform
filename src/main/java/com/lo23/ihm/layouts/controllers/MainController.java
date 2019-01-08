@@ -272,7 +272,9 @@ public class MainController implements Initializable {
                     FXMLLoader fxmlloader = new FXMLLoader(getClass().getClassLoader().getResource("mainLayout.fxml"));
                     Parent root = fxmlloader.load();
                     Stage stage = new Stage();
-
+                    stage.setWidth(700);
+                    stage.setHeight(470);
+                    stage.setResizable(false);
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.setOpacity(1);
                     stage.setTitle("Fenêtre principale");
@@ -305,6 +307,9 @@ public class MainController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
+            stage.setWidth(700);
+            stage.setHeight(470);
+            stage.setResizable(false);
             stage.setScene(new Scene(root));
         } catch (Exception e) {
             e.printStackTrace();
@@ -360,6 +365,9 @@ public class MainController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) mainHBox.getScene().getWindow();
             stage.setTitle("Édition du compte");
+            stage.setWidth(700);
+            stage.setHeight(470);
+            stage.setResizable(false);
             stage.setScene(new Scene(root));
         } catch (Exception e) {
             e.printStackTrace();
