@@ -326,6 +326,17 @@ public class MainController implements Initializable {
             currentFileSize.textProperty().setValue(Long.toString(file.getSize()));
         }
     }
+    
+    @FXML
+    public void OnMyAvailableItemClicked() {
+        FileHandler file = listViewMyFiles.getSelectionModel().getSelectedItem();
+
+        if (listViewMyFiles.getSelectionModel().getSelectedItem() != null) {
+            currentFileDetailsPane.setVisible(true);
+            currentFileName.textProperty().setValue(file.getTitle());
+            currentFileSize.textProperty().setValue(Long.toString(file.getSize()));
+        }
+    }
 
     private void binding() {
         this.contactsListView.itemsProperty().bind(userListProperty);
