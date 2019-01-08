@@ -7,21 +7,21 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="updateUserPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane fx:id="updateUserPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="381.0" style="-fx-background-color: #79a8ff #79a8ff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="205.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editer son profil :" wrappingWidth="126.5966796875" />
-      <TextField fx:id="passwordUpdateField" layoutX="205.0" layoutY="59.0" prefHeight="38.0" prefWidth="290.0" promptText="Mot de passe ..." style="-fx-prompt-text-fill: #FFFFFF; -fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc;" />
-      <TextField fx:id="passwordConfirmationUpdateField" layoutX="205.0" layoutY="110.0" prefHeight="38.0" prefWidth="290.0" promptText="Confirmation Mot de Passe..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
-      <TextField fx:id="familynameUpdateField" layoutX="205.0" layoutY="164.0" prefHeight="38.0" prefWidth="290.0" promptText="Nom ..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
-      <TextField fx:id="nameUpdateField" layoutX="205.0" layoutY="220.0" prefHeight="38.0" prefWidth="290.0" promptText="Prénom ..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
-      <TextField fx:id="ageUpdateField" layoutX="205.0" layoutY="276.0" prefHeight="38.0" prefWidth="290.0" promptText="Âge..." style="-fx-background-color: #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc #6287cc; -fx-prompt-text-fill: #FFFFFF;" />
-      <Button fx:id="validateUpdateButton" layoutX="205.0" layoutY="341.0" mnemonicParsing="false" onAction="#Validate" prefHeight="27.0" prefWidth="290.0" style="-fx-background-color: #79ebff#79ebff;" text="Valider" />
-      <Button fx:id="previousButton" layoutX="33.0" layoutY="32.0" mnemonicParsing="false" onAction="#Previous" style="-fx-background-color: #ffffff;" text="&lt;- Précédent" />
-      <Label fx:id="errorUpdateLabel" layoutX="237.0" layoutY="384.0" prefHeight="17.0" prefWidth="226.0" text="Tous les champs sont obligatoires" textFill="#d30d0d" />
-      <Line endX="179.0" layoutX="316.0" layoutY="97.0" startX="-111.0" stroke="WHITE" />
-      <Line endX="179.0" layoutX="316.0" layoutY="148.0" startX="-111.0" stroke="WHITE" />
-      <Line endX="179.0" layoutX="316.0" layoutY="202.0" startX="-111.0" stroke="WHITE" />
-      <Line endX="179.0" layoutX="316.0" layoutY="258.0" startX="-111.0" stroke="WHITE" />
-      <Line endX="179.0" layoutX="316.0" layoutY="314.0" startX="-111.0" stroke="WHITE" />
+      <Text layoutX="39.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editer son profil :" wrappingWidth="126.5966796875" />
+      <TextField fx:id="passwordUpdateField" layoutX="39.0" layoutY="70.0" prefHeight="38.0" prefWidth="290.0" promptText="Mot de passe ..." style="-fx-prompt-text-fill: #FFFFFF; -fx-background-color: #79a8ff #79a8ff #79a8ff #79a8ff;" />
+      <TextField fx:id="passwordConfirmationUpdateField" layoutX="39.0" layoutY="121.0" prefHeight="38.0" prefWidth="290.0" promptText="Confirmation Mot de Passe..." style="-fx-background-color: #79a8ff #79a8ff #79a8ff #79a8ff; -fx-prompt-text-fill: #FFFFFF;" />
+      <TextField fx:id="familynameUpdateField" layoutX="39.0" layoutY="175.0" prefHeight="38.0" prefWidth="290.0" promptText="Nom ..." style="-fx-background-color: #79a8ff #79a8ff #79a8ff #79a8ff; -fx-prompt-text-fill: #FFFFFF;" />
+      <TextField fx:id="nameUpdateField" layoutX="39.0" layoutY="231.0" prefHeight="38.0" prefWidth="290.0" promptText="Prénom ..." style="-fx-background-color: #79a8ff #79a8ff #79a8ff #79a8ff; -fx-prompt-text-fill: #FFFFFF;" />
+      <TextField fx:id="ageUpdateField" layoutX="39.0" layoutY="287.0" prefHeight="38.0" prefWidth="290.0" promptText="Âge..." style="-fx-background-color: #79a8ff #79a8ff #79a8ff #79a8ff; -fx-prompt-text-fill: #FFFFFF;" />
+      <Button fx:id="validateUpdateButton" layoutX="140.0" layoutY="352.0" mnemonicParsing="false" onAction="#Validate" prefHeight="27.0" prefWidth="189.0" style="-fx-background-color: #79ebff#79ebff;" text="Valider" />
+      <Button fx:id="previousButton" layoutX="39.0" layoutY="352.0" mnemonicParsing="false" onAction="#Previous" prefHeight="27.0" prefWidth="86.0" style="-fx-background-color: #ffffff;" text="Précédent" />
+      <Label fx:id="errorUpdateLabel" layoutX="71.0" layoutY="395.0" prefHeight="17.0" prefWidth="226.0" text="Tous les champs sont obligatoires" textFill="#d30d0d" />
+      <Line endX="179.0" layoutX="150.0" layoutY="108.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="150.0" layoutY="159.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="150.0" layoutY="213.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="150.0" layoutY="269.0" startX="-111.0" stroke="WHITE" />
+      <Line endX="179.0" layoutX="150.0" layoutY="325.0" startX="-111.0" stroke="WHITE" />
    </children>
 </AnchorPane>
